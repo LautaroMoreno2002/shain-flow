@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorResponse, setErrorResponse] = useState("");
+  // const [errorResponse, setErrorResponse] = useState("");
 
   // const auth = useAuth();
 
@@ -60,7 +60,7 @@ export const Login = () => {
   </div>
 
   {/* Mensaje de error */}
-  {!!errorResponse && <div className="error-message">{errorResponse}</div>}
+  {/* {!!errorResponse && <div className="error-message">{errorResponse}</div>} */}
 
   {/* Usuario */}
   <label htmlFor="username">Usuario:</label>
