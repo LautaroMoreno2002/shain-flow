@@ -1,4 +1,4 @@
-import "./styles/Asistencias.css";
+import "./styles/asistencias.css";
 
 const mes = new Date().getMonth() + 1;
 const anio = new Date().getFullYear();
