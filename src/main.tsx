@@ -1,12 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Empleado } from './routes/empleado/Empleado'
 import './index.css'
-import { Empleado } from './components/empleado/Empleado'
-import { Reconocimiento } from './components/reco-facial/RecoFacial'
+import App from './App'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Empleado />
-    {/* <Reconocimiento /> */}
+    <App />
   </StrictMode>,
 )

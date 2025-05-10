@@ -1,9 +1,4 @@
-import "./empleado.css";
-import { VerDatos } from "../../routes/VerDatos";
-import { Asistencias } from "../../routes/Asistencias";
-import { DatosLaborales } from "../../routes/DatosLaborales";
-import { NavBar } from "../NavBar";
-import { BrowserRouter, Routes, Route, NavLink, Link } from "react-router-dom";
+import './styles/confirmacion.css'
 
 const nombre = "Lautaro Moreno";
 const fecha = new Date();
@@ -66,43 +61,7 @@ export const Confirmacion = () => {
         <p className="horas-trabajadas__confirmacion">32 horas</p>
         </div>
       </div>
-      {/* <div className="cont-botones">
-        <NavLink to='/verDatos' type="button" className="btn btn-primary">
-          Datos personales
-        </NavLink>
-        <NavLink to='/asistencias' type="button" className="btn btn-primary">
-          Asistencias
-        </NavLink>
-        <NavLink to='/datosLaborales' type="button" className="btn btn-primary">
-          Datos laborales
-        </NavLink>
-      </div> */}
     </div>
     </div>
-  );
-};
-
-const navItems =  [
-  { label: "Datos personales", icon: "fa-solid fa-user", path: "/verDatos" },
-  { label: "Confirmación", icon: "fa-solid fa-square-check", path: "/" },
-  { label: "Datos laborales", icon: "fa-solid fa-user-tie", path: "/datosLaborales" },
-  { label: "Asistencias", icon: "fa-regular fa-id-card", path: "/asistencias" },
-  { label: "Cerrar sesión", icon: "fa-solid fa-lock", path: "/" },
-];
-
-export const Empleado = () => {
-  return (
-    <>
-    <BrowserRouter>
-      <NavBar items={navItems}/>
-      <Routes>
-        <Route path="/" element={<Confirmacion />}></Route>
-        <Route path="/verDatos" element={<VerDatos/>}></Route>
-        <Route path="/datosLaborales" element={<DatosLaborales/>}></Route>
-        <Route path="/asistencias" element={<Asistencias/>}></Route>
-        <Route path="/*" element={<Confirmacion/>}></Route>
-      </Routes>
-    </BrowserRouter>
-    </>
   );
 };
