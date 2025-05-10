@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'
 import './reco-facial.css'
 
 export const Reconocimiento = () => {
@@ -22,7 +23,11 @@ export const Reconocimiento = () => {
     </main>
     <div className='cont-alternativa'>
       <p>¿No puedes escanearte?</p>
-      <p><span>Ingresa manualmente por el login</span></p>
+      <p>
+        <NavLink to={'/login'}>
+          <span>Ingresa manualmente por el login</span>
+        </NavLink>
+      </p>
     </div>
     </div>
   )

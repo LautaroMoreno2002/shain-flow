@@ -8,18 +8,18 @@ interface DefaultLayoutProps {
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
     <>
-      <header>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Login</Link>
-            </li>
-            <li>
-              <Link to="/signup">Signup</Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <header className="navbar-header">
+      <nav className="navbar">
+        <ul className="nav-list">
+          <li className="nav-item">
+            <Link to="/login" className="nav-link">Login</Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/signup" className="nav-link">Signup</Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
       <main>{children}</main>
     </>

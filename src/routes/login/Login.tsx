@@ -1,5 +1,7 @@
 import { useState } from "react";
 import DefaultLayout from "../../components/DefaultLayout";
+import './login.css'
+import { NavLink } from "react-router-dom";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
@@ -51,26 +53,52 @@ export const Login = () => {
   }
   return (
     <DefaultLayout>
-      <form onSubmit={handleSubmit} className="form">
-        <h1>Login</h1>
-        {!!errorResponse && <div className="errorMessage">{errorResponse}</div>}
-        <label>Username</label>
-        <input
-          name="username"
-          type="text"
-          onChange={handleChange}
-          value={username}
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          onChange={handleChange}
-          value={password}
-        />
+      <form onSubmit={handleSubmit} className="login-form">
+  {/* Logo */}
+  <div className="logo-container">
+    <img src="./logo_producto.png" alt="ShainFlow Logo" className="logo" />
+  </div>
 
-        <button>Login</button>
-      </form>
+  {/* Mensaje de error */}
+  {!!errorResponse && <div className="error-message">{errorResponse}</div>}
+
+  {/* Usuario */}
+  <label htmlFor="username">Usuario:</label>
+  <input
+    id="username"
+    name="username"
+    type="text"
+    onChange={handleChange}
+    value={username}
+    className="input-field"
+  />
+
+  {/* Contraseña */}
+  <label htmlFor="password">Contraseña:</label>
+  <input
+    id="password"
+    name="password"
+    type="password"
+    onChange={handleChange}
+    value={password}
+    className="input-field"
+  />
+
+  {/* Botón */}
+  <button type="submit" className="login-button">Login</button>
+
+  {/* Ícono de reconocimiento facial */}
+  <div className="face-id-container">
+    <NavLink to="/">
+      <img src="/ruta-icono-facial.png" alt="Reconocimiento facial" className="face-id-icon" />
+    </NavLink>
+  </div>
+
+  {/* Enlace de registro */}
+  <p className="register-text">
+    ¿No puedes ingresar o no tienes una cuenta? <NavLink to="/signup">Regístrate</NavLink>
+  </p>
+</form>
     </DefaultLayout>
   );
 }
