@@ -8,6 +8,7 @@ import { DatosLaborales } from './routes/empleado/DatosLaborales'
 import { Reconocimiento } from './routes/reco-facial/RecoFacial'
 import { Login } from './routes/login/Login'
 import { Signup } from './routes/signup/Signup'
+import { Administrador } from './routes/administrador/Administrador'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="" element={<Confirmacion/>}></Route>
           <Route path="*" element={<Confirmacion/>}></Route>
         </Route>
+    <Route path='/administrador' element={<Administrador />}></Route>
     </Routes>
   </BrowserRouter>
   )

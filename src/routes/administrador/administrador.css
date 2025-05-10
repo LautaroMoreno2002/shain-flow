@@ -1,0 +1,40 @@
+.admin-container {
+  padding: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fefaff;
+  min-height: 100vh;
+}
+
+.admin-title {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.busqueda-container {
+  display: flex;
+  align-items: center;
+  background-color: #f1eefb;
+  border-radius: 25px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.busqueda-container input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  outline: none;
+}
+
+.icono-busqueda {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.lista-empleados {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}

@@ -1,0 +1,15 @@
+.empleado-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  padding: 0.6rem 1rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+  
+.icono-perfil {
+  font-size: 1.4rem;
+  color: #222;
+}
