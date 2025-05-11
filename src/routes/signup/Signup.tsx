@@ -7,11 +7,17 @@ export const Signup = () => {
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
+  const [DNITipo, setDNITipo] = useState('');
+  const [DNI, setDNI] = useState('');
+  const [nacionalidad, setNacionalidad] = useState('');
+  const [direccion, setDireccion] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorResponse, setErrorResponse] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  
+  
 
   // const auth = useAuth();
   // const goTo = useNavigate();
@@ -20,6 +26,10 @@ export const Signup = () => {
     name &&
     lastname &&
     email &&
+    DNITipo &&
+    DNI &&
+    nacionalidad &&
+    direccion &&
     username &&
     password &&
     confirmPassword &&
@@ -47,6 +57,10 @@ export const Signup = () => {
           name,
           lastname,
           email,
+          DNITipo,
+          DNI,
+          nacionalidad,
+          direccion,
           username,
           password,
         }),
@@ -132,10 +146,42 @@ export const Signup = () => {
         onChange={(e) => setEmail(e.target.value)}
         className="input-field"
       />
+      <label htmlFor="DNI">Tipo de DNI:</label>
+      <input
+        type="text"
+        id="DNI-Tipo"
+        value={DNITipo}
+        onChange={(e) => setDNITipo(e.target.value)}
+        className="input-field"
+      />
+      <label htmlFor="DNI">DNI:</label>
+      <input
+        type="text"
+        id="DNI"
+        value={DNITipo}
+        onChange={(e) => setDNI(e.target.value)}
+        className="input-field"
+      />
     </div>
 
     {/* Columna derecha */}
     <div className="column">
+      <label htmlFor="nacionalidad">Nacionalidad:</label>
+      <input
+        type="text"
+        id="nacionalidad"
+        value={nacionalidad}
+        onChange={(e) => setNacionalidad(e.target.value)}
+        className="input-field"
+      />
+      <label htmlFor="direccion">Dirección:</label>
+      <input
+        type="text"
+        id="direccion"
+        value={direccion}
+        onChange={(e) => setDireccion(e.target.value)}
+        className="input-field"
+      />
       <label htmlFor="username">Usuario:</label>
       <input
         type="text"
@@ -162,6 +208,7 @@ export const Signup = () => {
         onChange={(e) => setConfirmPassword(e.target.value)}
         className="input-field"
       />
+      
     </div>
   </div>
 
