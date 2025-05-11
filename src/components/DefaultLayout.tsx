@@ -8,7 +8,7 @@ interface DefaultLayoutProps {
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
     <>
-      <header className="navbar-header">
+      {/*<header className="navbar-header">
       <nav className="navbar">
         <ul className="nav-list">
           <li className="nav-item">
@@ -19,7 +19,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
           </li>
         </ul>
       </nav>
-    </header>
+    </header>*/}
 
       <main>{children}</main>
     </>
