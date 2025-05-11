@@ -46,11 +46,11 @@ export const UltRecibos = () => {
       <thead>
         <tr>
           <th>Periodo</th>
+          <th>Salario base</th>
           <th>Bono presentismo</th>
           <th>Bono antiguedad</th>
-          <th>Descuento</th>
-          <th>Salario base</th>
           <th>Monto hora extra</th>
+          <th>Descuento</th>
           <th>Sueldo bruto</th>
           <th>Sueldo neto</th>
         </tr>
@@ -58,41 +58,41 @@ export const UltRecibos = () => {
       <tbody>
   <tr>
     <td data-label="Periodo">01/2023</td>
+    <td data-label="Salario base">$3000</td>
     <td data-label="Bono presentismo">$1000</td>
     <td data-label="Bono antiguedad">$500</td>
-    <td data-label="Descuento">$200</td>
-    <td data-label="Salario base">$3000</td>
     <td data-label="Monto hora extra">$1500</td>
+    <td data-label="Descuento">$200</td>
     <td data-label="Sueldo bruto">$5000</td>
     <td data-label="Sueldo neto">$4000</td>
   </tr>
         <tr>
           <td data-label="Periodo">02/2023</td>
+          <td data-label="Salario base">$3000</td>
           <td data-label="Bono presentismo">$1000</td>
           <td data-label="Bono antiguedad">$500</td>
-          <td data-label="Descuento">$200</td>
-          <td data-label="Salario base">$3000</td>
           <td data-label="Monto hora extra">$1500</td>
+          <td data-label="Descuento">$200</td>
           <td data-label="Sueldo bruto">$5000</td>
           <td data-label="Sueldo neto">$4000</td>
         </tr>
         <tr>
           <td data-label="Periodo">03/2023</td>
+          <td data-label="Salario base">$3000</td>
           <td data-label="Bono presentismo">$1000</td>
           <td data-label="Bono antiguedad">$500</td>
-          <td data-label="Descuento">$200</td>
-          <td data-label="Salario base">$3000</td>
           <td data-label="Monto hora extra">$1500</td>
+          <td data-label="Descuento">$200</td>
           <td data-label="Sueldo bruto">$5000</td>
           <td data-label="Sueldo neto">$4000</td>
         </tr>
         <tr>
           <td data-label="Periodo">04/2023</td>
+          <td data-label="Salario base">$3000</td>
           <td data-label="Bono presentismo">$1000</td>
           <td data-label="Bono antiguedad">$500</td>
-          <td data-label="Descuento">$200</td>
-          <td data-label="Salario base">$3000</td>
           <td data-label="Monto hora extra">$1500</td>
+          <td data-label="Descuento">$200</td>
           <td data-label="Sueldo bruto">$5000</td>
           <td data-label="Sueldo neto">$4000</td>
         </tr>

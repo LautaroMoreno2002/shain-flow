@@ -1,34 +1,36 @@
-import { NavLink } from 'react-router-dom'
-import './reco-facial.css'
+import { NavLink } from 'react-router-dom';
+import './reco-facial.css';
 
-export const Reconocimiento = () => {
+export const ReconocimientoFacial = () => {
   return (
-  <div className='cont-reco'>
-      <div className="logo_shain-flow">
-      <img src="/logo_producto.png" alt="Shain Flow" />
+    <div className="contenedor-reconocimiento">
+      <header className="logo-container">
+        <img src="/logo_producto.png" alt="Shain Flow" />
+      </header>
+
+      <main className="contenido">
+        <section className="seccion-camara">
+          <div className="camara"></div>
+          <p className="mensaje-guia">
+            Enfoca tu rostro dentro del círculo para realizar el reconocimiento facial y tomar asistencia.
+          </p>
+          <button
+            className="boton-reconocimiento"
+            onClick={() => alert('Reconocimiento facial iniciado')}
+          >
+            Iniciar Reconocimiento
+          </button>
+        </section>
+
+        <aside className="seccion-alternativa">
+          <p>¿No puedes escanearte?</p>
+          <p>
+            <NavLink to="/login">
+              <span>Ingresa manualmente por el login</span>
+            </NavLink>
+          </p>
+        </aside>
+      </main>
     </div>
-    <main>
-      <div className="cont-camara">
-      <div className='camara'>
-      </div>
-    </div>
-    <div className='mensaje-guia'>
-      <p>Enfoca tu rostro dentro del círculo para realizar el reconocimiento facial y tomar asistencia.</p>
-    </div>
-    <button className='btn-reconocimiento' onClick={() => {
-      alert('Reconocimiento facial iniciado')
-    }}>
-      Iniciar Reconocimiento
-    </button>
-    </main>
-    <div className='cont-alternativa'>
-      <p>¿No puedes escanearte?</p>
-      <p>
-        <NavLink to={'/login'}>
-          <span>Ingresa manualmente por el login</span>
-        </NavLink>
-      </p>
-    </div>
-    </div>
-  )
-}
+  );
+};

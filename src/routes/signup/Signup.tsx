@@ -62,7 +62,8 @@ export const Signup = () => {
   const [DNITipo, setDNITipo] = useState('DNI');
   const [DNI, setDNI] = useState('');
   const [nacionalidad, setNacionalidad] = useState('');
-  const [direccion, setDireccion] = useState('');
+  const [calle, setCalle] = useState('');
+  const [numeroCalle, setNumeroCalle] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -74,7 +75,7 @@ export const Signup = () => {
 
   const isFormValid =
     name && lastname && email && DNITipo && DNI &&
-    nacionalidad && direccion && provincia && localidad && partido &&
+    nacionalidad && calle && numeroCalle && provincia && localidad && partido &&
     username && password && confirmPassword &&
     password === confirmPassword;
 
@@ -99,7 +100,8 @@ export const Signup = () => {
           DNITipo,
           DNI,
           nacionalidad,
-          direccion,
+          calle,
+          numeroCalle,
           provincia,
           localidad,
           partido,
@@ -157,19 +159,41 @@ export const Signup = () => {
                     <option value="DNI">DNI</option>
                     <option value="Pasaporte">Pasaporte</option>
                     <option value="Cédula">Cédula</option>
-                    <option value="Carnet de extranjería">Carnet de extranjería</option>
                   </select>
 
-                  <label htmlFor="DNI">{(DNITipo === 'Selecciona un tipo') ? DNITipo : 'DNI'}</label>
-                  <input type="text" id="DNI" value={DNI} onChange={(e) => setDNI(e.target.value)} className="input-field" />
+                  <label htmlFor="DNI">{(DNITipo === 'Selecciona un tipo') ? 'DNI' : DNITipo}</label>
+                  <input type="number" id="DNI" value={DNI} onChange={(e) => setDNI(e.target.value)} className="input-field" />
                 </div>
 
                 <div className="column">
-                  <label htmlFor="nacionalidad">Nacionalidad:</label>
-                  <input type="text" id="nacionalidad" value={nacionalidad} onChange={(e) => setNacionalidad(e.target.value)} className="input-field" />
+                  <label htmlFor="nacionalidad">País de nacimiento:</label>
+<select
+  id="nacionalidad"
+  value={nacionalidad}
+  onChange={(e) => setNacionalidad(e.target.value)}
+  className="input-field"
+>
+  <option value="">Selecciona una nacionalidad</option>
+  <option value="Argentina">Argentina</option>
+  <option value="Brasil">Brasil</option>
+  <option value="Chile">Chile</option>
+  <option value="Uruguay">Uruguay</option>
+  <option value="Paraguay">Paraguay</option>
+  <option value="Bolivia">Bolivia</option>
+  <option value="Perú">Perú</option>
+  <option value="Ecuador">Ecuador</option>
+  <option value="Colombia">Colombia</option>
+  <option value="Venezuela">Venezuela</option>
+  <option value="México">México</option>
+</select>
 
-                  <label htmlFor="direccion">Dirección:</label>
-                  <input type="text" id="direccion" value={direccion} onChange={(e) => setDireccion(e.target.value)} className="input-field" />
+                 <div className="cont-direccion">
+                 <label htmlFor="calle">Calle:</label>
+                  <input type="text" id="calle" value={calle} onChange={(e) => setCalle(e.target.value)} className="input-field" />
+
+                  <label htmlFor="numero-calle">Número:</label>
+                  <input type="number" id="numero-calle" value={numeroCalle} onChange={(e) => setNumeroCalle(e.target.value)} className="input-field" />
+                 </div>
 
                   <label htmlFor="localidad">Localidad:</label>
                   <input type="text" id="localidad" value={localidad} onChange={(e) => setLocalidad(e.target.value)} className="input-field" />
@@ -178,7 +202,37 @@ export const Signup = () => {
                   <input type="text" id="partido" value={partido} onChange={(e) => setPartido(e.target.value)} className="input-field" />
 
                   <label htmlFor="provincia">Provincia:</label>
-                  <input type="text" id="provincia" value={provincia} onChange={(e) => setProvincia(e.target.value)} className="input-field" />
+<select
+  id="provincia"
+  value={provincia}
+  onChange={(e) => setProvincia(e.target.value)}
+  className="input-field"
+>
+  <option value="">Selecciona una provincia</option>
+  <option value="Buenos Aires">Buenos Aires</option>
+  <option value="Catamarca">Catamarca</option>
+  <option value="Chaco">Chaco</option>
+  <option value="Chubut">Chubut</option>
+  <option value="Córdoba">Córdoba</option>
+  <option value="Corrientes">Corrientes</option>
+  <option value="Entre Ríos">Entre Ríos</option>
+  <option value="Formosa">Formosa</option>
+  <option value="Jujuy">Jujuy</option>
+  <option value="La Pampa">La Pampa</option>
+  <option value="La Rioja">La Rioja</option>
+  <option value="Mendoza">Mendoza</option>
+  <option value="Misiones">Misiones</option>
+  <option value="Neuquén">Neuquén</option>
+  <option value="Río Negro">Río Negro</option>
+  <option value="Salta">Salta</option>
+  <option value="San Juan">San Juan</option>
+  <option value="San Luis">San Luis</option>
+  <option value="Santa Cruz">Santa Cruz</option>
+  <option value="Santa Fe">Santa Fe</option>
+  <option value="Santiago del Estero">Santiago del Estero</option>
+  <option value="Tierra del Fuego">Tierra del Fuego</option>
+  <option value="Tucumán">Tucumán</option>
+</select>
                 </div>
               </div>
             </motion.div>
@@ -212,7 +266,7 @@ export const Signup = () => {
             className="signup-button"
             onClick={() => setStep(2)}
             disabled={
-              !name || !lastname || !email || !DNITipo || !DNI || !nacionalidad || !direccion
+              !name || !lastname || !email || !DNITipo || !DNI || !nacionalidad || !calle || !numeroCalle
             }
           >
             Siguiente

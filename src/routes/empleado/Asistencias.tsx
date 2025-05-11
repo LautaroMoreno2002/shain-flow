@@ -71,13 +71,13 @@ export const Asistencias = () => {
                 <th className="col-he">HE</th>
                 <th className="col-hs">HS</th>
                 <th className="col-ht">HT</th>
-                <th>Estado</th>
                 <th className="col-hex">HEX</th>
+                <th>Estado</th>
               </tr>
             </thead>
             <tbody>
-              {Array.from({ length: diasMes }, (_, i) => i + 1).map((dia) => {
-                const asistencia = asistencias[dia - 1] || {};  // Si no existe, asigna un objeto vacío
+              {/* {Array.from({ length: diasMes }, (_, i) => i + 1).map((dia) => {
+                const asistencia = asistencias[dia - 1];  // Si no existe, asigna un objeto vacío
 
                 const horaEntrada = asistencia?.horaEntrada || "";
                 const horaSalida = asistencia?.horaSalida || "";
@@ -94,6 +94,7 @@ export const Asistencias = () => {
                     <td>{horaEntrada}</td>
                     <td>{horaSalida}</td>
                     <td>{horasTrabajadas}</td>
+                    <td>{horasExtras}</td>
                     <td className={
                       asistencia?.estado === 'Completada' ? 'completa' :
                       asistencia?.estado === 'Incompleta' ? 'incompleta' :
@@ -106,10 +107,44 @@ export const Asistencias = () => {
                     }>
                       {asistencia?.estado || ''}
                     </td>
-                    <td>{horasExtras}</td>
-                  </tr>
+                  </tr> 
                 );
-              })}
+              })} */}
+              {asistencias.map((asistencia, index) => {
+  const [dia, mesTexto, anioTexto] = asistencia.fecha.split("/");
+  const diaNumero = parseInt(dia);
+
+  const horaEntrada = asistencia.horaEntrada || "";
+  const horaSalida = asistencia.horaSalida || "";
+  const horasExtras = asistencia.horasExtras || "";
+  const horasTrabajadas =
+    horaEntrada && horaSalida
+      ? calcularHorasTrabajadas(horaEntrada, horaSalida)
+      : "";
+
+  return (
+    <tr key={index}>
+      <td>{asistencia.fecha}</td>
+      <td>{obtenerNombreDia(diaNumero)}</td>
+      <td>{horaEntrada}</td>
+      <td>{horaSalida}</td>
+      <td>{horasTrabajadas}</td>
+      <td>{horasExtras}</td>
+      <td className={
+        asistencia.estado === 'Completada' ? 'completa' :
+        asistencia.estado === 'Incompleta' ? 'incompleta' :
+        asistencia.estado === 'Falta' ? 'falta' :
+        asistencia.estado === 'Licencia médica' ? 'licencia-medica' :
+        asistencia.estado === 'Vacaciones' ? 'vacaciones' :
+        asistencia.estado === 'Suspensión' ? 'suspension' :
+        asistencia.estado === 'No laboral' ? 'no-laboral' :
+        asistencia.estado === 'Otra' ? 'otra' : ''
+      }>
+        {asistencia.estado}
+      </td>
+    </tr>
+  );
+})}
             </tbody>
           </table>
         </div>

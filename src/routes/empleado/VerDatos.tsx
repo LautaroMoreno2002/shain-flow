@@ -9,8 +9,11 @@ interface PersonalDataType {
   fechaNacimiento: string;
   email: string;
   telefono: string;
-  direccion: string;
+  calle: string;
+  numero: string; 
   nacionalidad: string;
+  provincia: string;
+  localidad: string; 
   estado: string;
 }
 
@@ -21,14 +24,17 @@ export const VerDatos = () => {
   // Estado para los datos personales, tipado con la interfaz PersonalDataType
   const [personalData, setPersonalData] = useState<PersonalDataType>({
     nombre: "Lautaro Emmanuel",
-    apellido: "Moreno",
-    dni: "12345678",
-    fechaNacimiento: "01/04/2002",
-    email: "lemoreno2002@gmail.com",
-    telefono: "1234567890",
-    direccion: "Calle Falsa 123",
-    nacionalidad: "Argentina",
-    estado: "Soltero",
+      apellido: "Moreno",
+      dni: "12345678",
+      fechaNacimiento: "01/04/2002",
+      email: "lemoreno2002@gmail.com",
+      telefono: "1234567890",
+      calle: "Calle Falsa",
+      numero: "123",
+      nacionalidad: "Argentina",
+      provincia: "Buenos Aires",
+      localidad: "San Miguel",
+      estado: "Soltero"
   });
 
   // Función para manejar los cambios en los inputs
@@ -58,9 +64,12 @@ export const VerDatos = () => {
       fechaNacimiento: "01/04/2002",
       email: "lemoreno2002@gmail.com",
       telefono: "1234567890",
-      direccion: "Calle Falsa 123",
+      calle: "Calle Falsa",
+      numero: "123",
       nacionalidad: "Argentina",
-      estado: "Soltero",
+      provincia: "Buenos Aires",
+      localidad: "San Miguel",
+      estado: "Soltero"
     });
   };
 
@@ -140,23 +149,56 @@ export const VerDatos = () => {
               />
             </div>
             <div className="data-item">
-              <p className="data-item--label">Dirección:</p>
+              <p className="data-item--label">Calle:</p>
               <input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="direccion"
-                value={personalData.direccion}
+                value={personalData.calle}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
             </div>
             <div className="data-item">
-              <p className="data-item--label">Nationalidad:</p>
+              <p className="data-item--label">Número:</p>
+              <input
+                className={`data-item--value ${isEditable ? "editable" : ""}`}
+                type="text"
+                name="nacionalidad"
+                value={personalData.numero}
+                onChange={handleChange}
+                readOnly={!isEditable}
+              />
+            </div>
+            <div className="data-item">
+              <p className="data-item--label">País de nacimiento:</p>
               <input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="nacionalidad"
                 value={personalData.nacionalidad}
+                onChange={handleChange}
+                readOnly={!isEditable}
+              />
+            </div>
+            <div className="data-item">
+              <p className="data-item--label">Provincia:</p>
+              <input
+                className={`data-item--value ${isEditable ? "editable" : ""}`}
+                type="text"
+                name="nacionalidad"
+                value={personalData.provincia}
+                onChange={handleChange}
+                readOnly={!isEditable}
+              />
+            </div>
+            <div className="data-item">
+              <p className="data-item--label">Localidad:</p>
+              <input
+                className={`data-item--value ${isEditable ? "editable" : ""}`}
+                type="text"
+                name="nacionalidad"
+                value={personalData.localidad}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
