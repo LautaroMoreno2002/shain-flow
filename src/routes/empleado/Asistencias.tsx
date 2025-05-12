@@ -110,7 +110,7 @@ export const Asistencias = () => {
                 );
               })} */}
               {asistencias.map((asistencia, index) => {
-  const [dia, mesTexto, anioTexto] = asistencia.fecha.split("/");
+  const [dia] = asistencia.fecha.split("/");
   const diaNumero = parseInt(dia);
 
   const horaEntrada = asistencia.horaEntrada || "";
