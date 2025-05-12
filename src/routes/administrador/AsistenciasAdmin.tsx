@@ -43,7 +43,7 @@ const obtenerNombreDia = (dia: number) => {
   return new Intl.DateTimeFormat("es-ES", { weekday: "long" }).format(fecha);
 };
 
-export const Asistencias = () => {
+export const AsistenciasAdmin = () => {
   return (
     <div className="layout">
       <div className="cont-asistencias">

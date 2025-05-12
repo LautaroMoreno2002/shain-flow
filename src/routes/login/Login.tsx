@@ -1,7 +1,8 @@
 import { useState } from "react";
 import DefaultLayout from "../../components/DefaultLayout";
 import './login.css'
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
   const [username, setUsername] = useState("");
@@ -9,6 +10,18 @@ export const Login = () => {
   // const [errorResponse, setErrorResponse] = useState("");
 
   // const auth = useAuth();
+  const navegar = useNavigate();
+  const users = [
+    {
+      username: 'Lautaro Moreno',
+      password: '1234',
+      rol: 'empleado'
+    },{
+      username: 'Pablo Da Silva',
+      password: '5678',
+      rol: 'administrador'
+    }
+  ]
 
   function handleChange(e: React.ChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
@@ -24,7 +37,12 @@ export const Login = () => {
     e.preventDefault();
     console.log(username);
     console.log(password);
-        
+    if (username == users[0].username && password == users[0].password) {
+      navegar("/empleado");
+    }
+    if (username == users[1].username && password == users[1].password) {
+      navegar("/administrador");
+    }
     // auth.setIsAuthenticated(true);
     // try {
     //   const response = await fetch("http://localhost:3000/api/login", {

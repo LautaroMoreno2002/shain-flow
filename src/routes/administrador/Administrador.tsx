@@ -1,56 +1,24 @@
-import { useState, useEffect } from 'react';
-import EmpleadoItem from '../../components/EmpleadoItem';
-import './administrador.css';
+import { NavBar } from "../../components/NavBar";
+import { Outlet } from "react-router-dom";
 
-interface Empleado {
-  id: number;
-  nombre: string;
-}
+const navItemsAdministrador =  [
+  { label: "Datos personales", icon: "fa-solid fa-address-card", path: "verDatos" },
+  { label: "Confirmación", icon: "fa-solid fa-square-check", path: "confirmacion" },
+  { label: "Datos laborales", icon: "fa-solid fa-user-tie", path: "datosLaborales" },
+  { label: "Asistencias", icon: "fa-regular fa-id-card", path: "asistencias" },
+  { label: "Empleados", icon: "fa-solid fa-users", path: "empleados" },
+  { label: "Reportería", icon: "fa-solid fa-chart-simple", path: "#" },
+  { label: "Nóminas", icon: "fa-solid fa-coins", path: "#" },
+  { label: "Cerrar sesión", icon: "fa-solid fa-lock", path: "/login" },
+];
 
 export const Administrador = () => {
-  const [empleados, setEmpleados] = useState<Empleado[]>([]);
-  const [busqueda, setBusqueda] = useState<string>('');
-
-  // Simulación de datos (temporal)
-  const empleadosSimulados: Empleado[] = Array.from({ length: 12 }, (_, i) => ({
-    id: i + 1,
-    nombre: `EMPLEADO ${i + 1}`,
-  }));
-
-  useEffect(() => {
-    // TODO: Descomenta esto cuando tengas el backend funcionando
-    /*
-    fetch('https://tu-api.com/empleados')
-      .then(res => res.json())
-      .then(data => setEmpleados(data))
-      .catch(err => console.error('Error al cargar empleados:', err));
-    */
-
-    // Temporal
-    setEmpleados(empleadosSimulados);
-  }, []);
-
-  const empleadosFiltrados = empleados.filter((emp) =>
-    emp.nombre.toLowerCase().includes(busqueda.toLowerCase())
-  );
-
   return (
-    <div className="admin-container">
-      <h2 className="admin-title">👥 Empleados:</h2>
-      <div className="busqueda-container">
-        <input
-          type="text"
-          placeholder="EMPLEADO 500...."
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
-        />
-        <span className="icono-busqueda">🔍</span>
-      </div>
-      <div className="lista-empleados">
-        {empleadosFiltrados.map((empleado) => (
-          <EmpleadoItem key={empleado.id} empleado={empleado} />
-        ))}
-      </div>
-    </div>
-  );
+    <>
+      <NavBar items={navItemsAdministrador}/>
+      <main>
+        <Outlet /> {/* Aquí se renderiza la ruta hija */}
+      </main>
+    </>
+  )
 };
