@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import './empleado-item.css';
 
 interface Empleado {
@@ -14,6 +15,7 @@ export const EmpleadoItem = ({ empleado }: EmpleadoItemProps) => {
     <div className="empleado-item">
       <span className="icono-perfil">👤</span>
       <span>{empleado.nombre}</span>
+      <NavLink to="/administrador/editarEmpleado" >Editar</NavLink>
     </div>
   );
 };

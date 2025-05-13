@@ -15,6 +15,7 @@ import { AsistenciasAdmin } from './routes/administrador/AsistenciasAdmin'
 import { ConfirmacionAdmin } from './routes/administrador/ConfirmacionAdmin'
 import { DatosLaboralesAdmin } from './routes/administrador/DatosLaboralesAdmin'
 import { AgregarEmpleado } from './routes/administrador/agregarEmpleado'
+import { EditarEmpleado } from './routes/administrador/editarEmpleado'
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="confirmacion" element={<ConfirmacionAdmin />}></Route>
           <Route path="empleados" element={<Empleados />}></Route>
           <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
+          <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>
           <Route path="" element={<Empleados />}></Route>
     </Route>
     </Routes>
