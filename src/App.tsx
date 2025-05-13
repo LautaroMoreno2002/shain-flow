@@ -14,6 +14,7 @@ import { VerDatosAdmin } from './routes/administrador/VerDatosAdmin'
 import { AsistenciasAdmin } from './routes/administrador/AsistenciasAdmin'
 import { ConfirmacionAdmin } from './routes/administrador/ConfirmacionAdmin'
 import { DatosLaboralesAdmin } from './routes/administrador/DatosLaboralesAdmin'
+import { AgregarEmpleado } from './routes/administrador/agregarEmpleado'
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="datosLaborales" element={<DatosLaboralesAdmin />}></Route>
           <Route path="confirmacion" element={<ConfirmacionAdmin />}></Route>
           <Route path="empleados" element={<Empleados />}></Route>
+          <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
           <Route path="" element={<Empleados />}></Route>
     </Route>
     </Routes>
