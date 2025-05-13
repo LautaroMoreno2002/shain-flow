@@ -17,6 +17,17 @@ interface PersonalDataType {
   estado: string;
 }
 
+const API_URL = 'https://jsonplaceholder.typicode.com/posts';//conectar con la API
+
+// GET request
+const getData = async (): Promise<PersonalDataType[]> => {//pedir los datos
+  const response = await fetch(API_URL);
+  if (!response.ok) {//control de errores
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.json();//respuesta en formato json
+};
+
 export const VerDatos = () => {
   // Estado para determinar si los campos son editables
   const [isEditable, setIsEditable] = useState<boolean>(false);

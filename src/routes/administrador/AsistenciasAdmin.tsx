@@ -3,6 +3,23 @@ import "./styles/asistencias.css";
 const mes = new Date().getMonth() + 1;
 const anio = new Date().getFullYear();
 
+interface DataType {
+  id: number;
+  title: string;
+  body: string;
+}
+
+const API_URL = 'https://jsonplaceholder.typicode.com/posts';//conectar con la API
+
+// GET request
+const getData = async (): Promise<DataType[]> => {//pedir los datos
+  const response = await fetch(API_URL);
+  if (!response.ok) {//control de errores
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.json();//respuesta en formato json
+};
+
 const asistencias = [
   { fecha: "01/09/2025", horaEntrada: "08:00", horaSalida: "17:00", estado: "Completada", horasExtras: "0 h" },
   { fecha: "02/09/2025", horaEntrada: "08:00", horaSalida: "17:00", estado: "Completada", horasExtras: "0 h" },
