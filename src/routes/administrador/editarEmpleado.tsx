@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import './styles/datos-personales.css'
+import type { NavBar } from '../../components/NavBar';
+import { NavLink, useNavigate } from 'react-router-dom';
+
+
 
 // Definimos el tipo de datos personales
 interface PersonalDataType {
@@ -20,6 +24,7 @@ interface PersonalDataType {
 export const EditarEmpleado = () => {
   // Estado para determinar si los campos son editables
   const [isEditable, setIsEditable] = useState<boolean>(true);
+  const navegar = useNavigate();
 
   // Estado para los datos personales, tipado con la interfaz PersonalDataType
   const [personalData, setPersonalData] = useState<PersonalDataType>({
@@ -49,8 +54,12 @@ export const EditarEmpleado = () => {
   // Función para guardar los cambios
   const handleSave = () => {
     setIsEditable(false);
+    
     // podrías agregar lógica para guardar los cambios, por ejemplo, en una base de datos
     console.log("Datos guardados:", personalData);
+    
+    //Vuelve a la lista de empleados
+    navegar('/administrador/empleados');
   };
 
   // Función para cancelar y revertir los cambios
