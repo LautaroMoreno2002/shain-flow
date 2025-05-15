@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import './styles/confirmacion.css'
+import '../../estilos/confirmacion.css'
 
 const nombre = "Lautaro Moreno";
 const fecha = new Date();

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DefaultLayout from "../../components/DefaultLayout";
-import './login.css'
+import '../../estilos/login.css'
 import { NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 

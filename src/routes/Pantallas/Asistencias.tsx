@@ -1,4 +1,4 @@
-import "./styles/asistencias.css";
+import "../../estilos/asistencias.css";
 
 const mes = new Date().getMonth() + 1;
 const anio = new Date().getFullYear();
@@ -60,7 +60,7 @@ const obtenerNombreDia = (dia: number) => {
   return new Intl.DateTimeFormat("es-ES", { weekday: "long" }).format(fecha);
 };
 
-export const AsistenciasAdmin = () => {
+export const Asistencias = () => {
   return (
     <div className="layout">
       <div className="cont-asistencias">

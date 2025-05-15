@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import './styles/datos-personales.css'
+import '../../estilos/datos-personales.css'
+import type { NavBar } from '../../components/NavBar';
+import { NavLink, useNavigate } from 'react-router-dom';
+
+
 
 // Definimos el tipo de datos personales
 interface PersonalDataType {
@@ -17,9 +21,10 @@ interface PersonalDataType {
   estado: string;
 }
 
-export const VerDatosAdmin = () => {
+export const EditarEmpleado = () => {
   // Estado para determinar si los campos son editables
-  const [isEditable, setIsEditable] = useState<boolean>(false);
+  const [isEditable, setIsEditable] = useState<boolean>(true);
+  const navegar = useNavigate();
 
   // Estado para los datos personales, tipado con la interfaz PersonalDataType
   const [personalData, setPersonalData] = useState<PersonalDataType>({
@@ -49,13 +54,17 @@ export const VerDatosAdmin = () => {
   // Función para guardar los cambios
   const handleSave = () => {
     setIsEditable(false);
+    
     // podrías agregar lógica para guardar los cambios, por ejemplo, en una base de datos
     console.log("Datos guardados:", personalData);
+    
+    //Vuelve a la lista de empleados
+    navegar('/administrador/empleados');
   };
 
   // Función para cancelar y revertir los cambios
   const handleCancel = () => {
-    setIsEditable(false);
+    setIsEditable(true);
     // Volver a los datos iniciales
     setPersonalData({
       nombre: "Lautaro Emmanuel",
@@ -217,7 +226,10 @@ export const VerDatosAdmin = () => {
           </div>
         </div>
         <div className="button-container">
-          {!isEditable ? (
+          <button className="save-button" onClick={handleSave}>
+                Guardar
+            </button>
+          {/*{!isEditable ? (
             <button className="edit-button" onClick={() => setIsEditable(true)}>
               Modificar Información
             </button>
@@ -230,7 +242,7 @@ export const VerDatosAdmin = () => {
                 Cancelar
               </button>
             </>
-          )}
+          )}*/}
         </div>
       </div>
     </div>

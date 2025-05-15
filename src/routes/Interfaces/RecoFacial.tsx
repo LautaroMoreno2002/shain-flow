@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import './reco-facial.css';
+import '../../estilos/reco-facial.css';
 
 export const ReconocimientoFacial = () => {
   return (

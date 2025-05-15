@@ -1,4 +1,4 @@
-import './styles/datosLaborales.css'
+import '../../estilos/datosLaborales.css'
 
 interface DataType {
   id: number;

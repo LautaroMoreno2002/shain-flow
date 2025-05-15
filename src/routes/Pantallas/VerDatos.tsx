@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import './styles/datos-personales.css'
-import type { NavBar } from '../../components/NavBar';
-import { NavLink, useNavigate } from 'react-router-dom';
-
-
+import '../../estilos/datos-personales.css'
 
 // Definimos el tipo de datos personales
 interface PersonalDataType {
@@ -21,10 +17,20 @@ interface PersonalDataType {
   estado: string;
 }
 
-export const EditarEmpleado = () => {
+const API_URL = 'https://jsonplaceholder.typicode.com/posts';//conectar con la API
+
+// GET request
+const getData = async (): Promise<PersonalDataType[]> => {//pedir los datos
+  const response = await fetch(API_URL);
+  if (!response.ok) {//control de errores
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.json();//respuesta en formato json
+};
+
+export const VerDatos = () => {
   // Estado para determinar si los campos son editables
-  const [isEditable, setIsEditable] = useState<boolean>(true);
-  const navegar = useNavigate();
+  const [isEditable, setIsEditable] = useState<boolean>(false);
 
   // Estado para los datos personales, tipado con la interfaz PersonalDataType
   const [personalData, setPersonalData] = useState<PersonalDataType>({
@@ -54,17 +60,13 @@ export const EditarEmpleado = () => {
   // Función para guardar los cambios
   const handleSave = () => {
     setIsEditable(false);
-    
     // podrías agregar lógica para guardar los cambios, por ejemplo, en una base de datos
     console.log("Datos guardados:", personalData);
-    
-    //Vuelve a la lista de empleados
-    navegar('/administrador/empleados');
   };
 
   // Función para cancelar y revertir los cambios
   const handleCancel = () => {
-    setIsEditable(true);
+    setIsEditable(false);
     // Volver a los datos iniciales
     setPersonalData({
       nombre: "Lautaro Emmanuel",
@@ -226,10 +228,7 @@ export const EditarEmpleado = () => {
           </div>
         </div>
         <div className="button-container">
-          <button className="save-button" onClick={handleSave}>
-                Guardar
-            </button>
-          {/*{!isEditable ? (
+          {!isEditable ? (
             <button className="edit-button" onClick={() => setIsEditable(true)}>
               Modificar Información
             </button>
@@ -242,7 +241,7 @@ export const EditarEmpleado = () => {
                 Cancelar
               </button>
             </>
-          )}*/}
+          )}
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import EmpleadoItem from '../../components/EmpleadoItem';
-import './styles/empleados.css';
+import '../../estilos/empleados.css';
 import { NavLink } from "react-router-dom";
 
 interface Empleado {
@@ -62,7 +62,7 @@ export const Empleados = () => {
         {empleadosFiltrados.map((empleado) => (
           <EmpleadoItem key={empleado.id} empleado={empleado} />
         ))}
-        <NavLink to="/administrador/agregarEmpleado">Agregar empleado</NavLink>
+        <NavLink to="/Administrador/agregarEmpleado">Agregar empleado</NavLink>
       </div>
     </div>
   );
