@@ -12,26 +12,30 @@
   margin-bottom: 1em;
 }
 .logo-container img {
-  max-width: 200px;
+  max-width: 300px;
+  min-width: 200px;
   margin: 0 auto;
-  display: block;
 }
 
 /* Contenido principal */
 .contenido {
   display: flex;
   flex-direction: column;
-  gap: 2em;
   align-items: center;
   justify-content: center;
   flex: 1;
+  gap: 3em;
 }
-
+.seccion-camara {
+  width: 100%;
+  min-width: 300px;
+  position: relative;
+}
 /* Cámara */
 .seccion-camara .camara {
   width: 100%;
   max-width: 300px;
-  height: 300px;
+  min-width: 250px;
   background-image: url("/usuario.png");
   background-size: cover;
   background-position: center;
@@ -40,19 +44,17 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   margin: 0 auto;
 }
-
 .mensaje-guia {
   font-weight: 700;
   max-width: 400px;
   margin: 1em auto;
 }
-
 .boton-reconocimiento {
   background-color: #d61103;
   color: white;
   border: none;
-  padding: 15px 20px;
-  font-size: 1.3em;
+  padding: 10px;
+  font-size: 1.1em;
   border-radius: 15px;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -65,14 +67,24 @@
 .boton-reconocimiento:active {
   transform: scale(0.95);
 }
-
+.seccion-derecha {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
 /* Alternativa */
+.seccion-alternativa {
+  text-align: center;
+}
 .seccion-alternativa span {
   font-weight: 700;
 }
 
 /* Versión desktop */
-@media (min-width: 768px) {
+@media (min-width: 850px) {
   .contenido {
     flex-direction: row;
     justify-content: space-evenly;
@@ -81,15 +93,55 @@
 
   .seccion-camara, .seccion-alternativa {
     flex: 1;
-    max-width: 50%;
+    max-width: 60%;
   }
 
   .seccion-alternativa {
-    text-align: left;
+    text-align: center
   }
 
   .seccion-camara .camara {
-    max-width: 400px;
-    height: 400px;
+    min-width: 500px;
+    max-width: 700px;
+    height: 700px;
+  }
+ 
+}
+.seccion-camara .camara {
+  width: 100%;
+  max-width: 500px;
+  min-width: 250px;
+  height: 400px;
+  background-image: url("/usuario.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+}
+
+/* Versión desktop */
+@media (min-width: 850px) {
+  .contenido {
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .seccion-camara,
+  .seccion-alternativa {
+    flex: 1;
+    max-width: 60%;
+  }
+
+  .seccion-alternativa {
+    text-align: center;
+  }
+
+  .seccion-camara .camara {
+    min-width: 500px;
+    max-width: 700px;
+    height: 700px;
   }
 }
