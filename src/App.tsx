@@ -14,6 +14,8 @@ import { AgregarEmpleado } from './routes/Pantallas/agregarEmpleado'
 import { EditarEmpleado } from './routes/Pantallas/EditarEmpleado'
 import { Supervisor } from './routes/Interfaces/Supervisor'
 import { AnalistaDeDatos } from './routes/Interfaces/AnalistaDeDatos'
+import { FichadaExepcional } from './routes/Pantallas/FichadaExepcional'
+import { PermitirFichada } from './routes/Pantallas/PermitirFichada'
 
 function App() {
   return (
@@ -57,6 +59,8 @@ function App() {
           <Route path="asistencias" element={<Asistencias />}></Route>
           <Route path="datosLaborales" element={<DatosLaborales />}></Route>
           <Route path="confirmacion" element={<Confirmacion />}></Route>
+          <Route path="fichada-exepcional" element={<FichadaExepcional />}></Route>
+          <Route path="permitir-fichada" element={<PermitirFichada />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
     </Routes>
