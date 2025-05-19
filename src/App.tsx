@@ -13,6 +13,7 @@ import { Empleado } from './routes/Interfaces/Empleado'
 import { AgregarEmpleado } from './routes/Pantallas/agregarEmpleado'
 import { EditarEmpleado } from './routes/Pantallas/EditarEmpleado'
 import { Supervisor } from './routes/Interfaces/Supervisor'
+import { AnalistaDeDatos } from './routes/Interfaces/AnalistaDeDatos'
 
 function App() {
   return (
@@ -32,6 +33,16 @@ function App() {
           <Route path="*" element={<Confirmacion/>}></Route>
         </Route>
     <Route path='/administrador' element={<Administrador />}>
+          <Route path="verDatos" element={<VerDatos />}></Route>
+          <Route path="asistencias" element={<Asistencias />}></Route>
+          <Route path="datosLaborales" element={<DatosLaborales />}></Route>
+          <Route path="confirmacion" element={<Confirmacion />}></Route>
+          <Route path="empleados" element={<Empleados />}></Route>
+          <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
+          <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>
+          <Route path="" element={<Confirmacion />}></Route>
+    </Route>
+    <Route path='/analista-datos' element={<AnalistaDeDatos />}>
           <Route path="verDatos" element={<VerDatos />}></Route>
           <Route path="asistencias" element={<Asistencias />}></Route>
           <Route path="datosLaborales" element={<DatosLaborales />}></Route>

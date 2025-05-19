@@ -18,8 +18,12 @@ export const Login = () => {
       rol: 'empleado'
     },{
       username: 'Pablo Da Silva',
-      password: '5678',
+      password: '1234',
       rol: 'administrador'
+    },{
+      username: 'Abel Aquino',
+      password: '1234',
+      rol: 'analista-datos'
     }
   ]
 
@@ -37,11 +41,9 @@ export const Login = () => {
     e.preventDefault();
     console.log(username);
     console.log(password);
-    if (username == users[0].username && password == users[0].password) {
-      navegar("/empleado");
-    }
-    if (username == users[1].username && password == users[1].password) {
-      navegar("/administrador");
+    for (let user of users) {
+      if (username == user.username && password == user.password)
+        navegar(`/${user.rol}`);
     }
     // auth.setIsAuthenticated(true);
     // try {

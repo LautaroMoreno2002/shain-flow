@@ -9,6 +9,14 @@ const navItemsEmpleado =  [
   { label: "Cerrar sesión", icon: "fa-solid fa-lock", path: "/login" },
 ];
 
+/*
+Interfaz Empleado:
+
+
+Puede ver, editar y realizar acciones sobre sus datos personales, su información laboral, su registro de asistencias y faltas, sus últimos recibos de sueldo y sus horas extra.
+
+*/
+
 export const Empleado = () => {
   return (
     <>

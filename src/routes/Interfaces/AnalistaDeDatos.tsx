@@ -13,23 +13,16 @@ const navItemsAdministrador =  [
 ];
 
 /*
+Interfaz Analista de Datos:
 
 
-Interfaz RRHH:
+Configura y analiza modelos (si los tiene), como un científico de datos.
 
 
-Gestiona toda la plataforma, tiene acceso completo.
+Puede ver los datos de los empleados, el registro de asistencias y la nómina; no podrá realizar modificaciones.
 
 
-Puede ver, editar y realizar acciones sobre los datos de los empleados, el registro de asistencias y la nómina.
-
-
-Podrá descargar los datos, registro de asistencia y nómina en un archivo Excel.
-
-
-Podrá enviar notificaciones a los empleados.
-
-
+Puede hacer reportes y gráficos con la información que ve. Esto podría ser útil para el supervisor, RRHH, etc.
 
 */
 
@@ -50,7 +43,7 @@ const getData = async (): Promise<DataType[]> => {//pedir los datos
   return await response.json();//respuesta en formato json
 };
 
-export const Administrador = () => {
+export const AnalistaDeDatos = () => {
   return (
     <>
       <NavBar items={navItemsAdministrador}/>
