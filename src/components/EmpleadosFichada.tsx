@@ -15,7 +15,7 @@ export const EmpleadoFichada = ({ empleado }: EmpleadoItemProps) => {
     <div className="empleado-item">
       <span className="icono-perfil">👤</span>
       <span>{empleado.nombre}</span>
-      <NavLink to="/supervisor/permitir-fichada" >Fichada exepcional</NavLink>
+      <NavLink to="/supervisor/permitir-fichada" >Fichada manual</NavLink>
     </div>
   );
 };

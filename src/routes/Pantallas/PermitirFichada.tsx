@@ -7,18 +7,10 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 // Definimos el tipo de datos personales
 interface PersonalDataType {
-  nombre: string;
-  apellido: string;
-  dni: string;
-  fechaNacimiento: string;
-  email: string;
-  telefono: string;
-  calle: string;
-  numero: string; 
-  nacionalidad: string;
-  provincia: string;
-  localidad: string; 
-  estado: string;
+  fecha: string;
+  hora_ingreso: string;
+  hora_egreso: string;
+  motivo: string;
 }
 
 export const PermitirFichada = () => {
@@ -28,18 +20,10 @@ export const PermitirFichada = () => {
 
   // Estado para los datos personales, tipado con la interfaz PersonalDataType
   const [personalData, setPersonalData] = useState<PersonalDataType>({
-    nombre: "Lautaro Emmanuel",
-      apellido: "Moreno",
-      dni: "12345678",
-      fechaNacimiento: "01/04/2002",
-      email: "lemoreno2002@gmail.com",
-      telefono: "1234567890",
-      calle: "Calle Falsa",
-      numero: "123",
-      nacionalidad: "Argentina",
-      provincia: "Buenos Aires",
-      localidad: "San Miguel",
-      estado: "Soltero"
+    fecha: "01/01/2025",
+    hora_ingreso: "08:00",
+    hora_egreso: "16:00",
+    motivo: "Error de reconocimiento facial",
   });
 
   // Función para manejar los cambios en los inputs
@@ -52,11 +36,11 @@ export const PermitirFichada = () => {
   };
 
   // Función para guardar los cambios
-  const handleSave = () => {
-    alert('Vas a permitir que el empleado realice una fichada exepcional')
+  const handleSave = () => {    
+    alert('Vas a permitir que el empleado realice una fichada manual')
     
     //Vuelve a la lista de empleados
-    navegar('/supervisor/fichada-exepcional');
+    navegar('/supervisor/fichada-manual');
   };
 
   // Función para cancelar y revertir los cambios
@@ -64,182 +48,79 @@ export const PermitirFichada = () => {
     setIsEditable(true);
     // Volver a los datos iniciales
     setPersonalData({
-      nombre: "Lautaro Emmanuel",
-      apellido: "Moreno",
-      dni: "12345678",
-      fechaNacimiento: "01/04/2002",
-      email: "lemoreno2002@gmail.com",
-      telefono: "1234567890",
-      calle: "Calle Falsa",
-      numero: "123",
-      nacionalidad: "Argentina",
-      provincia: "Buenos Aires",
-      localidad: "San Miguel",
-      estado: "Soltero"
+      fecha: "01/01/2025",
+      hora_ingreso: "08:00",
+      hora_egreso: "16:00",
+      motivo: "Error de reconocimiento facial",
     });
+    alert('Vas a cancelar la fichada manual')
+    
+    //Vuelve a la lista de empleados
+    navegar('/supervisor/fichada-manual');
   };
 
   return (
     <div className="container-personal-data">
       <div className="personal-data">
-        <h2 className="title">Información personal</h2>
+        <h2 className="title">Fichada Manual</h2>
         <div className="data-container">
           <div className="data-group">
             <div className="data-item">
-              <p className="data-item--label">Nombre/s:</p>
+              <p className="data-item--label">Fecha:</p>
               <input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
-                name="nombre"
-                value={personalData.nombre}
+                name="fecha"
+                value={personalData.fecha}
                 onChange={handleChange}
-                readOnly={!isEditable}
+                readOnly={isEditable}
               />
             </div>
             <div className="data-item">
-              <p className="data-item--label">Apellido/s</p>
+              <p className="data-item--label">Hora de ingreso:</p>
               <input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
-                name="apellido"
-                value={personalData.apellido}
+                name="hora_ingreso"
+                value={personalData.hora_ingreso}
                 onChange={handleChange}
-                readOnly={!isEditable}
+                readOnly={isEditable}
               />
             </div>
             <div className="data-item">
-              <p className="data-item--label">DNI:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="number"
-                name="dni"
-                value={personalData.dni}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Fecha de nacimiento</p>
+              <p className="data-item--label">Hoar de egreso:</p>
               <input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
-                name="fechaNacimiento"
-                value={personalData.fechaNacimiento}
+                name="hora_egreso"
+                value={personalData.hora_egreso}
                 onChange={handleChange}
-                readOnly={!isEditable}
+                readOnly={isEditable}
+              />
+            </div>
+            <div className="data-item">
+              <p className="data-item--label">Motivo</p>
+              <input
+                className={`data-item--value ${isEditable ? "editable" : ""}`}
+                type="text"
+                name="motivo"
+                value={personalData.motivo}
+                onChange={handleChange}
+                readOnly={isEditable}
               />
             </div>
           </div>
 
-          <div className="data-group">
-            <div className="data-item">
-              <p className="data-item--label">Email:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="email"
-                name="email"
-                value={personalData.email}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Teléfono:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="tel"
-                name="telefono"
-                value={personalData.telefono}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Calle:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="direccion"
-                value={personalData.calle}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Número:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="nacionalidad"
-                value={personalData.numero}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">País de nacimiento:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="nacionalidad"
-                value={personalData.nacionalidad}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Provincia:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="nacionalidad"
-                value={personalData.provincia}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Localidad:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="nacionalidad"
-                value={personalData.localidad}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Estado:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="estado"
-                value={personalData.estado}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-          </div>
+          
         </div>
         <div className="button-container">
           <button className="save-button" onClick={handleSave}>
-                Permitir
-            </button>
-          {/*{!isEditable ? (
-            <button className="edit-button" onClick={() => setIsEditable(true)}>
-              Modificar Información
-            </button>
-          ) : (
-            <>
-              <button className="save-button" onClick={handleSave}>
-                Guardar
-              </button>
-              <button className="cancel-button" onClick={handleCancel}>
-                Cancelar
-              </button>
-            </>
-          )}*/}
+            Permitir
+          </button>
+          <button className="cancel-button" onClick={handleCancel}>
+            Cancelar
+          </button>
+          
         </div>
       </div>
     </div>

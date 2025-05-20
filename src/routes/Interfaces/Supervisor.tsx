@@ -6,7 +6,7 @@ const navItemsAdministrador =  [
   { label: "Confirmación", icon: "fa-solid fa-square-check", path: "confirmacion" },
   { label: "Datos laborales", icon: "fa-solid fa-user-tie", path: "datosLaborales" },
   { label: "Asistencias", icon: "fa-regular fa-id-card", path: "asistencias" },
-  { label: "Fichada exepcional", icon: "fa-regular fa-id-card", path: "fichada-exepcional" },
+  { label: "Fichada manual", icon: "fa-regular fa-id-card", path: "fichada-manual" },
   { label: "Cerrar sesión", icon: "fa-solid fa-lock", path: "/login" },
 ];
 

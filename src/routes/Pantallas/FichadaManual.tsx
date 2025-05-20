@@ -19,7 +19,7 @@ const getData = async (): Promise<Empleado[]> => {//pedir los datos
   return await response.json();//respuesta en formato json
 };
 
-export const FichadaExepcional = () => {
+export const FichadaManual = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
   const [busqueda, setBusqueda] = useState<string>('');
 
