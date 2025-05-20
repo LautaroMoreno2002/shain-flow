@@ -16,6 +16,7 @@ import { Supervisor } from './routes/Interfaces/Supervisor'
 import { AnalistaDeDatos } from './routes/Interfaces/AnalistaDeDatos'
 import { FichadaManual } from './routes/Pantallas/FichadaManual'
 import { PermitirFichada } from './routes/Pantallas/PermitirFichada'
+import { GraficoDeBarra } from './components/GarficoDeBarra'
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
           <Route path="confirmacion" element={<Confirmacion />}></Route>
           <Route path="fichada-manual" element={<FichadaManual />}></Route>
           <Route path="permitir-fichada" element={<PermitirFichada />}></Route>
+          <Route path="reportes" element={<GraficoDeBarra />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
     </Routes>

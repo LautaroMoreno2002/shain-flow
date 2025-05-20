@@ -7,6 +7,7 @@ const navItemsAdministrador =  [
   { label: "Datos laborales", icon: "fa-solid fa-user-tie", path: "datosLaborales" },
   { label: "Asistencias", icon: "fa-regular fa-id-card", path: "asistencias" },
   { label: "Fichada manual", icon: "fa-regular fa-id-card", path: "fichada-manual" },
+  { label: "Reprtes", icon: "fa-regular fa-id-card", path: "reportes" },
   { label: "Cerrar sesión", icon: "fa-solid fa-lock", path: "/login" },
 ];
 
