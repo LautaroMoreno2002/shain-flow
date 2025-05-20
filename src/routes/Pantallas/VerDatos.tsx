@@ -1,87 +1,73 @@
-import React, { useState } from 'react';
-import '../../estilos/datos-personales.css'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import '../../estilos/datos-personales.css';
 
-// Definimos el tipo de datos personales
 interface PersonalDataType {
-  nombre: string;
-  apellido: string;
-  dni: string;
-  fechaNacimiento: string;
-  email: string;
-  telefono: string;
-  calle: string;
-  numero: string; 
-  nacionalidad: string;
-  provincia: string;
-  localidad: string; 
-  estado: string;
+  nombre: string,
+  apellido: string,
+  tipo_identificacion: string,
+  numero_identificacion: string,
+  fecha_nacimiento: string,
+  correo_electronico: string,
+  telefono: string,
+  calle: string,
+  numero_calle: string,
+  localidad: string,
+  nacionalidad: string,
+  estado_civil: string
 }
 
-const API_URL = 'https://jsonplaceholder.typicode.com/posts';//conectar con la API
-
-// GET request
-const getData = async (): Promise<PersonalDataType[]> => {//pedir los datos
-  const response = await fetch(API_URL);
-  if (!response.ok) {//control de errores
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return await response.json();//respuesta en formato json
-};
+const API_URL = 'https://tpp-g2-adp-1.onrender.com/empleados/56789012';
 
 export const VerDatos = () => {
-  // Estado para determinar si los campos son editables
-  const [isEditable, setIsEditable] = useState<boolean>(false);
-
-  // Estado para los datos personales, tipado con la interfaz PersonalDataType
+  const [isEditable, setIsEditable] = useState(false);
   const [personalData, setPersonalData] = useState<PersonalDataType>({
-    nombre: "Lautaro Emmanuel",
-      apellido: "Moreno",
-      dni: "12345678",
-      fechaNacimiento: "01/04/2002",
-      email: "lemoreno2002@gmail.com",
-      telefono: "1234567890",
-      calle: "Calle Falsa",
-      numero: "123",
-      nacionalidad: "Argentina",
-      provincia: "Buenos Aires",
-      localidad: "San Miguel",
-      estado: "Soltero"
+    nombre: "",
+    apellido: "",
+    tipo_identificacion: "",
+    numero_identificacion: "",
+    fecha_nacimiento: "",
+    correo_electronico: "",
+    telefono: "",
+    calle: "",
+    numero_calle: "",
+    localidad: "",
+    nacionalidad: "",
+    estado_civil: ""
   });
 
-  // Función para manejar los cambios en los inputs
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(API_URL);
+      console.log(response);
+      setPersonalData(response.data);
+    } catch (error) {
+      console.error('Error al obtener los datos:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setPersonalData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setPersonalData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Función para guardar los cambios
-  const handleSave = () => {
-    setIsEditable(false);
-    // podrías agregar lógica para guardar los cambios, por ejemplo, en una base de datos
-    console.log("Datos guardados:", personalData);
+  const handleSave = async () => {
+    try {
+      await axios.put(API_URL, personalData);
+      console.log('Datos actualizados correctamente.');
+      setIsEditable(false);
+    } catch (error) {
+      console.error('Error al guardar los cambios:', error);
+    }
   };
 
-  // Función para cancelar y revertir los cambios
   const handleCancel = () => {
     setIsEditable(false);
-    // Volver a los datos iniciales
-    setPersonalData({
-      nombre: "Lautaro Emmanuel",
-      apellido: "Moreno",
-      dni: "12345678",
-      fechaNacimiento: "01/04/2002",
-      email: "lemoreno2002@gmail.com",
-      telefono: "1234567890",
-      calle: "Calle Falsa",
-      numero: "123",
-      nacionalidad: "Argentina",
-      provincia: "Buenos Aires",
-      localidad: "San Miguel",
-      estado: "Soltero"
-    });
+    fetchData(); // ← vuelve a cargar los datos desde la API
   };
 
   return (
@@ -90,143 +76,52 @@ export const VerDatos = () => {
         <h2 className="title">Información personal</h2>
         <div className="data-container">
           <div className="data-group">
-            <div className="data-item">
-              <p className="data-item--label">Nombre/s:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="nombre"
-                value={personalData.nombre}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Apellido/s</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="apellido"
-                value={personalData.apellido}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">DNI:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="number"
-                name="dni"
-                value={personalData.dni}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Fecha de nacimiento</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="fechaNacimiento"
-                value={personalData.fechaNacimiento}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
+            {[
+              { label: 'Nombre/s', name: 'nombre' },
+              { label: 'Apellido/s', name: 'apellido' },
+              { label: 'DNI', name: 'numero_identificacion' },
+              { label: 'Fecha de nacimiento', name: 'fecha_nacimiento' },
+            ].map(({ label, name }) => (
+              <div className="data-item" key={name}>
+                <p className="data-item--label">{label}:</p>
+                <input
+                  className={`data-item--value ${isEditable ? 'editable' : ''}`}
+                  type="text"
+                  name={name}
+                  value={(personalData as any)[name]}
+                  onChange={handleChange}
+                  readOnly={!isEditable}
+                />
+              </div>
+            ))}
           </div>
 
           <div className="data-group">
-            <div className="data-item">
-              <p className="data-item--label">Email:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="email"
-                name="email"
-                value={personalData.email}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Teléfono:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="tel"
-                name="telefono"
-                value={personalData.telefono}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Calle:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="direccion"
-                value={personalData.calle}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Número:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="nacionalidad"
-                value={personalData.numero}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">País de nacimiento:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="nacionalidad"
-                value={personalData.nacionalidad}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Provincia:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="nacionalidad"
-                value={personalData.provincia}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Localidad:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="nacionalidad"
-                value={personalData.localidad}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Estado:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="estado"
-                value={personalData.estado}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
+            {[
+              { label: 'Email', name: 'correo_electronico', type: 'email' },
+              { label: 'Teléfono', name: 'telefono', type: 'tel' },
+              { label: 'Calle', name: 'calle' },
+              { label: 'Número', name: 'numero_calle' },
+              { label: 'País de nacimiento', name: 'nacionalidad' },
+              { label: 'Provincia', name: 'provincia' },
+              { label: 'Localidad', name: 'localidad' },
+              { label: 'Estado', name: 'estado_civil' },
+            ].map(({ label, name, type = 'text' }) => (
+              <div className="data-item" key={name}>
+                <p className="data-item--label">{label}:</p>
+                <input
+                  className={`data-item--value ${isEditable ? 'editable' : ''}`}
+                  type={type}
+                  name={name}
+                  value={(personalData as any)[name]}
+                  onChange={handleChange}
+                  readOnly={!isEditable}
+                />
+              </div>
+            ))}
           </div>
         </div>
+
         <div className="button-container">
           {!isEditable ? (
             <button className="edit-button" onClick={() => setIsEditable(true)}>
