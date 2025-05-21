@@ -13,14 +13,14 @@ const COLORS = ['#ce93d8', '#5c6bc0', '#b39ddb', '#4dd0e1', '#f48fb1', '#d500f9'
 
 export const GraficoDeTorta = () => {
   return (
-    <div style={{ width: '100%', height: 400}}>
+    <div style={{ width: '100%', height: 500}}>
         <ResponsiveContainer>
             <PieChart>
                 <Pie
                     dataKey="value" 
                     data={data}
-                    innerRadius={60}
-                    outerRadius={85}
+                    innerRadius={200}
+                    outerRadius={250}
                     fill="#82ca9d"
                 >
                    {data.map((entry, index) => (
