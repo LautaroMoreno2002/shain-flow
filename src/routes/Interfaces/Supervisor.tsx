@@ -11,7 +11,6 @@ const navItemsAdministrador =  [
   { label: "Cerrar sesión", icon: "fa-solid fa-lock", path: "/login" },
 ];
 
-
 export const Supervisor = () => {
   return (
     <>

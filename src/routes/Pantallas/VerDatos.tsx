@@ -78,7 +78,7 @@ export const VerDatos = () => {
             {[
               { label: 'Nombre/s', name: 'nombre' },
               { label: 'Apellido/s', name: 'apellido' },
-              { label: 'DNI', name: 'numero_identificacion' },
+              { label: personalData.tipo_identificacion, name: 'numero_identificacion' },
               { label: 'Fecha de nacimiento', name: 'fecha_nacimiento' },
             ].map(({ label, name }) => (
               <div className="data-item" key={name}>

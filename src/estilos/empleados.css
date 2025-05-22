@@ -1,8 +1,12 @@
 .admin-container {
-  padding: 1rem;
+  padding: 3rem;
   font-family: 'Segoe UI', sans-serif;
   background-color: #fefaff;
-  min-height: 100vh;
+  max-height: fit-content;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  max-width: 1000px;
 }
 
 .admin-title {
