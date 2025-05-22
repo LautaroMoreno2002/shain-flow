@@ -18,6 +18,7 @@ import { FichadaManual } from './routes/Pantallas/FichadaManual'
 import { PermitirFichada } from './routes/Pantallas/PermitirFichada'
 import { GraficoDeBarra } from './components/GarficoDeBarra'
 import { GraficoDeTorta } from './components/GraficoDeTorta'
+import { Reportes } from './routes/Pantallas/Reportes'
 
 function App() {
   return (
@@ -64,7 +65,8 @@ function App() {
           <Route path="fichada-manual" element={<FichadaManual />}></Route>
           <Route path="permitir-fichada" element={<PermitirFichada />}></Route>
           {/*<Route path="reportes" element={<GraficoDeBarra />}></Route>*/}
-          <Route path="reportes" element={<GraficoDeTorta />}></Route>
+          {/*<Route path="reportes" element={<GraficoDeTorta />}></Route>*/}
+          <Route path="reportes" element={<Reportes />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
     </Routes>

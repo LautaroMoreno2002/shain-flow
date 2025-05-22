@@ -1,26 +1,26 @@
 import { PieChart, ResponsiveContainer, Pie, Tooltip, Cell } from 'recharts'
 
 const data = [
-    { name: "Group A", value: 2400 },
-    { name: 'Group B', value: 4567 },
-    { name: 'Group C', value: 1398 },
-    { name: 'Group D', value: 9800 },
-    { name: 'Group E', value: 3908 },
-    { name: 'Group F', value: 4800 },
+    { name: "Asistencia", value: 94 },
+    { name: 'Inacistencia', value: 8 },
+    { name: "Tardanzas", value: 4 },
+    { name: 'Salida anticipada', value: 16 },
 ]
 
-const COLORS = ['#ce93d8', '#5c6bc0', '#b39ddb', '#4dd0e1', '#f48fb1', '#d500f9']
+const COLORS = ['#20c997', '#dc3545', '#fd7e14', '#ffc107', '#f48fb1', '#d500f9']
 
 export const GraficoDeTorta = () => {
   return (
-    <div style={{ width: '100%', height: 500}}>
+    <div style={{ width: '100%', height: 300,}}>
         <ResponsiveContainer>
             <PieChart>
                 <Pie
+                    startAngle={180}
+                    endAngle={0}
                     dataKey="value" 
                     data={data}
-                    innerRadius={200}
-                    outerRadius={250}
+                    innerRadius={100}
+                    outerRadius={150}
                     fill="#82ca9d"
                 >
                    {data.map((entry, index) => (
