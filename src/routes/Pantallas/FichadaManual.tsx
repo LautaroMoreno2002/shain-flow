@@ -2,67 +2,67 @@ import { useState, useEffect } from 'react';
 import EmpleadoFichada from '../../components/EmpleadosFichada';
 import '../../estilos/empleados.css';
 import { NavLink } from "react-router-dom";
+import { listarEmpleados } from '../../services/api';//conectar con la API
 
-interface Empleado {
-  id: number;
+export interface Empleado {
+  id_empleado: number;
+  numero_identificacion: string;
   nombre: string;
+  apellido: string;
+  correo: string;
+  telefono: string;
 }
-
-const API_URL = 'https://jsonplaceholder.typicode.com/posts';
-
-// GET request
-const getData = async (): Promise<Empleado[]> => {//pedir los datos
-  const response = await fetch(API_URL);
-  if (!response.ok) {//control de errores
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return await response.json();//respuesta en formato json
-};
 
 export const FichadaManual = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
   const [busqueda, setBusqueda] = useState<string>('');
 
   // Simulación de datos (temporal)
-  const empleadosSimulados: Empleado[] = Array.from({ length: 12 }, (_, i) => ({
-    id: i + 1,
-    nombre: `EMPLEADO ${i + 1}`,
-  }));
+  // const empleadosSimulados: Empleado[] = Array.from({ length: 12 }, (_, i) => ({
+  //   id: i + 1,
+  //   nombre: `EMPLEADO ${i + 1}`,
+  // }));
 
   useEffect(() => {
-    // TODO: Descomenta esto cuando tengas el backend funcionando
-    /*
-    fetch('https://tu-api.com/empleados')
-      .then(res => res.json())
-      .then(data => setEmpleados(data))
-      .catch(err => console.error('Error al cargar empleados:', err));
-    */
-
+      const cargarEmpleados = async () => {
+        try {         
+          setEmpleados(await listarEmpleados());
+          console.log(await listarEmpleados());
+        } catch (error) {
+          console.error('Error al cargar empleados:', error);
+        }
+      };
+      cargarEmpleados();
     // Temporal
-    setEmpleados(empleadosSimulados);
+    // setEmpleados(empleadosSimulados);
   }, []);
 
-  const empleadosFiltrados = empleados.filter((emp) =>
-    emp.nombre.toLowerCase().includes(busqueda.toLowerCase())
+   // FILTRO: busca por nombre, apellido o número de identificación
+   const empleadosFiltrados = empleados.filter((emp) =>
+    `${emp.nombre} ${emp.apellido} ${emp.numero_identificacion}`
+      .toLowerCase()
+      .includes(busqueda.toLowerCase())
   );
 
   return (
     <div className="admin-container">
       <h2 className="admin-title">👥 Empleados:</h2>
       <div className="busqueda-container">
-        <input
+      <input
           type="text"
-          placeholder="EMPLEADO 500...."
+          placeholder="Buscar empleado por nombre, apellido o ID..."
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
         />
         <span className="icono-busqueda">🔍</span>
       </div>
       <div className="lista-empleados">
-        {empleadosFiltrados.map((empleado) => (
-          <EmpleadoFichada key={empleado.id} empleado={empleado} />
+      {empleadosFiltrados.map((empleado) => (
+          <EmpleadoFichada key={empleado.id_empleado} empleado={empleado} />
         ))}
       </div>
     </div>
   );
 }
+
+
