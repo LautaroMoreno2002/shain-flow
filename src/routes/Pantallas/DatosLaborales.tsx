@@ -1,4 +1,5 @@
 import '../../estilos/datosLaborales.css'
+import axios from 'axios';
 
 interface DataType {
   id: number;
@@ -6,15 +7,20 @@ interface DataType {
   body: string;
 }
 
-const API_URL = 'https://jsonplaceholder.typicode.com/posts';//conectar con la API
+const API_URL = 'https://tpp-g2-adp-1.onrender.com/';//conectar con la API
 
-// GET request
-const getData = async (): Promise<DataType[]> => {//pedir los datos
-  const response = await fetch(API_URL);
-  if (!response.ok) {//control de errores
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return await response.json();//respuesta en formato json
+// Instancia de Axios configurada
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// 2. Listar empleados
+export const listarEmpleados = async () => {
+  const response = await api.get('/empleados/');
+  return response.data;
 };
 
 export const DatosLaboralesDescrip = () => {

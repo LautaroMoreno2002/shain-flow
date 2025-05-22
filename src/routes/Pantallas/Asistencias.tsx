@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { datosLabPorId } from "../../services/api";
 import "../../estilos/asistencias.css";
 
 const mes = new Date().getMonth() + 1;
 const anio = new Date().getFullYear();
-const ID_EMPLEADO = 2;
-
-const API_URL = `https://tpp-g2-adp-1.onrender.com/registros/${ID_EMPLEADO}?año=${anio}&mes=${mes}`;
 
 interface RegistroAsistencia {
   id_registro: number;
@@ -47,18 +44,38 @@ export const Asistencias = () => {
   useEffect(() => {
     const fetchAsistencias = async () => {
       try {
-        const response = await axios.get(API_URL);
-        console.log(response);
-        
-        setAsistencias(response.data);
-        console.log(asistencias);
-        
+        const datosCrudos = await datosLabPorId('2');
+  
+        // Adaptar los arrays al formato del estado
+        const asistenciasAdaptadas: RegistroAsistencia[] = datosCrudos.map((registro: any[]) => ({
+          id_registro: registro[0],
+          id_empleado: registro[1],
+          fecha: registro[2],
+          horaEntrada: registro[3],
+          horaSalida: registro[4],
+          estado: registro[5],
+          horasExtras: registro[6]
+        }));
+  
+        setAsistencias(asistenciasAdaptadas);
       } catch (error) {
         console.error("Error al obtener las asistencias:", error);
       }
     };
+  
     fetchAsistencias();
   }, []);
+
+  const clasesEstado: Record<string, string> = {
+    'Completa': 'completa',
+    'Incompleta': 'incompleta',
+    'Falta': 'falta',
+    'Licencia médica': 'licencia-medica',
+    'Vacaciones': 'vacaciones',
+    'Suspensión': 'suspension',
+    'No laboral': 'no-laboral',
+    'Otra': 'otra'
+  };
 
   return (
     <div className="layout">
@@ -91,6 +108,7 @@ export const Asistencias = () => {
             </thead>
             <tbody>
             {asistencias.map((asistencia, index) => {
+              
   const { fecha, horaEntrada, horaSalida, estado, horasExtras } = asistencia;
   const horasTrabajadas = calcularHorasTrabajadas(horaEntrada, horaSalida);
 
@@ -98,10 +116,6 @@ export const Asistencias = () => {
   const partesFecha = fecha?.split("-");
   const dia = partesFecha?.length === 3 ? parseInt(partesFecha[2]) : 0;
   const nombreDia = obtenerNombreDia(dia);
-  console.log(dia);
-  console.log(nombreDia);
-  
-  
 
   return (
     <tr key={index}>
@@ -111,18 +125,7 @@ export const Asistencias = () => {
       <td>{horaSalida}</td>
       <td>{horasTrabajadas}</td>
       <td>{horasExtras}</td>
-      <td className={
-        estado === 'Completada' ? 'completa' :
-        estado === 'Incompleta' ? 'incompleta' :
-        estado === 'Falta' ? 'falta' :
-        estado === 'Licencia médica' ? 'licencia-medica' :
-        estado === 'Vacaciones' ? 'vacaciones' :
-        estado === 'Suspensión' ? 'suspension' :
-        estado === 'No laboral' ? 'no-laboral' :
-        estado === 'Otra' ? 'otra' : ''
-      }>
-        {estado}
-      </td>
+      <td className={clasesEstado[estado] || ''}>{estado}</td>
     </tr>
   );
 })}

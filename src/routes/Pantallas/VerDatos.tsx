@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../estilos/datos-personales.css';
+import { actualizarDatosEmpleado, obtenerEmpleadoPorIdentificacion } from '../../services/api';
 
-interface PersonalDataType {
+export interface PersonalDataType {
+  id: string,
   nombre: string,
   apellido: string,
   tipo_identificacion: string,
@@ -17,11 +19,10 @@ interface PersonalDataType {
   estado_civil: string
 }
 
-const API_URL = 'https://tpp-g2-adp-1.onrender.com/empleados/56789012';
-
 export const VerDatos = () => {
   const [isEditable, setIsEditable] = useState(false);
   const [personalData, setPersonalData] = useState<PersonalDataType>({
+    id: "",
     nombre: "",
     apellido: "",
     tipo_identificacion: "",
@@ -38,9 +39,7 @@ export const VerDatos = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(API_URL);
-      console.log(response);
-      setPersonalData(response.data);
+      setPersonalData(await obtenerEmpleadoPorIdentificacion('56789012'));
     } catch (error) {
       console.error('Error al obtener los datos:', error);
     }
@@ -57,7 +56,7 @@ export const VerDatos = () => {
 
   const handleSave = async () => {
     try {
-      await axios.put(API_URL, personalData);
+      await actualizarDatosEmpleado(personalData.id, personalData);
       console.log('Datos actualizados correctamente.');
       setIsEditable(false);
     } catch (error) {

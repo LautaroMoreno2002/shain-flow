@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import EmpleadoItem from '../../components/EmpleadoItem';
 import '../../estilos/empleados.css';
 import { NavLink } from "react-router-dom";
-import axios from 'axios';
+import { listarEmpleados } from '../../services/api';//conectar con la API
 
 export interface Empleado {
   id_empleado: number;
@@ -12,37 +12,6 @@ export interface Empleado {
   correo: string;
   telefono: string;
 }
-
-// interface DataType {
-//   id: number;
-//   title: string;
-//   body: string;
-// }
-
-const API_URL = 'https://tpp-g2-adp-1.onrender.com/';//conectar con la API
-
-// Instancia de Axios configurada
-const api = axios.create({
-  baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-// 1. Listar empleados
-export const listarEmpleados = async () => {
-  const response = await api.get('/empleados/');
-  return response.data;
-};
-
-// GET request
-// const getData = async (): Promise<DataType[]> => {//pedir los datos
-//   const response = await fetch(`${API_URL}/empleados`);
-//   if (!response.ok) {//control de errores
-//     throw new Error(`HTTP error! status: ${response.status}`);
-//   }
-//   return await response.json();//respuesta en formato json
-// };
 
 export const Empleados = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
@@ -55,17 +24,10 @@ export const Empleados = () => {
   // }));
 
   useEffect(() => {
-    // TODO: Descomenta esto cuando tengas el backend funcionando
-    // fetch(`${API_URL}/empleados`)
-      // .then(res => res.json())
       const cargarEmpleados = async () => {
-        try {
-          const data = await listarEmpleados();
-          console.log(data);
-          
-          setEmpleados(data);
-          console.log(empleados);
-          
+        try {         
+          setEmpleados(await listarEmpleados());
+          console.log(await listarEmpleados());
         } catch (error) {
           console.error('Error al cargar empleados:', error);
         }
@@ -75,24 +37,27 @@ export const Empleados = () => {
     // setEmpleados(empleadosSimulados);
   }, []);
 
-  // const empleadosFiltrados = empleados.filter((emp) =>
-  //   emp.nombre.toLowerCase().includes(busqueda.toLowerCase())
-  // );
+   // FILTRO: busca por nombre, apellido o número de identificación
+   const empleadosFiltrados = empleados.filter((emp) =>
+    `${emp.nombre} ${emp.apellido} ${emp.numero_identificacion}`
+      .toLowerCase()
+      .includes(busqueda.toLowerCase())
+  );
 
   return (
     <div className="admin-container">
       <h2 className="admin-title">👥 Empleados:</h2>
       <div className="busqueda-container">
-        <input
+      <input
           type="text"
-          placeholder="EMPLEADO 500...."
+          placeholder="Buscar empleado por nombre, apellido o ID..."
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
         />
         <span className="icono-busqueda">🔍</span>
       </div>
       <div className="lista-empleados">
-        {empleados.map((empleado) => (
+      {empleadosFiltrados.map((empleado) => (
           <EmpleadoItem key={empleado.id_empleado} empleado={empleado} />
         ))}
         <NavLink to="/Administrador/agregarEmpleado">Agregar empleado</NavLink>

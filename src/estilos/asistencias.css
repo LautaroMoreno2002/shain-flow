@@ -22,7 +22,7 @@
 
   & .asistencias {
     box-shadow: 0 0 5px rgba(0, 0, 0);
-    height: 550px;
+    max-height: 550px;
     overflow-y: auto;
     margin: 0 3em;
   }
@@ -87,14 +87,17 @@ th, td {
 .completa {
   background-color: #d4edda;
   color: #155724;
+  font-weight: bold;
 }
 .incompleta {
   background-color: #ebd405;
   color: #6e6702;
+  font-weight: bold;
 }
 .falta, .licencia-medica, .vacaciones, .suspension, .no-laboral, .otra {
   background-color: #ff7c7c;
   color: #a00303;
+  font-weight: bold;
 }
 @media screen and (max-width: 900px) {
   .cont-asistencias {
