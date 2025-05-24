@@ -1,65 +1,70 @@
+import { useEffect, useState } from 'react'
 import '../../estilos/datosLaborales.css'
-import axios from 'axios';
+import { datosLabPorId } from '../../services/api';
 
-interface DataType {
-  id: number;
-  title: string;
-  body: string;
+interface DatosLaborales {
+  departamento: string;
+  puesto: string;
+  turno: string;
+  horario_entrada: string;
+  horario_salida: string;
+  fecha_ingreso: string;
+  tipo_contrato: string;
 }
 
-const API_URL = 'https://tpp-g2-adp-1.onrender.com/';//conectar con la API
-
-// Instancia de Axios configurada
-const api = axios.create({
-  baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-// 2. Listar empleados
-export const listarEmpleados = async () => {
-  const response = await api.get('/empleados/');
-  return response.data;
-};
-
 export const DatosLaboralesDescrip = () => {
+  const [datos, setDatos] = useState<DatosLaborales | null>(null);
+
+  useEffect(() => {
+    const fetchDatos = async () => {
+      try {
+        const response = await datosLabPorId('1'); // debe retornar el JSON
+        setDatos(response);
+      } catch (error) {
+        console.error("Error al obtener los datos laborales:", error);
+      }
+    };
+
+    fetchDatos();
+  }, []);
+
   return (
-    <div className="cont-datos-laborales">  
+    <div className="cont-datos-laborales">
       <div className="datos">
         <h2 className="titulo">Datos laborales</h2>
         <div className="cont-datos">
           <div className="cont-datos__item">
             <p className="cont-datos__item--label">Departamento:</p>
-            <p className="cont-datos__item--value">IT</p>
+            <p className="cont-datos__item--value">{datos?.departamento || "—"}</p>
           </div>
           <div className="cont-datos__item">
             <p className="cont-datos__item--label">Puesto:</p>
-            <p className="cont-datos__item--value">Desarrollador</p>
+            <p className="cont-datos__item--value">{datos?.puesto || "—"}</p>
           </div>
           <div className="cont-datos__item">
             <p className="cont-datos__item--label">Turno:</p>
-            <p className="cont-datos__item--value">Mañana</p>
+            <p className="cont-datos__item--value">{datos?.turno || "—"}</p>
           </div>
           <div className="cont-datos__item">
             <p className="cont-datos__item--label">Horario de entrada:</p>
-            <p className="cont-datos__item--value">08:00</p>
+            <p className="cont-datos__item--value">{datos?.horario_entrada?.slice(0,5) || "—"}</p>
             <p className="cont-datos__item--label">Horario de salida:</p>
-            <p className="cont-datos__item--value">16:00</p>
-        </div>
-        <div className="cont-datos__item">
+            <p className="cont-datos__item--value">{datos?.horario_salida?.slice(0,5) || "—"}</p>
+          </div>
+          <div className="cont-datos__item">
             <p className="cont-datos__item--label">Fecha de ingreso:</p>
-            <p className="cont-datos__item--value">01/01/2022</p>
+            <p className="cont-datos__item--value">{datos?.fecha_ingreso || "—"}</p>
           </div>
           <div className="cont-datos__item">
             <p className="cont-datos__item--label">Tipo de contrato:</p>
-            <p className="cont-datos__item--value">Indefinido</p>
+            <p className="cont-datos__item--value">{datos?.tipo_contrato || "—"}</p>
           </div>
+        </div>
       </div>
     </div>
-  </div>
-  )
-}
+  );
+};
+
 
 export const UltRecibos = () => {
   return (

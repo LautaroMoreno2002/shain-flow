@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { datosLabPorId } from "../../services/api";
+import { datosLabPorId, registroAsistenciasPorId } from "../../services/api";
 import "../../estilos/asistencias.css";
 
 const mes = new Date().getMonth() + 1;
@@ -44,18 +44,22 @@ export const Asistencias = () => {
   useEffect(() => {
     const fetchAsistencias = async () => {
       try {
-        const datosCrudos = await datosLabPorId('2');
+        const datosCrudos = await registroAsistenciasPorId('1');
   
-        // Adaptar los arrays al formato del estado
-        const asistenciasAdaptadas: RegistroAsistencia[] = datosCrudos.map((registro: any[]) => ({
-          id_registro: registro[0],
-          id_empleado: registro[1],
-          fecha: registro[2],
-          horaEntrada: registro[3],
-          horaSalida: registro[4],
-          estado: registro[5],
-          horasExtras: registro[6]
-        }));
+        const asistenciasAdaptadas: RegistroAsistencia[] = datosCrudos.map((registro: any[]) => {
+          const horaEntrada = registro[4]?.slice(0, 5) || "---"; // "HH:mm"
+          const horaSalida = registro[5]?.slice(0, 5) || "---";
+  
+          return {
+            id_registro: registro[0],
+            id_empleado: registro[1],
+            fecha: registro[2],
+            horaEntrada,
+            horaSalida,
+            estado: registro[6],
+            horasExtras: registro[7]?.toString() || "0"
+          };
+        });
   
         setAsistencias(asistenciasAdaptadas);
       } catch (error) {
@@ -120,7 +124,7 @@ export const Asistencias = () => {
   return (
     <tr key={index}>
       <td>{fecha}</td>
-      <td>{nombreDia}</td>
+      <td>{nombreDia.toLocaleUpperCase()}</td>
       <td>{horaEntrada}</td>
       <td>{horaSalida}</td>
       <td>{horasTrabajadas}</td>

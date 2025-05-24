@@ -39,7 +39,7 @@ export const VerDatos = () => {
 
   const fetchData = async () => {
     try {
-      setPersonalData(await obtenerEmpleadoPorIdentificacion('56789012'));
+      setPersonalData(await obtenerEmpleadoPorIdentificacion('45893639'));
     } catch (error) {
       console.error('Error al obtener los datos:', error);
     }
@@ -112,7 +112,7 @@ export const VerDatos = () => {
                   className={`data-item--value ${isEditable ? 'editable' : ''}`}
                   type={type}
                   name={name}
-                  value={(personalData as any)[name]}
+                  value={(personalData as any)[name] || ""}
                   onChange={handleChange}
                   readOnly={!isEditable}
                 />

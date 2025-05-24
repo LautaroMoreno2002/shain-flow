@@ -120,35 +120,11 @@ export const AgregarEmpleado = () => {
       setErrorResponse('Ocurrió un error en la conexión');
     }
   }
-
-interface DataType {
-  id: number;
-  title: string;
-  body: string;
-}
-
-const API_URL = 'https://jsonplaceholder.typicode.com/posts';
-  
-  // POST request
-const postData = async (data: Omit<DataType, 'id'>): Promise<DataType> => {//metodo post para insertar datos
-  const response = await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return await response.json();
-};
-
   return (
       <form onSubmit={handleSubmit} className="signup-form">
-        {/*<div className="logo-container">
+        {/* <div className="logo-container">
           <img src="./logo_producto.png" alt="ShainFlow Logo" className="logo" />
-        </div>*/}
+        </div> */}
 
         <h3>
             Agregar empleado:
