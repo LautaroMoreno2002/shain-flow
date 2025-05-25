@@ -17,8 +17,8 @@ export const Empleados = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
   const [busqueda, setBusqueda] = useState<string>('');
 
-  // Simulación de datos (temporal)
-  // const empleadosSimulados: Empleado[] = Array.from({ length: 12 }, (_, i) => ({
+  //Simulación de datos (temporal)
+  //const empleadosSimulados: Empleado[] = Array.from({ length: 12 }, (_, i) => ({
   //   id: i + 1,
   //   nombre: `EMPLEADO ${i + 1}`,
   // }));

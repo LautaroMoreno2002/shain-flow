@@ -17,6 +17,7 @@ export const EmpleadoItem = ({ empleado }: EmpleadoItemProps) => {
       <span className="icono-perfil">👤</span>
       <span>{empleado.nombre} {empleado.apellido}</span>
       <NavLink to="/administrador/editarEmpleado" >Editar</NavLink>
+      <NavLink to="/administrador/calculo-nomina" >Calcular nómina</NavLink>
     </div>
   );
 };

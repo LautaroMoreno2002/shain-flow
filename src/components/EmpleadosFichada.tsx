@@ -18,7 +18,7 @@ export const EmpleadoFichada = ({ empleado }: EmpleadoItemProps) => {
       <span>{empleado.nombre}</span>
       <NavLink to="/supervisor/permitir-fichada" >Fichada manual</NavLink>
       <NavLink to="/supervisor/reportes" >Ver Reportes</NavLink>
-      <NavLink to="/supervisor/calculo-nomina" >Calcular nomina</NavLink>
+      <NavLink to="/supervisor" >Ver nomina</NavLink>
     </div>
   );
 };

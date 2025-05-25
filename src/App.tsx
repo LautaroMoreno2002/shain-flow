@@ -45,6 +45,7 @@ function App() {
           <Route path="empleados" element={<Empleados />}></Route>
           <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
           <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>
+          <Route path="calculo-nomina" element={<CalculoNomina />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
     <Route path='/analista-datos' element={<AnalistaDeDatos />}>
@@ -55,6 +56,7 @@ function App() {
           <Route path="empleados" element={<Empleados />}></Route>
           <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
           <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>
+          
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
     <Route path='/Supervisor' element={<Supervisor />}>
@@ -64,8 +66,6 @@ function App() {
           <Route path="confirmacion" element={<Confirmacion />}></Route>
           <Route path="fichada-manual" element={<FichadaManual />}></Route>
           <Route path="permitir-fichada" element={<PermitirFichada />}></Route>
-          <Route path="calculo-nomina" element={<CalculoNomina />}></Route>
-          {/*<Route path="reportes" element={<GraficoDeTorta />}></Route>*/}
           <Route path="reportes" element={<Reportes />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
