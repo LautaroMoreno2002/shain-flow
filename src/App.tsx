@@ -18,6 +18,7 @@ import { FichadaManual } from './routes/Pantallas/FichadaManual'
 import { PermitirFichada } from './routes/Pantallas/PermitirFichada'
 import { Reportes } from './routes/Pantallas/Reportes'
 import { CalculoNomina } from './routes/Pantallas/CalculoNomina'
+import { VerNomina } from './routes/Pantallas/VerNomina'
 
 
 function App() {
@@ -55,8 +56,7 @@ function App() {
           <Route path="confirmacion" element={<Confirmacion />}></Route>
           <Route path="empleados" element={<Empleados />}></Route>
           <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
-          <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>
-          
+          <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>          
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
     <Route path='/Supervisor' element={<Supervisor />}>
@@ -66,7 +66,8 @@ function App() {
           <Route path="confirmacion" element={<Confirmacion />}></Route>
           <Route path="fichada-manual" element={<FichadaManual />}></Route>
           <Route path="permitir-fichada" element={<PermitirFichada />}></Route>
-          <Route path="reportes" element={<Reportes />}></Route>
+          <Route path="reportes" element={<Reportes />}></Route>          
+          <Route path="ver-nomina" element={<VerNomina />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
     </Routes>
