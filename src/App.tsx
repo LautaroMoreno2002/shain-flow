@@ -47,6 +47,7 @@ function App() {
           <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
           <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>
           <Route path="calculo-nomina" element={<CalculoNomina />}></Route>
+          <Route path="ver-nomina" element={<VerNomina />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
     <Route path='/analista-datos' element={<AnalistaDeDatos />}>

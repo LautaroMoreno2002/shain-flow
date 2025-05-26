@@ -55,7 +55,7 @@ export const CalculoNomina = () => {
     console.log("Datos guardados:", personalData);
     
     //Vuelve a la lista de empleados
-    navegar('/administrador/empleados');
+    navegar('/administrador/ver-nomina');
   };
 
   // Función para cancelar y revertir los cambios
