@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import DefaultLayout from "../../components/DefaultLayout";
-import { NavLink } from "react-router-dom";
 
 interface CredentialFormProps {
   username: string;

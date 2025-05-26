@@ -142,3 +142,25 @@ i {
     display: none;
   }
 }
+@media screen and (max-width: 420px) {
+  .navLink {
+    & i {
+      font-size: 1.1em;
+    }
+    .cont-nav ul {
+      gap: 8px; /* Añade espacio entre los ítems */
+    }
+  }
+  
+}
+@media screen and (max-width: 380px) {
+  .navLink {
+    & i {
+      font-size: 1em;
+    }
+  }
+  .cont-nav ul {
+    gap: 5px; /* Añade espacio entre los ítems */
+  }
+  
+}

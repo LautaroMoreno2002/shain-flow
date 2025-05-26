@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import '../../estilos/datos-personales.css';
 import { actualizarDatosEmpleado, obtenerEmpleadoPorIdentificacion } from '../../services/api';
 
@@ -39,7 +38,7 @@ export const VerDatos = () => {
 
   const fetchData = async () => {
     try {
-      setPersonalData(await obtenerEmpleadoPorIdentificacion('45893639'));
+      setPersonalData(await obtenerEmpleadoPorIdentificacion("46474422"));
     } catch (error) {
       console.error('Error al obtener los datos:', error);
     }

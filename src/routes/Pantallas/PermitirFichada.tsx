@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '../../estilos/datos-personales.css'
-import type { NavBar } from '../../components/NavBar';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 

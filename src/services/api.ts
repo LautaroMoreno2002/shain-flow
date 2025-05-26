@@ -1,12 +1,18 @@
 import axios from "axios";
 import type { PersonalDataType } from "../routes/Pantallas/VerDatos";
 
-// const API_URL = "https://tpp-g2-adp-1.onrender.com/"; //conectar con la API
+const API_URL2 = "https://tpp-g2-adp-1.onrender.com/"; //conectar con la API
 const API_URL = "https://render-crud-jc22.onrender.com/"
 
 // Instancia de Axios configurada
 const api = axios.create({
   baseURL: API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+const api2 = axios.create({
+  baseURL: API_URL2,
   headers: {
     "Content-Type": "application/json",
   },
@@ -67,3 +73,11 @@ export const datosLabPorId = async (id_empleado: string) => {
   const response = await api.get(`empleados/${id_empleado}/informacion-laboral`);
   return response.data;
 }
+
+// 7. Crear empleado
+export const crearEmpleado = async (nuevoEmpleado: any) => {
+  console.log("Enviando a backend:", nuevoEmpleado);
+  const response = await api2.post("/empleados/", nuevoEmpleado);
+  return response.data;
+};
+

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import EmpleadoFichada from '../../components/EmpleadosFichada';
 import '../../estilos/empleados.css';
-import { NavLink } from "react-router-dom";
 import { listarEmpleados } from '../../services/api';//conectar con la API
 
 export interface Empleado {

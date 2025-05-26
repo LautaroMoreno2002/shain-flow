@@ -18,7 +18,7 @@ export const DatosLaboralesDescrip = () => {
   useEffect(() => {
     const fetchDatos = async () => {
       try {
-        const response = await datosLabPorId('1'); // debe retornar el JSON
+        const response = await datosLabPorId('0'); // debe retornar el JSON
         setDatos(response);
       } catch (error) {
         console.error("Error al obtener los datos laborales:", error);
