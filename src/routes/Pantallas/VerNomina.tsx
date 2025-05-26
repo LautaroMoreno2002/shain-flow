@@ -81,43 +81,43 @@ export function VerNomina() {
             <tbody>
               <tr>
                 <td>01</td>
-                <td>Haber Mensual</td>
+                <td>Salario base</td>
                 <td>600.000</td>
                 <td>62.000</td>
               </tr>
               <tr>
                 <td>02</td>
                 <td>Antigüedad</td>
-                <td>200.000</td>
+                <td>170.000</td>
                 <td>24.000</td>
               </tr>
               <tr>
                 <td>03</td>
                 <td>Presentismo</td>
-                <td>70.000</td>
+                <td>40.000</td>
               </tr>
               <tr>
                 <td>04</td>
                 <td>Horas extras</td>
-                <td>140.000</td>
+                <td>45.000</td>
               </tr>
               <tr>
                 <td>05</td>
                 <td>Descuento Obra Social</td>
                 <td></td>
-                <td>65.000</td>
+                <td>60.000</td>
               </tr>
               <tr>
                 <td>04</td>
                 <td>Descuento ANSSAL</td>
                 <td></td>
-                <td>28.000</td>
+                <td>20.000</td>
               </tr>
               <tr>
                 <td>04</td>
                 <td>Descuento Ley 19.032</td>
                 <td></td>
-                <td>13.000</td>
+                <td>5.000</td>
               </tr>
               <tr>
                 <td>04</td>
@@ -129,7 +129,13 @@ export function VerNomina() {
                 <td>04</td>
                 <td>Descuento Sindical</td>
                 <td></td>
-                <td>28.000</td>
+                <td>10.000</td>
+              </tr>
+              <tr>
+                <td>04</td>
+                <td>Descuento Jubilatorio</td>
+                <td></td>
+                <td>12.000</td>
               </tr>
             </tbody>
           </table>

@@ -17,6 +17,7 @@ interface PersonalDataType {
     descuento_ley_19032: string;
     impuesto_ganancias: string;
     descuento_sindical: string;
+    descuento_jubilatorio: string;
 }
 
 export const CalculoNomina = () => {
@@ -34,8 +35,9 @@ export const CalculoNomina = () => {
         descuento_obra_social: "60000",
         descuento_anssal: "20000",
         descuento_ley_19032: "5000",
-        impuesto_ganancias: "0",
-        descuento_sindical: "10000"
+        impuesto_ganancias: "5000",
+        descuento_sindical: "10000",
+        descuento_jubilatorio: "12000"
     });
 
   // Función para manejar los cambios en los inputs
@@ -71,8 +73,9 @@ export const CalculoNomina = () => {
           descuento_obra_social: "60000",
           descuento_anssal: "20000",
           descuento_ley_19032: "5000",
-          impuesto_ganancias: "0",
-          descuento_sindical: "10000"
+          impuesto_ganancias: "5000",
+          descuento_sindical: "10000",
+          descuento_jubilatorio: "12000"
       });
   };
 
@@ -89,6 +92,17 @@ export const CalculoNomina = () => {
                 type="text"
                 name="fecha_pago"
                 value={personalData.fecha_pago}
+                onChange={handleChange}
+                readOnly={!isEditable}
+              />
+            </div>
+            <div className="data-item">
+              <p className="data-item--label">Salario base</p>
+              <input
+                className={`data-item--value ${isEditable ? "editable" : ""}`}
+                type="text"
+                name="salario_base"
+                value={personalData.salario_base}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
@@ -180,6 +194,17 @@ export const CalculoNomina = () => {
                 type="text"
                 name="descuento_sindical"
                 value={personalData.descuento_sindical}
+                onChange={handleChange}
+                readOnly={!isEditable}
+              />
+            </div>
+            <div className="data-item">
+              <p className="data-item--label">Descuento jubilatorio</p>
+              <input
+                className={`data-item--value ${isEditable ? "editable" : ""}`}
+                type="text"
+                name="descuento_jubilatorio"
+                value={personalData.descuento_jubilatorio}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
