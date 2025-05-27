@@ -21,6 +21,7 @@ import { CalculoNomina } from './routes/Pantallas/CalculoNomina'
 import { VerNomina } from './routes/Pantallas/VerNomina'
 import { EmpleadosNomina } from './routes/Pantallas/EmpleadosNomina'
 import { EditarDatosLaborales } from './routes/Pantallas/EditarDatosLaborales'
+import { InformacionBancaria } from './routes/Pantallas/InformacionBancaria'
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="asistencias" element={<Asistencias/>}></Route>
           <Route path="datosLaborales" element={<DatosLaborales/>}></Route>
           <Route path="confirmacion" element={<Confirmacion/>}></Route>
+          <Route path="info-bancaria" element={<InformacionBancaria/>}></Route>
           <Route path="" element={<Confirmacion/>}></Route>
           <Route path="*" element={<Confirmacion/>}></Route>
         </Route>
