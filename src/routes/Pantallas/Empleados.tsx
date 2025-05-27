@@ -62,62 +62,65 @@ export const Empleados = () => {
     setErrores((prev) => ({ ...prev, [name]: false }));
   };
 
-const cargarEmpleado = async () => {
-  const nuevosErrores: { [key: string]: boolean } = {};
-  let esValido = true;
-
-  Object.entries(nuevoEmpleado).forEach(([key, valor]) => {
-    if (!valor.trim()) {
-      nuevosErrores[key] = true;
-      esValido = false;
-    }
-  });
-
-  if (!esValido) {
-    setErrores(nuevosErrores);
-    setMensajeError("Por favor, completa todos los campos.");
-    return;
-  }
-
-  try {
-    console.log("Datos enviados:", nuevoEmpleado);
-    const empleadoCreado = await crearEmpleado(nuevoEmpleado);
-    setEmpleados((prev) => [...prev, {
-      id_empleado: empleadoCreado.id_empleado,
-      numero_identificacion: empleadoCreado.numero_identificacion,
-      nombre: empleadoCreado.nombre,
-      apellido: empleadoCreado.apellido,
-      correo: empleadoCreado.correo_electronico,
-      telefono: empleadoCreado.telefono,
-    }]);
-    
-
-    setMostrarFormulario(false);
-    setNuevoEmpleado({ // reiniciar el formulario
-      nombre: "",
-      apellido: "",
-      tipo_identificacion: "",
-      numero_identificacion: "",
-      fecha_nacimiento: "",
-      correo_electronico: "",
-      telefono: "",
-      calle: "",
-      numero_calle: "",
-      localidad: "",
-      partido: "",
-      provincia: "",
-      genero: "",
-      pais_nacimiento: "",
-      estado_civil: "",
+  const cargarEmpleado = async () => {
+    const nuevosErrores: { [key: string]: boolean } = {};
+    let esValido = true;
+  
+    Object.entries(nuevoEmpleado).forEach(([key, valor]) => {
+      if (!valor.trim()) {
+        nuevosErrores[key] = true;
+        esValido = false;
+      }
     });
-    setErrores({});
-    setMensajeError("");
-  } catch (error: any) {
-    console.error("Error al crear empleado:", error);
-    setMensajeError("Error al crear el empleado. Verifica los datos ingresados.");
-  }
-};
-
+  
+    if (!esValido) {
+      setErrores(nuevosErrores);
+      setMensajeError("Por favor, completa todos los campos antes de continuar.");
+      return;
+    }
+  
+    try {
+      console.log("Enviando empleado:", nuevoEmpleado);
+      const empleadoCreado = await crearEmpleado(nuevoEmpleado);
+  
+      setEmpleados((prev) => [
+        ...prev,
+        {
+          id_empleado: empleadoCreado.id_empleado,
+          numero_identificacion: empleadoCreado.numero_identificacion,
+          nombre: empleadoCreado.nombre,
+          apellido: empleadoCreado.apellido,
+          correo: empleadoCreado.correo_electronico ?? empleadoCreado.correo,
+          telefono: empleadoCreado.telefono,
+        },
+      ]);
+  
+      setMostrarFormulario(false);
+      setNuevoEmpleado({
+        nombre: "",
+        apellido: "",
+        tipo_identificacion: "",
+        numero_identificacion: "",
+        fecha_nacimiento: "",
+        correo_electronico: "",
+        telefono: "",
+        calle: "",
+        numero_calle: "",
+        localidad: "",
+        partido: "",
+        provincia: "",
+        genero: "",
+        pais_nacimiento: "",
+        estado_civil: "",
+      });
+      setErrores({});
+      setMensajeError("");
+    } catch (error) {
+      console.error("Error al crear empleado:", error);
+      setMensajeError("Error al crear el empleado. Intenta nuevamente.");
+    }
+  };
+  
 
   return (
     <div className="admin-container">

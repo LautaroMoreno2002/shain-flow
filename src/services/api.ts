@@ -11,12 +11,12 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
-const api2 = axios.create({
-  baseURL: API_URL2,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+// const api2 = axios.create({
+//   baseURL: API_URL2,
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+// });
 
 // 1. Listar empleados
 export const listarEmpleados = async () => {
@@ -77,7 +77,7 @@ export const datosLabPorId = async (id_empleado: string) => {
 // 7. Crear empleado
 export const crearEmpleado = async (nuevoEmpleado: any) => {
   console.log("Enviando a backend:", nuevoEmpleado);
-  const response = await api2.post("/empleados/", nuevoEmpleado);
+  const response = await api.post("/empleados/", nuevoEmpleado);
   return response.data;
 };
 

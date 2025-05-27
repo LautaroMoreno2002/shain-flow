@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '../../estilos/datos-personales.css';
 import { actualizarDatosEmpleado, obtenerEmpleadoPorIdentificacion } from '../../services/api';
 
 export interface PersonalDataType {
