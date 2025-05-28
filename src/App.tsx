@@ -23,6 +23,7 @@ import { EmpleadosNomina } from './routes/Pantallas/EmpleadosNomina'
 import { EditarDatosLaborales } from './routes/Pantallas/EditarDatosLaborales'
 import { InformacionBancaria } from './routes/Pantallas/InformacionBancaria'
 import { CalcularNomina } from './routes/Pantallas/CalcularNomina'
+import { RegistroFacial } from './routes/Interfaces/RegistroFacial'
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<ReconocimientoFacial />} />
+      <Route path="/registro-facial" element={<RegistroFacial />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} /> 
 
