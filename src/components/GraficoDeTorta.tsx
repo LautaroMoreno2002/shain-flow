@@ -23,7 +23,7 @@ export const GraficoDeTorta = () => {
                     outerRadius={150}
                     fill="#82ca9d"
                 >
-                   {data.map((entry, index) => (
+                   {data.map((_entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                    ))}     
                 </Pie>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../../estilos/datos-personales.css'
-import type { NavBar } from '../../components/NavBar';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -58,23 +57,23 @@ export const EditarDatosLaborales = () => {
     navegar('/administrador/empleados');
   };
 
-  // Función para cancelar y revertir los cambios
-  const handleCancel = () => {
-    setIsEditable(true);
-    // Volver a los datos iniciales
-    setPersonalData({
-      departamento: "Sistemas",
-      puesto: "Desarrollador",
-      categoria: "front-end",
-      fechaAlta: "01/04/2002",
-      horaIngreso: "hh:mm",
-      horaSalida: "hh:mm",
-      cantidadHoras: "hh:mm",
-      tipoContrato: "Permanente",
-      estado: "Activo",
-      tipoSemana: "Normal",
-    });
-  };
+  // // Función para cancelar y revertir los cambios
+  // const handleCancel = () => {
+  //   setIsEditable(true);
+  //   // Volver a los datos iniciales
+  //   setPersonalData({
+  //     departamento: "Sistemas",
+  //     puesto: "Desarrollador",
+  //     categoria: "front-end",
+  //     fechaAlta: "01/04/2002",
+  //     horaIngreso: "hh:mm",
+  //     horaSalida: "hh:mm",
+  //     cantidadHoras: "hh:mm",
+  //     tipoContrato: "Permanente",
+  //     estado: "Activo",
+  //     tipoSemana: "Normal",
+  //   });
+  // };
 
   return (
     <div className="container-personal-data">

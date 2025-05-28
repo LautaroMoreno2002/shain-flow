@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../../estilos/datos-personales.css'
-import type { NavBar } from '../../components/NavBar';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -61,23 +60,23 @@ export const CalculoNomina = () => {
   };
 
   // Función para cancelar y revertir los cambios
-  const handleCancel = () => {
-    setIsEditable(true);
-    // Volver a los datos iniciales
-      setPersonalData({
-          fecha_pago: "01/01/2025",
-          salario_base: "600000",
-          presentismo: "40000",
-          antiguedad: "170000",
-          hora_extra: "45000",
-          descuento_obra_social: "60000",
-          descuento_anssal: "20000",
-          descuento_ley_19032: "5000",
-          impuesto_ganancias: "5000",
-          descuento_sindical: "10000",
-          descuento_jubilatorio: "12000"
-      });
-  };
+  // const handleCancel = () => {
+  //   setIsEditable(true);
+  //   // Volver a los datos iniciales
+  //     setPersonalData({
+  //         fecha_pago: "01/01/2025",
+  //         salario_base: "600000",
+  //         presentismo: "40000",
+  //         antiguedad: "170000",
+  //         hora_extra: "45000",
+  //         descuento_obra_social: "60000",
+  //         descuento_anssal: "20000",
+  //         descuento_ley_19032: "5000",
+  //         impuesto_ganancias: "5000",
+  //         descuento_sindical: "10000",
+  //         descuento_jubilatorio: "12000"
+  //     });
+  // };
 
   return (
     <div className="container-personal-data">

@@ -1,7 +1,6 @@
 import axios from "axios";
-import type { PersonalDataType } from "../routes/Pantallas/VerDatos";
 
-const API_URL2 = "https://tpp-g2-adp-1.onrender.com/"; //conectar con la API
+// const API_URL2 = "https://tpp-g2-adp-1.onrender.com/"; //conectar con la API
 const API_URL = "https://render-crud-jc22.onrender.com/"
 
 // Instancia de Axios configurada

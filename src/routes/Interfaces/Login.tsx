@@ -24,6 +24,10 @@ export const Login = () => {
       username: 'Abel Aquino',
       password: '1234',
       rol: 'analista-datos'
+    },{
+      username: 'Rodrigo Montoro',
+      password: '1234',
+      rol: 'supervisor'
     }
   ]
 

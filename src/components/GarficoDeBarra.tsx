@@ -1,4 +1,3 @@
-import { div } from "framer-motion/client"
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis, Text, Label } from "recharts"
 
 const data = [

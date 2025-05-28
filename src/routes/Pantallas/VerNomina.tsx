@@ -1,5 +1,3 @@
-import { div } from "framer-motion/client";
-
 const recibo = {
   empresa: "Shain Flow",
   periodo: "Enero 2025",
@@ -29,32 +27,32 @@ function CabeceraRecibo() {
   );
 }
 
-function ListaItems() {
-  return (
-    <section>
-      <h2>Ingresos</h2>
-      <ul>
-        <li>
-            "Salario base" : "600.000"
-        </li>
-        <li>
-            "Horas extras" : "70.000"
-        </li>
-        {/*items.map((item, index) => (
-          <li key={index}>
-            {item.tipo}: {item.monto}
-          </li>
-        ))*/}
-      </ul>
-      <h2>Descuentos</h2>
-        <ul>
-            <li>
-                "Descuento Obra Social" : "60.000"
-            </li>
-        </ul>
-    </section>
-  );
-}
+// function ListaItems() {
+//   return (
+//     <section>
+//       <h2>Ingresos</h2>
+//       <ul>
+//         <li>
+//             "Salario base" : "600.000"
+//         </li>
+//         <li>
+//             "Horas extras" : "70.000"
+//         </li>
+//         {/*items.map((item, index) => (
+//           <li key={index}>
+//             {item.tipo}: {item.monto}
+//           </li>
+//         ))*/}
+//       </ul>
+//       <h2>Descuentos</h2>
+//         <ul>
+//             <li>
+//                 "Descuento Obra Social" : "60.000"
+//             </li>
+//         </ul>
+//     </section>
+//   );
+// }
 
 export function VerNomina() {
     return (

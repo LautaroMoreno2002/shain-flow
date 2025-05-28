@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../../estilos/calcular-nomina.css";
 import { calcularNominaAuto, obtenerNomina } from "../../services/api";
 
