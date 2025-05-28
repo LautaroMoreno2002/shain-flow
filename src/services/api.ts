@@ -91,3 +91,16 @@ export const crearEmpleado = async (nuevoEmpleado: any) => {
   return response.data;
 };
 
+export const calcularNominaAuto = async (
+  id_empleado: number,
+  periodo: string,
+  fecha_calculo: string
+) => {
+  const response = await api.post("/calcular", {
+    id_empleado,
+    periodo,
+    fecha_calculo,
+  });
+  return response.data;
+};
+
