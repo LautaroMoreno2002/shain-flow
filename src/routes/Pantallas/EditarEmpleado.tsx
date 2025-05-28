@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../../estilos/datos-personales.css'
-import type { NavBar } from '../../components/NavBar';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { actualizarDatosEmpleado } from '../../services/api';
 import { useEffect } from 'react';
 import { obtenerEmpleadoPorIdentificacion } from '../../services/api';
