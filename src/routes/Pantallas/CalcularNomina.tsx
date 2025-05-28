@@ -18,6 +18,7 @@ export const CalcularNomina = () => {
       if (nominaExistente) {
         console.log("Nómina ya existente encontrada");
         setResultado(nominaExistente);
+        
       } else {
         console.log("No existe nómina, se procede a calcularla");
         const nuevaNomina = await calcularNominaAuto(1, periodo, "27/05/2025");
@@ -45,19 +46,20 @@ export const CalcularNomina = () => {
         Calcular
       </button>
 
-      {resultado && (
-  <div className="tabla-container">
-    <table>
+      {Array.isArray(resultado) && resultado.length > 0 ? (
+  <div className="tabla-container-nomina">
+    <h3>Resultado de la nómina</h3>
+    <table className="tabla-nomina">
       <thead>
         <tr>
-          {Object.keys(resultado).map((clave) => (
-            <th key={clave}>{clave}</th>
+          {Object.keys(resultado[0]).map((clave) => (
+            <th key={clave}>{clave.replace(/_/g, " ").toUpperCase()}</th>
           ))}
         </tr>
       </thead>
       <tbody>
         <tr>
-          {Object.values(resultado).map((valor, index) => (
+          {Object.values(resultado[0]).map((valor, index) => (
             <td key={index}>
               {typeof valor === "string" || typeof valor === "number"
                 ? valor
@@ -68,7 +70,11 @@ export const CalcularNomina = () => {
       </tbody>
     </table>
   </div>
+) : (
+  <p>No hay resultados para mostrar.</p>
 )}
+
+
 
 
     </div>

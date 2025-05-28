@@ -101,6 +101,7 @@ export const calcularNominaAuto = async (
     periodo,
     fecha_calculo,
   });
+  console.log("Resultado recibido:", response.data);
   return response.data;
 };
 
@@ -112,5 +113,8 @@ export const obtenerNomina = async (
     id_empleado,
     periodo
   });
-  return response.data;  
+  console.log("Resultado recibido:", response.data);
+  console.log("Resultado recibido:", response.data.nominas);
+  console.log("Resultado recibido:", response.data.nominas[0]);
+  return response.data.nominas[0];  
 }
