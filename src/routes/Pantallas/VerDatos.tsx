@@ -37,7 +37,7 @@ export const VerDatos = () => {
 
   const fetchData = async () => {
     try {
-      setPersonalData(await obtenerEmpleadoPorIdentificacion("46474422"));
+      setPersonalData(await obtenerEmpleadoPorIdentificacion("12348795"));
     } catch (error) {
       console.error('Error al obtener los datos:', error);
     }
