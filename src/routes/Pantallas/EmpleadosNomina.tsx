@@ -35,6 +35,14 @@ export const EmpleadosNomina = () => {
     estado_civil: "",
   });
 
+  const [nuevoConcepto, setNuevoConcepto] = useState({
+    codigo:"",
+    nombre:"",
+    tipo_concepto:"",
+    valor:"",
+    es_porcentaje: ""
+  })
+
   const [errores, setErrores] = useState<{ [key: string]: boolean }>({});
   const [mensajeError, setMensajeError] = useState<string>("");
 
@@ -124,7 +132,7 @@ export const EmpleadosNomina = () => {
 
   return (
     <div className="admin-container">
-      <h2 className="admin-title">👥 Empleados:</h2>
+      <h2 className="admin-title">👥 Nomina:</h2>
 
       {!mostrarFormulario && (
         <>
@@ -143,7 +151,7 @@ export const EmpleadosNomina = () => {
               <EmpleadoNomina key={empleado.id_empleado} empleado={empleado} />
             ))}
             <button onClick={() => setMostrarFormulario(true)}>
-              ➕ Agregar empleado
+              ➕ Agregar Concepto
             </button>
           </div>
         </>
@@ -151,9 +159,9 @@ export const EmpleadosNomina = () => {
 
       {mostrarFormulario && (
         <div className="formulario-empleado">
-          <h3>Formulario de nuevo empleado</h3>
+          <h3>Formulario de nuevo concepto</h3>
           <form className="formulario-grid">
-            {Object.entries(nuevoEmpleado).map(([campo, valor]) => {
+            {Object.entries(nuevoConcepto).map(([campo, valor]) => {
               const label = campo.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 
               const opcionesIdentificacion = ["DNI", "Pasaporte", "Libreta Cívica"];
@@ -205,7 +213,7 @@ export const EmpleadosNomina = () => {
           </form>
           {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
           <div className="botones-formulario">
-            <button onClick={cargarEmpleado}>✅ Cargar empleado</button>
+            <button onClick={cargarEmpleado}>✅ Cargar</button>
             <button onClick={() => setMostrarFormulario(false)}>❌ Cancelar</button>
           </div>
         </div>
