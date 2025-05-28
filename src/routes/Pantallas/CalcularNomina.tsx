@@ -15,7 +15,7 @@ export const CalcularNomina = () => {
       // Intentamos obtener la nómina existente con id 0
       const nominaExistente = await obtenerNomina(1, periodo);
 
-      if (nominaExistente) {
+      if (nominaExistente && nominaExistente.periodo == periodo) {
         console.log("Nómina ya existente encontrada");
         setResultado(nominaExistente);
         
@@ -30,6 +30,7 @@ export const CalcularNomina = () => {
   };
 
   return (
+    <>
     <div className="calcular-container">
       <h2 className="titulo">CALCULAR NÓMINA</h2>
 
@@ -45,38 +46,28 @@ export const CalcularNomina = () => {
       <button onClick={calcularNomina} className="boton-calcular">
         Calcular
       </button>
-
-      {Array.isArray(resultado) && resultado.length > 0 ? (
+    </div>
+    {resultado && typeof resultado === "object" && !Array.isArray(resultado) && (
   <div className="tabla-container-nomina">
     <h3>Resultado de la nómina</h3>
     <table className="tabla-nomina">
       <thead>
         <tr>
-          {Object.keys(resultado[0]).map((clave) => (
-            <th key={clave}>{clave.replace(/_/g, " ").toUpperCase()}</th>
-          ))}
+          <th>Campo</th>
+          <th>Valor</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          {Object.values(resultado[0]).map((valor, index) => (
-            <td key={index}>
-              {typeof valor === "string" || typeof valor === "number"
-                ? valor
-                : JSON.stringify(valor)}
-            </td>
-          ))}
-        </tr>
+        {Object.entries(resultado).map(([clave, valor]) => (
+          <tr key={clave}>
+            <td>{clave.replace(/_/g, " ").toUpperCase()}</td>
+            <td>{valor}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   </div>
-) : (
-  <p>No hay resultados para mostrar.</p>
 )}
-
-
-
-
-    </div>
+    </>
   );
 };
