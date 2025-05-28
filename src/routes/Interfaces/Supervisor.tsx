@@ -1,7 +1,7 @@
 import { NavBar } from "../../components/NavBar";
 import { Outlet } from "react-router-dom";
 
-const navItemsAdministrador =  [
+const navItemsSupervisor =  [
   { label: "Datos personales", icon: "fa-solid fa-address-card", path: "verDatos" },
   { label: "Confirmación", icon: "fa-solid fa-square-check", path: "confirmacion" },
   { label: "Datos laborales", icon: "fa-solid fa-user-tie", path: "datosLaborales" },
@@ -14,7 +14,7 @@ const navItemsAdministrador =  [
 export const Supervisor = () => {
   return (
     <>
-      <NavBar items={navItemsAdministrador}/>
+      <NavBar items={navItemsSupervisor}/>
       <main>
         <Outlet /> {/* Aquí se renderiza la ruta hija */}
       </main>
