@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { actualizarDatosEmpleado, obtenerEmpleadoPorIdentificacion } from '../../services/api';
+import { actualizarDatosEmpleado, obtenerEmpleadoPorIdentificacion, type ModificarData } from '../../services/api';
 
 export interface PersonalDataType {
   id: string,
@@ -37,7 +37,7 @@ export const VerDatos = () => {
 
   const fetchData = async () => {
     try {
-      setPersonalData(await obtenerEmpleadoPorIdentificacion("46474422"));
+      setPersonalData(await obtenerEmpleadoPorIdentificacion("12348795"));
     } catch (error) {
       console.error('Error al obtener los datos:', error);
     }
@@ -54,7 +54,16 @@ export const VerDatos = () => {
 
   const handleSave = async () => {
     try {
-      await actualizarDatosEmpleado(personalData.id, personalData);
+      const data: ModificarData = {
+        telefono: personalData.telefono,
+        correo_electronico: personalData.correo_electronico,
+        calle: personalData.calle,
+        numero_calle: personalData.numero_calle,
+        localidad: personalData.localidad,
+        partido: "",
+        provincia: personalData.nacionalidad
+      }
+      await actualizarDatosEmpleado(personalData.id, data);
       console.log('Datos actualizados correctamente.');
       setIsEditable(false);
     } catch (error) {

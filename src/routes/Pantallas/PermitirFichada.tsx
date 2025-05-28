@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../estilos/datos-personales.css'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 

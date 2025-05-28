@@ -22,6 +22,8 @@ import { VerNomina } from './routes/Pantallas/VerNomina'
 import { EmpleadosNomina } from './routes/Pantallas/EmpleadosNomina'
 import { EditarDatosLaborales } from './routes/Pantallas/EditarDatosLaborales'
 import { InformacionBancaria } from './routes/Pantallas/InformacionBancaria'
+import { CalcularNomina } from './routes/Pantallas/CalcularNomina'
+import { RegistroFacial } from './routes/Interfaces/RegistroFacial'
 
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<ReconocimientoFacial />} />
+      <Route path="/registro-facial" element={<RegistroFacial />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} /> 
 
@@ -53,6 +56,7 @@ function App() {
           <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
           <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>
           <Route path="calculo-nomina" element={<CalculoNomina />}></Route>
+          <Route path="calcular-nomina" element={<CalcularNomina />}></Route>
           <Route path="ver-nomina" element={<VerNomina />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
@@ -66,7 +70,7 @@ function App() {
           <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>          
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
-    <Route path='/Supervisor' element={<Supervisor />}>
+    <Route path='/supervisor' element={<Supervisor />}>
           <Route path="verDatos" element={<VerDatos />}></Route>
           <Route path="asistencias" element={<Asistencias />}></Route>
           <Route path="datosLaborales" element={<DatosLaborales />}></Route>

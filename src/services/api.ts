@@ -1,7 +1,6 @@
 import axios from "axios";
-import type { PersonalDataType } from "../routes/Pantallas/VerDatos";
 
-const API_URL2 = "https://tpp-g2-adp-1.onrender.com/"; //conectar con la API
+// const API_URL2 = "https://tpp-g2-adp-1.onrender.com/"; //conectar con la API
 const API_URL = "https://render-crud-jc22.onrender.com/"
 
 // Instancia de Axios configurada
@@ -17,6 +16,16 @@ const api = axios.create({
 //     "Content-Type": "application/json",
 //   },
 // });
+
+export interface ModificarData {
+  telefono: string,
+  correo_electronico: string,
+  calle: string,
+  numero_calle: string,
+  localidad: string,
+  partido: string,
+  provincia: string
+}
 
 // 1. Listar empleados
 export const listarEmpleados = async () => {
@@ -35,7 +44,7 @@ export const obtenerEmpleadoPorIdentificacion = async (
 // 3. Actualizar datos personales del empleado
 export const actualizarDatosEmpleado = async (
   empleadoId: string,
-  nuevosDatos: PersonalDataType
+  nuevosDatos: ModificarData
 ) => {
   const response = await api.put(
     `/empleados/${empleadoId}/datos-personales`,
@@ -81,3 +90,30 @@ export const crearEmpleado = async (nuevoEmpleado: any) => {
   return response.data;
 };
 
+export const calcularNominaAuto = async (
+  id_empleado: number,
+  periodo: string,
+  fecha_calculo: string
+) => {
+  const response = await api.post("/calcular", {
+    id_empleado,
+    periodo,
+    fecha_calculo,
+  });
+  console.log("Resultado recibido:", response.data);
+  return response.data;
+};
+
+export const obtenerNomina = async (
+  id_empleado: number,
+  periodo: string
+) => {
+  const response = await api.post(`/nominas/empleado/buscar`,{
+    id_empleado,
+    periodo
+  });
+  console.log("Resultado recibido:", response.data);
+  console.log("Resultado recibido:", response.data.nominas);
+  console.log("Resultado recibido:", response.data.nominas[0]);
+  return response.data.nominas[0];  
+}

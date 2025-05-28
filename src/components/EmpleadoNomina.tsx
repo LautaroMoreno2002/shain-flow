@@ -16,7 +16,8 @@ export const EmpleadoNomina = ({ empleado }: EmpleadoNominaProps) => {
     <div className="empleado-item">
       <span className="icono-perfil">👤</span>
       <span>{empleado.nombre} {empleado.apellido}</span>
-      <NavLink to="/administrador/calculo-nomina" >Calcular nómina</NavLink>
+      <NavLink to="/administrador/calculo-nomina" >Calcular manualmente</NavLink>
+      <NavLink to="/administrador/calcular-nomina" >Calcular automáticamente</NavLink>
     </div>
   );
 };

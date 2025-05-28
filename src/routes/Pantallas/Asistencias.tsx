@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { datosLabPorId, registroAsistenciasPorId } from "../../services/api";
+import { registroAsistenciasPorId } from "../../services/api";
 import "../../estilos/asistencias.css";
 
 const mes = new Date().getMonth() + 1;

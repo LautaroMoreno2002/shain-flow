@@ -1,5 +1,4 @@
-import { div } from "framer-motion/client"
-import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis, Text, Label } from "recharts"
+import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 const data = [
     {mes: "Enero",  semana_1: 10, semana_2: 20, semana_3: 36, semana_4: 33 },

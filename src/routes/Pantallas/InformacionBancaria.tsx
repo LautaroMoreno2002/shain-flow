@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { actualizarDatosEmpleado, obtenerEmpleadoPorIdentificacion } from '../../services/api';
+import { obtenerEmpleadoPorIdentificacion } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 
 export interface PersonalDataType {
