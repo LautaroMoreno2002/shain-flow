@@ -1,24 +1,9 @@
 import React, { useState } from "react";
 import "../../estilos/calcular-nomina.css";
-import { calcularNominaAuto } from "../../services/api"; // Asegúrate de que la ruta sea correcta
+import { calcularNominaAuto, obtenerNomina } from "../../services/api";
 
 interface NominaData {
-  id_nomina: number;
-  id_empleado: number;
-  periodo: string;
-  fecha_de_pago: string;
-  salario_base: number;
-  bono_presentismo: number;
-  bono_antiguedad: number;
-  horas_extra: number;
-  descuento_jubilacion: number;
-  descuento_obra_social: number;
-  descuento_anssal: number;
-  descuento_ley_19032: number;
-  impuesto_ganancias: number;
-  descuento_sindical: number;
-  sueldo_bruto: number;
-  sueldo_neto: number;
+  [key: string]: string | number;
 }
 
 export const CalcularNomina = () => {
@@ -27,16 +12,26 @@ export const CalcularNomina = () => {
 
   const calcularNomina = async () => {
     try {
-      const data = await calcularNominaAuto(1, periodo, "27/05/2025");
-      setResultado(data);
+      // Intentamos obtener la nómina existente con id 0
+      const nominaExistente = await obtenerNomina(1, periodo);
+
+      if (nominaExistente) {
+        console.log("Nómina ya existente encontrada");
+        setResultado(nominaExistente);
+      } else {
+        console.log("No existe nómina, se procede a calcularla");
+        const nuevaNomina = await calcularNominaAuto(1, periodo, "27/05/2025");
+        setResultado(nuevaNomina);
+      }
     } catch (error) {
-      console.error("Error al calcular la nómina:", error);
+      console.error("Error durante el proceso de cálculo/verificación:", error);
     }
   };
 
   return (
     <div className="calcular-container">
       <h2 className="titulo">CALCULAR NÓMINA</h2>
+
       <label htmlFor="periodo">Período</label>
       <input
         type="text"
@@ -44,32 +39,38 @@ export const CalcularNomina = () => {
         value={periodo}
         onChange={(e) => setPeriodo(e.target.value)}
         className="input-periodo"
-        placeholder="Ej: MAYO 2025"
+        placeholder="Ej: Mayo 2025"
       />
       <button onClick={calcularNomina} className="boton-calcular">
         Calcular
       </button>
 
       {resultado && (
-        <div className="tabla-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Campo</th>
-                <th>Valor</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.entries(resultado).map(([clave, valor]) => (
-                <tr key={clave}>
-                  <td>{clave}</td>
-                  <td>{valor}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+  <div className="tabla-container">
+    <table>
+      <thead>
+        <tr>
+          {Object.keys(resultado).map((clave) => (
+            <th key={clave}>{clave}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {Object.values(resultado).map((valor, index) => (
+            <td key={index}>
+              {typeof valor === "string" || typeof valor === "number"
+                ? valor
+                : JSON.stringify(valor)}
+            </td>
+          ))}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+)}
+
+
     </div>
   );
 };

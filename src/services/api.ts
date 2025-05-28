@@ -104,3 +104,13 @@ export const calcularNominaAuto = async (
   return response.data;
 };
 
+export const obtenerNomina = async (
+  id_empleado: number,
+  periodo: string
+) => {
+  const response = await api.post(`/nominas/empleado/buscar`,{
+    id_empleado,
+    periodo
+  });
+  return response.data;  
+}
