@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import '../../estilos/datos-personales.css'
 import type { NavBar } from '../../components/NavBar';
 import { NavLink, useNavigate } from 'react-router-dom';
-
-
+import { actualizarDatosEmpleado } from '../../services/api';
+import { useEffect } from 'react';
+import { obtenerEmpleadoPorIdentificacion } from '../../services/api';
 
 // Definimos el tipo de datos personales
 interface PersonalDataType {
@@ -22,24 +23,25 @@ interface PersonalDataType {
 }
 
 export const EditarEmpleado = () => {
+  const empleadoId = "1";
   // Estado para determinar si los campos son editables
   const [isEditable, setIsEditable] = useState<boolean>(true);
   const navegar = useNavigate();
 
   // Estado para los datos personales, tipado con la interfaz PersonalDataType
   const [personalData, setPersonalData] = useState<PersonalDataType>({
-    nombre: "Lautaro Emmanuel",
-      apellido: "Moreno",
-      dni: "12345678",
-      fechaNacimiento: "01/04/2002",
-      email: "lemoreno2002@gmail.com",
-      telefono: "1234567890",
-      calle: "Calle Falsa",
-      numero: "123",
-      nacionalidad: "Argentina",
-      provincia: "Buenos Aires",
-      localidad: "San Miguel",
-      estado: "Soltero"
+    nombre: "",
+      apellido: "",
+      dni: "",
+      fechaNacimiento: "",
+      email: "",
+      telefono: "",
+      calle: "",
+      numero: "",
+      nacionalidad: "",
+      provincia: "",
+      localidad: "",
+      estado: ""
   });
 
   // Función para manejar los cambios en los inputs
@@ -52,35 +54,81 @@ export const EditarEmpleado = () => {
   };
 
   // Función para guardar los cambios
-  const handleSave = () => {
-    setIsEditable(false);
-    
-    // podrías agregar lógica para guardar los cambios, por ejemplo, en una base de datos
-    console.log("Datos guardados:", personalData);
-    
-    //Vuelve a la lista de empleados
-    navegar('/administrador/empleados');
+  const handleSave = async () => {
+    setIsEditable(true);
+    if (!empleadoId) {
+      console.error("ID del empleado no encontrado en la URL.");
+      return;
+    }
+  
+    try {
+      const nuevosDatos = {
+        telefono: personalData.telefono,
+        correo_electronico: personalData.email,
+        calle: personalData.calle,
+        numero_calle: personalData.numero,
+        localidad: personalData.localidad,
+        partido: "",
+        provincia: personalData.provincia
+      };
+  
+      await actualizarDatosEmpleado(empleadoId, nuevosDatos);
+      console.log("Datos actualizados exitosamente.");
+      setIsEditable(false);
+      navegar('/administrador/empleados');
+    } catch (error) {
+      console.error("Error al actualizar los datos:", error);
+    }
   };
 
   // Función para cancelar y revertir los cambios
-  const handleCancel = () => {
+  const handleCancel = async () => {
     setIsEditable(true);
+    const datos = await obtenerEmpleadoPorIdentificacion("12348795");
     // Volver a los datos iniciales
     setPersonalData({
-      nombre: "Lautaro Emmanuel",
-      apellido: "Moreno",
-      dni: "12345678",
-      fechaNacimiento: "01/04/2002",
-      email: "lemoreno2002@gmail.com",
-      telefono: "1234567890",
-      calle: "Calle Falsa",
-      numero: "123",
-      nacionalidad: "Argentina",
-      provincia: "Buenos Aires",
-      localidad: "San Miguel",
-      estado: "Soltero"
+      nombre: datos.nombre,
+          apellido: datos.apellido,
+          dni: datos.numero_identificacion,
+          fechaNacimiento: datos.fecha_nacimiento,
+          email: datos.correo_electronico,
+          telefono: datos.telefono,
+          calle: datos.calle,
+          numero: datos.numero_calle,
+          nacionalidad: datos.pais_nacimiento,
+          provincia: datos.provincia,
+          localidad: datos.localidad,
+          estado: datos.estado_civil
     });
+    setIsEditable(false);
   };
+
+  useEffect(() => {
+    const cargarDatosEmpleado = async () => {
+      try {
+        const datos = await obtenerEmpleadoPorIdentificacion("12348795");
+  
+        setPersonalData({
+          nombre: datos.nombre,
+          apellido: datos.apellido,
+          dni: datos.numero_identificacion,
+          fechaNacimiento: datos.fecha_nacimiento,
+          email: datos.correo_electronico,
+          telefono: datos.telefono,
+          calle: datos.calle,
+          numero: datos.numero_calle,
+          nacionalidad: datos.pais_nacimiento,
+          provincia: datos.provincia,
+          localidad: datos.localidad,
+          estado: datos.estado_civil
+        });
+      } catch (error) {
+        console.error("Error al obtener los datos del empleado:", error);
+      }
+    };
+  
+    cargarDatosEmpleado();
+  }, []);
 
   return (
     <div className="container-personal-data">
@@ -91,45 +139,45 @@ export const EditarEmpleado = () => {
             <div className="data-item">
               <p className="data-item--label">Nombre/s:</p>
               <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
+                className="data-item--value"
                 type="text"
                 name="nombre"
                 value={personalData.nombre}
                 onChange={handleChange}
-                readOnly={!isEditable}
+                readOnly={true}
               />
             </div>
             <div className="data-item">
               <p className="data-item--label">Apellido/s</p>
               <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
+                className="data-item--value"
                 type="text"
                 name="apellido"
                 value={personalData.apellido}
                 onChange={handleChange}
-                readOnly={!isEditable}
+                readOnly={true}
               />
             </div>
             <div className="data-item">
               <p className="data-item--label">DNI:</p>
               <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
+                className="data-item--value"
                 type="number"
                 name="dni"
                 value={personalData.dni}
                 onChange={handleChange}
-                readOnly={!isEditable}
+                readOnly={true}
               />
             </div>
             <div className="data-item">
               <p className="data-item--label">Fecha de nacimiento</p>
               <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
+                className="data-item--value"
                 type="text"
                 name="fechaNacimiento"
                 value={personalData.fechaNacimiento}
                 onChange={handleChange}
-                readOnly={!isEditable}
+                readOnly={true}
               />
             </div>
           </div>
@@ -162,7 +210,7 @@ export const EditarEmpleado = () => {
               <input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
-                name="direccion"
+                name="calle"
                 value={personalData.calle}
                 onChange={handleChange}
                 readOnly={!isEditable}
@@ -173,7 +221,7 @@ export const EditarEmpleado = () => {
               <input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
-                name="nacionalidad"
+                name="numero"
                 value={personalData.numero}
                 onChange={handleChange}
                 readOnly={!isEditable}
@@ -182,12 +230,12 @@ export const EditarEmpleado = () => {
             <div className="data-item">
               <p className="data-item--label">País de nacimiento:</p>
               <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
+                className={`data-item--value`}
                 type="text"
                 name="nacionalidad"
                 value={personalData.nacionalidad}
                 onChange={handleChange}
-                readOnly={!isEditable}
+                readOnly={true}
               />
             </div>
             <div className="data-item">
@@ -195,7 +243,7 @@ export const EditarEmpleado = () => {
               <input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
-                name="nacionalidad"
+                name="provincia"
                 value={personalData.provincia}
                 onChange={handleChange}
                 readOnly={!isEditable}
@@ -206,7 +254,7 @@ export const EditarEmpleado = () => {
               <input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
-                name="nacionalidad"
+                name="localidad"
                 value={personalData.localidad}
                 onChange={handleChange}
                 readOnly={!isEditable}
@@ -226,10 +274,7 @@ export const EditarEmpleado = () => {
           </div>
         </div>
         <div className="button-container">
-          <button className="save-button" onClick={handleSave}>
-                Guardar
-            </button>
-          {/*{!isEditable ? (
+          {!isEditable ? (
             <button className="edit-button" onClick={() => setIsEditable(true)}>
               Modificar Información
             </button>
@@ -242,7 +287,7 @@ export const EditarEmpleado = () => {
                 Cancelar
               </button>
             </>
-          )}*/}
+          )}
         </div>
       </div>
     </div>

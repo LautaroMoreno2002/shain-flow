@@ -18,6 +18,16 @@ const api = axios.create({
 //   },
 // });
 
+export interface ModificarData {
+  telefono: string,
+  correo_electronico: string,
+  calle: string,
+  numero_calle: string,
+  localidad: string,
+  partido: string,
+  provincia: string
+}
+
 // 1. Listar empleados
 export const listarEmpleados = async () => {
   const response = await api.get("/empleados/");
@@ -35,7 +45,7 @@ export const obtenerEmpleadoPorIdentificacion = async (
 // 3. Actualizar datos personales del empleado
 export const actualizarDatosEmpleado = async (
   empleadoId: string,
-  nuevosDatos: PersonalDataType
+  nuevosDatos: ModificarData
 ) => {
   const response = await api.put(
     `/empleados/${empleadoId}/datos-personales`,

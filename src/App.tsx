@@ -66,7 +66,7 @@ function App() {
           <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>          
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
-    <Route path='/Supervisor' element={<Supervisor />}>
+    <Route path='/supervisor' element={<Supervisor />}>
           <Route path="verDatos" element={<VerDatos />}></Route>
           <Route path="asistencias" element={<Asistencias />}></Route>
           <Route path="datosLaborales" element={<DatosLaborales />}></Route>
