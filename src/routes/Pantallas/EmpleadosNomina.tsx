@@ -169,7 +169,9 @@ export const EmpleadosNomina = () => {
             {Object.entries(nuevoConcepto).map(([campo, valor]) => {
               const label = campo.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 
-              const opcionesIdentificacion = ["DNI", "Pasaporte", "Libreta Cívica"];
+              const opcionesTipoConcepto = ['Remunerativo','No remunerativo','Deducción','Retención','Percepción',
+                'Indemnización','Reintegro','Premio','Multa','Ajuste','Anticipo','Vacaciones'];
+              const opcionesEsPorcentaje = ["Si", "No"];
               const opcionesProvincia = [
                 "Buenos Aires", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes", "Entre Ríos", "Formosa",
                 "Jujuy", "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquén", "Río Negro", "Salta", "San Juan",
@@ -182,8 +184,8 @@ export const EmpleadosNomina = () => {
               ];
 
               let opciones: string[] = [];
-              if (campo === "tipo_identificacion") opciones = opcionesIdentificacion;
-              else if (campo === "provincia") opciones = opcionesProvincia;
+              if (campo === "tipo_concepto") opciones = opcionesTipoConcepto;
+              else if (campo === "es_porcentaje") opciones = opcionesEsPorcentaje;
               else if (campo === "pais_nacimiento") opciones = opcionesPaises;
 
               return (
