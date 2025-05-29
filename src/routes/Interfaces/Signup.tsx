@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, progress } from "framer-motion";
 import DefaultLayout from "../../components/DefaultLayout";
 import { NavLink } from "react-router-dom";
 import '../../estilos/signup.css';
@@ -55,7 +55,6 @@ export const CredentialForm = ({
 
 export const Signup = () => {
   const [step, setStep] = useState(1);
-
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
@@ -121,7 +120,14 @@ export const Signup = () => {
       setErrorResponse('Ocurrió un error en la conexión');
     }
   }
+  const totalInputs = 14;
+  const completedInputs = [
+    name, lastname, email, DNITipo, DNI,
+    nacionalidad, calle, numeroCalle, provincia, localidad, partido,
+    username, password, confirmPassword
+  ].filter(val => val !== '').length;
 
+const progresoActual = Math.round((completedInputs / totalInputs) * 100);
   return (
     <DefaultLayout>
       <form onSubmit={handleSubmit} className="signup-form">
@@ -260,6 +266,20 @@ export const Signup = () => {
           )}
         </AnimatePresence>
 
+          <div
+  className="progress"
+  role="progressbar"
+  aria-label="Progreso de registro"
+  aria-valuenow={progresoActual}
+  aria-valuemin={0}
+  aria-valuemax={100}
+>
+  <div className="progress-bar bg-danger" style={{ width: `${progresoActual}%` }}>
+    {progresoActual}%
+  </div>
+</div>
+
+
         {step === 1 ? (
           <button
             type="button"
@@ -298,7 +318,7 @@ export const Signup = () => {
             <NavLink to="/login">Ingresar manualmente</NavLink>
           </p>
           <NavLink to="/">
-            <img src="/face-id-icon.png" alt="Reconocimiento facial" className="face-icon" />
+            <img src="/scaneo.png" alt="Reconocimiento facial" title="Reconocimiento facial" className="face-icon" />
           </NavLink>
         </div>
       </form>

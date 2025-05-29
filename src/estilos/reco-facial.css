@@ -4,7 +4,6 @@
   flex-direction: column;
   min-height: 100dvh;
   text-align: center;
-  padding: 1em;
 }
 
 /* Logo */
@@ -24,12 +23,11 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  gap: 3em;
+  gap: 2em;
 }
 .seccion-camara {
   width: 100%;
   min-width: 300px;
-  position: relative;
 }
 /* Cámara */
 .seccion-camara .camara {
@@ -78,13 +76,14 @@
 /* Alternativa */
 .seccion-alternativa {
   text-align: center;
+  margin-bottom: 1em;
 }
 .seccion-alternativa span {
   font-weight: 700;
 }
 
 /* Versión desktop */
-@media (min-width: 850px) {
+@media (min-width: 900px) {
   .contenido {
     flex-direction: row;
     justify-content: space-evenly;
@@ -128,11 +127,14 @@
     justify-content: space-evenly;
     align-items: center;
   }
-
   .seccion-camara,
   .seccion-alternativa {
     flex: 1;
     max-width: 60%;
+  }
+
+  .seccion-camara {
+    min-width: 500px;
   }
 
   .seccion-alternativa {
@@ -143,5 +145,24 @@
     min-width: 500px;
     max-width: 700px;
     height: 700px;
+  }
+}
+
+.estado-reconocimiento {
+  text-align: center;
+  margin-bottom: 1em;
+  animation-name: expand;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes expand {
+  0% {
+    scale: 1;
+  }
+  100% {
+    scale: 1.1;
   }
 }

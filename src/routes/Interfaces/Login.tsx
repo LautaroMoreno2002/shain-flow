@@ -114,7 +114,7 @@ export const Login = () => {
   {/* Ícono de reconocimiento facial */}
   <div className="face-id-container">
     <NavLink to="/">
-      <img src="/ruta-icono-facial.png" alt="Reconocimiento facial" className="face-id-icon" />
+      <img src="/scaneo.png" alt="Reconocimiento facial" className="face-id-icon" />
     </NavLink>
   </div>
 

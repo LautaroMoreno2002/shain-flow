@@ -193,6 +193,7 @@ export const RegistroFacial = () => {
 
             <main className="contenido">
                 <section className="seccion-camara">
+                    <p className="estado-reconocimiento">{registrationStatus}</p>
                     <div className="camara">
                         <video
                             ref={videoRef}
@@ -210,7 +211,6 @@ export const RegistroFacial = () => {
                             }}
                         ></video>
                     </div>
-                    <p className="estado-reconocimiento">{registrationStatus}</p>
                 </section>
 
                 <section className="seccion-derecha">

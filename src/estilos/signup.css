@@ -56,7 +56,7 @@ label {
 }
 
 .signup-button {
-  background-color: #8676f9;
+  background-color: rgb(160, 3, 3);
   color: white;
   font-weight: bold;
   border: none;
@@ -72,31 +72,33 @@ label {
 }
 
 .signup-button:disabled {
-  background-color: #c4b8fa;
+  background-color: rgb(160, 3, 3);
   cursor: not-allowed;
 }
 
 .face-login-section {
-  margin-top: 2rem;
   display: flex;
-  flex-direction: column;
+  text-align: center;
+  justify-content: center;
   align-items: center;
+  margin-top: 2rem;
+  gap: 5em;
 }
 
 .login-text {
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 
 .login-text a {
-  color: #8676f9;
-  text-decoration: underline;
-  font-weight: 500;
+  color: rgb(160, 3, 3);
+  text-decoration: none;
+  font-weight: 700;
 }
 
 .face-icon {
-  width: 60px;
+  max-width: 90px;
   height: auto;
 }
 
@@ -152,4 +154,7 @@ label {
     min-width: 200px;
     align-self: center;
   }
+}
+.progress {
+  width: 50%;
 }

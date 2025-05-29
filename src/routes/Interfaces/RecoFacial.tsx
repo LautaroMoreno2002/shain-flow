@@ -46,7 +46,7 @@ export const ReconocimientoFacial = () => {
 
         socketRef.current.onclose = () => {
             console.log("Desconectado del servidor WebSocket.");
-            setRecognitionStatus("Desconectado del servidor de reconocimiento.");
+            setRecognitionStatus("Desconectado del servidor de reconocimiento.");//TODO
         };
 
         socketRef.current.onerror = (error) => {
@@ -139,6 +139,16 @@ export const ReconocimientoFacial = () => {
 
             <main className="contenido">
                 <section className="seccion-camara">
+                    <p className="estado-reconocimiento" 
+                    // style={{animation: `${recognitionStatus ? "expand" : ""}`, animationIterationCount: `${recognitionStatus ? "infinite" : "1"}`}}
+                    >
+                        {recognitionStatus}
+                        {currentGesturePrompt && (
+                            <span style={{ marginLeft: '10px' }}>
+                                {gestureEmojis[currentGesturePrompt]}
+                            </span>
+                        )}
+                    </p>
                     <div className="camara">
                         <video
                             ref={videoRef}
@@ -156,14 +166,6 @@ export const ReconocimientoFacial = () => {
                             }}
                         ></video>
                     </div>
-                    <p className="estado-reconocimiento">
-                        {recognitionStatus}
-                        {currentGesturePrompt && (
-                            <span style={{ marginLeft: '10px' }}>
-                                {gestureEmojis[currentGesturePrompt]}
-                            </span>
-                        )}
-                    </p>
                 </section>
 
                 <section className="seccion-derecha">
