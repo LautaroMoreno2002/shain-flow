@@ -52,3 +52,16 @@ export default tseslint.config({
   },
 })
 ```
+
+
+# HERRAMIENTAS USADAS
+## VERCEL
+Tiene que estar la carpeta dist con el contenido pasado a JS, HTML y CSS puro.
+Usar 
+  npm run build
+Instalar vercel en la terminal
+  npm install vercel
+Hostear con 
+  vercel
+Hostear más veces con
+  vercel --prod

@@ -6,7 +6,7 @@ interface DefaultLayoutProps {
 }
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
-    <>
+    <div className="default-layout">
       {/*<header className="navbar-header">
       <nav className="navbar">
         <ul className="nav-list">
@@ -20,7 +20,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
       </nav>
     </header>*/}
 
-      <main>{children}</main>
-    </>
+      {children}
+    </div>
   );
 }

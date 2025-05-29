@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence, progress } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import DefaultLayout from "../../components/DefaultLayout";
 import { NavLink } from "react-router-dom";
 import '../../estilos/signup.css';
