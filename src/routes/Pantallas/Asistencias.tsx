@@ -78,6 +78,7 @@ export const Asistencias = () => {
     'Vacaciones': 'vacaciones',
     'Suspensión': 'suspension',
     'No laboral': 'no-laboral',
+    'Completa con horas extra': 'comp-he',
     'Otra': 'otra'
   };
 

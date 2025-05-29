@@ -46,11 +46,13 @@
     padding: 1rem;
     font-weight: bold;
     border-bottom: 1px solid #333;
+    text-align: center;
   }
   & td {
     padding: 1rem;
     border-bottom: 1px solid #ddd;
     border-left: 1px solid #ddd;
+    text-align: center;
 
     &:first-child {
       border-left: none;
@@ -86,7 +88,7 @@ th, td {
 }
 
 .completa {
-  background-color: #d4edda;
+  background-color: #05ff3f;
   color: #155724;
   font-weight: bold;
 }
@@ -95,10 +97,30 @@ th, td {
   color: #6e6702;
   font-weight: bold;
 }
+.comp-he {
+  background-color: #88f4a1;
+  color: #155724;
+  font-weight: bold;
+}
 .falta, .licencia-medica, .vacaciones, .suspension, .no-laboral, .otra {
   background-color: #ff7c7c;
   color: #a00303;
   font-weight: bold;
+}
+.leyenda-abreviaciones {
+  display: flex;
+  gap: 2rem; /* espacio entre cada elemento */
+  flex-wrap: wrap; /* permite que baje a otra línea si no entra */
+  font-size: 1.1rem; /* tamaño de letra más grande */
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.leyenda-abreviaciones li {
+  display: flex;
+  align-items: center;
 }
 @media screen and (max-width: 900px) {
   .cont-asistencias {
