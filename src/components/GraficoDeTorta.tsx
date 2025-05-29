@@ -1,4 +1,5 @@
-import { PieChart, ResponsiveContainer, Pie, Tooltip, Cell } from 'recharts'
+import { span } from 'framer-motion/client'
+import { PieChart, ResponsiveContainer, Pie, Tooltip, Cell, Legend } from 'recharts'
 
 const data = [
     { name: "Asistencia", value: 94 },
@@ -10,6 +11,7 @@ const data = [
 const COLORS = ['#20c997', '#dc3545', '#fd7e14', '#ffc107', '#f48fb1', '#d500f9']
 
 export const GraficoDeTorta = () => {
+
   return (
     <div style={{ width: '100%', height: 300,}}>
         <ResponsiveContainer>
@@ -28,6 +30,20 @@ export const GraficoDeTorta = () => {
                    ))}     
                 </Pie>
                 <Tooltip />
+                  <Legend
+                      verticalAlign="middle"
+                      wrapperStyle={{ paddingTop: "4%" }}
+                      payload={
+                          data.map(
+                              (item, index) => ({
+                                  id: item.name,
+                                  type: "square",
+                                  value: `${item.name} :${item.value}`,
+                                  color: COLORS[index % COLORS.length]
+                              })
+                          )
+                      }
+                  />
             </PieChart>
 
         </ResponsiveContainer>

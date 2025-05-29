@@ -12,7 +12,7 @@ const data = [
 
 export const GraficoDeBarra = () => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center'}}>
       <ResponsiveContainer width="60%" aspect={2}>        
         <BarChart
           data={data}          
@@ -30,10 +30,10 @@ export const GraficoDeBarra = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="semana_1" fill="#6b48ff" />
-          <Bar dataKey="semana_2" fill="#1ee3cf" />
-          <Bar dataKey="semana_3" fill="#fd7e14" />
-          <Bar dataKey="semana_4" fill="#d63384" />
+          <Bar dataKey="semana_1" fill="#6b48ff" label={{position:"top"}}/>
+          <Bar dataKey="semana_2" fill="#1ee3cf" label={{position:"top"}}/>
+          <Bar dataKey="semana_3" fill="#fd7e14" label={{position:"top"}}/>
+          <Bar dataKey="semana_4" fill="#d63384" label={{position:"top"}}/>
         </BarChart>
       </ResponsiveContainer>
     </div>
