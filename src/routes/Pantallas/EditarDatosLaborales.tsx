@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 // Definimos el tipo de datos personales
-interface PersonalDataType {
+interface PersonalDataType {  
   departamento: string;
   puesto: string;
   categoria: string;
@@ -16,6 +16,7 @@ interface PersonalDataType {
   tipoContrato: string; 
   estado: string;
   tipoSemana: string;
+  turno: string;
 }
 
 export const EditarDatosLaborales = () => {
@@ -35,10 +36,11 @@ export const EditarDatosLaborales = () => {
       tipoContrato: "Permanente",
       estado: "Activo",
       tipoSemana: "Normal",
+      turno: "Mañana"
   });
 
   // Función para manejar los cambios en los inputs
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setPersonalData((prevData) => ({
       ...prevData,
@@ -75,6 +77,19 @@ export const EditarDatosLaborales = () => {
   //   });
   // };
 
+  const opcionesDepartamentos = ['Finanzas','Sistemas','RRHH','Contaduría','Administracón','Operaciones'];
+  const opcionesPuetos = ['CEO','Presidente','Visepresidente','Director','Gerente', 'Supervisor','Jefe', 
+    'Empleado'];
+  const opcionesCategoria = ['Directivo','Ejecutivo','Administrativo','Operario','Técnico'];
+  const opcionesTipoContrato = ['Tiempo indeterminado', 'Tiempo parcial','A plazo fijo', 'Por temporada',
+    'Eventual','Pasantia'];
+  const opcionesEstado = ['Activo', 'Suspendido','Desafectado', 'Licencia','En formacion','Jubilado',
+    'Vacaciones'];
+  const opcionesSemanaLaboral = [ 'Normal', 'Extendida', 'Completa'];
+  const opcionesTurno = [ 'Mañana', 'Tarde', 'Noche'];
+
+  //let opciones: string[] = opcionesTipoConcepto;
+
   return (
     <div className="container-personal-data">
       <div className="personal-data">
@@ -82,37 +97,49 @@ export const EditarDatosLaborales = () => {
         <div className="data-container">
           <div className="data-group">
             <div className="data-item">
-              <p className="data-item--label">Departamento:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="departamento"
-                value={personalData.departamento}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
+              <p className="data-item--label">Departamento:</p>              
+              <select
+                      id="departamento"
+                      name="departamento"
+                      value={personalData.departamento}
+                      onChange={handleChange}
+                      className={`data-item--value ${isEditable ? "editable" : ""}`}
+                    >
+                      <option value="">Seleccione una opción</option>
+                      {opcionesDepartamentos.map((opcion) => (
+                        <option key={opcion} value={opcion}>{opcion}</option>
+                      ))}
+                    </select>
             </div>
             <div className="data-item">
               <p className="data-item--label">Puesto:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="Puesto"
-                value={personalData.puesto}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
+              <select
+                      id="puesto"
+                      name="puesto"
+                      value={personalData.puesto}
+                      onChange={handleChange}
+                      className={`data-item--value ${isEditable ? "editable" : ""}`}
+                    >
+                      <option value="">Seleccione una opción</option>
+                      {opcionesPuetos.map((opcion) => (
+                        <option key={opcion} value={opcion}>{opcion}</option>
+                      ))}
+                    </select>
             </div>
             <div className="data-item">
               <p className="data-item--label">Categoria:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="categoria"
-                value={personalData.categoria}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
+              <select
+                      id="categoria"
+                      name="categoria"
+                      value={personalData.categoria}
+                      onChange={handleChange}
+                      className={`data-item--value ${isEditable ? "editable" : ""}`}
+                    >
+                      <option value="">Seleccione una opción</option>
+                      {opcionesCategoria.map((opcion) => (
+                        <option key={opcion} value={opcion}>{opcion}</option>
+                      ))}
+                    </select>
             </div>
             <div className="data-item">
               <p className="data-item--label">Fecha de alta</p>
@@ -163,36 +190,63 @@ export const EditarDatosLaborales = () => {
             </div>
             <div className="data-item">
               <p className="data-item--label">Tipo de contrato:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="tipoContrato"
-                value={personalData.tipoContrato}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
+              <select
+                      id="tipoContrato"
+                      name="tipoContrato"
+                      value={personalData.tipoContrato}
+                      onChange={handleChange}
+                      className={`data-item--value ${isEditable ? "editable" : ""}`}
+                    >
+                      <option value="">Seleccione una opción</option>
+                      {opcionesTipoContrato.map((opcion) => (
+                        <option key={opcion} value={opcion}>{opcion}</option>
+                      ))}
+                    </select>              
             </div>
             <div className="data-item">
               <p className="data-item--label">Estado:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="estado"
-                value={personalData.estado}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
+              <select
+                      id="estado"
+                      name="estado"
+                      value={personalData.estado}
+                      onChange={handleChange}
+                      className={`data-item--value ${isEditable ? "editable" : ""}`}
+                    >
+                      <option value="">Seleccione una opción</option>
+                      {opcionesEstado.map((opcion) => (
+                        <option key={opcion} value={opcion}>{opcion}</option>
+                      ))}
+                    </select>
             </div>
             <div className="data-item">
               <p className="data-item--label">Tipo de semana laboral:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="tipoSemana"
-                value={personalData.tipoSemana}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
+              <select
+                      id="tipoSemana"
+                      name="tipoSemana"
+                      value={personalData.tipoSemana}
+                      onChange={handleChange}
+                      className={`data-item--value ${isEditable ? "editable" : ""}`}
+                    >
+                      <option value="">Seleccione una opción</option>
+                      {opcionesSemanaLaboral.map((opcion) => (
+                        <option key={opcion} value={opcion}>{opcion}</option>
+                      ))}
+                    </select>
+            </div>
+            <div className="data-item">
+              <p className="data-item--label">Turno:</p>
+              <select
+                      id="turno"
+                      name="turno"
+                      value={personalData.turno}
+                      onChange={handleChange}
+                      className={`data-item--value ${isEditable ? "editable" : ""}`}
+                    >
+                      <option value="">Seleccione una opción</option>
+                      {opcionesTurno.map((opcion) => (
+                        <option key={opcion} value={opcion}>{opcion}</option>
+                      ))}
+                    </select>
             </div>
           </div>
         </div>
@@ -200,20 +254,7 @@ export const EditarDatosLaborales = () => {
           <button className="save-button" onClick={handleSave}>
                 Guardar
             </button>
-          {/*{!isEditable ? (
-            <button className="edit-button" onClick={() => setIsEditable(true)}>
-              Modificar Información
-            </button>
-          ) : (
-            <>
-              <button className="save-button" onClick={handleSave}>
-                Guardar
-              </button>
-              <button className="cancel-button" onClick={handleCancel}>
-                Cancelar
-              </button>
-            </>
-          )}*/}
+          
         </div>
       </div>
     </div>
