@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { EmpleadoNomina } from "../../components/EmpleadoNomina";
 import "../../estilos/empleados.css";
 import { listarEmpleados, crearEmpleado } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 export interface Empleado {
   id_empleado: number;
@@ -36,15 +37,16 @@ export const EmpleadosNomina = () => {
   });
 
   const [nuevoConcepto, setNuevoConcepto] = useState({
-    codigo:"",
-    nombre:"",
-    tipo_concepto:"",
-    valor:"",
-    es_porcentaje: ""
+    codigo: "0",
+    nombre:"Salario base",
+    tipo_concepto:"Remunerativo",
+    valor: "600000",
+    es_porcentaje: "No"
   })
 
   const [errores, setErrores] = useState<{ [key: string]: boolean }>({});
   const [mensajeError, setMensajeError] = useState<string>("");
+  const [isEditable, setIsEditable] = useState<boolean>(true);
 
   useEffect(() => {
     const cargarEmpleados = async () => {
@@ -66,7 +68,7 @@ export const EmpleadosNomina = () => {
 
   const manejarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setNuevoEmpleado((prev) => ({ ...prev, [name]: value }));
+    setNuevoConcepto((prev) => ({ ...prev, [name]: value }));
     setErrores((prev) => ({ ...prev, [name]: false }));
   };
 
@@ -74,7 +76,7 @@ export const EmpleadosNomina = () => {
     const nuevosErrores: { [key: string]: boolean } = {};
     let esValido = true;
   
-    Object.entries(nuevoEmpleado).forEach(([key, valor]) => {
+    Object.entries(nuevoConcepto).forEach(([key, valor]) => {
       if (!valor.trim()) {
         nuevosErrores[key] = true;
         esValido = false;
@@ -86,10 +88,13 @@ export const EmpleadosNomina = () => {
       setMensajeError("Por favor, completa todos los campos antes de continuar.");
       return;
     }
+    //Quitar esto cuanod se integre con back-end
+    alert("Concepto cargado correctamente");
+    setMostrarFormulario(false);
   
-    try {
-      console.log("Enviando empleado:", nuevoEmpleado);
-      const empleadoCreado = await crearEmpleado(nuevoEmpleado);
+    {/*try {
+      console.log("Enviando empleado:", nuevoConcepto);
+      const empleadoCreado = await crearEmpleado(nuevoConcepto);
   
       setEmpleados((prev) => [
         ...prev,
@@ -126,7 +131,7 @@ export const EmpleadosNomina = () => {
     } catch (error) {
       console.error("Error al crear empleado:", error);
       setMensajeError("Error al crear el empleado. Intenta nuevamente.");
-    }
+    }*/}
   };
   
 
@@ -164,7 +169,9 @@ export const EmpleadosNomina = () => {
             {Object.entries(nuevoConcepto).map(([campo, valor]) => {
               const label = campo.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 
-              const opcionesIdentificacion = ["DNI", "Pasaporte", "Libreta Cívica"];
+              const opcionesTipoConcepto = ['Remunerativo','No remunerativo','Deducción','Retención','Percepción',
+                'Indemnización','Reintegro','Premio','Multa','Ajuste','Anticipo','Vacaciones'];
+              const opcionesEsPorcentaje = ["Si", "No"];
               const opcionesProvincia = [
                 "Buenos Aires", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes", "Entre Ríos", "Formosa",
                 "Jujuy", "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquén", "Río Negro", "Salta", "San Juan",
@@ -177,8 +184,8 @@ export const EmpleadosNomina = () => {
               ];
 
               let opciones: string[] = [];
-              if (campo === "tipo_identificacion") opciones = opcionesIdentificacion;
-              else if (campo === "provincia") opciones = opcionesProvincia;
+              if (campo === "tipo_concepto") opciones = opcionesTipoConcepto;
+              else if (campo === "es_porcentaje") opciones = opcionesEsPorcentaje;
               else if (campo === "pais_nacimiento") opciones = opcionesPaises;
 
               return (
@@ -201,7 +208,7 @@ export const EmpleadosNomina = () => {
                     <input
                       id={campo}
                       name={campo}
-                      type={campo === "fecha_nacimiento" ? "date" : "text"}
+                      type= "text" //{campo === "valor" ? "number" : campo === "codigo" ? "number" : "text"}
                       value={valor}
                       onChange={manejarCambio}
                       className={errores[campo] ? "input-error" : ""}
@@ -221,3 +228,4 @@ export const EmpleadosNomina = () => {
     </div>
   );
 };
+
