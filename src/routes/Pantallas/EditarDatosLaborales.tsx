@@ -77,10 +77,11 @@ export const EditarDatosLaborales = () => {
   //   });
   // };
 
-  const opcionesDepartamentos = ['Finanzas','Sistemas','RRHH','Contaduría','Administracón','Operaciones'];
-  const opcionesPuetos = ['CEO','Presidente','Visepresidente','Director','Gerente', 'Supervisor','Jefe', 
-    'Empleado'];
-  const opcionesCategoria = ['Directivo','Ejecutivo','Administrativo','Operario','Técnico'];
+  const opcionesDepartamentos = ['Recursos Humanos', 'Sistemas', 'Contabilidad'];
+  const opcionesPuetos = ['Trainee', 'Junior', 'Semi Senior', 'Senior', 'Teach Lead'];
+  const opcionesCategoria = ['Arquitecto de Software', 'DevOps', 'QA Analyst', 'Scrum Master', 'Project Manager', 
+    'Product Owner', 'Analista Funcional', 'Backend Developer', 'Frontend Developer', 'Fullstack Developer', 
+    'Data Analyst', 'Data Engineer', 'Data Scientist', 'UX/UI Designer', 'CTO'];
   const opcionesTipoContrato = ['Tiempo indeterminado', 'Tiempo parcial','A plazo fijo', 'Por temporada',
     'Eventual','Pasantia'];
   const opcionesEstado = ['Activo', 'Suspendido','Desafectado', 'Licencia','En formacion','Jubilado',
