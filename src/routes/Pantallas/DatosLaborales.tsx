@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import '../../estilos/datosLaborales.css'
-import { datosLabPorId } from '../../services/api';
+import { datosLabPorId, nominasPorId } from '../../services/api';
 import { CircularProgress } from '@mui/material';
 
 interface DatosLaborales {
@@ -11,6 +11,25 @@ interface DatosLaborales {
   horario_salida: string;
   fecha_ingreso: string;
   tipo_contrato: string;
+}
+
+interface Nomina {
+  id_nomina: string;
+  id_empleado: number;
+  periodo: string;
+  fecha_de_pago: string;
+  salario_base: number;
+  bono_presentismo: number;
+  bono_antiguedad: number;
+  horas_extra: number;
+  descuento_jubilacion: number;
+  descuento_obra_social: number;
+  descuento_anssal: number;
+  descuento_ley_19032: number;
+  impuesto_ganancias: number;
+  descuento_sindical: number;
+  sueldo_bruto: number;
+  sueldo_neto: number;
 }
 
 export const DatosLaboralesDescrip = () => {
@@ -77,9 +96,68 @@ export const DatosLaboralesDescrip = () => {
 
 
 export const UltRecibos = () => {
+  const [nominas, setNominas] = useState<any | null>(null);
+  const [cargando, setCargando] = useState(false);
+
+  useEffect(() => {
+    const fetchNominas = async () => {
+      try {
+        setCargando(true);
+        const response = await nominasPorId('1'); 
+        console.log(response);
+        console.log(response.nominas);
+        setNominas(response);
+      } catch (error) {
+        console.error("Error al obtener las nóminas:", error);
+      } finally {
+        setCargando(false);
+      }
+    };
+    fetchNominas();
+  }, []);
+
   return (
     <div className="cont-recibos">
-      <h2>Últimos recibos de sueldo</h2>
+      <div className="cont-recibos__title">
+        <h2>Últimos recibos de sueldo</h2>
+      </div>
+      <div className="cont-recibos__table" style={{ position: 'relative' }}>
+        {cargando && (
+          <div className="overlay">
+            <CircularProgress />
+          </div>
+        )}
+        {/*
+        <table style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
+          {nominas?.nominas.lenght === 0 ?
+            <p>No hay nóminas cargadas</p>
+            :
+            <>
+              <thead>
+                <tr>
+                  {nominas?.nominas?.[0] &&
+                    Object.keys(nominas.nominas[0]).map((clave) => (
+                      <th key={clave}>{clave}</th>
+                    ))
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                {nominas?.nominas?.map((fila: number, index: number) => (
+                  <tr key={index}>
+                    {Object.values(fila).map((valor, i) => (
+                      <td key={i}>{valor}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </>
+          }
+        </table>
+      </div>
+    </div>
+  );
+}; */}
       <table>
         <thead>
           <tr>
@@ -136,6 +214,7 @@ export const UltRecibos = () => {
           </tr>
         </tbody>
       </table>
+    </div> 
     </div>
   )
 }

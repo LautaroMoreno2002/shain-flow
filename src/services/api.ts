@@ -72,7 +72,7 @@ export const nominasPorId = async (
   numeroId: string
 ) => {
   const response = await api.get(
-    `/registros/${numeroId}`
+    `/nominas/empleado/${numeroId}`
   );
   return response.data;
 };
