@@ -9,7 +9,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
     <div className="default-layout">
       <div className="cont-empresa">
         <div className="empresa-logo">
-          <img src="/logo.png" alt="Logo de la empresa" />
+          <img src="/Logo_Empresa.png" alt="Logo de la empresa" />
         </div>
         <div className="empresa-descripcion">
           <h2>Sobre la empresa</h2>
