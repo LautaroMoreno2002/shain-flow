@@ -1,6 +1,6 @@
 .default-layout {
   display: flex;
-  min-height: 100vh; /* Para que ocupen todo el alto */
+  max-height: 90vh; /* Para que ocupen todo el alto */
 }
 
 /* Panel lateral: empresa */
@@ -8,7 +8,7 @@
   background-color: #f9f9f9;
   padding: 2rem;
   border-right: 1px solid #e0e0e0;
-  width: 300px;
+  width: 500px;
   box-sizing: border-box;
 }
 
@@ -22,7 +22,8 @@
 /* Opcionales: diseño de logo y textos */
 .empresa-logo img {
   max-width: 100%;
-  height: auto;
+  height: 150px;
+  margin: auto;
   margin-bottom: 1rem;
 }
 
