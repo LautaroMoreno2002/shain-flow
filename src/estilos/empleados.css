@@ -177,14 +177,14 @@ button {
   color: white;
 }
 .lista-empleados > button {
-  background-color: #2d89ef;       /* azul vibrante */
+  background-color: var(--c1);       /* azul vibrante */
   color: white;
   border: none;
   padding: 8px;
   font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgb(45 137 239 / 0.4);
+  box-shadow: 0 4px 8px var(--c2);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   display: inline-flex;
   align-items: center;
@@ -192,17 +192,21 @@ button {
 }
 
 .lista-empleados > button:hover {
-  background-color: #1b5fbd;
-  box-shadow: 0 6px 12px rgb(27 95 189 / 0.6);
+  background-color: var(--c2);
+  box-shadow: 0 6px 12px var(--c2);
 }
 
 .lista-empleados > button:active {
-  background-color: #144a8a;
-  box-shadow: 0 2px 4px rgb(20 74 138 / 0.8);
+  background-color: var(--c2);
+  box-shadow: 0 2px 4px var(--c2);
   transform: scale(0.97);
 }
 
 .lista-empleados > button:focus {
-  outline: 3px solid #a3c2f7;
+  outline: 3px solid var(--c2);
   outline-offset: 2px;
+}
+
+.plus {
+  color: #FFF;
 }

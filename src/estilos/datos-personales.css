@@ -20,7 +20,7 @@
   text-align: center;
   font-size: 2rem;
   margin-bottom: 1.5em;
-  color: #0056b3;
+  color: var(--c1);
   text-transform: uppercase;
 }
 
@@ -44,7 +44,7 @@
 
 .data-item--label {
   font-weight: bold;
-  color: #0056b3;
+  color: var(--c1);
 }
 
 .data-item--value {
@@ -57,7 +57,7 @@
   bottom: 20px;   /* Fija el botón en la parte inferior */
   right: 20px;    /* Fija el botón a la derecha */
   padding: 1em 2em;
-  background-color: #0056b3;  /* Color celeste */
+  background-color: var(--c2);  /* Color celeste */
   color: white;
   font-size: 1rem;
   border-radius: 15px;
@@ -68,7 +68,7 @@
 }
 
 .edit-button:hover {
-  background-color: #0088cc;  /* Cambio de color en hover */
+  background-color: var(--c1);  /* Cambio de color en hover */
 }
 @media (max-width: 900px) {
   .personal-data {
@@ -109,12 +109,12 @@
 }
 
 .edit-button {
-  background-color: #007bff;
+  background-color: var(--c1);
   color: white;
 }
 
 .edit-button:hover {
-  background-color: #0056b3;
+  background-color: var(--c2);
 }
 
 .save-button {
@@ -146,12 +146,12 @@
 
 /* Borde inferior celeste cuando los inputs están en modo editables */
 .data-item--value:focus {
-  border-color: #00bcd4; /* Celeste */
+  border-color: var(--c1); /* Celeste */
 }
 
 /* Borde inferior celeste al presionar el botón "Modificar Información" */
 .data-item--value.editable {
-  border-color: #00bcd4; /* Celeste */
+  border-color: var(--c2); /* Celeste */
 }
 
 @media (max-width: 600px) {

@@ -6,6 +6,9 @@
 }
 body {
   /* background-color: #272727; */
+  --c1: #520f02;
+  --c2: #270700;
+  --c3: #737373;
 }
 #root {
   max-width: 1280px;

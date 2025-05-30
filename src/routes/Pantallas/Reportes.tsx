@@ -1,4 +1,3 @@
-import { button } from "framer-motion/client";
 import PDF from "../../components/DocumentoPDF";
 import { GraficoDeBarra } from "../../components/GarficoDeBarra";
 import { GraficoDeTorta } from "../../components/GraficoDeTorta";

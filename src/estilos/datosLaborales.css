@@ -20,7 +20,7 @@
 .titulo {
   font-size: 1.8rem;
   margin-bottom: 20px;
-  color: #0056b3;
+  color: var(--c1);
   text-align: center;
   text-transform: uppercase;
 }
@@ -40,7 +40,7 @@
 .cont-datos__item--label {
   font-weight: bold;
   margin: 5px 0;
-  color: #0056b3;
+  color: var(--c1);
 }
 
 .cont-datos__item--value {
@@ -52,7 +52,7 @@
   font-size: 1.6rem;
   margin-bottom: 20px;
   text-align: center;
-  color: #0056b3;
+  color: var(--c1);
   text-transform: uppercase;
 }
 
@@ -75,7 +75,7 @@
 }
 
 .cont-recibos th {
-  background-color: #0056b3;
+  background-color: var(--c1);
   color: #fff;
   font-weight: 600;
 }

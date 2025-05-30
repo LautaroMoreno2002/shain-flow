@@ -143,7 +143,7 @@ export const Empleados = () => {
               <EmpleadoItem key={empleado.id_empleado} empleado={empleado} />
             ))}
             <button onClick={() => setMostrarFormulario(true)}>
-              ➕ Agregar empleado
+              <span className="plus">➕</span> Agregar empleado
             </button>
           </div>
         </>

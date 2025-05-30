@@ -274,7 +274,7 @@ const progresoActual = Math.round((completedInputs / totalInputs) * 100);
   aria-valuemin={0}
   aria-valuemax={100}
 >
-  <div className="progress-bar bg-danger" style={{ width: `${progresoActual}%` }}>
+  <div className="progress-bar" style={{ width: `${progresoActual}%`, backgroundColor: 'var(--c1)' }}>
     {progresoActual}%
   </div>
 </div>

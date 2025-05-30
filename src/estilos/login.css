@@ -42,7 +42,7 @@ label {
 }
 
 .login-button {
-  background-color: rgb(160, 3, 3);
+  background-color: var(--c1);
   color: white;
   font-weight: bold;
   border: none;
@@ -56,7 +56,7 @@ label {
 }
 
 .login-button:hover {
-  background-color: rgb(92, 16, 16);
+  background-color: var(--c2);
 }
 
 .face-id-container {
@@ -76,14 +76,14 @@ label {
 }
 
 .register-text a {
-  color: rgb(160, 3, 3);
+  color: var(--c1);
   text-decoration: none;
   &:active {
-    color: rgb(160, 3, 3);
+    color: var(--c1);
     text-decoration: none;
   }
   &:visited {
-    color: rgb(160, 3, 3);
+    color: var(--c1);
     text-decoration: none;
   }
 }
