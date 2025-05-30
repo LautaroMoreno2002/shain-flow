@@ -1,7 +1,7 @@
 import { NavBar } from "../../components/NavBar";
 import { Outlet } from "react-router-dom";
 
-const navItemsAdministrador =  [
+const navItemsAdministrador = [
   { label: "Datos personales", icon: "fa-solid fa-address-card", path: "verDatos" },
   { label: "Confirmación", icon: "fa-solid fa-square-check", path: "confirmacion" },
   { label: "Datos laborales", icon: "fa-solid fa-user-tie", path: "datosLaborales" },
@@ -12,31 +12,18 @@ const navItemsAdministrador =  [
 ];
 
 /*
-
-
 Interfaz RRHH:
-
-
 Gestiona toda la plataforma, tiene acceso completo.
-
-
 Puede ver, editar y realizar acciones sobre los datos de los empleados, el registro de asistencias y la nómina.
-
-
 Podrá descargar los datos, registro de asistencia y nómina en un archivo Excel.
-
-
 Podrá enviar notificaciones a los empleados.
-
-
-
 */
 
 
 export const Administrador = () => {
   return (
     <>
-      <NavBar items={navItemsAdministrador}/>
+      <NavBar items={navItemsAdministrador} />
       <main>
         <Outlet /> {/* Aquí se renderiza la ruta hija */}
       </main>

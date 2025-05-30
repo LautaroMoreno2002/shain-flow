@@ -1,7 +1,7 @@
 import { NavBar } from "../../components/NavBar";
 import { Outlet } from "react-router-dom";
 
-const navItemsAnalista =  [
+const navItemsAnalista = [
   { label: "Datos personales", icon: "fa-solid fa-address-card", path: "verDatos" },
   { label: "Confirmación", icon: "fa-solid fa-square-check", path: "confirmacion" },
   { label: "Datos laborales", icon: "fa-solid fa-user-tie", path: "datosLaborales" },
@@ -14,22 +14,15 @@ const navItemsAnalista =  [
 
 /*
 Interfaz Analista de Datos:
-
-
 Configura y analiza modelos (si los tiene), como un científico de datos.
-
-
 Puede ver los datos de los empleados, el registro de asistencias y la nómina; no podrá realizar modificaciones.
-
-
 Puede hacer reportes y gráficos con la información que ve. Esto podría ser útil para el supervisor, RRHH, etc.
-
 */
 
 export const AnalistaDeDatos = () => {
   return (
     <>
-      <NavBar items={navItemsAnalista}/>
+      <NavBar items={navItemsAnalista} />
       <main>
         <Outlet /> {/* Aquí se renderiza la ruta hija */}
       </main>

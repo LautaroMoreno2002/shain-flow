@@ -23,21 +23,21 @@ export const FichadaManual = () => {
   // }));
 
   useEffect(() => {
-      const cargarEmpleados = async () => {
-        try {         
-          setEmpleados(await listarEmpleados());
-          console.log(await listarEmpleados());
-        } catch (error) {
-          console.error('Error al cargar empleados:', error);
-        }
-      };
-      cargarEmpleados();
+    const cargarEmpleados = async () => {
+      try {
+        setEmpleados(await listarEmpleados());
+        console.log(await listarEmpleados());
+      } catch (error) {
+        console.error('Error al cargar empleados:', error);
+      }
+    };
+    cargarEmpleados();
     // Temporal
     // setEmpleados(empleadosSimulados);
   }, []);
 
-   // FILTRO: busca por nombre, apellido o número de identificación
-   const empleadosFiltrados = empleados.filter((emp) =>
+  // FILTRO: busca por nombre, apellido o número de identificación
+  const empleadosFiltrados = empleados.filter((emp) =>
     `${emp.nombre} ${emp.apellido} ${emp.numero_identificacion}`
       .toLowerCase()
       .includes(busqueda.toLowerCase())
@@ -47,7 +47,7 @@ export const FichadaManual = () => {
     <div className="admin-container">
       <h2 className="admin-title">👥 Empleados:</h2>
       <div className="busqueda-container">
-      <input
+        <input
           type="text"
           placeholder="Buscar empleado por nombre, apellido o ID..."
           value={busqueda}
@@ -56,7 +56,7 @@ export const FichadaManual = () => {
         <span className="icono-busqueda">🔍</span>
       </div>
       <div className="lista-empleados">
-      {empleadosFiltrados.map((empleado) => (
+        {empleadosFiltrados.map((empleado) => (
           <EmpleadoFichada key={empleado.id_empleado} empleado={empleado} />
         ))}
       </div>

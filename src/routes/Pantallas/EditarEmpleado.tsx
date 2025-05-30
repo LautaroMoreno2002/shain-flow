@@ -14,10 +14,10 @@ interface PersonalDataType {
   email: string;
   telefono: string;
   calle: string;
-  numero: string; 
+  numero: string;
   nacionalidad: string;
   provincia: string;
-  localidad: string; 
+  localidad: string;
   estado: string;
 }
 
@@ -30,17 +30,17 @@ export const EditarEmpleado = () => {
   // Estado para los datos personales, tipado con la interfaz PersonalDataType
   const [personalData, setPersonalData] = useState<PersonalDataType>({
     nombre: "",
-      apellido: "",
-      dni: "",
-      fechaNacimiento: "",
-      email: "",
-      telefono: "",
-      calle: "",
-      numero: "",
-      nacionalidad: "",
-      provincia: "",
-      localidad: "",
-      estado: ""
+    apellido: "",
+    dni: "",
+    fechaNacimiento: "",
+    email: "",
+    telefono: "",
+    calle: "",
+    numero: "",
+    nacionalidad: "",
+    provincia: "",
+    localidad: "",
+    estado: ""
   });
 
   // Función para manejar los cambios en los inputs
@@ -59,7 +59,7 @@ export const EditarEmpleado = () => {
       console.error("ID del empleado no encontrado en la URL.");
       return;
     }
-  
+
     try {
       const nuevosDatos = {
         telefono: personalData.telefono,
@@ -70,7 +70,7 @@ export const EditarEmpleado = () => {
         partido: "",
         provincia: personalData.provincia
       };
-  
+
       await actualizarDatosEmpleado(empleadoId, nuevosDatos);
       console.log("Datos actualizados exitosamente.");
       setIsEditable(false);
@@ -87,17 +87,17 @@ export const EditarEmpleado = () => {
     // Volver a los datos iniciales
     setPersonalData({
       nombre: datos.nombre,
-          apellido: datos.apellido,
-          dni: datos.numero_identificacion,
-          fechaNacimiento: datos.fecha_nacimiento,
-          email: datos.correo_electronico,
-          telefono: datos.telefono,
-          calle: datos.calle,
-          numero: datos.numero_calle,
-          nacionalidad: datos.pais_nacimiento,
-          provincia: datos.provincia,
-          localidad: datos.localidad,
-          estado: datos.estado_civil
+      apellido: datos.apellido,
+      dni: datos.numero_identificacion,
+      fechaNacimiento: datos.fecha_nacimiento,
+      email: datos.correo_electronico,
+      telefono: datos.telefono,
+      calle: datos.calle,
+      numero: datos.numero_calle,
+      nacionalidad: datos.pais_nacimiento,
+      provincia: datos.provincia,
+      localidad: datos.localidad,
+      estado: datos.estado_civil
     });
     setIsEditable(false);
   };
@@ -106,7 +106,7 @@ export const EditarEmpleado = () => {
     const cargarDatosEmpleado = async () => {
       try {
         const datos = await obtenerEmpleadoPorIdentificacion("12348795");
-  
+
         setPersonalData({
           nombre: datos.nombre,
           apellido: datos.apellido,
@@ -125,7 +125,7 @@ export const EditarEmpleado = () => {
         console.error("Error al obtener los datos del empleado:", error);
       }
     };
-  
+
     cargarDatosEmpleado();
   }, []);
 

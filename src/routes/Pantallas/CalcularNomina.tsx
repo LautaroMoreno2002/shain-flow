@@ -18,7 +18,7 @@ export const CalcularNomina = () => {
       if (nominaExistente && nominaExistente.periodo == periodo) {
         console.log("Nómina ya existente encontrada");
         setResultado(nominaExistente);
-        
+
       } else {
         console.log("No existe nómina, se procede a calcularla");
         const nuevaNomina = await calcularNominaAuto(1, periodo, "27/05/2025");
@@ -31,43 +31,43 @@ export const CalcularNomina = () => {
 
   return (
     <>
-    <div className="calcular-container">
-      <h2 className="titulo">CALCULAR NÓMINA</h2>
+      <div className="calcular-container">
+        <h2 className="titulo">CALCULAR NÓMINA</h2>
 
-      <label htmlFor="periodo">Período</label>
-      <input
-        type="text"
-        id="periodo"
-        value={periodo}
-        onChange={(e) => setPeriodo(e.target.value)}
-        className="input-periodo"
-        placeholder="Ej: Mayo 2025"
-      />
-      <button onClick={calcularNomina} className="boton-calcular">
-        Calcular
-      </button>
-    </div>
-    {resultado && typeof resultado === "object" && !Array.isArray(resultado) && (
-  <div className="tabla-container-nomina">
-    <h3>Resultado de la nómina</h3>
-    <table className="tabla-nomina">
-      <thead>
-        <tr>
-          <th>Campo</th>
-          <th>Valor</th>
-        </tr>
-      </thead>
-      <tbody>
-        {Object.entries(resultado).map(([clave, valor]) => (
-          <tr key={clave}>
-            <td>{clave.replace(/_/g, " ").toUpperCase()}</td>
-            <td>{valor}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-)}
+        <label htmlFor="periodo">Período</label>
+        <input
+          type="text"
+          id="periodo"
+          value={periodo}
+          onChange={(e) => setPeriodo(e.target.value)}
+          className="input-periodo"
+          placeholder="Ej: Mayo 2025"
+        />
+        <button onClick={calcularNomina} className="boton-calcular">
+          Calcular
+        </button>
+      </div>
+      {resultado && typeof resultado === "object" && !Array.isArray(resultado) && (
+        <div className="tabla-container-nomina">
+          <h3>Resultado de la nómina</h3>
+          <table className="tabla-nomina">
+            <thead>
+              <tr>
+                <th>Campo</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(resultado).map(([clave, valor]) => (
+                <tr key={clave}>
+                  <td>{clave.replace(/_/g, " ").toUpperCase()}</td>
+                  <td>{valor}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </>
   );
 };

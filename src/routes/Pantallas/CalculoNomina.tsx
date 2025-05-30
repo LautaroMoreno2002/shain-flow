@@ -6,17 +6,17 @@ import { useNavigate } from 'react-router-dom';
 
 // Definimos el tipo de datos personales
 interface PersonalDataType {
-    fecha_pago: string;
-    salario_base: string;
-    presentismo: string;
-    antiguedad: string;
-    hora_extra: string;
-    descuento_obra_social: string;
-    descuento_anssal: string;
-    descuento_ley_19032: string;
-    impuesto_ganancias: string;
-    descuento_sindical: string;
-    descuento_jubilatorio: string;
+  fecha_pago: string;
+  salario_base: string;
+  presentismo: string;
+  antiguedad: string;
+  hora_extra: string;
+  descuento_obra_social: string;
+  descuento_anssal: string;
+  descuento_ley_19032: string;
+  impuesto_ganancias: string;
+  descuento_sindical: string;
+  descuento_jubilatorio: string;
 }
 
 export const CalculoNomina = () => {
@@ -25,19 +25,19 @@ export const CalculoNomina = () => {
   const navegar = useNavigate();
 
   // Estado para los datos personales, tipado con la interfaz PersonalDataType
-    const [personalData, setPersonalData] = useState<PersonalDataType>({
-        fecha_pago: "01/01/2025",
-        salario_base: "600000",
-        presentismo: "40000",
-        antiguedad: "170000",
-        hora_extra: "45000",
-        descuento_obra_social: "60000",
-        descuento_anssal: "20000",
-        descuento_ley_19032: "5000",
-        impuesto_ganancias: "5000",
-        descuento_sindical: "10000",
-        descuento_jubilatorio: "12000"
-    });
+  const [personalData, setPersonalData] = useState<PersonalDataType>({
+    fecha_pago: "01/01/2025",
+    salario_base: "600000",
+    presentismo: "40000",
+    antiguedad: "170000",
+    hora_extra: "45000",
+    descuento_obra_social: "60000",
+    descuento_anssal: "20000",
+    descuento_ley_19032: "5000",
+    impuesto_ganancias: "5000",
+    descuento_sindical: "10000",
+    descuento_jubilatorio: "12000"
+  });
 
   // Función para manejar los cambios en los inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,10 +51,10 @@ export const CalculoNomina = () => {
   // Función para guardar los cambios
   const handleSave = () => {
     setIsEditable(false);
-    
+
     // podrías agregar lógica para guardar los cambios, por ejemplo, en una base de datos
     console.log("Datos guardados:", personalData);
-    
+
     //Vuelve a la lista de empleados
     navegar('/administrador/ver-nomina');
   };
@@ -245,8 +245,8 @@ export const CalculoNomina = () => {
         </div>
         <div className="button-container">
           <button className="save-button" onClick={handleSave}>
-                Calcular
-            </button>
+            Calcular
+          </button>
           {/*{!isEditable ? (
             <button className="edit-button" onClick={() => setIsEditable(true)}>
               Modificar Información

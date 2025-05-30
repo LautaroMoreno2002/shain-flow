@@ -127,7 +127,7 @@ export const Signup = () => {
     username, password, confirmPassword
   ].filter(val => val !== '').length;
 
-const progresoActual = Math.round((completedInputs / totalInputs) * 100);
+  const progresoActual = Math.round((completedInputs / totalInputs) * 100);
   return (
     <DefaultLayout>
       <form onSubmit={handleSubmit} className="signup-form">
@@ -173,33 +173,33 @@ const progresoActual = Math.round((completedInputs / totalInputs) * 100);
 
                 <div className="column">
                   <label htmlFor="nacionalidad">País de nacimiento:</label>
-<select
-  id="nacionalidad"
-  value={nacionalidad}
-  onChange={(e) => setNacionalidad(e.target.value)}
-  className="input-field"
->
-  <option value="">Selecciona una nacionalidad</option>
-  <option value="Argentina">Argentina</option>
-  <option value="Brasil">Brasil</option>
-  <option value="Chile">Chile</option>
-  <option value="Uruguay">Uruguay</option>
-  <option value="Paraguay">Paraguay</option>
-  <option value="Bolivia">Bolivia</option>
-  <option value="Perú">Perú</option>
-  <option value="Ecuador">Ecuador</option>
-  <option value="Colombia">Colombia</option>
-  <option value="Venezuela">Venezuela</option>
-  <option value="México">México</option>
-</select>
+                  <select
+                    id="nacionalidad"
+                    value={nacionalidad}
+                    onChange={(e) => setNacionalidad(e.target.value)}
+                    className="input-field"
+                  >
+                    <option value="">Selecciona una nacionalidad</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Brasil">Brasil</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Uruguay">Uruguay</option>
+                    <option value="Paraguay">Paraguay</option>
+                    <option value="Bolivia">Bolivia</option>
+                    <option value="Perú">Perú</option>
+                    <option value="Ecuador">Ecuador</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Venezuela">Venezuela</option>
+                    <option value="México">México</option>
+                  </select>
 
-                 <div className="cont-direccion">
-                 <label htmlFor="calle">Calle:</label>
-                  <input type="text" id="calle" value={calle} onChange={(e) => setCalle(e.target.value)} className="input-field" />
+                  <div className="cont-direccion">
+                    <label htmlFor="calle">Calle:</label>
+                    <input type="text" id="calle" value={calle} onChange={(e) => setCalle(e.target.value)} className="input-field" />
 
-                  <label htmlFor="numero-calle">Número:</label>
-                  <input type="number" id="numero-calle" value={numeroCalle} onChange={(e) => setNumeroCalle(e.target.value)} className="input-field" />
-                 </div>
+                    <label htmlFor="numero-calle">Número:</label>
+                    <input type="number" id="numero-calle" value={numeroCalle} onChange={(e) => setNumeroCalle(e.target.value)} className="input-field" />
+                  </div>
 
                   <label htmlFor="localidad">Localidad:</label>
                   <input type="text" id="localidad" value={localidad} onChange={(e) => setLocalidad(e.target.value)} className="input-field" />
@@ -208,37 +208,37 @@ const progresoActual = Math.round((completedInputs / totalInputs) * 100);
                   <input type="text" id="partido" value={partido} onChange={(e) => setPartido(e.target.value)} className="input-field" />
 
                   <label htmlFor="provincia">Provincia:</label>
-<select
-  id="provincia"
-  value={provincia}
-  onChange={(e) => setProvincia(e.target.value)}
-  className="input-field"
->
-  <option value="">Selecciona una provincia</option>
-  <option value="Buenos Aires">Buenos Aires</option>
-  <option value="Catamarca">Catamarca</option>
-  <option value="Chaco">Chaco</option>
-  <option value="Chubut">Chubut</option>
-  <option value="Córdoba">Córdoba</option>
-  <option value="Corrientes">Corrientes</option>
-  <option value="Entre Ríos">Entre Ríos</option>
-  <option value="Formosa">Formosa</option>
-  <option value="Jujuy">Jujuy</option>
-  <option value="La Pampa">La Pampa</option>
-  <option value="La Rioja">La Rioja</option>
-  <option value="Mendoza">Mendoza</option>
-  <option value="Misiones">Misiones</option>
-  <option value="Neuquén">Neuquén</option>
-  <option value="Río Negro">Río Negro</option>
-  <option value="Salta">Salta</option>
-  <option value="San Juan">San Juan</option>
-  <option value="San Luis">San Luis</option>
-  <option value="Santa Cruz">Santa Cruz</option>
-  <option value="Santa Fe">Santa Fe</option>
-  <option value="Santiago del Estero">Santiago del Estero</option>
-  <option value="Tierra del Fuego">Tierra del Fuego</option>
-  <option value="Tucumán">Tucumán</option>
-</select>
+                  <select
+                    id="provincia"
+                    value={provincia}
+                    onChange={(e) => setProvincia(e.target.value)}
+                    className="input-field"
+                  >
+                    <option value="">Selecciona una provincia</option>
+                    <option value="Buenos Aires">Buenos Aires</option>
+                    <option value="Catamarca">Catamarca</option>
+                    <option value="Chaco">Chaco</option>
+                    <option value="Chubut">Chubut</option>
+                    <option value="Córdoba">Córdoba</option>
+                    <option value="Corrientes">Corrientes</option>
+                    <option value="Entre Ríos">Entre Ríos</option>
+                    <option value="Formosa">Formosa</option>
+                    <option value="Jujuy">Jujuy</option>
+                    <option value="La Pampa">La Pampa</option>
+                    <option value="La Rioja">La Rioja</option>
+                    <option value="Mendoza">Mendoza</option>
+                    <option value="Misiones">Misiones</option>
+                    <option value="Neuquén">Neuquén</option>
+                    <option value="Río Negro">Río Negro</option>
+                    <option value="Salta">Salta</option>
+                    <option value="San Juan">San Juan</option>
+                    <option value="San Luis">San Luis</option>
+                    <option value="Santa Cruz">Santa Cruz</option>
+                    <option value="Santa Fe">Santa Fe</option>
+                    <option value="Santiago del Estero">Santiago del Estero</option>
+                    <option value="Tierra del Fuego">Tierra del Fuego</option>
+                    <option value="Tucumán">Tucumán</option>
+                  </select>
                 </div>
               </div>
             </motion.div>
@@ -266,18 +266,18 @@ const progresoActual = Math.round((completedInputs / totalInputs) * 100);
           )}
         </AnimatePresence>
 
-          <div
-  className="progress"
-  role="progressbar"
-  aria-label="Progreso de registro"
-  aria-valuenow={progresoActual}
-  aria-valuemin={0}
-  aria-valuemax={100}
->
-  <div className="progress-bar" style={{ width: `${progresoActual}%`, backgroundColor: 'var(--c1)' }}>
-    {progresoActual}%
-  </div>
-</div>
+        <div
+          className="progress"
+          role="progressbar"
+          aria-label="Progreso de registro"
+          aria-valuenow={progresoActual}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
+          <div className="progress-bar" style={{ width: `${progresoActual}%`, backgroundColor: 'var(--c1)' }}>
+            {progresoActual}%
+          </div>
+        </div>
 
 
         {step === 1 ? (

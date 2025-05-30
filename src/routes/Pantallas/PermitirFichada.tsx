@@ -35,9 +35,9 @@ export const PermitirFichada = () => {
   };
 
   // Función para guardar los cambios
-  const handleSave = () => {    
+  const handleSave = () => {
     alert('Vas a permitir que el empleado realice una fichada manual')
-    
+
     //Vuelve a la lista de empleados
     navegar('/supervisor/fichada-manual');
   };
@@ -53,7 +53,7 @@ export const PermitirFichada = () => {
       motivo: "Error de reconocimiento facial",
     });
     alert('Vas a cancelar la fichada manual')
-    
+
     //Vuelve a la lista de empleados
     navegar('/supervisor/fichada-manual');
   };
@@ -110,7 +110,7 @@ export const PermitirFichada = () => {
             </div>
           </div>
 
-          
+
         </div>
         <div className="button-container">
           <button className="save-button" onClick={handleSave}>
@@ -119,7 +119,7 @@ export const PermitirFichada = () => {
           <button className="cancel-button" onClick={handleCancel}>
             Cancelar
           </button>
-          
+
         </div>
       </div>
     </div>

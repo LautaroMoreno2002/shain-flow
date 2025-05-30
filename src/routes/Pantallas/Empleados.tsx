@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import EmpleadoItem from "../../components/EmpleadoItem";
 import "../../estilos/empleados.css";
 import { listarEmpleados, crearEmpleado } from "../../services/api";
+import { CircularProgress } from "@mui/material";
 
 export interface Empleado {
   id_empleado: number;
@@ -16,7 +17,7 @@ export const Empleados = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
   const [busqueda, setBusqueda] = useState<string>("");
   const [mostrarFormulario, setMostrarFormulario] = useState<boolean>(false);
-
+  const [cargando, setCargando] = useState(false);
   const [nuevoEmpleado, setNuevoEmpleado] = useState({
     nombre: "",
     apellido: "",
@@ -41,10 +42,13 @@ export const Empleados = () => {
   useEffect(() => {
     const cargarEmpleados = async () => {
       try {
+        setCargando(true);
         const data = await listarEmpleados();
         setEmpleados(data);
       } catch (error) {
         console.error("Error al cargar empleados:", error);
+      } finally {
+        setCargando(false);
       }
     };
     cargarEmpleados();
@@ -65,24 +69,24 @@ export const Empleados = () => {
   const cargarEmpleado = async () => {
     const nuevosErrores: { [key: string]: boolean } = {};
     let esValido = true;
-  
+
     Object.entries(nuevoEmpleado).forEach(([key, valor]) => {
       if (!valor.trim()) {
         nuevosErrores[key] = true;
         esValido = false;
       }
     });
-  
+
     if (!esValido) {
       setErrores(nuevosErrores);
       setMensajeError("Por favor, completa todos los campos antes de continuar.");
       return;
     }
-  
+
     try {
       console.log("Enviando empleado:", nuevoEmpleado);
       const empleadoCreado = await crearEmpleado(nuevoEmpleado);
-  
+
       setEmpleados((prev) => [
         ...prev,
         {
@@ -94,7 +98,7 @@ export const Empleados = () => {
           telefono: empleadoCreado.telefono,
         },
       ]);
-  
+
       setMostrarFormulario(false);
       setNuevoEmpleado({
         nombre: "",
@@ -120,7 +124,7 @@ export const Empleados = () => {
       setMensajeError("Error al crear el empleado. Intenta nuevamente.");
     }
   };
-  
+
 
   return (
     <div className="admin-container">
@@ -128,7 +132,7 @@ export const Empleados = () => {
 
       {!mostrarFormulario && (
         <>
-          <div className="busqueda-container">
+          <div className="busqueda-container" style={{ position: 'relative' }}>
             <input
               type="text"
               placeholder="Buscar empleado por nombre, apellido o ID..."
@@ -137,8 +141,12 @@ export const Empleados = () => {
             />
             <span className="icono-busqueda">🔍</span>
           </div>
-
-          <div className="lista-empleados">
+          {cargando && (
+            <div className="overlay">
+              <CircularProgress />
+            </div>
+          )}
+          <div className="lista-empleados" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
             {empleadosFiltrados.map((empleado) => (
               <EmpleadoItem key={empleado.id_empleado} empleado={empleado} />
             ))}

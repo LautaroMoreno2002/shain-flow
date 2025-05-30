@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { registroAsistenciasPorId } from "../../services/api";
 import "../../estilos/asistencias.css";
+import { CircularProgress } from "@mui/material";
 
 const mes = new Date().getMonth() + 1;
 const anio = new Date().getFullYear();
@@ -40,16 +41,18 @@ const obtenerNombreDia = (dia: number | string) => {
 
 export const Asistencias = () => {
   const [asistencias, setAsistencias] = useState<RegistroAsistencia[]>([]);
+  const [cargando, setCargando] = useState(false);
 
   useEffect(() => {
     const fetchAsistencias = async () => {
       try {
+        setCargando(true);
         const datosCrudos = await registroAsistenciasPorId('1');
-  
+
         const asistenciasAdaptadas: RegistroAsistencia[] = datosCrudos.map((registro: any[]) => {
           const horaEntrada = registro[4]?.slice(0, 5) || "---"; // "HH:mm"
           const horaSalida = registro[5]?.slice(0, 5) || "---";
-  
+
           return {
             id_registro: registro[0],
             id_empleado: registro[1],
@@ -60,13 +63,15 @@ export const Asistencias = () => {
             horasExtras: registro[7]?.toString() || "0"
           };
         });
-  
+
         setAsistencias(asistenciasAdaptadas);
       } catch (error) {
         console.error("Error al obtener las asistencias:", error);
+      } finally {
+        setCargando(false);
       }
     };
-  
+
     fetchAsistencias();
   }, []);
 
@@ -98,8 +103,13 @@ export const Asistencias = () => {
           <li><strong>HEX</strong> → Horas Extras</li>
         </ul>
 
-        <div className="asistencias">
-          <table>
+        <div className="asistencias" style={{ position: 'relative' }}>
+          {cargando && (
+            <div className="overlay">
+              <CircularProgress />
+            </div>
+          )}
+          <table style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
             <thead>
               <tr>
                 <th className="col-fecha">Fecha</th>
@@ -112,28 +122,28 @@ export const Asistencias = () => {
               </tr>
             </thead>
             <tbody>
-            {asistencias.map((asistencia, index) => {
-              
-  const { fecha, horaEntrada, horaSalida, estado, horasExtras } = asistencia;
-  const horasTrabajadas = calcularHorasTrabajadas(horaEntrada, horaSalida);
+              {asistencias.map((asistencia, index) => {
 
-  // Asegúrate de que la fecha está bien formateada
-  const partesFecha = fecha?.split("-");
-  const dia = partesFecha?.length === 3 ? parseInt(partesFecha[2]) : 0;
-  const nombreDia = obtenerNombreDia(dia);
+                const { fecha, horaEntrada, horaSalida, estado, horasExtras } = asistencia;
+                const horasTrabajadas = calcularHorasTrabajadas(horaEntrada, horaSalida);
 
-  return (
-    <tr key={index}>
-      <td>{fecha}</td>
-      <td>{nombreDia.toLocaleUpperCase()}</td>
-      <td>{horaEntrada}</td>
-      <td>{horaSalida}</td>
-      <td>{horasTrabajadas}</td>
-      <td>{horasExtras}</td>
-      <td className={clasesEstado[estado] || ''}>{estado}</td>
-    </tr>
-  );
-})}
+                // Asegúrate de que la fecha está bien formateada
+                const partesFecha = fecha?.split("-");
+                const dia = partesFecha?.length === 3 ? parseInt(partesFecha[2]) : 0;
+                const nombreDia = obtenerNombreDia(dia);
+
+                return (
+                  <tr key={index}>
+                    <td>{fecha}</td>
+                    <td>{nombreDia.toLocaleUpperCase()}</td>
+                    <td>{horaEntrada}</td>
+                    <td>{horaSalida}</td>
+                    <td>{horasTrabajadas}</td>
+                    <td>{horasExtras}</td>
+                    <td className={clasesEstado[estado] || ''}>{estado}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

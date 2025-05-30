@@ -16,15 +16,15 @@ export const Login = () => {
       username: 'Lautaro Moreno',
       password: '1234',
       rol: 'empleado'
-    },{
+    }, {
       username: 'Pablo Da Silva',
       password: '1234',
       rol: 'administrador'
-    },{
+    }, {
       username: 'Abel Aquino',
       password: '1234',
       rol: 'analista-datos'
-    },{
+    }, {
       username: 'Rodrigo Montoro',
       password: '1234',
       rol: 'supervisor'
@@ -71,58 +71,58 @@ export const Login = () => {
     // } catch (error) {
     //   console.log(error);
     // }
-  // }
-  // if (auth.isAuthenticated) {
-  //   return <Navigate to="/inicio" />;
+    // }
+    // if (auth.isAuthenticated) {
+    //   return <Navigate to="/inicio" />;
   }
   return (
     <DefaultLayout>
       <form onSubmit={handleSubmit} className="login-form">
-  {/* Logo */}
-  <div className="logo-container">
-    <img src="./logo_producto.png" alt="ShainFlow Logo" className="logo" />
-  </div>
+        {/* Logo */}
+        <div className="logo-container">
+          <img src="./logo_producto.png" alt="ShainFlow Logo" className="logo" />
+        </div>
 
-  {/* Mensaje de error */}
-  {/* {!!errorResponse && <div className="error-message">{errorResponse}</div>} */}
+        {/* Mensaje de error */}
+        {/* {!!errorResponse && <div className="error-message">{errorResponse}</div>} */}
 
-  {/* Usuario */}
-  <label htmlFor="username">Usuario:</label>
-  <input
-    id="username"
-    name="username"
-    type="text"
-    onChange={handleChange}
-    value={username}
-    className="input-field"
-  />
+        {/* Usuario */}
+        <label htmlFor="username">Usuario:</label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          onChange={handleChange}
+          value={username}
+          className="input-field"
+        />
 
-  {/* Contraseña */}
-  <label htmlFor="password">Contraseña:</label>
-  <input
-    id="password"
-    name="password"
-    type="password"
-    onChange={handleChange}
-    value={password}
-    className="input-field"
-  />
+        {/* Contraseña */}
+        <label htmlFor="password">Contraseña:</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          onChange={handleChange}
+          value={password}
+          className="input-field"
+        />
 
-  {/* Botón */}
-  <button type="submit" className="login-button">Login</button>
+        {/* Botón */}
+        <button type="submit" className="login-button">Login</button>
 
-  {/* Ícono de reconocimiento facial */}
-  <div className="face-id-container">
-    <NavLink to="/">
-      <img src="/scaneo.png" alt="Reconocimiento facial" className="face-id-icon" />
-    </NavLink>
-  </div>
+        {/* Ícono de reconocimiento facial */}
+        <div className="face-id-container">
+          <NavLink to="/">
+            <img src="/scaneo.png" alt="Reconocimiento facial" className="face-id-icon" />
+          </NavLink>
+        </div>
 
-  {/* Enlace de registro */}
-  <p className="register-text">
-    ¿No puedes ingresar o no tienes una cuenta? <NavLink to="/signup">Regístrate</NavLink>
-  </p>
-</form>
+        {/* Enlace de registro */}
+        <p className="register-text">
+          ¿No puedes ingresar o no tienes una cuenta? <NavLink to="/signup">Regístrate</NavLink>
+        </p>
+      </form>
     </DefaultLayout>
   );
 }

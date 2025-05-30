@@ -55,8 +55,8 @@ export const RegistroFacial = () => {
         socketRef.current.onerror = (error) => {
             console.error("Error en el WebSocket de registro:", error);
             setRegistrationStatus("❌ Error en la conexión con el servidor. Recarga la página.");
-            setIsRegistering(false); 
-            setExpectedImageFor(null); 
+            setIsRegistering(false);
+            setExpectedImageFor(null);
             alert("❌ Error de conexión. Por favor, recarga la página.");
         };
 
@@ -87,11 +87,11 @@ export const RegistroFacial = () => {
                 setIsRegistering(false); // Finalizar el proceso de registro
             }
             // Mensajes de errores específicos durante la captura de gestos
-            else if (message.includes("No se detectó rostro en la imagen de") || 
-                     (message.includes("El gesto") && message.includes("no fue detectado correctamente")) ||
-                     message.includes("Error al guardar el vector para") ||
-                     message.includes("Error interno al procesar tu imagen de") ) {
-                
+            else if (message.includes("No se detectó rostro en la imagen de") ||
+                (message.includes("El gesto") && message.includes("no fue detectado correctamente")) ||
+                message.includes("Error al guardar el vector para") ||
+                message.includes("Error interno al procesar tu imagen de")) {
+
                 setRegistrationStatus(`❌ ${message}.`); // Mostrar el mensaje de error directamente
                 alert(`❌ ${message}. Por favor, vuelve a intentar.`); // Alertar al usuario
                 // IMPORTANTE: Aquí NO CAMBIAMOS `nextExpectedGesture`.
@@ -107,7 +107,7 @@ export const RegistroFacial = () => {
                     setIsRegistering(false); // Resetear el estado de registro
                 }
             }
-            
+
             // Actualiza expectedImageFor al final, para que cualquier instrucción de "Por favor, envía..."
             // tenga prioridad y active el botón.
             setExpectedImageFor(nextExpectedGesture);
@@ -125,7 +125,7 @@ export const RegistroFacial = () => {
     // --- Funciones de Lógica de Registro ---
 
     const startRegistration = useCallback(() => {
-        if (!employeeId.trim()) { 
+        if (!employeeId.trim()) {
             setRegistrationStatus("Por favor, ingresa un ID de empleado válido para comenzar el registro.");
             alert("Por favor, ingresa un ID de empleado válido para comenzar el registro.");
             return;
@@ -174,19 +174,19 @@ export const RegistroFacial = () => {
         if (expectedImageFor === "giro") {
             return "Enviar Foto con Giro";
         }
-        return "Esperando instrucción..."; 
+        return "Esperando instrucción...";
     };
 
     // Lógica para deshabilitar el botón de acción
     const isActionButtonDisabled = () => {
         // Deshabilitado si el socket no está abierto o la cámara no está lista
-       
+
         return false;
     };
 
 
     return (
-        <div className="contenedor-reconocimiento"> 
+        <div className="contenedor-reconocimiento">
             <header className="logo-container">
                 <img className='logo' src="/logo_producto.png" alt="Shain Flow" />
             </header>
@@ -203,7 +203,7 @@ export const RegistroFacial = () => {
                             playsInline
                             muted
                             style={{
-                                transform: 'scaleX(-1)', 
+                                transform: 'scaleX(-1)',
                                 objectFit: 'cover',
                                 borderRadius: '50%',
                                 width: '100%',
@@ -225,7 +225,7 @@ export const RegistroFacial = () => {
                             value={employeeId}
                             onChange={(e) => setEmployeeId(e.target.value)}
                             placeholder="Ej: 12345"
-                            disabled={isRegistering} 
+                            disabled={isRegistering}
                             style={{
                                 width: '100%',
                                 padding: '8px',
@@ -248,7 +248,7 @@ export const RegistroFacial = () => {
                                 sendImageForRegistration("giro");
                             }
                         }}
-                        disabled={isActionButtonDisabled()} 
+                        disabled={isActionButtonDisabled()}
                     >
                         {getActionButtonText()}
                     </button>

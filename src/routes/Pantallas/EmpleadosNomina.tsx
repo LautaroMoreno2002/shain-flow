@@ -3,6 +3,7 @@ import { EmpleadoNomina } from "../../components/EmpleadoNomina";
 import "../../estilos/empleados.css";
 import { listarEmpleados, crearEmpleado } from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 export interface Empleado {
   id_empleado: number;
@@ -17,7 +18,7 @@ export const EmpleadosNomina = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
   const [busqueda, setBusqueda] = useState<string>("");
   const [mostrarFormulario, setMostrarFormulario] = useState<boolean>(false);
-
+  const [cargando, setCargando] = useState(false);
   const [nuevoEmpleado, setNuevoEmpleado] = useState({
     nombre: "",
     apellido: "",
@@ -38,8 +39,8 @@ export const EmpleadosNomina = () => {
 
   const [nuevoConcepto, setNuevoConcepto] = useState({
     codigo: "0",
-    nombre:"Salario base",
-    tipo_concepto:"Remunerativo",
+    nombre: "Salario base",
+    tipo_concepto: "Remunerativo",
     valor: "600000",
     es_porcentaje: "No"
   })
@@ -51,10 +52,13 @@ export const EmpleadosNomina = () => {
   useEffect(() => {
     const cargarEmpleados = async () => {
       try {
+        setCargando(true);
         const data = await listarEmpleados();
         setEmpleados(data);
       } catch (error) {
         console.error("Error al cargar empleados:", error);
+      } finally {
+        setCargando(false);
       }
     };
     cargarEmpleados();
@@ -75,14 +79,14 @@ export const EmpleadosNomina = () => {
   const cargarEmpleado = async () => {
     const nuevosErrores: { [key: string]: boolean } = {};
     let esValido = true;
-  
+
     Object.entries(nuevoConcepto).forEach(([key, valor]) => {
       if (!valor.trim()) {
         nuevosErrores[key] = true;
         esValido = false;
       }
     });
-  
+
     if (!esValido) {
       setErrores(nuevosErrores);
       setMensajeError("Por favor, completa todos los campos antes de continuar.");
@@ -91,7 +95,7 @@ export const EmpleadosNomina = () => {
     //Quitar esto cuanod se integre con back-end
     alert("Concepto cargado correctamente");
     setMostrarFormulario(false);
-  
+
     {/*try {
       console.log("Enviando empleado:", nuevoConcepto);
       const empleadoCreado = await crearEmpleado(nuevoConcepto);
@@ -133,7 +137,7 @@ export const EmpleadosNomina = () => {
       setMensajeError("Error al crear el empleado. Intenta nuevamente.");
     }*/}
   };
-  
+
 
   return (
     <div className="admin-container">
@@ -141,7 +145,7 @@ export const EmpleadosNomina = () => {
 
       {!mostrarFormulario && (
         <>
-          <div className="busqueda-container">
+          <div className="busqueda-container" style={{ position: 'relative' }}>
             <input
               type="text"
               placeholder="Buscar empleado por nombre, apellido o ID..."
@@ -150,8 +154,12 @@ export const EmpleadosNomina = () => {
             />
             <span className="icono-busqueda">🔍</span>
           </div>
-
-          <div className="lista-empleados">
+          {cargando && (
+            <div className="overlay">
+              <CircularProgress />
+            </div>
+          )}
+          <div className="lista-empleados" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
             {empleadosFiltrados.map((empleado) => (
               <EmpleadoNomina key={empleado.id_empleado} empleado={empleado} />
             ))}
@@ -169,8 +177,8 @@ export const EmpleadosNomina = () => {
             {Object.entries(nuevoConcepto).map(([campo, valor]) => {
               const label = campo.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 
-              const opcionesTipoConcepto = ['Remunerativo','No remunerativo','Deducción','Retención','Percepción',
-                'Indemnización','Reintegro','Premio','Multa','Ajuste','Anticipo','Vacaciones'];
+              const opcionesTipoConcepto = ['Remunerativo', 'No remunerativo', 'Deducción', 'Retención', 'Percepción',
+                'Indemnización', 'Reintegro', 'Premio', 'Multa', 'Ajuste', 'Anticipo', 'Vacaciones'];
               const opcionesEsPorcentaje = ["Si", "No"];
               const opcionesProvincia = [
                 "Buenos Aires", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes", "Entre Ríos", "Formosa",
@@ -208,7 +216,7 @@ export const EmpleadosNomina = () => {
                     <input
                       id={campo}
                       name={campo}
-                      type= "text" //{campo === "valor" ? "number" : campo === "codigo" ? "number" : "text"}
+                      type="text" //{campo === "valor" ? "number" : campo === "codigo" ? "number" : "text"}
                       value={valor}
                       onChange={manejarCambio}
                       className={errores[campo] ? "input-error" : ""}

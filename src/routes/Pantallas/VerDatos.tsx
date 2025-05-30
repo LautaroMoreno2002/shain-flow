@@ -90,81 +90,81 @@ export const VerDatos = () => {
     fetchData();
   };
 
- return (
-  <div className="container-personal-data" style={{ position: 'relative' }}>
-    {cargando && (
-      <div className="overlay">
-        <CircularProgress />
-      </div>
-    )}
+  return (
+    <div className="container-personal-data" style={{ position: 'relative' }}>
+      {cargando && (
+        <div className="overlay">
+          <CircularProgress />
+        </div>
+      )}
 
-    <div className="personal-data" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
-      <h2 className="title">Información personal</h2>
-          <div className="data-container">
-            <div className="data-group">
-              {[
-                { label: 'Nombre/s', name: 'nombre' },
-                { label: 'Apellido/s', name: 'apellido' },
-                { label: personalData.tipo_identificacion, name: 'numero_identificacion' },
-                { label: 'Fecha de nacimiento', name: 'fecha_nacimiento' },
-              ].map(({ label, name }) => (
-                <div className="data-item" key={name}>
-                  <p className="data-item--label">{label}:</p>
-                  <input
-                    className={`data-item--value ${isEditable ? 'editable' : ''}`}
-                    type="text"
-                    name={name}
-                    value={(personalData as any)[name]}
-                    onChange={handleChange}
-                    readOnly={!isEditable}
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="data-group">
-              {[
-                { label: 'Email', name: 'correo_electronico', type: 'email' },
-                { label: 'Teléfono', name: 'telefono', type: 'tel' },
-                { label: 'Calle', name: 'calle' },
-                { label: 'Número', name: 'numero_calle' },
-                { label: 'País de nacimiento', name: 'nacionalidad' },
-                { label: 'Provincia', name: 'provincia' },
-                { label: 'Localidad', name: 'localidad' },
-                { label: 'Estado', name: 'estado_civil' },
-              ].map(({ label, name, type = 'text' }) => (
-                <div className="data-item" key={name}>
-                  <p className="data-item--label">{label}:</p>
-                  <input
-                    className={`data-item--value ${isEditable ? 'editable' : ''}`}
-                    type={type}
-                    name={name}
-                    value={(personalData as any)[name] || ""}
-                    onChange={handleChange}
-                    readOnly={!isEditable}
-                  />
-                </div>
-              ))}
-            </div>
+      <div className="personal-data" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
+        <h2 className="title">Información personal</h2>
+        <div className="data-container">
+          <div className="data-group">
+            {[
+              { label: 'Nombre/s', name: 'nombre' },
+              { label: 'Apellido/s', name: 'apellido' },
+              { label: personalData.tipo_identificacion, name: 'numero_identificacion' },
+              { label: 'Fecha de nacimiento', name: 'fecha_nacimiento' },
+            ].map(({ label, name }) => (
+              <div className="data-item" key={name}>
+                <p className="data-item--label">{label}:</p>
+                <input
+                  className={`data-item--value ${isEditable ? 'editable' : ''}`}
+                  type="text"
+                  name={name}
+                  value={(personalData as any)[name]}
+                  onChange={handleChange}
+                  readOnly={!isEditable}
+                />
+              </div>
+            ))}
           </div>
 
-          <div className="button-container">
-            {!isEditable ? (
-              <button className="edit-button" onClick={() => setIsEditable(true)}>
-                Modificar Información
-              </button>
-            ) : (
-              <>
-                <button className="save-button" onClick={handleSave}>
-                  Guardar
-                </button>
-                <button className="cancel-button" onClick={handleCancel}>
-                  Cancelar
-                </button>
-              </>
-            )}
+          <div className="data-group">
+            {[
+              { label: 'Email', name: 'correo_electronico', type: 'email' },
+              { label: 'Teléfono', name: 'telefono', type: 'tel' },
+              { label: 'Calle', name: 'calle' },
+              { label: 'Número', name: 'numero_calle' },
+              { label: 'País de nacimiento', name: 'nacionalidad' },
+              { label: 'Provincia', name: 'provincia' },
+              { label: 'Localidad', name: 'localidad' },
+              { label: 'Estado', name: 'estado_civil' },
+            ].map(({ label, name, type = 'text' }) => (
+              <div className="data-item" key={name}>
+                <p className="data-item--label">{label}:</p>
+                <input
+                  className={`data-item--value ${isEditable ? 'editable' : ''}`}
+                  type={type}
+                  name={name}
+                  value={(personalData as any)[name] || ""}
+                  onChange={handleChange}
+                  readOnly={!isEditable}
+                />
+              </div>
+            ))}
           </div>
         </div>
+
+        <div className="button-container">
+          {!isEditable ? (
+            <button className="edit-button" onClick={() => setIsEditable(true)}>
+              Modificar Información
+            </button>
+          ) : (
+            <>
+              <button className="save-button" onClick={handleSave}>
+                Guardar
+              </button>
+              <button className="cancel-button" onClick={handleCancel}>
+                Cancelar
+              </button>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

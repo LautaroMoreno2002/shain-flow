@@ -55,9 +55,9 @@ function CabeceraRecibo() {
 // }
 
 export function VerNomina() {
-    return (
-      <div style={{display: 'flex', justifyContent: 'center', position: 'relative'}}>
-      <div style={{position: 'absolute', border: '1px solid black', backgroundColor: '#fff', borderRadius: '5px', boxShadow: '0 0 20px rgba(0, 0, 0, 0.1)', width: '70%' }}>
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
+      <div style={{ position: 'absolute', border: '1px solid black', backgroundColor: '#fff', borderRadius: '5px', boxShadow: '0 0 20px rgba(0, 0, 0, 0.1)', width: '70%' }}>
         <section style={{ border: '1px solid black', backgroundColor: '#fff', padding: '10px', borderRadius: '5px', marginTop: '20px', marginLeft: '10px', marginRight: '10px', marginBottom: '10px' }}>
           <CabeceraRecibo />
         </section>
@@ -71,7 +71,7 @@ export function VerNomina() {
             <thead>
               <tr>
                 <th>Concepto</th>
-                <th style={{width:"80%"}}>Decripción</th>
+                <th style={{ width: "80%" }}>Decripción</th>
                 <th>Ingreso</th>
                 <th>Descuento</th>
               </tr>
@@ -146,6 +146,6 @@ export function VerNomina() {
           <p>Total Neto: {recibo.total_neto}</p>
         </section>
       </div>
-      </div>
-    )
+    </div>
+  )
 }

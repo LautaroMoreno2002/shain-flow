@@ -139,7 +139,7 @@ export const ReconocimientoFacial = () => {
 
             <main className="contenido">
                 <section className="seccion-camara">
-                    <p className="estado-reconocimiento" 
+                    <p className="estado-reconocimiento"
                     // style={{animation: `${recognitionStatus ? "expand" : ""}`, animationIterationCount: `${recognitionStatus ? "infinite" : "1"}`}}
                     >
                         {recognitionStatus}
