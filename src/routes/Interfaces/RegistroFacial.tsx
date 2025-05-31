@@ -19,8 +19,9 @@ export const RegistroFacial = () => {
     useEffect(() => {
         // 1. Inicializar la conexión WebSocket
         // Asegúrate de que esta URL coincida con la de tu backend FastAPI para el registro
-        socketRef.current = new WebSocket("ws://127.0.0.1:8000/ws"); // ¡Asegúrate que esta sea la URL correcta para el registro!
+        // socketRef.current = new WebSocket("ws://127.0.0.1:8000/ws"); // ¡Asegúrate que esta sea la URL correcta para el registro!
 
+        socketRef.current = new WebSocket("http://18.191.23.177:8000/ws");
         // Manejador cuando la conexión se abre
         socketRef.current.onopen = () => {
             console.log("✅ Conectado al servidor WebSocket para registro");

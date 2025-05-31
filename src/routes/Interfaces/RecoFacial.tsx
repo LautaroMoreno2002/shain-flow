@@ -22,8 +22,8 @@ export const ReconocimientoFacial = () => {
     const [currentGesturePrompt, setCurrentGesturePrompt] = useState<Gestos | null>(null);
 
     useEffect(() => {
-        socketRef.current = new WebSocket("ws://127.0.0.1:8000/ws");
-
+        // socketRef.current = new WebSocket("ws://127.0.0.1:8000/ws");
+        socketRef.current = new WebSocket("http://18.191.23.177:8000/ws");
         socketRef.current.onopen = () => {
             console.log("✅ Conectado al servidor WebSocket");
             setRecognitionStatus("Conectado. Activando cámara...");
