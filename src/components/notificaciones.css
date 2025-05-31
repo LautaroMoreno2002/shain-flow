@@ -1,0 +1,66 @@
+.notificaciones-container {
+  padding: 20px;
+  background-color: white;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.bell-icon {
+  font-size: 1.5rem;
+  color: #2563eb;
+}
+
+.notificaciones-lista {
+  margin-top: 20px;
+}
+
+.notificacion {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.notificacion-icono {
+  color: #2563eb;
+  font-size: 1.4rem;
+}
+
+.notificacion-contenido {
+  flex: 1;
+}
+
+.mensaje {
+  font-size: 0.95rem;
+}
+
+.tiempo {
+  font-size: 0.8rem;
+  color: gray;
+  margin-top: 4px;
+}
+
+.ver-todo {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.ver-todo button {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}

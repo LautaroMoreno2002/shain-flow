@@ -5,7 +5,6 @@ const API_URL = "https://render-crud-jc22.onrender.com/";
 
 export const WS_URL = "http://18.191.23.177:8000/ws"; // URL del WebSocket
 
-
 // Instancia de Axios configurada
 const api = axios.create({
   baseURL: API_URL,
@@ -13,12 +12,6 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
-// const api2 = axios.create({
-//   baseURL: API_URL2,
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-// });
 
 export interface ModificarData {
   telefono: string,

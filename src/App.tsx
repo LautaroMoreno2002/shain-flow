@@ -24,6 +24,8 @@ import { EditarDatosLaborales } from './routes/Pantallas/EditarDatosLaborales'
 import { InformacionBancaria } from './routes/Pantallas/InformacionBancaria'
 import { CalcularNomina } from './routes/Pantallas/CalcularNomina'
 import { RegistroFacial } from './routes/Interfaces/RegistroFacial'
+import Verificacion from './components/Verificacion'
+import Notificaciones from './components/Notificaciones'
 
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
       <Route path="/registro-facial" element={<RegistroFacial />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} /> 
+      <Route path='/verificacion' element={<Verificacion />} />
+      <Route path='/notificaciones' element={<Notificaciones />} />
 
       {/* Rutas del empleado (requieren layout y pueden estar protegidas) */}
         <Route path="/empleado" element={<Empleado />}>
