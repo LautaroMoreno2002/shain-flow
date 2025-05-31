@@ -1,4 +1,3 @@
-import { span } from 'framer-motion/client'
 import { PieChart, ResponsiveContainer, Pie, Tooltip, Cell, Legend } from 'recharts'
 
 const data = [

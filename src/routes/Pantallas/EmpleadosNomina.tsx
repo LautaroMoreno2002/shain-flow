@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { EmpleadoNomina } from "../../components/EmpleadoNomina";
 import "../../estilos/empleados.css";
-import { listarEmpleados, crearEmpleado } from "../../services/api";
-import { useNavigate } from "react-router-dom";
+import { listarEmpleados } from "../../services/api";
 import { CircularProgress } from "@mui/material";
 
 export interface Empleado {
@@ -19,23 +18,23 @@ export const EmpleadosNomina = () => {
   const [busqueda, setBusqueda] = useState<string>("");
   const [mostrarFormulario, setMostrarFormulario] = useState<boolean>(false);
   const [cargando, setCargando] = useState(false);
-  const [nuevoEmpleado, setNuevoEmpleado] = useState({
-    nombre: "",
-    apellido: "",
-    tipo_identificacion: "",
-    numero_identificacion: "",
-    fecha_nacimiento: "",
-    correo_electronico: "",
-    telefono: "",
-    calle: "",
-    numero_calle: "",
-    localidad: "",
-    partido: "",
-    provincia: "",
-    genero: "",
-    pais_nacimiento: "",
-    estado_civil: "",
-  });
+  // const [nuevoEmpleado, setNuevoEmpleado] = useState({
+  //   nombre: "",
+  //   apellido: "",
+  //   tipo_identificacion: "",
+  //   numero_identificacion: "",
+  //   fecha_nacimiento: "",
+  //   correo_electronico: "",
+  //   telefono: "",
+  //   calle: "",
+  //   numero_calle: "",
+  //   localidad: "",
+  //   partido: "",
+  //   provincia: "",
+  //   genero: "",
+  //   pais_nacimiento: "",
+  //   estado_civil: "",
+  // });
 
   const [nuevoConcepto, setNuevoConcepto] = useState({
     codigo: "0",
@@ -47,7 +46,7 @@ export const EmpleadosNomina = () => {
 
   const [errores, setErrores] = useState<{ [key: string]: boolean }>({});
   const [mensajeError, setMensajeError] = useState<string>("");
-  const [isEditable, setIsEditable] = useState<boolean>(true);
+  // const [isEditable, setIsEditable] = useState<boolean>(true);
 
   useEffect(() => {
     const cargarEmpleados = async () => {
@@ -180,11 +179,11 @@ export const EmpleadosNomina = () => {
               const opcionesTipoConcepto = ['Remunerativo', 'No remunerativo', 'Deducción', 'Retención', 'Percepción',
                 'Indemnización', 'Reintegro', 'Premio', 'Multa', 'Ajuste', 'Anticipo', 'Vacaciones'];
               const opcionesEsPorcentaje = ["Si", "No"];
-              const opcionesProvincia = [
-                "Buenos Aires", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes", "Entre Ríos", "Formosa",
-                "Jujuy", "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquén", "Río Negro", "Salta", "San Juan",
-                "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucumán"
-              ];
+              // const opcionesProvincia = [
+              //   "Buenos Aires", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes", "Entre Ríos", "Formosa",
+              //   "Jujuy", "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquén", "Río Negro", "Salta", "San Juan",
+              //   "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucumán"
+              // ];
               const opcionesPaises = [
                 "Argentina", "Uruguay", "Paraguay", "Chile", "Bolivia", "Perú", "Ecuador", "Colombia", "Venezuela",
                 "Brasil", "México", "Guatemala", "Honduras", "El Salvador", "Nicaragua", "Costa Rica", "Panamá",

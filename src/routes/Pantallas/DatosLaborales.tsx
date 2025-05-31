@@ -13,24 +13,24 @@ interface DatosLaborales {
   tipo_contrato: string;
 }
 
-interface Nomina {
-  id_nomina: string;
-  id_empleado: number;
-  periodo: string;
-  fecha_de_pago: string;
-  salario_base: number;
-  bono_presentismo: number;
-  bono_antiguedad: number;
-  horas_extra: number;
-  descuento_jubilacion: number;
-  descuento_obra_social: number;
-  descuento_anssal: number;
-  descuento_ley_19032: number;
-  impuesto_ganancias: number;
-  descuento_sindical: number;
-  sueldo_bruto: number;
-  sueldo_neto: number;
-}
+// interface Nomina {
+//   id_nomina: string;
+//   id_empleado: number;
+//   periodo: string;
+//   fecha_de_pago: string;
+//   salario_base: number;
+//   bono_presentismo: number;
+//   bono_antiguedad: number;
+//   horas_extra: number;
+//   descuento_jubilacion: number;
+//   descuento_obra_social: number;
+//   descuento_anssal: number;
+//   descuento_ley_19032: number;
+//   impuesto_ganancias: number;
+//   descuento_sindical: number;
+//   sueldo_bruto: number;
+//   sueldo_neto: number;
+// }
 
 export const DatosLaboralesDescrip = () => {
   const [datos, setDatos] = useState<DatosLaborales | null>(null);
@@ -96,7 +96,7 @@ export const DatosLaboralesDescrip = () => {
 
 
 export const UltRecibos = () => {
-  const [nominas, setNominas] = useState<any | null>(null);
+  // const [nominas, setNominas] = useState<any | null>(null);
   const [cargando, setCargando] = useState(false);
 
   useEffect(() => {
@@ -106,7 +106,7 @@ export const UltRecibos = () => {
         const response = await nominasPorId('1'); 
         console.log(response);
         console.log(response.nominas);
-        setNominas(response);
+        // setNominas(response);
       } catch (error) {
         console.error("Error al obtener las nóminas:", error);
       } finally {

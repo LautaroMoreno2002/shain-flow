@@ -12,7 +12,7 @@ export function Reportes() {
             <GraficoDeTorta />
             <PDFDownloadLink document={<PDF />} fileName="miPrimerPDF.pdf">
                 {
-                    ({ loading, url, error, blob }) => loading ? <button>
+                    ({ loading }) => loading ? <button>
                         Cargando Documento...
                     </button> : <button>
                         Nueva Descarga!
