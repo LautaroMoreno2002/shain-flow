@@ -14,10 +14,13 @@ const Notificaciones = () => {
 
   return (
     <div className="notificaciones-container">
-      <div className="header">
-        <h1>Notificaciones</h1>
+     <div className="header">
+      <h1>Notificaciones</h1>
+      <div className="campana-contenedor">
         <span className="bell-icon">🔔</span>
+        <span className="contador">1</span>
       </div>
+    </div>
 
       <div className="notificaciones-lista">
         {notificaciones.map((n, i) => (
