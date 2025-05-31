@@ -1,7 +1,10 @@
 import axios from "axios";
 
 // const API_URL2 = "https://tpp-g2-adp-1.onrender.com/"; //conectar con la API
-const API_URL = "https://render-crud-jc22.onrender.com/"
+const API_URL = "https://render-crud-jc22.onrender.com/";
+
+export const WS_URL = "http://18.191.23.177:8000/ws"; // URL del WebSocket
+
 
 // Instancia de Axios configurada
 const api = axios.create({

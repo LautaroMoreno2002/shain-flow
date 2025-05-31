@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../../estilos/reco-facial.css';
+import { WS_URL } from '../../services/api';
 
 type Gestos = 'sonrisa' | 'giro' | 'cejas';
 
@@ -23,7 +24,7 @@ export const ReconocimientoFacial = () => {
 
     useEffect(() => {
         // socketRef.current = new WebSocket("ws://127.0.0.1:8000/ws");
-        socketRef.current = new WebSocket("http://18.191.23.177:8000/ws");
+        socketRef.current = new WebSocket(WS_URL);
         socketRef.current.onopen = () => {
             console.log("✅ Conectado al servidor WebSocket");
             setRecognitionStatus("Conectado. Activando cámara...");

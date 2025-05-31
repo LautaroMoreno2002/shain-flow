@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import '../../estilos/reco-facial.css'; // Asumiendo que usas los mismos estilos base
 import { NavLink } from 'react-router-dom';
+import { WS_URL } from '../../services/api';
 
 export const RegistroFacial = () => {
     const videoRef = useRef<HTMLVideoElement>(null); // Referencia al elemento <video>
@@ -21,7 +22,7 @@ export const RegistroFacial = () => {
         // Asegúrate de que esta URL coincida con la de tu backend FastAPI para el registro
         // socketRef.current = new WebSocket("ws://127.0.0.1:8000/ws"); // ¡Asegúrate que esta sea la URL correcta para el registro!
 
-        socketRef.current = new WebSocket("http://18.191.23.177:8000/ws");
+        socketRef.current = new WebSocket(WS_URL);
         // Manejador cuando la conexión se abre
         socketRef.current.onopen = () => {
             console.log("✅ Conectado al servidor WebSocket para registro");
