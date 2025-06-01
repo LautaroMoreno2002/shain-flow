@@ -12,7 +12,7 @@ const COLORS = ['#20c997', '#dc3545', '#fd7e14', '#ffc107', '#f48fb1', '#d500f9'
 export const GraficoDeTorta = () => {
 
   return (
-    <div style={{ width: '100%', height: 300,}}>
+    <div id="chart-bar-container" style={{ width: '100%', height: 300,}}>
         <ResponsiveContainer>
             <PieChart>
                 <Pie
