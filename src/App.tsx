@@ -27,6 +27,7 @@ import { RegistroFacial } from './routes/Interfaces/RegistroFacial'
 import Verificacion from './components/Verificacion'
 import Notificaciones from './components/Notificaciones'
 import { AgregarSalario } from './components/AgregaSalario'
+import { AgregarDatos } from './components/AgregaDatos'
 
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
           <Route path="calcular-nomina" element={<CalcularNomina />}></Route>
           <Route path="ver-nomina" element={<VerNomina />}></Route>
           <Route path="agregar-salario" element={<AgregarSalario />}></Route>
+          <Route path="agregar-datos" element={<AgregarDatos />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
     <Route path='/analista-datos' element={<AnalistaDeDatos />}>

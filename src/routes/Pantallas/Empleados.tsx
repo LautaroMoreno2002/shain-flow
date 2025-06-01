@@ -3,6 +3,7 @@ import EmpleadoItem from "../../components/EmpleadoItem";
 import "../../estilos/empleados.css";
 import { listarEmpleados, crearEmpleado } from "../../services/api";
 import { CircularProgress } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export interface Empleado {
   id_empleado: number;
@@ -38,6 +39,7 @@ export const Empleados = () => {
 
   const [errores, setErrores] = useState<{ [key: string]: boolean }>({});
   const [mensajeError, setMensajeError] = useState<string>("");
+  const navegar = useNavigate();
 
   useEffect(() => {
     const cargarEmpleados = async () => {
@@ -59,6 +61,10 @@ export const Empleados = () => {
       .toLowerCase()
       .includes(busqueda.toLowerCase())
   );
+
+  const agregarDatos = () => {
+    navegar('/administrador/agregar-datos');
+  };
 
   const manejarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -152,6 +158,9 @@ export const Empleados = () => {
             ))}
             <button onClick={() => setMostrarFormulario(true)}>
               <span className="plus">➕</span> Agregar empleado
+            </button>
+            <button onClick={() => agregarDatos()}>
+              <span className="plus">➕</span> Agregar datos
             </button>
           </div>
         </>
