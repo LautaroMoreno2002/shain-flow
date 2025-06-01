@@ -78,10 +78,10 @@ export const EditarDatosLaborales = () => {
   // };
 
   const opcionesDepartamentos = ['Recursos Humanos', 'Sistemas', 'Contabilidad'];
-  const opcionesPuetos = ['Trainee', 'Junior', 'Semi Senior', 'Senior', 'Teach Lead'];
-  const opcionesCategoria = ['Arquitecto de Software', 'DevOps', 'QA Analyst', 'Scrum Master', 'Project Manager',
+  const opcionesPuetos = ['Arquitecto de Software', 'DevOps', 'QA Analyst', 'Scrum Master', 'Project Manager',
     'Product Owner', 'Analista Funcional', 'Backend Developer', 'Frontend Developer', 'Fullstack Developer',
     'Data Analyst', 'Data Engineer', 'Data Scientist', 'UX/UI Designer', 'CTO'];
+  const opcionesCategoria = ['Trainee', 'Junior', 'Semi Senior', 'Senior', 'Teach Lead'];
   const opcionesTipoContrato = ['Tiempo indeterminado', 'Tiempo parcial', 'A plazo fijo', 'Por temporada',
     'Eventual', 'Pasantia'];
   const opcionesEstado = ['Activo', 'Suspendido', 'Desafectado', 'Licencia', 'En formacion', 'Jubilado',

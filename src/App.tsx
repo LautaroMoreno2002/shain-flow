@@ -26,6 +26,7 @@ import { CalcularNomina } from './routes/Pantallas/CalcularNomina'
 import { RegistroFacial } from './routes/Interfaces/RegistroFacial'
 import Verificacion from './components/Verificacion'
 import Notificaciones from './components/Notificaciones'
+import { AgregarSalario } from './components/AgregaSalario'
 
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
           <Route path="calculo-nomina" element={<CalculoNomina />}></Route>
           <Route path="calcular-nomina" element={<CalcularNomina />}></Route>
           <Route path="ver-nomina" element={<VerNomina />}></Route>
+          <Route path="agregar-salario" element={<AgregarSalario />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
     <Route path='/analista-datos' element={<AnalistaDeDatos />}>

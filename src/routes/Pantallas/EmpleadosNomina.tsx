@@ -3,6 +3,7 @@ import { EmpleadoNomina } from "../../components/EmpleadoNomina";
 import "../../estilos/empleados.css";
 import { listarEmpleados } from "../../services/api";
 import { CircularProgress } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export interface Empleado {
   id_empleado: number;
@@ -47,6 +48,7 @@ export const EmpleadosNomina = () => {
   const [errores, setErrores] = useState<{ [key: string]: boolean }>({});
   const [mensajeError, setMensajeError] = useState<string>("");
   // const [isEditable, setIsEditable] = useState<boolean>(true);
+  const navegar = useNavigate();
 
   useEffect(() => {
     const cargarEmpleados = async () => {
@@ -68,6 +70,10 @@ export const EmpleadosNomina = () => {
       .toLowerCase()
       .includes(busqueda.toLowerCase())
   );
+
+  const agregarSalario = () => {
+    navegar('/administrador/agregar-salario');
+  };
 
   const manejarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -164,6 +170,9 @@ export const EmpleadosNomina = () => {
             ))}
             <button onClick={() => setMostrarFormulario(true)}>
               ➕ Agregar Concepto
+            </button>
+            <button onClick={() => agregarSalario()}>
+              ➕ Agregar Salario Base
             </button>
           </div>
         </>
