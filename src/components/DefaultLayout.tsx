@@ -19,7 +19,8 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
 <p>"Mirai" (未来) significa futuro en japonés, lo cual le da un toque tecnológico, moderno y con visión a largo plazo.</p> 
 <p>"Solutions" refuerza que no solo desarrollan productos, sino que brindan soluciones concretas. 
 Producto: SHAIN FLOW “Flujo de empleados” </p>
-<p>"Shain" (社員) significa empleado o miembro de una organización. ● "Flow" le da esa idea de procesos flujos, automatizados, modernos.</p> 
+<p>"Shain" (社員) significa empleado o miembro de una organización.</p>
+<p>"Flow" le da esa idea de procesos flujos, automatizados, modernos.</p> 
 
         </div>
         <div className="empresa-integrantes">

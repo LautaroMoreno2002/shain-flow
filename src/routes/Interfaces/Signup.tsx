@@ -197,7 +197,7 @@ export const Signup = () => {
                     <label htmlFor="calle">Calle:</label>
                     <input type="text" id="calle" value={calle} onChange={(e) => setCalle(e.target.value)} className="input-field" />
 
-                    <label htmlFor="numero-calle">Número:</label>
+                    <label htmlFor="numero-calle">N°:</label>
                     <input type="number" id="numero-calle" value={numeroCalle} onChange={(e) => setNumeroCalle(e.target.value)} className="input-field" />
                   </div>
 
