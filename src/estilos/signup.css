@@ -146,7 +146,7 @@ label {
 /* Para pantallas grandes: dividir en dos columnas */
 @media (min-width: 768px) {
   .signup-form {
-    padding: 3rem;
+    padding: 1rem;
   }
 
   .logo {
