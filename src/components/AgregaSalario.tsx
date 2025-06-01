@@ -23,12 +23,12 @@ export function AgregarSalario() {
 
     const cargarSalario = async () => {
         const nuevosErrores: { [key: string]: boolean } = {};
-        let esValido = true;
+        // let esValido = true;
 
         Object.entries(nuevoSalario).forEach(([key, valor]) => {
             if (!valor.trim()) {
                 nuevosErrores[key] = true;
-                esValido = false;
+                // esValido = false;
             }
         });
     };

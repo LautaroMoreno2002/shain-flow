@@ -21,12 +21,12 @@ export function AgregarDatos() {
     const cargarDatos = async () => {
         
         const nuevosErrores: { [key: string]: boolean } = {};
-        let esValido = true;
+        // let esValido = true;
 
         Object.entries(nuevoDato).forEach(([key, valor]) => {
             if (!valor.trim()) {
                 nuevosErrores[key] = true;
-                esValido = false;
+                // esValido = false;
             }
         });
         alert("Datos cargados correctamente")
