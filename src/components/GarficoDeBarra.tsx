@@ -12,7 +12,7 @@ const data = [
 
 export const GraficoDeBarra = () => {
   return (
-    <div id="chart-bar-container" style={{ display: 'flex', justifyContent: 'center'}}>
+    <div className="chart-container" style={{ display: 'flex', justifyContent: 'center'}}>
       <ResponsiveContainer width="60%" aspect={2}>        
         <BarChart
           data={data}          
