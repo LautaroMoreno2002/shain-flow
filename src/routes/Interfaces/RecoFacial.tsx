@@ -8,6 +8,7 @@ type Gestos = 'sonrisa' | 'giro' | 'cejas';
 export const ReconocimientoFacial = () => {
     const videoRef = useRef<HTMLVideoElement | null>(null); // Referencia para el elemento de video
     const socketRef = useRef<WebSocket | null>(null); // Referencia para la conexión WebSocket
+    const [mostrarCamara, setMostrarCamara] = useState(false);
 
     // Estado para los mensajes que se muestran al usuario en la interfaz
     const [recognitionStatus, setRecognitionStatus] = useState<string>('Esperando conexión con el servidor...');
@@ -107,6 +108,7 @@ export const ReconocimientoFacial = () => {
     }, []);
 
     const startRecognition = () => {
+        setMostrarCamara(true); // ✅ activar animación
         if (videoRef.current && socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
             const video = videoRef.current;
             const canvas = document.createElement('canvas');
@@ -139,7 +141,7 @@ export const ReconocimientoFacial = () => {
             </header>
 
             <main className="contenido">
-                <section className="seccion-camara">
+                <section className={`seccion-camara ${mostrarCamara ? 'camara-activa' : 'camara-inactiva'}`}>
                     <p className="estado-reconocimiento"
                     // style={{animation: `${recognitionStatus ? "expand" : ""}`, animationIterationCount: `${recognitionStatus ? "infinite" : "1"}`}}
                     >
@@ -169,7 +171,7 @@ export const ReconocimientoFacial = () => {
                     </div>
                 </section>
 
-                <section className="seccion-derecha">
+                <section className={`seccion-derecha ${mostrarCamara ? 'derecha-activa' : 'derecha-inicial'}`}>
                     <p className="mensaje-guia">
                         Enfoca tu rostro dentro del círculo para realizar el reconocimiento facial y tomar asistencia.
                     </p>

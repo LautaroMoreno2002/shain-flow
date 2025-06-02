@@ -24,6 +24,7 @@
   justify-content: center;
   flex: 1;
   gap: 2em;
+  position: relative;
 }
 .seccion-camara {
   width: 100%;
@@ -82,6 +83,39 @@
   font-weight: 700;
 }
 
+.camara-inactiva {
+  transform: translateX(-150%);
+  opacity: 0;
+  transition: transform 1s ease, opacity 1s ease;
+}
+
+.camara-activa {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform 1s ease, opacity 1s ease;
+}
+
+/* Animación de entrada para la sección derecha */
+.seccion-derecha {
+  transition: all 1s ease;
+}
+
+.derecha-inicial {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90vw;
+  z-index: 10;
+}
+
+.derecha-activa {
+  position: static;
+  transform: none;
+  max-width: 400px;
+  z-index: auto;
+}
+
 /* Versión desktop */
 @media (min-width: 900px) {
   .contenido {
@@ -96,7 +130,10 @@
   }
 
   .seccion-alternativa {
-    text-align: center
+    text-align: center;
+    transition: all 1s ease;
+    width: 100%;
+    max-width: 600px;
   }
 
   .seccion-camara .camara {
@@ -157,6 +194,12 @@
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }
+
+.seccion-derecha {
+  transition: all 1s ease;
+  max-width: 900px;
+}
+
 
 @keyframes expand {
   0% {
