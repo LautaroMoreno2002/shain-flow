@@ -1,23 +1,40 @@
+// exportChartsToPDF.ts
 import { toPng } from 'html-to-image';
 import jsPDF from 'jspdf';
 
-export const exportChartToPDF = async () => {
-  const chartElement = document.getElementById('chart-bar-container');
-  if (!chartElement) {
-    console.error('No se encontró el elemento del gráfico.');
+export const exportChartsToPDF = async () => {
+  const chartElements = document.getElementsByClassName('chart-container');
+  if (chartElements.length === 0) {
+    console.error('No se encontraron elementos de gráficos.');
     return;
   }
 
-  try {
-    const imgData = await toPng(chartElement);
-    const pdf = new jsPDF({
-      orientation: 'landscape',
-      unit: 'px',
-      format: [chartElement.offsetWidth, chartElement.offsetHeight],
-    });
-    pdf.addImage(imgData, 'PNG', 10, 10, 780, 300);
-    pdf.save('grafico.pdf');
-  } catch (error) {
-    console.error('Error al exportar el gráfico a PDF:', error);
+  const pdf = new jsPDF('p', 'pt', 'a4');
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+  const margin = 20;
+  let yOffset = margin;
+
+  for (let i = 0; i < chartElements.length; i++) {
+    const chartElement = chartElements[i] as HTMLElement;
+
+    try {
+      const imgData = await toPng(chartElement);
+      const imgProps = chartElement.getBoundingClientRect();
+      const imgWidth = pageWidth - margin * 2;
+      const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+      if (yOffset + imgHeight > pageHeight - margin) {
+        pdf.addPage();
+        yOffset = margin;
+      }
+
+      pdf.addImage(imgData, 'PNG', margin, yOffset, imgWidth, imgHeight);
+      yOffset += imgHeight + margin;
+    } catch (error) {
+      console.error(`Error al procesar el gráfico ${i + 1}:`, error);
+    }
   }
+
+  pdf.save('graficos.pdf');
 };

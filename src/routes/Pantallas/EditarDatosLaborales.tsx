@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import '../../estilos/datos-personales.css'
 import { useNavigate } from 'react-router-dom';
+import { CalendarioInput } from "../../components/Calendario"
+import HoraInput from '../../components/Hora';
 
 
 
@@ -144,28 +146,30 @@ export const EditarDatosLaborales = () => {
             </div>
             <div className="data-item">
               <p className="data-item--label">Fecha de alta</p>
-              <input
+              {/*<input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="fechaIngreso"
                 value={personalData.fechaAlta}
                 onChange={handleChange}
                 readOnly={!isEditable}
-              />
+              />*/}
+              <CalendarioInput />
             </div>
           </div>
 
           <div className="data-group">
             <div className="data-item">
               <p className="data-item--label">Hora de ingreso:</p>
-              <input
+              {/*<input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="horaIngreso"
                 value={personalData.horaIngreso}
                 onChange={handleChange}
                 readOnly={!isEditable}
-              />
+              />*/}
+              <HoraInput />
             </div>
             <div className="data-item">
               <p className="data-item--label">Hora de salida:</p>
