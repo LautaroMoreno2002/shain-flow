@@ -43,7 +43,7 @@ const GraficoAntiguedad: React.FC = () => {
           textAlign: 'center',
         }}
       >
-        Rando de años laborales
+        Rango de años laborales
       </div>
 
       <div style={{ width: '100%', height: '300px' }}>
