@@ -16,7 +16,7 @@ export const HoraInput: React.FC = () => {
         timeIntervals={1}
         timeCaption="Hora"
         dateFormat="HH:mm"
-        placeholderText="Selecciona la hora"
+        placeholderText="Elige la hora"
       />
     </div>
   );

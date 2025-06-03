@@ -66,12 +66,12 @@ export function VerNomina() {
           <p>Nombre: {recibo.empleado.nombre}</p>
           <p>Número de Empleado: {recibo.empleado.numero_empleado}</p>
         </section>
-        <section style={{ border: '1px solid black', backgroundColor: '#fff', padding: '10px', borderRadius: '5px', marginTop: '20px', marginLeft: '10px', marginRight: '10px', marginBottom: '10px' }}>
-          <table>
+        <section style={{ border: '1px solid black', backgroundColor: '#fff', padding: '10px', borderRadius: '5px', marginTop: '20px', marginLeft: '10px', marginRight: '10px', marginBottom: '10px', overflowX: 'auto'}}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '300px' }}>
             <thead>
               <tr>
                 <th>Concepto</th>
-                <th style={{ width: "80%" }}>Decripción</th>
+                <th >Decripción</th>
                 <th>Ingreso</th>
                 <th>Descuento</th>
               </tr>
