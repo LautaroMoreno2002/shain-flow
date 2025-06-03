@@ -28,6 +28,7 @@ import Verificacion from './components/Verificacion'
 import Notificaciones from './components/Notificaciones'
 import { AgregarSalario } from './components/AgregaSalario'
 import { AgregarDatos } from './components/AgregaDatos'
+import { ReportesAnalista } from './routes/Pantallas/Reportes-analista'
 
 
 function App() {
@@ -75,7 +76,8 @@ function App() {
           <Route path="confirmacion" element={<Confirmacion />}></Route>
           <Route path="empleados" element={<Empleados />}></Route>
           <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
-          <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>          
+          <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>
+          <Route path="reportes-analista" element={<ReportesAnalista />}></Route>           
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
     <Route path='/supervisor' element={<Supervisor />}>
