@@ -8,6 +8,7 @@ export const HoraInput: React.FC = () => {
   return (
     <div >      
       <DatePicker
+        className = 'data-item--value'
         selected={hora}
         onChange={(date: Date | null) => setHora(date)}
         showTimeSelect

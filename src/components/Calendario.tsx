@@ -7,12 +7,13 @@ export const CalendarioInput: React.FC = () => {
 
   return (
     <div >
-      <DatePicker
+      <DatePicker 
+        className = 'data-item--value'
         selected={fecha}
         onChange={(date: Date | null) => setFecha(date)}
         dateFormat="yyyy-MM-dd"
         placeholderText="Elige una fecha"
-        className="border p-2 rounded"
+        //className="border p-2 rounded"
       />
     </div>
   );
