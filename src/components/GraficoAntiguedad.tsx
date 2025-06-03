@@ -20,33 +20,10 @@ const data = [
 
 const GraficoAntiguedad: React.FC = () => {
   return (
-    <div
-      className='chart-container'
-      style={{
-        width: '100%',
-        maxWidth: 600,
-        margin: '0 auto',
-        borderRadius: 8,
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-        background: '#fff',
-        overflow: 'hidden',
-      }}
-    >
-      <h2 style={{ textAlign: 'center' }}>Informe de Antigüedad</h2>
-      <div
-        style={{
-          backgroundColor: '#00a8e8',
-          color: 'white',
-          padding: '12px',
-          fontSize: '1.1rem',
-          fontWeight: 600,
-          textAlign: 'center',
-        }}
-      >
-        Rango de años laborales
-      </div>
-
-      <div style={{ width: '100%', height: '300px' }}>
+    <div className="funnel-container">
+      <h2 className="titulo">Informe de antigüedad laboral</h2>
+      <div className="funnel-header">Porcentaje por rango de años laborales</div>
+      <div className="funnel-chart-wrapper">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             layout="vertical"
@@ -54,14 +31,9 @@ const GraficoAntiguedad: React.FC = () => {
             margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
           >
             <XAxis type="number" domain={[0, 100]} hide />
-            <YAxis
-              type="category"
-              dataKey="antiguedad"
-              width={100}
-              tick={{ fontSize: 12 }}
-            />
+            <YAxis type="category" dataKey="antiguedad" width={100} tick={{ fontSize: 12 }} />
             <Tooltip formatter={(value) => `${value}%`} />
-            <Bar dataKey="porcentaje" fill="#64c2f0" barSize={24}>
+            <Bar dataKey="porcentaje" fill="#c82333" barSize={24}>
               <LabelList
                 dataKey="porcentaje"
                 position="right"

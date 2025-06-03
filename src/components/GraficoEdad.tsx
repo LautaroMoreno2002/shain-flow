@@ -15,7 +15,7 @@ const data = [
 
 const GraficoEdad: React.FC = () => {
   return (
-    <div className="chart-container" style={{ margin: '0 auto', display: 'flex', gap: '2rem', alignItems: 'center', width: '60%', height: 200 }}>
+    <div className="funnel-container" >
       <div style={{ flex: 1 }}>
         <h2 style={{ textAlign: 'center' }}>Informe de edad</h2>
         <p style={{ textAlign: 'center', color: '#6b7280' }}>Contextualiza tu tema</p>

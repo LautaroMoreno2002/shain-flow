@@ -13,7 +13,7 @@ const data = [
 
 export const GraficoSalarios: React.FC = () => {
   return (
-    <div className='chart-container' style={{ margin: '0 auto', width: '60%', height: 400, display: 'flex', gap: '2rem', marginTop:'50'}}>
+    <div className="funnel-container" >
       <div style={{ flex: 1 }}>
         <h2 style={{ textAlign: 'center' }}>Informe de salarios</h2>
         <p style={{ textAlign: 'center', color: '#777' }}>Por departamentos</p>

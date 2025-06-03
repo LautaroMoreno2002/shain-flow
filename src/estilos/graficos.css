@@ -1,0 +1,30 @@
+.funnel-container {
+  width: 100%;
+  height: 400px;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  overflow: hidden;
+  padding: 10px;
+  display: flexbox;
+}
+
+.funnel-header {
+  background-color: #c82333;
+  color: white;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.funnel-chart-wrapper {
+  width: 100%;
+  height: 300px;
+}
+
+.titulo {
+    text-align: 'center' 
+}
