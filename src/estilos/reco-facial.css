@@ -209,3 +209,35 @@
     scale: 1.1;
   }
 }
+/* Transiciones generales */
+.seccion-camara,
+.seccion-derecha {
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+/* Mobile: efectos de entrada vertical */
+/* Solo aplica en modo mobile */
+@media (max-width: 849px) {
+  .seccion-camara,
+  .seccion-derecha {
+    transition: transform 0.8s ease;
+    position: relative;
+    width: 100%;
+  }
+
+  .camara-oculta {
+    transform: translateY(-100vh);
+  }
+
+  .camara-activa {
+    transform: translateY(0);
+  }
+
+  .derecha-movil-centro {
+    transform: translateY(-25vh);
+  }
+
+  .derecha-movil-abajo {
+    transform: translateY(0); /* Ajusta el desplazamiento según lo que necesites */
+  }
+}

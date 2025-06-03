@@ -171,7 +171,7 @@ export const ReconocimientoFacial = () => {
                     </div>
                 </section>
 
-                <section className={`seccion-derecha ${mostrarCamara ? 'derecha-activa' : 'derecha-inicial'}`}>
+                <section className={`seccion-derecha ${mostrarCamara ? 'derecha-movil-abajo' : 'derecha-movil-centro'}`}>
                     <p className="mensaje-guia">
                         Enfoca tu rostro dentro del círculo para realizar el reconocimiento facial y tomar asistencia.
                     </p>
