@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import '../../estilos/datos-personales.css'
 import { useNavigate } from 'react-router-dom';
+import CalendarioInput from '../../components/Calendario';
+import HoraInput from '../../components/Hora';
 
 
 
@@ -66,36 +68,39 @@ export const PermitirFichada = () => {
           <div className="data-group">
             <div className="data-item">
               <p className="data-item--label">Fecha:</p>
-              <input
+              {/*<input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="fecha"
                 value={personalData.fecha}
                 onChange={handleChange}
                 readOnly={isEditable}
-              />
+              />*/}
+              <CalendarioInput />
             </div>
             <div className="data-item">
               <p className="data-item--label">Hora de ingreso:</p>
-              <input
+              {/*<input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="hora_ingreso"
                 value={personalData.hora_ingreso}
                 onChange={handleChange}
                 readOnly={isEditable}
-              />
+              />*/}
+              <HoraInput />
             </div>
             <div className="data-item">
               <p className="data-item--label">Hoar de egreso:</p>
-              <input
+              {/*<input
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="hora_egreso"
                 value={personalData.hora_egreso}
                 onChange={handleChange}
                 readOnly={isEditable}
-              />
+              />*/}
+              <HoraInput />
             </div>
             <div className="data-item">
               <p className="data-item--label">Motivo</p>

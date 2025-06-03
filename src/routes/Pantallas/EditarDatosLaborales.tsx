@@ -146,14 +146,6 @@ export const EditarDatosLaborales = () => {
             </div>
             <div className="data-item">
               <p className="data-item--label">Fecha de alta</p>
-              {/*<input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="fechaIngreso"
-                value={personalData.fechaAlta}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />*/}
               <CalendarioInput />
             </div>
           </div>
@@ -161,37 +153,15 @@ export const EditarDatosLaborales = () => {
           <div className="data-group">
             <div className="data-item">
               <p className="data-item--label">Hora de ingreso:</p>
-              {/*<input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="horaIngreso"
-                value={personalData.horaIngreso}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />*/}
               <HoraInput />
             </div>
             <div className="data-item">
               <p className="data-item--label">Hora de salida:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="tel"
-                name="horaSalida"
-                value={personalData.horaSalida}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
+              <HoraInput />
             </div>
             <div className="data-item">
               <p className="data-item--label">Cantidad de horas de trabajo:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="cantidadHoras"
-                value={personalData.cantidadHoras}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
+              <HoraInput />
             </div>
             <div className="data-item">
               <p className="data-item--label">Tipo de contrato:</p>

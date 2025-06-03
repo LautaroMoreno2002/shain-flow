@@ -6,23 +6,17 @@ export const HoraInput: React.FC = () => {
   const [hora, setHora] = useState<Date | null>(null);
 
   return (
-    <div style={{ padding: '1rem', fontFamily: 'sans-serif' }}>
-      
+    <div >      
       <DatePicker
         selected={hora}
         onChange={(date: Date | null) => setHora(date)}
         showTimeSelect
         showTimeSelectOnly
-        timeIntervals={15}
+        timeIntervals={1}
         timeCaption="Hora"
         dateFormat="HH:mm"
         placeholderText="Selecciona la hora"
       />
-      {/*{hora && (
-        <p style={{ marginTop: '1rem' }}>
-          Hora seleccionada: <strong>{hora.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>
-        </p>
-      )}*/}
     </div>
   );
 };

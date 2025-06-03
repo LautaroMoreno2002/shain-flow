@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CalendarioInput from "./Calendario";
 
 export function AgregarSalario() {
     const [errores, setErrores] = useState<{ [key: string]: boolean }>({});
@@ -11,7 +12,7 @@ export function AgregarSalario() {
         departamento: "",
         categoria: "",
         valor: "600000",
-        fheca_inicio: "",
+        fecha_inicio: "",
         fecha_fin: ""
     });
 
@@ -74,12 +75,14 @@ export function AgregarSalario() {
                                         <option key={opcion} value={opcion}>{opcion}</option>
                                     ))}
                                 </select>
+                            ) : campo === "fecha_inicio" || campo === "fecha_fin"?(
+                                <CalendarioInput />
                             ) : (
                                 <input
                                     id={campo}
                                     name={campo}
                                     type="text" //{campo === "valor" ? "number" : campo === "codigo" ? "number" : "text"}
-                                    value={valor}
+                                    placeholder={valor}
                                     onChange={manejarCambio}
                                     className={errores[campo] ? "input-error" : ""}
                                 />

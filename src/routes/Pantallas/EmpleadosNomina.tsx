@@ -225,7 +225,7 @@ export const EmpleadosNomina = () => {
                       id={campo}
                       name={campo}
                       type="text" //{campo === "valor" ? "number" : campo === "codigo" ? "number" : "text"}
-                      value={valor}
+                      placeholder={valor}
                       onChange={manejarCambio}
                       className={errores[campo] ? "input-error" : ""}
                     />

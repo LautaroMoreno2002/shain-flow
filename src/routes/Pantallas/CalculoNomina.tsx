@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../estilos/datos-personales.css'
 import { useNavigate } from 'react-router-dom';
+import CalendarioInput from '../../components/Calendario';
 
 
 
@@ -86,14 +87,7 @@ export const CalculoNomina = () => {
           <div className="data-group">
             <div className="data-item">
               <p className="data-item--label">Fecha de pago:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="fecha_pago"
-                value={personalData.fecha_pago}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
+              <CalendarioInput />
             </div>
             <div className="data-item">
               <p className="data-item--label">Salario base</p>
@@ -101,7 +95,7 @@ export const CalculoNomina = () => {
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="salario_base"
-                value={personalData.salario_base}
+                placeholder={personalData.salario_base}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
@@ -112,7 +106,7 @@ export const CalculoNomina = () => {
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="presentismo"
-                value={personalData.presentismo}
+                placeholder={personalData.presentismo}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
@@ -123,7 +117,7 @@ export const CalculoNomina = () => {
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="antiguedad"
-                value={personalData.antiguedad}
+                placeholder={personalData.antiguedad}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
@@ -134,7 +128,7 @@ export const CalculoNomina = () => {
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="hora_extra"
-                value={personalData.hora_extra}
+                placeholder={personalData.hora_extra}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
@@ -148,7 +142,7 @@ export const CalculoNomina = () => {
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="descuento_obra_social"
-                value={personalData.descuento_obra_social}
+                placeholder={personalData.descuento_obra_social}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
@@ -159,7 +153,7 @@ export const CalculoNomina = () => {
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="descuento_anssal"
-                value={personalData.descuento_anssal}
+                placeholder={personalData.descuento_anssal}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
@@ -170,7 +164,7 @@ export const CalculoNomina = () => {
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="descuento_ley_19032"
-                value={personalData.descuento_ley_19032}
+                placeholder={personalData.descuento_ley_19032}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
@@ -181,7 +175,7 @@ export const CalculoNomina = () => {
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="impuesto_ganancias"
-                value={personalData.impuesto_ganancias}
+                placeholder={personalData.impuesto_ganancias}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
@@ -192,7 +186,7 @@ export const CalculoNomina = () => {
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="descuento_sindical"
-                value={personalData.descuento_sindical}
+                placeholder={personalData.descuento_sindical}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
@@ -203,64 +197,17 @@ export const CalculoNomina = () => {
                 className={`data-item--value ${isEditable ? "editable" : ""}`}
                 type="text"
                 name="descuento_jubilatorio"
-                value={personalData.descuento_jubilatorio}
+                placeholder={personalData.descuento_jubilatorio}
                 onChange={handleChange}
                 readOnly={!isEditable}
               />
             </div>
-            {/*<div className="data-item">
-              <p className="data-item--label">Provincia:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="nacionalidad"
-                value={personalData.provincia}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Localidad:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="nacionalidad"
-                value={personalData.localidad}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>
-            <div className="data-item">
-              <p className="data-item--label">Estado:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="estado"
-                value={personalData.estado}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
-            </div>*/}
           </div>
         </div>
         <div className="button-container">
           <button className="save-button" onClick={handleSave}>
             Calcular
           </button>
-          {/*{!isEditable ? (
-            <button className="edit-button" onClick={() => setIsEditable(true)}>
-              Modificar Información
-            </button>
-          ) : (
-            <>
-              <button className="save-button" onClick={handleSave}>
-                Guardar
-              </button>
-              <button className="cancel-button" onClick={handleCancel}>
-                Cancelar
-              </button>
-            </>
-          )}*/}
         </div>
       </div>
     </div>

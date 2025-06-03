@@ -2,11 +2,6 @@ import { NavLink } from 'react-router-dom';
 import './empleado-item.css';
 import type { Empleado } from '../routes/Pantallas/FichadaManual';
 
-/*interface Empleado {
-  id: number;
-  nombre: string;
-}*/
-
 interface EmpleadoItemProps {
   empleado: Empleado;
 }

@@ -8,8 +8,8 @@ export function AgregarDatos() {
 
     const [nuevoDato, setNuevoDato] = useState({
         departamento: "",
-        puesto: "",
-        categoria: ""
+        puesto: "Nombre del puesto",
+        categoria: "Nombre de la categoría"
     });
 
     const manejarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -32,8 +32,8 @@ export function AgregarDatos() {
         alert("Datos cargados correctamente")
         setNuevoDato({
                 departamento: "",
-                puesto: "",
-                categoria: ""
+                puesto: "Nombre del puesto",
+                categoria: "Nombre de la categoría"
             }
         );
     };
@@ -63,7 +63,7 @@ export function AgregarDatos() {
                                         id="nombre"
                                         name="nombre"
                                         type="text"
-                                        value="Nombre del departamento"
+                                        placeholder="Nombre del departamento"
                                         onChange={manejarCambio}
                                         className={errores[campo] ? "input-error" : ""}
                                     />
@@ -71,7 +71,7 @@ export function AgregarDatos() {
                                         id="descripcion"
                                         name="descripcion"
                                         type="text"
-                                        value="Descripción del departamento"
+                                        placeholder="Descripción del departamento"
                                         onChange={manejarCambio}
                                         className={errores[campo] ? "input-error" : ""}
                                     />
@@ -81,7 +81,7 @@ export function AgregarDatos() {
                                     id={campo}
                                     name={campo}
                                     type="text" //{campo === "valor" ? "number" : campo === "codigo" ? "number" : "text"}
-                                    value={valor}
+                                    placeholder={valor}
                                     onChange={manejarCambio}
                                     className={errores[campo] ? "input-error" : ""}
                                 />
