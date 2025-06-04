@@ -12,7 +12,7 @@ export interface NavBarProps {
   items: NavItem[];
 }
 
-export const NavBar = ({ items } : NavBarProps) => {
+export const NavBar = ({ items }: NavBarProps) => {
   const [showLabels, setShowLabels] = useState(true);
 
   const handleToggle = () => {
@@ -27,14 +27,15 @@ export const NavBar = ({ items } : NavBarProps) => {
             <li key={index}>
               <NavLink
                 to={path}
+                data-label={label} 
                 className={({ isActive }) =>
-                  `navLink ${!showLabels ? "collapsed" : ""} ${
-                    isActive ? "active" : ""
+                  `navLink ${!showLabels ? "collapsed" : ""} ${isActive ? "active" : ""
                   }`
                 }
               >
+
                 <i className={icon}></i>
-                {showLabels && <span>{label}</span>}
+                <span className="label">{label}</span>
               </NavLink>
             </li>
           ))}
