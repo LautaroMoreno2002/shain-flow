@@ -21,9 +21,10 @@ const data = [
 const GraficoAntiguedad: React.FC = () => {
   return (
     <div className="funnel-container">
-      <h2 className="titulo">Informe de antigüedad laboral</h2>
-      <div className="funnel-header">Porcentaje por rango de años laborales</div>
+      
       <div className="funnel-chart-wrapper">
+        <h2 className='funnel-titulo'>Informe de antigüedad laboral</h2>
+        <p className='funnel-header'>Porcentaje por rango de años laborales</p>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             layout="vertical"

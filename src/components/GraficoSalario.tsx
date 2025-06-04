@@ -4,20 +4,19 @@ import {
 } from 'recharts';
 
 const data = [
-  { rango: '<20k', dep1: 2, dep2: 1, dep3: 3, dep4: 5 },
-  { rango: '20-30k', dep1: 4, dep2: 2, dep3: 1, dep4: 2 },
-  { rango: '35-50k', dep1: 3, dep2: 5, dep3: 1, dep4: 2 },
-  { rango: '>70k', dep1: 2, dep2: 1, dep3: 0, dep4: 3 },
+  { rango: '<2m', dep1: 2, dep2: 1, dep3: 3, dep4: 5 },
+  { rango: '2-3m', dep1: 4, dep2: 2, dep3: 1, dep4: 2 },
+  { rango: '3.5-5m', dep1: 3, dep2: 5, dep3: 1, dep4: 2 },
+  { rango: '>7m', dep1: 2, dep2: 1, dep3: 0, dep4: 3 },
   { rango: 'Sin salario', dep1: 0, dep2: 0, dep3: 0, dep4: 2 },
 ];
 
 export const GraficoSalarios: React.FC = () => {
   return (
-    <div className="funnel-container" >
-      <div style={{ flex: 1 }}>
-        <h2 style={{ textAlign: 'center' }}>Informe de salarios</h2>
-        <p style={{ textAlign: 'center', color: '#777' }}>Por departamentos</p>
-
+    <div className="funnel-container" >        
+        <div className="funnel-chart-wrapper">
+        <h2 >Informe de salarios</h2>
+        <p>Por departamentos</p>
         <ResponsiveContainer width="100%" height="90%" >
           <BarChart
             data={data}
@@ -35,13 +34,12 @@ export const GraficoSalarios: React.FC = () => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-
-      <div style={{ width: '150px', textAlign: 'center' }}>
-        <h4>SALARIO MEDIO</h4>
-        <h2>22k</h2>
-        <p style={{ color: '#777' }}>euros</p>
-        <button style={{ fontSize: '1.5rem', padding: '0.5rem 1rem' }}>＋</button>
+      <div className='funnel-label' >
+        <h4>SALARIO PROMEDIO</h4>
+        <h2>2m</h2>
+        <p >pesos</p>
       </div>
     </div>
+    
   );
 };

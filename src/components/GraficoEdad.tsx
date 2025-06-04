@@ -17,8 +17,8 @@ const GraficoEdad: React.FC = () => {
   return (
     <div className="funnel-container" >
       <div style={{ flex: 1 }}>
-        <h2 style={{ textAlign: 'center' }}>Informe de edad</h2>
-        <p style={{ textAlign: 'center', color: '#6b7280' }}>Contextualiza tu tema</p>
+        <h2 >Informe de edad</h2>
+        <p >Contextualiza tu tema</p>
 
         <ResponsiveContainer width="100%" height={80}>
           <BarChart
@@ -38,11 +38,10 @@ const GraficoEdad: React.FC = () => {
         </ResponsiveContainer>
       </div>
 
-      <div style={{ width: '150px', textAlign: 'center' }}>
+      <div className='funnel-label' >
         <h4>EDAD MEDIA</h4>
         <h2>29,5</h2>
-        <p style={{ color: '#6b7280' }}>años</p>
-        <button style={{ fontSize: '1.5rem', padding: '0.5rem 1rem' }}>＋</button>
+        <p>años</p>
       </div>
     </div>
   );
