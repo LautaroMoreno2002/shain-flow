@@ -15,6 +15,7 @@ export const RegistroFacial = () => {
     const [expectedImageFor, setExpectedImageFor] = useState<string | null>(null);
     // Estado para indicar si el proceso de registro está en curso
     const [isRegistering, setIsRegistering] = useState<boolean>(false);
+    const [mostrarCamara, setMostrarCamara] = useState(false);
 
     // --- Manejo de la Conexión WebSocket, Activación de la Cámara y Mensajes del Servidor ---
     useEffect(() => {
@@ -127,6 +128,7 @@ export const RegistroFacial = () => {
     // --- Funciones de Lógica de Registro ---
 
     const startRegistration = useCallback(() => {
+        setMostrarCamara(true); // ✅ activar animación
         if (!employeeId.trim()) {
             setRegistrationStatus("Por favor, ingresa un ID de empleado válido para comenzar el registro.");
             alert("Por favor, ingresa un ID de empleado válido para comenzar el registro.");
@@ -196,7 +198,7 @@ export const RegistroFacial = () => {
             <main className="contenido">
                 <section className="seccion-camara">
                     <p className="estado-reconocimiento">{registrationStatus}</p>
-                    <div className="camara">
+                    <div className={`camara ${mostrarCamara ? 'camara-activa' : 'camara-inactiva'}`}>
                         <video
                             ref={videoRef}
                             width="100%"
@@ -215,7 +217,7 @@ export const RegistroFacial = () => {
                     </div>
                 </section>
 
-                <section className="seccion-derecha">
+                <section className={`seccion-derecha ${mostrarCamara ? 'derecha-movil-abajo' : 'derecha-movil-centro'}`}>
                     <p className="mensaje-guia">
                         Ingresa el ID del empleado a registrar y sigue las instrucciones para capturar los gestos necesarios.
                     </p>

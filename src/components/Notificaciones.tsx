@@ -1,4 +1,4 @@
-import './notificaciones.css';
+import './estilos/notificaciones.css';
 
 const Notificaciones = () => {
   const notificaciones = [

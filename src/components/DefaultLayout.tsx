@@ -1,5 +1,5 @@
 import React from "react";
-import './default-layout.css'
+import './estilos/default-layout.css'
 
 interface DefaultLayoutProps {
   children?: React.ReactNode;

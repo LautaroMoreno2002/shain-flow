@@ -1,4 +1,4 @@
-import './verificacion.css';
+import './estilos/verificacion.css';
 
 const Verificacion = () => {
   return (

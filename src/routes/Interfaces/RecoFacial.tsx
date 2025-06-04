@@ -141,7 +141,7 @@ export const ReconocimientoFacial = () => {
             </header>
 
             <main className="contenido">
-                <section className={`seccion-camara ${mostrarCamara ? 'camara-activa' : 'camara-inactiva'}`}>
+                <section className='seccion-camara'>
                     <p className="estado-reconocimiento"
                     // style={{animation: `${recognitionStatus ? "expand" : ""}`, animationIterationCount: `${recognitionStatus ? "infinite" : "1"}`}}
                     >
@@ -152,7 +152,7 @@ export const ReconocimientoFacial = () => {
                             </span>
                         )}
                     </p>
-                    <div className="camara">
+                    <div className={`camara ${mostrarCamara ? 'camara-activa' : 'camara-inactiva'}`}>
                         <video
                             ref={videoRef}
                             width="100%"
