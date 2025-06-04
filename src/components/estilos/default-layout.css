@@ -1,5 +1,11 @@
 .default-layout {
   display: flex;
+  margin: 1em;
+  box-shadow: 0 0 10px #666;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap-reverse;
+  width: 100%;
 }
 
 /* Panel lateral: empresa */
@@ -7,6 +13,7 @@
   background-color: #f9f9f9;
   padding: 2rem;
   border-right: 1px solid #e0e0e0;
+  width: 100%;
   max-width: 500px;
   box-sizing: border-box;
 }
@@ -52,4 +59,15 @@
 
 .empresa-integrantes li {
   margin-bottom: 0.3rem;
+}
+
+@media screen and (width < 1009px) {
+  .default-layout  {
+    margin: 0;
+    box-shadow: 0 0 0 0;
+
+    & .cont-empresa {
+      max-width: 100%;
+    }
+  }
 }
