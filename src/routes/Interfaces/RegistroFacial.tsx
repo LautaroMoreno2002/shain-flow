@@ -18,6 +18,15 @@ export const RegistroFacial = () => {
     const [isRegistering, setIsRegistering] = useState<boolean>(false);
     const [mostrarCamara, setMostrarCamara] = useState(false);
 
+    const [esMovil, setEsMovil] = useState(window.innerWidth < 850);
+
+    useEffect(() => {
+        const handleResize = () => setEsMovil(window.innerWidth < 850);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+
     // --- Manejo de la Conexión WebSocket, Activación de la Cámara y Mensajes del Servidor ---
     useEffect(() => {
         // 1. Inicializar la conexión WebSocket
@@ -32,15 +41,15 @@ export const RegistroFacial = () => {
 
             // 2. Activar la cámara
             navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-            videoRef.current.play();
-            console.log("🎥 Cámara activada correctamente");
-            setRegistrationStatus("Cámara lista. Ingresa el ID del empleado y presiona 'Iniciar Registro'.");
-            setMostrarCamara(true); // ✅ Mostrar cámara automáticamente
-        }
-    })
+                .then(stream => {
+                    if (videoRef.current) {
+                        videoRef.current.srcObject = stream;
+                        videoRef.current.play();
+                        console.log("🎥 Cámara activada correctamente");
+                        setRegistrationStatus("Cámara lista. Ingresa el ID del empleado y presiona 'Iniciar Registro'.");
+                        setMostrarCamara(true); // ✅ Mostrar cámara automáticamente
+                    }
+                })
 
                 .catch(err => {
                     console.error("❌ Error al acceder a la cámara:", err);
@@ -220,7 +229,10 @@ export const RegistroFacial = () => {
                     </div>
                 </section>
 
-                <section className={`seccion-derecha ${mostrarCamara ? 'derecha-movil-abajo' : 'derecha-movil-centro'}`}>
+                <section className={`seccion-derecha ${esMovil
+                        ? (mostrarCamara ? 'derecha-movil-abajo' : 'derecha-movil-centro')
+                        : (mostrarCamara ? 'derecha-activa' : 'derecha-inicial')
+                    }`}>
                     <p className="mensaje-guia">
                         Ingresa el ID del empleado a registrar y sigue las instrucciones para capturar los gestos necesarios.
                     </p>

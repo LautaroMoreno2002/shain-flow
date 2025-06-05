@@ -200,6 +200,21 @@
   max-width: 900px;
 }
 
+.derecha-inicial {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90vw;
+  z-index: 10;
+}
+
+.derecha-activa {
+  position: static;
+  transform: none;
+  max-width: 400px;
+  z-index: auto;
+}
 
 @keyframes expand {
   0% {

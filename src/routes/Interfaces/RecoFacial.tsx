@@ -23,6 +23,15 @@ export const ReconocimientoFacial = () => {
     // Estado para el gesto que se está solicitando actualmente (para mostrarlo en la UI)
     const [currentGesturePrompt, setCurrentGesturePrompt] = useState<Gestos | null>(null);
 
+    const [esMovil, setEsMovil] = useState(window.innerWidth < 850);
+
+    useEffect(() => {
+        const handleResize = () => setEsMovil(window.innerWidth < 850);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+
     useEffect(() => {
         // socketRef.current = new WebSocket("ws://127.0.0.1:8000/ws");
         socketRef.current = new WebSocket(WS_URL);
@@ -31,15 +40,15 @@ export const ReconocimientoFacial = () => {
             setRecognitionStatus("Conectado. Activando cámara...");
 
             navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-            videoRef.current.play();
-            console.log("🎥 Cámara activada correctamente");
-            setRecognitionStatus("Cámara lista. Preparado para reconocimiento.");
-            setMostrarCamara(true); // 👈 Mostrar cámara automáticamente
-        }
-    })
+                .then(stream => {
+                    if (videoRef.current) {
+                        videoRef.current.srcObject = stream;
+                        videoRef.current.play();
+                        console.log("🎥 Cámara activada correctamente");
+                        setRecognitionStatus("Cámara lista. Preparado para reconocimiento.");
+                        setMostrarCamara(true); // 👈 Mostrar cámara automáticamente
+                    }
+                })
                 .catch(err => {
                     console.error("❌ Error al acceder a la cámara:", err);
                     setRecognitionStatus("❌ Error al acceder a la cámara. Por favor, asegúrate de que esté disponible.");
@@ -172,7 +181,10 @@ export const ReconocimientoFacial = () => {
                     </div>
                 </section>
 
-                <section className={`seccion-derecha ${mostrarCamara ? 'derecha-movil-abajo' : 'derecha-movil-centro'}`}>
+                <section className={`seccion-derecha ${esMovil
+                    ? (mostrarCamara ? 'derecha-movil-abajo' : 'derecha-movil-centro')
+                    : (mostrarCamara ? 'derecha-activa' : 'derecha-inicial')}`}>
+
                     <p className="mensaje-guia">
                         Enfoca tu rostro dentro del círculo para realizar el reconocimiento facial y tomar asistencia.
                     </p>
