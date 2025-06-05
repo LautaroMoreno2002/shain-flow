@@ -161,7 +161,6 @@ export const Signup = () => {
 
                   <label htmlFor="DNI-Tipo">Tipo de Documento:</label>
                   <select id="DNI-Tipo" value={DNITipo} onChange={(e) => setDNITipo(e.target.value)} className="input-field">
-                    <option value="">Selecciona un tipo</option>
                     <option value="DNI">DNI</option>
                     <option value="Pasaporte">Pasaporte</option>
                     <option value="Cédula">Cédula</option>
