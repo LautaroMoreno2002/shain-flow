@@ -3,6 +3,7 @@ import '../../estilos/reco-facial.css'; // Asumiendo que usas los mismos estilos
 import { NavLink } from 'react-router-dom';
 import { WS_URL } from '../../services/api';
 
+
 export const RegistroFacial = () => {
     const videoRef = useRef<HTMLVideoElement>(null); // Referencia al elemento <video>
     const socketRef = useRef<WebSocket | null>(null); // Referencia a la conexión WebSocket
@@ -31,14 +32,16 @@ export const RegistroFacial = () => {
 
             // 2. Activar la cámara
             navigator.mediaDevices.getUserMedia({ video: true })
-                .then(stream => {
-                    if (videoRef.current) {
-                        videoRef.current.srcObject = stream;
-                        videoRef.current.play();
-                        console.log("🎥 Cámara activada correctamente");
-                        setRegistrationStatus("Cámara lista. Ingresa el ID del empleado y presiona 'Iniciar Registro'.");
-                    }
-                })
+    .then(stream => {
+        if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            videoRef.current.play();
+            console.log("🎥 Cámara activada correctamente");
+            setRegistrationStatus("Cámara lista. Ingresa el ID del empleado y presiona 'Iniciar Registro'.");
+            setMostrarCamara(true); // ✅ Mostrar cámara automáticamente
+        }
+    })
+
                 .catch(err => {
                     console.error("❌ Error al acceder a la cámara:", err);
                     setRegistrationStatus("❌ Error al acceder a la cámara. Por favor, asegúrate de que esté disponible y permite el acceso.");

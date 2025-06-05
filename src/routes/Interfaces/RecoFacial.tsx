@@ -31,14 +31,15 @@ export const ReconocimientoFacial = () => {
             setRecognitionStatus("Conectado. Activando cámara...");
 
             navigator.mediaDevices.getUserMedia({ video: true })
-                .then(stream => {
-                    if (videoRef.current) {
-                        videoRef.current.srcObject = stream;
-                        videoRef.current.play();
-                        console.log("🎥 Cámara activada correctamente");
-                        setRecognitionStatus("Cámara lista. Haz clic en 'Iniciar Reconocimiento'.");
-                    }
-                })
+    .then(stream => {
+        if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            videoRef.current.play();
+            console.log("🎥 Cámara activada correctamente");
+            setRecognitionStatus("Cámara lista. Preparado para reconocimiento.");
+            setMostrarCamara(true); // 👈 Mostrar cámara automáticamente
+        }
+    })
                 .catch(err => {
                     console.error("❌ Error al acceder a la cámara:", err);
                     setRecognitionStatus("❌ Error al acceder a la cámara. Por favor, asegúrate de que esté disponible.");
