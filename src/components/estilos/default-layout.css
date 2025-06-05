@@ -1,6 +1,5 @@
 .default-layout {
   display: flex;
-  margin: 1em;
   box-shadow: 0 0 10px #666;
   justify-content: center;
   align-items: center;
@@ -13,7 +12,6 @@
   background-color: #f9f9f9;
   padding: 2rem;
   border-right: 1px solid #e0e0e0;
-  width: 100%;
   max-width: 500px;
   box-sizing: border-box;
 }
@@ -21,6 +19,7 @@
 /* Contenido principal */
 .cont-child {
   flex: 1; /* Toma el espacio restante */
+  min-width: 600px;
   padding: 2rem;
   box-sizing: border-box;
 }
@@ -61,13 +60,20 @@
   margin-bottom: 0.3rem;
 }
 
-@media screen and (width < 1009px) {
+@media screen and (width < 1180px) {
   .default-layout  {
     margin: 0;
     box-shadow: 0 0 0 0;
 
     & .cont-empresa {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      text-align: center;
       max-width: 100%;
+      min-height: fit-content;
+      height: 100vh;
     }
   }
 }
