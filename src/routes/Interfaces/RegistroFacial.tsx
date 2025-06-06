@@ -313,6 +313,14 @@ export const RegistroFacial = () => {
   const [expectedImageFor, setExpectedImageFor] = useState<string | null>(null);
   // Estado para indicar si el proceso de registro está en curso
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
+  const [mostrarCamara, setMostrarCamara] = useState(false);
+  const [esMovil, setEsMovil] = useState(window.innerWidth < 850);
+
+  useEffect(() => {
+        const handleResize = () => setEsMovil(window.innerWidth < 850);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
   // --- Manejo de la Conexión WebSocket, Activación de la Cámara y Mensajes del Servidor ---
   useEffect(() => {
@@ -337,6 +345,7 @@ export const RegistroFacial = () => {
             setRegistrationStatus(
               "Cámara lista. Ingresa el ID del empleado y presiona 'Iniciar Registro'."
             );
+            setMostrarCamara(true);
           }
         })
         .catch((err) => {
@@ -553,7 +562,7 @@ export const RegistroFacial = () => {
       <main className="contenido">
         <section className="seccion-camara">
           <p className="estado-reconocimiento">{registrationStatus}</p>
-          <div className="camara">
+          <div className={`camara ${mostrarCamara ? 'camara-activa' : 'camara-inactiva'}`}>
             <video
               ref={videoRef}
               width="100%"
@@ -572,7 +581,10 @@ export const RegistroFacial = () => {
           </div>
         </section>
 
-        <section className="seccion-derecha">
+        <section className={`seccion-derecha ${esMovil
+                        ? (mostrarCamara ? 'derecha-movil-abajo' : 'derecha-movil-centro')
+                        : (mostrarCamara ? 'derecha-activa' : 'derecha-inicial')
+                    }`}>
           <p className="mensaje-guia">
             Ingresa el ID del empleado a registrar y sigue las instrucciones
             para capturar los gestos necesarios.
