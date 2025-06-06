@@ -3,7 +3,8 @@ import EmpleadoItem from "../../components/EmpleadoItem";
 import "../../estilos/empleados.css";
 import { listarEmpleados, crearEmpleado } from "../../services/api";
 import { CircularProgress } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
+import PaginatedList from "../../components/PaginatedList";
 
 export interface Empleado {
   id_empleado: number;
@@ -153,9 +154,13 @@ export const Empleados = () => {
             </div>
           )}
           <div className="lista-empleados" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
-            {empleadosFiltrados.map((empleado) => (
+            <PaginatedList items={empleados} itemsPerPage={9} />
+            {/*{empleadosFiltrados.map((empleado) => (
+              
               <EmpleadoItem key={empleado.id_empleado} empleado={empleado} />
-            ))}
+            ))}*/}
+          </div>
+          <div>
             <button onClick={() => setMostrarFormulario(true)}>
               <span className="plus">➕</span> Agregar empleado
             </button>
