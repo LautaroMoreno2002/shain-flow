@@ -15,13 +15,23 @@ const api = axios.create({
 });
 
 export interface ModificarData {
-  telefono: string,
-  correo_electronico: string,
-  calle: string,
-  numero_calle: string,
-  localidad: string,
-  partido: string,
-  provincia: string
+  telefono: string;
+  correo_electronico: string;
+  calle: string;
+  numero_calle: string;
+  localidad: string;
+  partido: string;
+  provincia: string;
+}
+
+export interface RegistroHorario {
+  tipo: string;
+  fecha: string;
+  hora: string | Date;
+  estado_asistencia: string;
+  turno_asistencia: string;
+  puesto_del_asistente: string;
+  vector_capturado: string;
 }
 
 // 1. Listar empleados
@@ -38,12 +48,24 @@ export const obtenerEmpleadoPorIdentificacion = async (
   return response.data;
 };
 
-// 3. Actualizar datos personales del empleado
+// 3. Actualizar datos personales del empleado con Put (reemplaza todo)
 export const actualizarDatosEmpleado = async (
   empleadoId: string,
   nuevosDatos: ModificarData
 ) => {
   const response = await api.put(
+    `/empleados/${empleadoId}/datos-personales`,
+    nuevosDatos
+  );
+  return response.data;
+};
+
+// Actualizar empleados con Patch (reemplaza parcialmente los datos)
+export const actualizarDatosPersonalesEmpleado = async (
+  empleadoId: string,
+  nuevosDatos: ModificarData
+) => {
+  const response = await api.patch(
     `/empleados/${empleadoId}/datos-personales`,
     nuevosDatos
   );
@@ -114,3 +136,43 @@ export const obtenerNomina = async (
   console.log("Resultado recibido:", response.data.nominas[0]);
   return response.data.nominas[0];  
 }
+
+// Eliminar un empleado
+export const eliminarEmpleado = async (
+  id_empleado: number
+) => {
+  return await api.delete(`/empleados/${id_empleado}`);
+}
+
+// Actualizar Registro de Horario Manual
+export const actualizarRegistroHorario = async (
+  registro_id: number | string,
+  registro: RegistroHorario
+) => {
+  return await api.put(`/registros/${registro_id}`, registro);
+}
+
+// Obtener última nómina del empleado
+export const obtenerUltimaNomina = async (
+  id_empleado: number | string
+) => await api.get(`/nominas/empleado/${id_empleado}/ultima`);
+
+// Obtener nóminas del empleado
+export const obtenerNominas = async (
+  id_empleado: number | string
+) => await api.get(`/nominas/empleado/${id_empleado}`);
+
+
+/*
+FALTA
+GET IMG,
+BORRAR EL POST OBTENER EMPLEADO,
+DELETE BORRAR EMPLEADO (UNO SOLO),
+REEVER LOS ENDPOINTS QUE NO DEVUELVEN NADA O ESTAN AL DOPE
+EJ: POST nominas/empleado o POST nominas/empleado/buscar
+TENER EN CUENTA QUE EL POST SE USA PARA CREAR ELEMENTOS, NO PARA CONSULTARLOS
+EL GET ES DE CONSULTA, MUCHO O DE A UNO POR MEDIO DEL ID
+EL PUT MODIFICA TODO UN ELEMENTO ENTERO
+EL PATCH MODIFICA PARCIALMENTE EL ELEMENTO O TODO
+EL DELETE ELIMINA UN REGISTRO O TODOS, SE LE DEBE PASAR SÓLO EL ID DEL EMPLEADO POR LA RUTA O NO PASARLE NADA PARA QUE BORRE TODOS. NO DEBE RECIBIR MÁS QUE ESO.
+*/
