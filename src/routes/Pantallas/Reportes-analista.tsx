@@ -5,11 +5,18 @@ import { GraficoSalarios } from "../../components/GraficoSalario";
 
 export function ReportesAnalista() {
     return (
-        <div style={{ alignContent:'center'}}>
-            <GraficoSalarios />
-            <GraficoEdad />
-            <GraficoAntiguedad />
-            <button onClick={exportChartsToPDF}>Exportar a PDF</button>
+        <div  style={{ alignContent:'center'}}>
+            <div className="chart-container">
+                <GraficoSalarios />
+                <GraficoEdad />
+                <GraficoAntiguedad />
+            </div>
+            
+            <div>
+                <button onClick={exportChartsToPDF}>Exportar a PDF</button>
+            </div>            
         </div>
+        
+        
     )
 }
