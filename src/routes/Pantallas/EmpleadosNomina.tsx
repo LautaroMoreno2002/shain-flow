@@ -4,6 +4,8 @@ import "../../estilos/empleados.css";
 import { listarEmpleados } from "../../services/api";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import PaginatedList from "../../components/PaginatedListEmpleados";
+import PaginatedListNomina from "../../components/PaginatedListNomina";
 
 export interface Empleado {
   id_empleado: number;
@@ -150,7 +152,7 @@ export const EmpleadosNomina = () => {
 
       {!mostrarFormulario && (
         <>
-          <div className="busqueda-container" style={{ position: 'relative' }}>
+          {/*<div className="busqueda-container" style={{ position: 'relative' }}>
             <input
               type="text"
               placeholder="Buscar empleado por nombre, apellido o ID..."
@@ -158,16 +160,17 @@ export const EmpleadosNomina = () => {
               onChange={(e) => setBusqueda(e.target.value)}
             />
             <span className="icono-busqueda">🔍</span>
-          </div>
+          </div>*/}
           {cargando && (
             <div className="overlay">
               <CircularProgress />
             </div>
           )}
-          <div className="lista-empleados" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
-            {empleadosFiltrados.map((empleado) => (
+          <PaginatedListNomina items={empleados} itemsPerPage={9} />
+          <div className="lista-empleados" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>            
+            {/*{empleadosFiltrados.map((empleado) => (
               <EmpleadoNomina key={empleado.id_empleado} empleado={empleado} />
-            ))}
+            ))}*/}
             <button onClick={() => setMostrarFormulario(true)}>
               ➕ Agregar Concepto
             </button>

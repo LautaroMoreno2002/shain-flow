@@ -44,13 +44,16 @@ const SearchablePaginatedList: React.FC<Props> = ({ items, itemsPerPage = 5 }) =
 
   return (
     <div >
-      <input
-        type="text"
-        placeholder="Buscar..."
-        value={searchTerm}
-        onChange={handleSearch}
-        style={{ marginBottom: '1rem', padding: '4px' }}
-      />
+      <div className="busqueda-container">
+        <input
+          type="text"
+          placeholder="Buscar empleado por nombre, apellido o ID..."
+          value={searchTerm}
+          onChange={handleSearch}
+          style={{ marginBottom: '1rem', padding: '4px' }}
+        />
+        <span className="icono-busqueda">🔍</span>
+      </div>
 
       <ul className='empleado-items'>
         {currentItems.length > 0 ? (
@@ -60,8 +63,8 @@ const SearchablePaginatedList: React.FC<Props> = ({ items, itemsPerPage = 5 }) =
               <img src="https://imgs.search.brave.com/z1pY-zOd_QZunrzoobVmAzPXl4KV3X43yVSRA6IYek4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9lcy52/aXNhZm90by5jb20v/aW1nLzR4NC1jbS1w/YXNzcG9ydC1waG90/by1leGFtcGxlLndl/YnA" alt="" width='50px'/>
             </span>
             <span className='empleado-nombre'>{item.nombre} {item.apellido}</span>
-            <NavLink className={"link"} to="/administrador/editarEmpleado" >Editar</NavLink>
-            <NavLink className={"link"} to="/administrador/editarDatosLaborales" >Agregar datos laborales</NavLink>
+            <NavLink className={"link"} to="/administrador/calculo-nomina" >Calcular manualmente</NavLink>
+            <NavLink className={"link"} to="/administrador/calcular-nomina" >Calcular automáticamente</NavLink>
           </div>)
         ) : (
           <li>No se encontraron resultados.</li>
