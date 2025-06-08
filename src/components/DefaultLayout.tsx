@@ -12,15 +12,14 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
           <img src="/Logo_Empresa.png" alt="Logo de la empresa" />
         </div>
         <div className="empresa-descripcion">
-          <h2>Sobre la empresa</h2>
           <p>
           “Soluciones de RRHH con visión de futuro”  
           </p>
-<p>"Mirai" (未来) significa futuro en japonés, lo cual le da un toque tecnológico, moderno y con visión a largo plazo.</p> 
-<p>"Solutions" refuerza que no solo desarrollan productos, sino que brindan soluciones concretas. 
-Producto: SHAIN FLOW “Flujo de empleados” </p>
-<p>"Shain" (社員) significa empleado o miembro de una organización.</p>
-<p>"Flow" le da esa idea de procesos flujos, automatizados, modernos.</p> 
+<p>"Mirai" (未来): futuro en japonés.</p> 
+<p>"Solutions": soluciones concretas. </p>
+<p>SHAIN FLOW “Flujo de empleados” </p>
+<p>"Shain" (社員): empleado o miembro de una organización.</p>
+<p>"Flow": flujo, automatizado y moderno.</p> 
 
         </div>
         <div className="empresa-integrantes">

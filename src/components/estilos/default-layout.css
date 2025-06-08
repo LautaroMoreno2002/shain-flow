@@ -19,7 +19,7 @@
 /* Contenido principal */
 .cont-child {
   flex: 1; /* Toma el espacio restante */
-  min-width: 600px;
+  min-width: 400px;
   padding: 2rem;
   box-sizing: border-box;
 }
