@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import { EmpleadoNomina } from "../../components/EmpleadoNomina";
 import "../../estilos/empleados.css";
 import { listarEmpleados } from "../../services/api";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import PaginatedList from "../../components/PaginatedListEmpleados";
 import PaginatedListNomina from "../../components/PaginatedListNomina";
 
 export interface Empleado {
@@ -18,7 +16,7 @@ export interface Empleado {
 
 export const EmpleadosNomina = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
-  const [busqueda, setBusqueda] = useState<string>("");
+  //const [busqueda, setBusqueda] = useState<string>("");
   const [mostrarFormulario, setMostrarFormulario] = useState<boolean>(false);
   const [cargando, setCargando] = useState(false);
   // const [nuevoEmpleado, setNuevoEmpleado] = useState({
@@ -67,11 +65,11 @@ export const EmpleadosNomina = () => {
     cargarEmpleados();
   }, []);
 
-  const empleadosFiltrados = empleados.filter((emp) =>
+  {/*const empleadosFiltrados = empleados.filter((emp) =>
     `${emp.nombre} ${emp.apellido} ${emp.numero_identificacion}`
       .toLowerCase()
       .includes(busqueda.toLowerCase())
-  );
+  );*/}
 
   const agregarSalario = () => {
     navegar('/administrador/agregar-salario');
