@@ -1,100 +1,152 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import "../estilos/nuevosDatos.css"
 
 export function AgregarDatos() {
     const [errores, setErrores] = useState<{ [key: string]: boolean }>({});
-    const [mensajeError] = useState<string>("");
-    const navegar = useNavigate();
 
-    const [nuevoDato, setNuevoDato] = useState({
-        departamento: "",
-        puesto: "Nombre del puesto",
-        categoria: "Nombre de la categoría"
+    const [nuevoDepartamento, setNuevoDepartamento] = useState({
+        departamento_nombre: "",
+        departamento_descripcion: "",
     });
 
-    const manejarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const [nuevoPuesto, setNuevoPuesto] = useState({
+        puesto: ""
+    });
+
+    const [nuevaCategoria, setNuevaCategoria] = useState({
+        categoria: ""
+    });
+
+    const manejarCambioDepartamento = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setNuevoDato((prev) => ({ ...prev, [name]: value }));
+        setNuevoDepartamento((prev) => ({ ...prev, [name]: value }));
         setErrores((prev) => ({ ...prev, [name]: false }));
     };
 
-    const cargarDatos = async () => {
-        
+    const manejarCambioPuesto = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setNuevoPuesto((prev) => ({ ...prev, [name]: value }));
+        setErrores((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const manejarCambioCategoria = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setNuevaCategoria((prev) => ({ ...prev, [name]: value }));
+        setErrores((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const cargarDepartamento = async () => {
+
         const nuevosErrores: { [key: string]: boolean } = {};
         // let esValido = true;
 
-        Object.entries(nuevoDato).forEach(([key, valor]) => {
+        Object.entries(nuevoDepartamento).forEach(([key, valor]) => {
             if (!valor.trim()) {
                 nuevosErrores[key] = true;
                 // esValido = false;
             }
         });
         alert("Datos cargados correctamente")
-        setNuevoDato({
-                departamento: "",
-                puesto: "Nombre del puesto",
-                categoria: "Nombre de la categoría"
+        setNuevoDepartamento({
+            departamento_nombre: "",
+            departamento_descripcion: ""
+        }
+        );
+    };
+    
+    const cargarPuesto = async () => {
+
+        const nuevosErrores: { [key: string]: boolean } = {};
+        // let esValido = true;
+
+        Object.entries(nuevoPuesto).forEach(([key, valor]) => {
+            if (!valor.trim()) {
+                nuevosErrores[key] = true;
+                // esValido = false;
             }
+        });
+        alert("Datos cargados correctamente")
+        setNuevoPuesto({
+            puesto: ""
+        }
         );
     };
 
-    const volver = () => {
-        // podrías agregar lógica para guardar los cambios, por ejemplo, en una base de datos
-        console.log("Datos guardados:", nuevoDato);
+    
+    const cargarCategoria = async () => {
 
-        //Vuelve a la lista de empleados
-        navegar('/administrador/empleados');
-    }
+        const nuevosErrores: { [key: string]: boolean } = {};
+        // let esValido = true;
+
+        Object.entries(nuevaCategoria).forEach(([key, valor]) => {
+            if (!valor.trim()) {
+                nuevosErrores[key] = true;
+                // esValido = false;
+            }
+        });
+        alert("Datos cargados correctamente")
+        setNuevaCategoria({
+            categoria: ""
+        }
+        );
+    };
+
     return (
-        <div className="formulario-empleado">
-            <h3>Formulario de nuevo salario base</h3>
-            <form className="formulario-grid">
-                {Object.entries(nuevoDato).map(([campo, valor]) => {
-                    const label = campo.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
-
-                    
-
-                    return (
-                        <div key={campo} className="form-group">
-                            <label htmlFor={campo}>{label}</label>
-                            {campo === "departamento" ? (
-                                <>
-                                    <input
-                                        id="nombre"
-                                        name="nombre"
-                                        type="text"
-                                        placeholder="Nombre del departamento"
-                                        onChange={manejarCambio}
-                                        className={errores[campo] ? "input-error" : ""}
-                                    />
-                                    <input
-                                        id="descripcion"
-                                        name="descripcion"
-                                        type="text"
-                                        placeholder="Descripción del departamento"
-                                        onChange={manejarCambio}
-                                        className={errores[campo] ? "input-error" : ""}
-                                    />
-                                </>
-                            ) : (
-                                <input
-                                    id={campo}
-                                    name={campo}
-                                    type="text" //{campo === "valor" ? "number" : campo === "codigo" ? "number" : "text"}
-                                    placeholder={valor}
-                                    onChange={manejarCambio}
-                                    className={errores[campo] ? "input-error" : ""}
-                                />
-                            )}
-                        </div>
-                    );
-                })}
+        <div className="formulario-datos">
+            <h3>Formulario de agregar datos</h3>
+            <form className="formulario-block">
+                <div  className="form-group-dpto">
+                    <label htmlFor={nuevoDepartamento.departamento_nombre}>Departamento</label>
+                    <input
+                        id="departamento_nombre"
+                        name="departamento_nombre"
+                        type="text"
+                        placeholder="Nombre del departamento"
+                        value={nuevoDepartamento.departamento_nombre}
+                        onChange={manejarCambioDepartamento}
+                        className={errores[nuevoDepartamento.departamento_nombre] ? "input-error" : ""}
+                    />
+                    <input
+                        id="departamento_descripcion"
+                        name="departamento_descripcion"
+                        type="text"
+                        placeholder="Descripción del departamento"
+                        onChange={manejarCambioDepartamento}
+                        className={errores[nuevoDepartamento.departamento_descripcion] ? "input-error" : ""}
+                    />
+                    <div className="botones-form">
+                        <button onClick={cargarDepartamento}>✅ Cargar</button>
+                    </div>
+                </div>
+                <div className="form-group-puesto">
+                    <label htmlFor={nuevoPuesto.puesto}>Puesto</label>
+                    <input
+                        id="puesto"
+                        name="puesto"
+                        type="text"
+                        placeholder="Nombre del puesto"
+                        onChange={manejarCambioPuesto}
+                        className={errores[nuevoPuesto.puesto] ? "input-error" : ""}
+                    />
+                    <div className="botones-form">
+                        <button onClick={cargarPuesto}>✅ Cargar</button>
+                    </div>
+                </div>
+                <div className="form-group-categoria">
+                    <label htmlFor={nuevaCategoria.categoria}>Categoría</label>
+                    <input
+                        id="categoria"
+                        name="categoria"
+                        type="text"
+                        placeholder="Nombre de la categoria"
+                        onChange={manejarCambioCategoria}
+                        className={errores[nuevaCategoria.categoria] ? "input-error" : ""}
+                    />
+                    <div className="botones-form">
+                        <button onClick={cargarCategoria}>✅ Cargar</button>
+                    </div>
+                </div>
             </form>
-            {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
-            <div className="botones-formulario">
-                <button onClick={cargarDatos}>✅ Cargar</button>
-                <button onClick={() => volver()}>❌ Cancelar</button>
-            </div>
         </div>
     )
 }
