@@ -70,6 +70,10 @@
 .edit-button:hover {
   background-color: var(--c1);  /* Cambio de color en hover */
 }
+
+.data-item--label {
+  text-align: left;
+}
 @media (max-width: 900px) {
   .personal-data {
     margin-left: 4em;

@@ -83,6 +83,7 @@ export const registroAsistenciasPorId = async (
     // `/registros/${numeroId}?año=${anio}&mes=${mes}`
     `/registroscompleto/${numeroId}`
   );
+  
   return response.data;
 };
 
