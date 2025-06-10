@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
+import "./estilos/empleado-item.css"
 
 type Item = {
     id_empleado: number;
