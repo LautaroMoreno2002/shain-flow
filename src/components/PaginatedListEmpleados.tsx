@@ -23,7 +23,8 @@ const SearchablePaginatedList: React.FC<Props> = ({ items, itemsPerPage = 5 }) =
   const filteredItems = useMemo(() => {
     return items.filter(item =>
       item.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.apellido.toLowerCase().includes(searchTerm.toLowerCase())
+      item.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.numero_identificacion.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [items, searchTerm]);
 
