@@ -10,7 +10,9 @@ body {
   --c2: rgb(158, 32, 3);
   --c3: #737373;
   /* margin-left: 15%; */
+
 }
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
