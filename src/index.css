@@ -9,7 +9,7 @@ body {
   --c1: #fc625d;
   --c2: rgb(158, 32, 3);
   --c3: #737373;
-  margin-left: 15%;
+  /* margin-left: 15%; */
 }
 #root {
   max-width: 1280px;
@@ -22,7 +22,6 @@ body {
 
 @media screen and (max-width: 600px) {
   body {
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
   }
 }
