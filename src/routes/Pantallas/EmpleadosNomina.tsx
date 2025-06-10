@@ -170,12 +170,13 @@ export const EmpleadosNomina = () => {
               <EmpleadoNomina key={empleado.id_empleado} empleado={empleado} />
             ))}*/}
             <button onClick={() => setMostrarFormulario(true)}>
-              ➕ Agregar Concepto
+             <span className="plus">➕</span>Agregar Concepto
             </button>
             <button onClick={() => agregarSalario()}>
-              ➕ Agregar Salario Base
+             <span className="plus">➕</span> Agregar Salario
             </button>
           </div>
+            
         </>
       )}
 

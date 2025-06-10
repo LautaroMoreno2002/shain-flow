@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import EmpleadoFichada from '../../components/EmpleadosFichada';
 import '../../estilos/empleados.css';
 import { listarEmpleados } from '../../services/api';//conectar con la API
+import PaginatedListEmpSup from '../../components/PaginatedListEmpSup';
 
 export interface Empleado {
   id_empleado: number;
@@ -37,16 +38,16 @@ export const FichadaManual = () => {
   }, []);
 
   // FILTRO: busca por nombre, apellido o número de identificación
-  const empleadosFiltrados = empleados.filter((emp) =>
+  /*const empleadosFiltrados = empleados.filter((emp) =>
     `${emp.nombre} ${emp.apellido} ${emp.numero_identificacion}`
       .toLowerCase()
       .includes(busqueda.toLowerCase())
-  );
+  );*/
 
   return (
     <div className="admin-container">
       <h2 className="admin-title">👥 Empleados:</h2>
-      <div className="busqueda-container">
+      {/*<div className="busqueda-container">
         <input
           type="text"
           placeholder="Buscar empleado por nombre, apellido o ID..."
@@ -54,12 +55,13 @@ export const FichadaManual = () => {
           onChange={(e) => setBusqueda(e.target.value)}
         />
         <span className="icono-busqueda">🔍</span>
-      </div>
-      <div className="lista-empleados">
+      </div>*/}
+      <PaginatedListEmpSup items={empleados} itemsPerPage={9} />
+      {/*<div className="lista-empleados">
         {empleadosFiltrados.map((empleado) => (
           <EmpleadoFichada key={empleado.id_empleado} empleado={empleado} />
         ))}
-      </div>
+      </div>*/}
     </div>
   );
 }
