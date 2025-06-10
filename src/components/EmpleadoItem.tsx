@@ -21,6 +21,7 @@ export const EmpleadoItem = ({ empleado }: EmpleadoItemProps) => {
       <span className='empleado-nombre'>{empleado.nombre} {empleado.apellido}</span>
       <NavLink className={"link"} to="/administrador/editarEmpleado" >Editar</NavLink>
       <NavLink className={"link"} to="/administrador/editarDatosLaborales" >Agregar datos laborales</NavLink>
+      <NavLink className={"link"} to="/administrador/inasistencia" >Agregar inasistencia</NavLink>
     </div>
   );
 };

@@ -1,0 +1,82 @@
+.form-inasistencia {
+    display: flex;
+    /*box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);*/
+    padding: 5px;
+    margin: 10px;
+    margin-left: 200px;
+}
+
+
+
+/* Contenedor del formulario */
+.form-container {    
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* Título del formulario */
+.form-inasistencia h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Estilo de los campos de entrada */
+.form-inasistencia input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* Estilo del área de texto */
+.form-inasistencia textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/*Botón de envío */
+.btn-registrar {
+  width: 100%;
+  padding: 12px;
+  background-color: #057e19;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-registrar:hover {
+  background-color: #15b300;
+}
+
+/* Mensajes de error 
+span {
+  color: red;
+  font-size: 14px;
+}*/
+
+@media screen and (max-width:800px) {
+    .form-inasistencia {
+        margin-left: 30px;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .form-inasistencia {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

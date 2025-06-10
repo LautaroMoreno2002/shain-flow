@@ -8,6 +8,7 @@ export const CalendarioInput: React.FC = () => {
   return (
     <div >
       <DatePicker 
+        id='calendario'
         className = 'data-item--value'
         selected={fecha}
         onChange={(date: Date | null) => setFecha(date)}

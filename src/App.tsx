@@ -29,6 +29,7 @@ import Notificaciones from './components/Notificaciones'
 import { AgregarSalario } from './components/AgregaSalario'
 import { AgregarDatos } from './components/AgregaDatos'
 import { ReportesAnalista } from './routes/Pantallas/Reportes-analista'
+import Inasistencia from './components/Inasistencia'
 
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
           <Route path="ver-nomina" element={<VerNomina />}></Route>
           <Route path="agregar-salario" element={<AgregarSalario />}></Route>
           <Route path="agregar-datos" element={<AgregarDatos />}></Route>
+          <Route path="inasistencia" element={<Inasistencia />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
     </Route>
     <Route path='/analista-datos' element={<AnalistaDeDatos />}>
