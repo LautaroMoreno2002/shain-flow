@@ -135,7 +135,18 @@ export const Empleados = () => {
 
   return (
     <div className="admin-container">
-      <h2 className="admin-title">👥 Empleados:</h2>
+      <div className="titulo-con-botones">
+  <h2 className="admin-title">👥 Empleados:</h2>
+  <div className="botones-superiores">
+    <button onClick={() => setMostrarFormulario(true)}>
+      <span className="plus">➕</span> Agregar empleado
+    </button>
+    <button onClick={agregarDatos}>
+      <span className="plus">➕</span> Agregar datos
+    </button>
+  </div>
+</div>
+
 
       {!mostrarFormulario && (
         <>
@@ -154,20 +165,20 @@ export const Empleados = () => {
             </div>
           )}
           <PaginatedList items={empleados} itemsPerPage={9} />
-          <div className="lista-empleados" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
+          {/* <div className="lista-empleados" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
             
             {/*{empleadosFiltrados.map((empleado) => (
               
               <EmpleadoItem key={empleado.id_empleado} empleado={empleado} />
             ))}*/}
-          
+          {/* 
             <button onClick={() => setMostrarFormulario(true)}>
               <span className="plus">➕</span> Agregar empleado
             </button>
             <button onClick={() => agregarDatos()}>
               <span className="plus">➕</span> Agregar datos
             </button>
-          </div>
+          </div> */}
         </>
       )}
 

@@ -210,4 +210,36 @@ button {
 
 .plus {
   color: #FFF;
+}.titulo-con-botones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.botones-superiores button {
+  background-color: var(--c1);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px var(--c2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.botones-superiores button:hover {
+  background-color: var(--c2);
+  box-shadow: 0 6px 12px var(--c2);
+}
+
+.botones-superiores button:focus {
+  outline: 2px solid var(--c2);
+  outline-offset: 2px;
 }
