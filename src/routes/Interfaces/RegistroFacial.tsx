@@ -148,12 +148,19 @@ export const RegistroFacial = () => {
         message.includes("El gesto") &&
         message.includes("no fue detectado correctamente")
       ) {
-        alert(`❌ ${message}. Intenta nuevamente.`);
+        alert(`❌ ${message}. Reintentando captura...`);
 
         // Extraer el gesto fallido de la respuesta del servidor
-        const gestoFallido = message.match(/'([^']+)'/); // Captura el nombre del gesto entre comillas simples
-        nextExpectedGesture = gestoFallido ? gestoFallido[1] : expectedImageFor; // Si encuentra el gesto, usarlo
+        const gestoFallido = message.match(/'([^']+)'/);
+        const retryGesture = gestoFallido ? gestoFallido[1] : expectedImageFor;
+
+        if (retryGesture) {
+          setTimeout(() => {
+            sendImageForRegistration(retryGesture); // Captura automática del gesto fallido
+          }, 500);
+        }
       }
+
       // Otros mensajes (errores de conexión, mensajes iniciales, etc.)
       else {
         setRegistrationStatus(message);
