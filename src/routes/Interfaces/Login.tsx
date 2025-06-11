@@ -43,36 +43,51 @@ export const Login = () => {
   }
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    // console.log(username);
-    // console.log(password);
-    // for (let user of users) {
-    //   if (username == user.username && password == user.password)
-    //     navegar(`/${user.rol}`);
-    // }
-    const resultado = await iniciarSesion(username, password);
+  e.preventDefault();
 
-    if (resultado.access_token) {
-      console.log("Token:", resultado.access_token);
-      console.log("Permisos:", resultado.permisos);
-      console.log("Rol:", resultado.rol);
-      switch (resultado.rol) {
-        case "1":
-          navegar(`/empleado`);
-          break;
-        case "2":
-          navegar(`/administrador`);
-          break;
-        case "3":
-          navegar(`/supervisor`);
-          break;
-        case "4":
-          navegar(`/analista-datos`);
-          break;
-      }
-    } else {
-      console.error("Fallo en el login:", resultado);
+  const resultado = await iniciarSesion(username, password);
+
+  if (resultado.access_token) {
+    console.log("Token:", resultado.access_token);
+    console.log("Permisos:", resultado.permisos);
+    console.log("Rol:", resultado.rol);
+
+    // 👉 Guardar en sessionStorage
+    sessionStorage.setItem("token", resultado.access_token);
+    sessionStorage.setItem("usuario", JSON.stringify({
+      permisos: resultado.permisos,
+      rol: resultado.rol,
+      id_empleado: resultado.id_empleado,
+      numero_identificacion: resultado.numero_identificacion
+    }));
+
+    // Redirigir según el rol
+    switch (resultado.rol) {
+      case "1":
+        navegar(`/empleado`);
+        break;
+      case "2":
+        navegar(`/administrador`);
+        break;
+      case "3":
+        navegar(`/supervisor`);
+        break;
+      case "4":
+        navegar(`/analista-datos`);
+        break;
     }
+  } else {
+    console.error("Fallo en el login:", resultado);
+  }
+
+
+  /*
+  PARA CAPTURAR EL TOKEN
+  const token = sessionStorage.getItem("token");
+  const usuario = JSON.parse(sessionStorage.getItem("usuario"));
+  console.log(usuario.rol);
+  console.log(usuario.permisos.ver_datos_personales);
+  */
 
     // auth.setIsAuthenticated(true);
     // try {
