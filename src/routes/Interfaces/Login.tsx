@@ -3,6 +3,7 @@ import DefaultLayout from "../../components/DefaultLayout";
 import '../../estilos/login.css'
 import { NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import { iniciarSesion } from "../../services/api";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
@@ -43,12 +44,36 @@ export const Login = () => {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log(username);
-    console.log(password);
-    for (let user of users) {
-      if (username == user.username && password == user.password)
-        navegar(`/${user.rol}`);
+    // console.log(username);
+    // console.log(password);
+    // for (let user of users) {
+    //   if (username == user.username && password == user.password)
+    //     navegar(`/${user.rol}`);
+    // }
+    const resultado = await iniciarSesion(username, password);
+
+    if (resultado.access_token) {
+      console.log("Token:", resultado.access_token);
+      console.log("Permisos:", resultado.permisos);
+      console.log("Rol:", resultado.rol);
+      switch (resultado.rol) {
+        case "1":
+          navegar(`/empleado`);
+          break;
+        case "2":
+          navegar(`/administrador`);
+          break;
+        case "3":
+          navegar(`/supervisor`);
+          break;
+        case "4":
+          navegar(`/analista-datos`);
+          break;
+      }
+    } else {
+      console.error("Fallo en el login:", resultado);
     }
+
     // auth.setIsAuthenticated(true);
     // try {
     //   const response = await fetch("http://localhost:3000/api/login", {
