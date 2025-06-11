@@ -12,25 +12,25 @@ export const Login = () => {
 
   // const auth = useAuth();
   const navegar = useNavigate();
-  const users = [
-    {
-      username: 'Lautaro Moreno',
-      password: '1234',
-      rol: 'empleado'
-    }, {
-      username: 'Pablo Da Silva',
-      password: '1234',
-      rol: 'administrador'
-    }, {
-      username: 'Abel Aquino',
-      password: '1234',
-      rol: 'analista-datos'
-    }, {
-      username: 'Rodrigo Montoro',
-      password: '1234',
-      rol: 'supervisor'
-    }
-  ]
+  // const users = [
+  //   {
+  //     username: 'Lautaro Moreno',
+  //     password: '1234',
+  //     rol: 'empleado'
+  //   }, {
+  //     username: 'Pablo Da Silva',
+  //     password: '1234',
+  //     rol: 'administrador'
+  //   }, {
+  //     username: 'Abel Aquino',
+  //     password: '1234',
+  //     rol: 'analista-datos'
+  //   }, {
+  //     username: 'Rodrigo Montoro',
+  //     password: '1234',
+  //     rol: 'supervisor'
+  //   }
+  // ]
 
   function handleChange(e: React.ChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
@@ -41,7 +41,21 @@ export const Login = () => {
       setPassword(value);
     }
   }
-
+  
+  /*
+  PARA CAPTURAR EL TOKEN
+  const token = sessionStorage.getItem("token");
+  const usuario = JSON.parse(sessionStorage.getItem("usuario"));
+  console.log(usuario.rol);
+  console.log(usuario.permisos.ver_datos_personales);
+  */
+ 
+ // console.log(username);
+ // console.log(password);
+ // for (let user of users) {
+ //   if (username == user.username && password == user.password)
+ //     navegar(`/${user.rol}`);
+ // }
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const resultado = await iniciarSesion(username, password);
@@ -84,12 +98,8 @@ export const Login = () => {
 
 
 
-    // console.log(username);
-    // console.log(password);
-    // for (let user of users) {
-    //   if (username == user.username && password == user.password)
-    //     navegar(`/${user.rol}`);
-    // }
+
+
     // auth.setIsAuthenticated(true);
     // try {
     //   const response = await fetch("http://localhost:3000/api/login", {

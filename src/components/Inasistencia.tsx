@@ -4,9 +4,10 @@ import 'react-day-picker/style.css';
 import CalendarioInput from './Calendario';
 import '../estilos/datosLaborales.css'
 import './estilos/inasistencia.css'
+import DatePicker from 'react-datepicker';
 
 type FormData = {
-  fecha: string;
+  fecha: Date | null;
   dia: string;
   tipo: string;
   descripcion: string;
@@ -34,17 +35,23 @@ const diasSemana = [
 
 const Inasistencia: React.FC = () => {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>();
-  const [fechaSeleccionada, setFechaSeleccionada] = useState<string>();
+  const [fechaSeleccionada, setFechaSeleccionada] = useState<Date | null>(null);
   const [diaSeleccionado, setDiaSeleccionado] = useState<string>();
+
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+  };
 
   const onSubmit = (data: FormData) => {
     console.log('Datos enviados:', data);
     alert('Inasistencia registrada')
   };
 
-  const handleFechaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {    
-    const { value } = e.target;
-    const fecha = value    
+  const handleFechaChange = (date: Date | null) => {    
+    
+    const fecha = date;    
     setFechaSeleccionada(fecha);
     if (fecha) {
       setValue('fecha', fecha);
@@ -67,9 +74,14 @@ const Inasistencia: React.FC = () => {
       <div className='cont-campos'>
       <div>
         <label>Fecha:</label>
-        <CalendarioInput />
-        {/*<input type="hidden" {...register('fecha', { required: 'La fecha es obligatoria' })} />
-        {errors.fecha && <span>{errors.fecha.message}</span>}*/}
+        {/*<CalendarioInput />*/}
+        <DatePicker
+        selected={fechaSeleccionada}
+        onChange={handleFechaChange}
+        dateFormat="yyyy-MM-dd" // Formato opcional
+        />
+        <input type="hidden" {...register('fecha', { required: 'La fecha es obligatoria' })} />
+        {errors.fecha && <span>{errors.fecha.message}</span>}
       </div>
 
       <div>
