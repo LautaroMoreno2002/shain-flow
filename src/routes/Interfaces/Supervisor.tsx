@@ -8,6 +8,7 @@ const navItemsSupervisor = [
   { label: "Asistencias", icon: "fa-regular fa-id-card", path: "asistencias" },
   { label: "Empleados", icon: "fa-regular fa-id-card", path: "fichada-manual" },
   /*{ label: "Reprtes", icon: "fa-regular fa-id-card", path: "reportes" },*/
+  { label: "Dashboard", icon: "fa-solid fa-chart-bar", path: "dashboard" },  // <-- nuevo ítem
   { label: "Cerrar sesión", icon: "fa-solid fa-lock", path: "/login" },
 ];
 
