@@ -4,7 +4,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export const CalendarioInput: React.FC = () => {
   const [fecha, setFecha] = useState<Date | null>(null);
-
   return (
     <div >
       <DatePicker 
