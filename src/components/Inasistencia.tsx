@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { CalendarDay, DayPicker, Select } from 'react-day-picker';
 import 'react-day-picker/style.css';
 import CalendarioInput from './Calendario';
 import '../estilos/datosLaborales.css'
