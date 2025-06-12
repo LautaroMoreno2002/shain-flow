@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import 'react-day-picker/style.css';
-import CalendarioInput from './Calendario';
 import '../estilos/datosLaborales.css'
 import './estilos/inasistencia.css'
 import DatePicker from 'react-datepicker';
@@ -36,13 +35,6 @@ const diasSemana = [
 const Inasistencia: React.FC = () => {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>();
   const [fechaSeleccionada, setFechaSeleccionada] = useState<Date | null>(null);
-  const [diaSeleccionado, setDiaSeleccionado] = useState<string>();
-
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-  };
 
   const onSubmit = (data: FormData) => {
     console.log('Datos enviados:', data);
@@ -61,7 +53,6 @@ const Inasistencia: React.FC = () => {
   const handleDiaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
     const dia = value;
-    setDiaSeleccionado(dia);
     if (dia) {
       const diaSemana = dia;
       setValue('dia', diaSemana);
@@ -78,7 +69,8 @@ const Inasistencia: React.FC = () => {
         <DatePicker
         selected={fechaSeleccionada}
         onChange={handleFechaChange}
-        dateFormat="yyyy-MM-dd" // Formato opcional
+        dateFormat="yyyy-MM-dd" 
+        placeholderText="Elige una fecha"
         />
         <input type="hidden" {...register('fecha', { required: 'La fecha es obligatoria' })} />
         {errors.fecha && <span>{errors.fecha.message}</span>}

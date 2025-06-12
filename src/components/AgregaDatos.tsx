@@ -1,7 +1,7 @@
 import "../estilos/nuevosDatos.css"
-import { AgregarDepartamento } from "./AgregaDepartamento";
-import { AgregarPuesto } from "./AgregaPuesto";
-import { AgregarCategoria } from "./AgregaCategoria";
+import AgregarDepartamento from "./AgregaDepartamento";
+import AgregarPuesto from "./AgregaPuesto";
+import AgregarCategoria from "./AgregaCategoria";
 
 export function AgregarDatos() {
     return (

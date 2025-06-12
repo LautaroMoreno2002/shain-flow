@@ -1,52 +1,63 @@
-import { useState } from "react";
-import "../estilos/nuevosDatos.css"
+import React, { useState } from 'react';
+import './estilos/AgregarDatos.css'; // Importa el archivo CSS
 
-export function AgregarPuesto() {
-    const [errores, setErrores] = useState<{ [key: string]: boolean }>({});
+const AgregaPuesto: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+  });
 
-    const [nuevoPuesto, setNuevoPuesto] = useState({
-        puesto: ""
-    });
+  const [errors, setErrors] = useState({
+    name: '',
+  });
 
-    const manejarCambioPuesto = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setNuevoPuesto((prev) => ({ ...prev, [name]: value }));
-        setErrores((prev) => ({ ...prev, [name]: false }));
-    };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-    const cargarPuesto = async () => {
+  const validate = () => {
+    const newErrors = { name: ''};
+    let isValid = true;
 
-        const nuevosErrores: { [key: string]: boolean } = {};
-        // let esValido = true;
+    if (!formData.name) {
+      newErrors.name = 'El nombre del puesto es obligatorio';
+      isValid = false;
+    }
 
-        Object.entries(nuevoPuesto).forEach(([key, valor]) => {
-            if (!valor.trim()) {
-                nuevosErrores[key] = true;
-                // esValido = false;
-            }
-        });
-        alert("Datos cargados correctamente")
-        setNuevoPuesto({
-            puesto: ""
-        }
-        );
-    };
+    setErrors(newErrors);
+    return isValid;
+  };
 
-    return (
-        <form className="formulario-block">
-            <div className="form-group-puesto">
-                <label htmlFor={nuevoPuesto.puesto}>Puesto</label>
-                <input
-                    id="puesto"
-                    name="puesto"
-                    type="text"
-                    placeholder="Nombre del puesto"
-                    onChange={manejarCambioPuesto}
-                    className={errores[nuevoPuesto.puesto] ? "input-error" : ""} />
-                <div className="botones-form">
-                    <button onClick={cargarPuesto}>✅ Cargar</button>
-                </div>
-            </div>
-        </form>
-    )
-}
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validate()) {
+      console.log('Puesto registrado:', formData);
+      // Aquí puedes enviar los datos al servidor o realizar otras acciones
+    }
+  };
+
+  return (
+      <form onSubmit={handleSubmit} className="department-form">
+        <div>
+          <label htmlFor="name">Puesto:</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder='Nombre del Puesto'
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          {errors.name && <span>{errors.name}</span>}
+        </div>
+
+        <button type="submit">✅ Registrar</button>
+      </form>
+  );
+};
+
+export default AgregaPuesto;

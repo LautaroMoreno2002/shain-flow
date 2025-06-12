@@ -1,64 +1,83 @@
-import { useState } from "react";
-import "../estilos/nuevosDatos.css"
+import React, { useState } from 'react';
+import './estilos/AgregarDatos.css'; // Importa el archivo CSS
 
-export function AgregarDepartamento() {
-    const [errores, setErrores] = useState<{ [key: string]: boolean }>({});
+const AgregaDepartamento: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+  });
 
-    const [nuevoDepartamento, setNuevoDepartamento] = useState({
-        departamento_nombre: "",
-        departamento_descripcion: "",
-    });
+  const [errors, setErrors] = useState({
+    name: '',
+    description: '',
+  });
 
-    const manejarCambioDepartamento = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setNuevoDepartamento((prev) => ({ ...prev, [name]: value }));
-        setErrores((prev) => ({ ...prev, [name]: false }));
-    };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-    const cargarDepartamento = async () => {
+  const validate = () => {
+    const newErrors = { name: '', description: '' };
+    let isValid = true;
 
-        const nuevosErrores: { [key: string]: boolean } = {};
-        // let esValido = true;
+    if (!formData.name) {
+      newErrors.name = 'El nombre del departamento es obligatorio';
+      isValid = false;
+    }
 
-        Object.entries(nuevoDepartamento).forEach(([key, valor]) => {
-            if (!valor.trim()) {
-                nuevosErrores[key] = true;
-                // esValido = false;
-            }
-        });
-        alert("Datos cargados correctamente")
-        setNuevoDepartamento({
-            departamento_nombre: "",
-            departamento_descripcion: ""
-        }
-        );
-    };
+    if (!formData.description) {
+      newErrors.description = 'La descripción es obligatoria';
+      isValid = false;
+    }
 
-    return (
-            <form className="formulario-block">
-                <div  className="form-group-dpto">
-                    <label htmlFor={nuevoDepartamento.departamento_nombre}>Departamento</label>
-                    <input
-                        id="departamento_nombre"
-                        name="departamento_nombre"
-                        type="text"
-                        placeholder="Nombre del departamento"
-                        value={nuevoDepartamento.departamento_nombre}
-                        onChange={manejarCambioDepartamento}
-                        className={errores[nuevoDepartamento.departamento_nombre] ? "input-error" : ""}
-                    />
-                    <input
-                        id="departamento_descripcion"
-                        name="departamento_descripcion"
-                        type="text"
-                        placeholder="Descripción del departamento"
-                        onChange={manejarCambioDepartamento}
-                        className={errores[nuevoDepartamento.departamento_descripcion] ? "input-error" : ""}
-                    />
-                    <div className="botones-form">
-                        <button onClick={cargarDepartamento}>✅ Cargar</button>
-                    </div>
-                </div>
-            </form>
-    )
-}
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validate()) {
+      console.log('Departamento registrado:', formData);
+      // Aquí puedes enviar los datos al servidor o realizar otras acciones
+    }
+  };
+
+  return (
+      <form onSubmit={handleSubmit} className="department-form">
+        <div>
+          <label htmlFor="name">Departamento:</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder='Nombre del Departamento'
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          {errors.name && <span>{errors.name}</span>}
+        </div>
+
+        <div>
+          <input
+            id="description"
+            name="description"
+            type="text"
+            placeholder='Descripción del Departamento'
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
+          {errors.description && <span>{errors.description}</span>}
+        </div>
+
+        <button type="submit">✅ Registrar</button>
+      </form>
+  );
+};
+
+export default AgregaDepartamento;
