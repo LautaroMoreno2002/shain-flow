@@ -30,7 +30,7 @@ import { AgregarSalario } from './components/AgregaSalario'
 import { AgregarDatos } from './components/AgregaDatos'
 import { ReportesAnalista } from './routes/Pantallas/Reportes-analista'
 import Inasistencia from './components/Inasistencia'
-import { Dashboard } from './components/dashboard'
+// import { Dashboard } from './components/dashboard'
 
 
 function App() {
@@ -93,7 +93,7 @@ function App() {
           <Route path="reportes" element={<Reportes />}></Route>          
           <Route path="ver-nomina" element={<VerNomina />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
-          <Route path="dashboard" element={<Dashboard />} />
+          {/* <Route path="dashboard" element={<Dashboard />} /> */}
     </Route>
     </Routes>
   </BrowserRouter>

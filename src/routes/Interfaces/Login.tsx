@@ -131,47 +131,62 @@ export const Login = () => {
       <form onSubmit={handleSubmit} className="login-form">
         {/* Logo */}
         <div className="logo-container">
-          <img src="./logo_producto.png" alt="ShainFlow Logo" className="logo" />
+          <img
+            src="./logo_producto.png"
+            alt="ShainFlow Logo"
+            className="logo"
+          />
         </div>
 
         {/* Mensaje de error */}
         {/* {!!errorResponse && <div className="error-message">{errorResponse}</div>} */}
 
         {/* Usuario */}
-        <label htmlFor="username">Usuario:</label>
-        <input
-          id="username"
-          name="username"
-          type="text"
-          onChange={handleChange}
-          value={username}
-          className="input-field"
-        />
+        <div className="cont-input">
+          <label htmlFor="username">Usuario:</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            onChange={handleChange}
+            value={username}
+            className="input-field"
+          />
+        </div>
 
         {/* Contraseña */}
-        <label htmlFor="password">Contraseña:</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          onChange={handleChange}
-          value={password}
-          className="input-field"
-        />
+        <div className="cont-input">
+          <label htmlFor="password">Contraseña:</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            onChange={handleChange}
+            value={password}
+            className="input-field"
+          />
+        </div>
 
         {/* Botón */}
-        <button type="submit" className="login-button">Login</button>
+        <button type="submit" className="login-button">
+          Login
+        </button>
 
         {/* Ícono de reconocimiento facial */}
         <div className="face-id-container">
           <NavLink to="/">
-            <img src="/scaneo.png" alt="Reconocimiento facial" className="face-id-icon" />
+            <img
+              src="/scaneo.png"
+              alt="Reconocimiento facial"
+              className="face-id-icon"
+            />
           </NavLink>
         </div>
 
         {/* Enlace de registro */}
         <p className="register-text">
-          ¿No puedes ingresar o no tienes una cuenta? <NavLink to="/signup">Regístrate</NavLink>
+          ¿No puedes ingresar o no tienes una cuenta?{" "}
+          <NavLink to="/signup">Regístrate</NavLink>
         </p>
       </form>
     </DefaultLayout>
