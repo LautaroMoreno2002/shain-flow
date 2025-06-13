@@ -30,8 +30,9 @@ import { AgregarSalario } from './components/AgregaSalario'
 import { AgregarDatos } from './components/AgregaDatos'
 import { ReportesAnalista } from './routes/Pantallas/Reportes-analista'
 import Inasistencia from './components/Inasistencia'
-import { Dashboard } from './components/dashboard'
-
+import { DashboardS } from './components/DashboardSupervisor'
+import { DashboardA } from './components/DashboardAdministrador'
+import { DashboardAn } from './components/DashboardAnalistadeDatos'
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
           <Route path="agregar-datos" element={<AgregarDatos />}></Route>
           <Route path="inasistencia" element={<Inasistencia />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
+          <Route path="dashboard" element={<DashboardA />} />
     </Route>
     <Route path='/analista-datos' element={<AnalistaDeDatos />}>
           <Route path="verDatos" element={<VerDatos />}></Route>
@@ -82,6 +84,7 @@ function App() {
           <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>
           <Route path="reportes-analista" element={<ReportesAnalista />}></Route>           
           <Route path="" element={<Confirmacion />}></Route>
+          <Route path="dashboard" element={<DashboardAn />} />
     </Route>
     <Route path='/supervisor' element={<Supervisor />}>
           <Route path="verDatos" element={<VerDatos />}></Route>
@@ -93,7 +96,7 @@ function App() {
           <Route path="reportes" element={<Reportes />}></Route>          
           <Route path="ver-nomina" element={<VerNomina />}></Route>
           <Route path="" element={<Confirmacion />}></Route>
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="dashboard" element={<DashboardS />} />
     </Route>
     </Routes>
   </BrowserRouter>
