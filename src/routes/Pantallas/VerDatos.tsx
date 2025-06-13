@@ -6,6 +6,7 @@ import {
 } from "../../services/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import "../../estilos/datos-personales.css";
+import { useUser } from "../../context/UserContext";
 
 export interface PersonalDataType {
   id: string;
@@ -29,6 +30,7 @@ export const VerDatos = () => {
   const [imagenPerfil, setImagenPerfil] = useState<string | null>(null);
   const [mostrarMenuImagen, setMostrarMenuImagen] = useState(false);
   const [mostrarVistaPrevia, setMostrarVistaPrevia] = useState(false);
+  const { usuario } = useUser();
 
   const manejarVerImagen = () => {
     if (imagenPerfil) {
@@ -60,7 +62,7 @@ export const VerDatos = () => {
   const fetchData = async () => {
     try {
       setCargando(true);
-      const data = await obtenerEmpleadoPorIdentificacion("12348795");
+      const data = await obtenerEmpleadoPorIdentificacion(usuario?.numero_identificacion || "1");
       setPersonalData(data);
     } catch (error) {
       console.error("Error al obtener los datos:", error);

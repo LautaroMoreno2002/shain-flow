@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import DefaultLayout from "../../components/DefaultLayout";
 import '../../estilos/login.css'
 import { NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { iniciarSesion } from "../../services/api";
+import { useUser } from "../../context/UserContext";
+
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { usuario, setUsuario } = useUser();
   // const [errorResponse, setErrorResponse] = useState("");
 
   // const auth = useAuth();
@@ -31,6 +34,14 @@ export const Login = () => {
   //     rol: 'supervisor'
   //   }
   // ]
+useEffect(() => {
+  if (usuario) {
+    console.log(usuario.id_empleado);
+    console.log(usuario.rol);
+    console.log(usuario.numero_identificacion);    
+  }
+}, [usuario]);
+
 
   function handleChange(e: React.ChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
@@ -59,11 +70,13 @@ export const Login = () => {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const resultado = await iniciarSesion(username, password);
+    
+    setUsuario(resultado);
 
     if (resultado.access_token) {
-      console.log("Token:", resultado.access_token);
-      console.log("Permisos:", resultado.permisos);
-      console.log("Rol:", resultado.rol);
+      // console.log("Token:", resultado.access_token);
+      // console.log("Permisos:", resultado.permisos);
+      // console.log("Rol:", resultado.rol);
 
       // 👉 Guardar en sessionStorage
       sessionStorage.setItem("token", resultado.access_token);

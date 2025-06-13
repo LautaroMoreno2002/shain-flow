@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import '../../estilos/datosLaborales.css'
 import { datosLabPorId, nominasPorId } from '../../services/api';
 import { CircularProgress } from '@mui/material';
+import { useUser } from '../../context/UserContext';
 
 interface DatosLaborales {
   departamento: string;
@@ -35,12 +36,13 @@ interface DatosLaborales {
 export const DatosLaboralesDescrip = () => {
   const [datos, setDatos] = useState<DatosLaborales | null>(null);
   const [cargando, setCargando] = useState(false);
+  const { usuario } = useUser();
 
   useEffect(() => {
     const fetchDatos = async () => {
       try {
         setCargando(true);
-        const response = await datosLabPorId('1'); // debe retornar el JSON
+        const response = await datosLabPorId(JSON.stringify(usuario?.id_empleado) || "1"); // debe retornar el JSON
         setDatos(response);
       } catch (error) {
         console.error("Error al obtener los datos laborales:", error);

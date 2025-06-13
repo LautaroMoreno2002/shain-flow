@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { registroAsistenciasPorId } from "../../services/api";
 import "../../estilos/asistencias.css";
 import { CircularProgress } from "@mui/material";
+import { useUser } from "../../context/UserContext";
 
 // const mes = new Date().getMonth() + 1;
 // const anio = new Date().getFullYear();
@@ -41,12 +42,13 @@ const calcularHorasTrabajadas = (entrada: string, salida: string) => {
 export const Asistencias = () => {
   const [asistencias, setAsistencias] = useState<RegistroAsistencia[]>([]);
   const [cargando, setCargando] = useState(false);
+  const { usuario } = useUser();
 
   useEffect(() => {
   const fetchAsistencias = async () => {
     try {
       setCargando(true);
-      const datosCrudos = await registroAsistenciasPorId('1');
+      const datosCrudos = await registroAsistenciasPorId(JSON.stringify(usuario?.id_empleado));
 
       // Mapear los datos crudos al formato esperado
       const asistenciasAdaptadas: RegistroAsistencia[] = datosCrudos.map((registro: any[]) => {
