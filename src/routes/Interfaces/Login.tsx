@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DefaultLayout from "../../components/DefaultLayout";
 import '../../estilos/login.css'
 import { NavLink } from "react-router-dom";

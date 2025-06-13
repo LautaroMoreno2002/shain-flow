@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import EmpleadoFichada from '../../components/EmpleadosFichada';
 import '../../estilos/empleados.css';
 import { listarEmpleados } from '../../services/api';//conectar con la API
 import PaginatedListEmpSup from '../../components/PaginatedListEmpSup';
@@ -15,7 +14,7 @@ export interface Empleado {
 
 export const FichadaManual = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
-  const [busqueda, setBusqueda] = useState<string>('');
+  // const [busqueda, setBusqueda] = useState<string>('');
 
   // Simulación de datos (temporal)
   // const empleadosSimulados: Empleado[] = Array.from({ length: 12 }, (_, i) => ({
