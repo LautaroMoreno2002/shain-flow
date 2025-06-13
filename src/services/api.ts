@@ -177,7 +177,6 @@ EL PUT MODIFICA TODO UN ELEMENTO ENTERO
 EL PATCH MODIFICA PARCIALMENTE EL ELEMENTO O TODO
 EL DELETE ELIMINA UN REGISTRO O TODOS, SE LE DEBE PASAR SÓLO EL ID DEL EMPLEADO POR LA RUTA O NO PASARLE NADA PARA QUE BORRE TODOS. NO DEBE RECIBIR MÁS QUE ESO.
 */
-
 // Login
 // 8. Iniciar sesión y obtener token + permisos
 export const iniciarSesion = async (username: string, password: string) => {
@@ -198,4 +197,4 @@ export const iniciarSesion = async (username: string, password: string) => {
       return { error: error.message };
     }
   }
-};
+}

@@ -7,6 +7,7 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   margin: auto;
   max-width: 1000px;
+  margin-left: 155px;
 }
 
 .admin-title {
@@ -242,4 +243,10 @@ button {
 .botones-superiores button:focus {
   outline: 2px solid var(--c2);
   outline-offset: 2px;
+}
+
+@media (max-width: 800px) {
+  .admin-container {
+    margin-left: auto;
+  }
 }

@@ -164,7 +164,7 @@ export const EmpleadosNomina = () => {
               <CircularProgress />
             </div>
           )}
-          <PaginatedListNomina items={empleados} itemsPerPage={9} />
+          <PaginatedListNomina items={empleados} itemsPerPage={12} />
           <div className="lista-empleados" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>            
             {/*{empleadosFiltrados.map((empleado) => (
               <EmpleadoNomina key={empleado.id_empleado} empleado={empleado} />

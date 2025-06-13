@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import EmpleadoItem from "../../components/EmpleadoItem";
+// import EmpleadoItem from "../../components/EmpleadoItem";
 import "../../estilos/empleados.css";
 import { listarEmpleados, crearEmpleado } from "../../services/api";
 import { CircularProgress } from "@mui/material";
-import { data, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PaginatedList from "../../components/PaginatedListEmpleados";
 
 export interface Empleado {
@@ -17,7 +17,7 @@ export interface Empleado {
 
 export const Empleados = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
-  const [busqueda, setBusqueda] = useState<string>("");
+  // const [busqueda, setBusqueda] = useState<string>("");
   const [mostrarFormulario, setMostrarFormulario] = useState<boolean>(false);
   const [cargando, setCargando] = useState(false);
   const [nuevoEmpleado, setNuevoEmpleado] = useState({
@@ -57,11 +57,11 @@ export const Empleados = () => {
     cargarEmpleados();
   }, []);
 
-  const empleadosFiltrados = empleados.filter((emp) =>
-    `${emp.nombre} ${emp.apellido} ${emp.numero_identificacion}`
-      .toLowerCase()
-      .includes(busqueda.toLowerCase())
-  );
+  // const empleadosFiltrados = empleados.filter((emp) =>
+  //   `${emp.nombre} ${emp.apellido} ${emp.numero_identificacion}`
+  //     .toLowerCase()
+  //     .includes(busqueda.toLowerCase())
+  // );
 
   const agregarDatos = () => {
     navegar('/administrador/agregar-datos');

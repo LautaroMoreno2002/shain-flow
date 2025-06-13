@@ -37,7 +37,7 @@
     background-color: rgb(231, 231, 229);
 }
 
-input {
+.form-group-categoria input {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 8px;
