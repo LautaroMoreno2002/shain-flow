@@ -100,12 +100,13 @@ export const DatosLaboralesDescrip = () => {
 export const UltRecibos = () => {
   // const [nominas, setNominas] = useState<any | null>(null);
   const [cargando, setCargando] = useState(false);
+  const { usuario } = useUser();
 
   useEffect(() => {
     const fetchNominas = async () => {
       try {
         setCargando(true);
-        const response = await nominasPorId('1'); 
+        const response = await nominasPorId(JSON.stringify(usuario?.id_empleado)); 
         console.log(response);
         console.log(response.nominas);
         // setNominas(response);
