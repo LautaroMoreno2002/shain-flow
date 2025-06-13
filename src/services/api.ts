@@ -198,3 +198,26 @@ export const iniciarSesion = async (username: string, password: string) => {
     }
   }
 }
+
+// Crear usuario
+export const crearUsuario = async (
+  id_empleado: number,
+  id_rol: number = 1,
+  nombre_usuario: string,
+  contrasena: string,
+  motivo: string
+) => {
+  try {
+    const response = await api.post("/crear-usuario", {
+      id_empleado,
+      id_rol, 
+      nombre_usuario,
+      contrasena,
+      motivo,
+    })
+    
+    return response.data;
+  } catch (e: any) {
+    console.error();
+  }
+}
