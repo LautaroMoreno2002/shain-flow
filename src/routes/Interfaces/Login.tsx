@@ -12,25 +12,25 @@ export const Login = () => {
 
   // const auth = useAuth();
   const navegar = useNavigate();
-  const users = [
-    {
-      username: 'Lautaro Moreno',
-      password: '1234',
-      rol: 'empleado'
-    }, {
-      username: 'Pablo Da Silva',
-      password: '1234',
-      rol: 'administrador'
-    }, {
-      username: 'Abel Aquino',
-      password: '1234',
-      rol: 'analista-datos'
-    }, {
-      username: 'Rodrigo Montoro',
-      password: '1234',
-      rol: 'supervisor'
-    }
-  ]
+  // const users = [
+  //   {
+  //     username: 'Lautaro Moreno',
+  //     password: '1234',
+  //     rol: 'empleado'
+  //   }, {
+  //     username: 'Pablo Da Silva',
+  //     password: '1234',
+  //     rol: 'administrador'
+  //   }, {
+  //     username: 'Abel Aquino',
+  //     password: '1234',
+  //     rol: 'analista-datos'
+  //   }, {
+  //     username: 'Rodrigo Montoro',
+  //     password: '1234',
+  //     rol: 'supervisor'
+  //   }
+  // ]
 
   function handleChange(e: React.ChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
@@ -88,32 +88,6 @@ export const Login = () => {
   console.log(usuario.rol);
   console.log(usuario.permisos.ver_datos_personales);
   */
-
-    // auth.setIsAuthenticated(true);
-    // try {
-    //   const response = await fetch("http://localhost:3000/api/login", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ username, password }),
-    //   });
-    //   if (response.ok) {
-    //     const json = (await response.json()) as AuthResponse;
-    //     console.log(json);
-
-    //     if (json.body.accessToken && json.body.refreshToken) {
-    //       auth.saveUser(json);
-    //     }
-    //   } else {
-    //     const json = (await response.json()) as AuthResponseError;
-
-    //     setErrorResponse(json.body.error);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    // }
-    // if (auth.isAuthenticated) {
-    //   return <Navigate to="/inicio" />;
   }
   return (
     <DefaultLayout>
