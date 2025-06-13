@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import { Empleados } from './routes/Pantallas/Empleados'
-import { Confirmacion } from './routes/Pantallas/Confirmacion'
+// import { Confirmacion } from './routes/Pantallas/Confirmacion'
 import { VerDatos } from './routes/Pantallas/VerDatos'
 import { Asistencias } from './routes/Pantallas/Asistencias'
 import { DatosLaborales } from './routes/Pantallas/DatosLaborales'
@@ -49,16 +49,16 @@ function App() {
           <Route path="verDatos" element={<VerDatos/>}></Route>
           <Route path="asistencias" element={<Asistencias/>}></Route>
           <Route path="datosLaborales" element={<DatosLaborales/>}></Route>
-          <Route path="confirmacion" element={<Confirmacion/>}></Route>
+          {/* <Route path="confirmacion" element={<Confirmacion/>}></Route> */}
           <Route path="info-bancaria" element={<InformacionBancaria/>}></Route>
-          <Route path="" element={<Confirmacion/>}></Route>
-          <Route path="*" element={<Confirmacion/>}></Route>
+          <Route path="" element={<Asistencias/>}></Route>
+          <Route path="*" element={<Asistencias/>}></Route>
         </Route>
     <Route path='/administrador' element={<Administrador />}>
           <Route path="verDatos" element={<VerDatos />}></Route>
           <Route path="asistencias" element={<Asistencias />}></Route>
           <Route path="datosLaborales" element={<DatosLaborales />}></Route>
-          <Route path="confirmacion" element={<Confirmacion />}></Route>
+          {/* <Route path="confirmacion" element={<Confirmacion />}></Route> */}
           <Route path="empleados" element={<Empleados />}></Route>
           <Route path="empleados-nomina" element={<EmpleadosNomina />}></Route>
           <Route path="editarDatosLaborales" element={<EditarDatosLaborales />}></Route>
@@ -70,29 +70,29 @@ function App() {
           <Route path="agregar-salario" element={<AgregarSalario />}></Route>
           <Route path="agregar-datos" element={<AgregarDatos />}></Route>
           <Route path="inasistencia" element={<Inasistencia />}></Route>
-          <Route path="" element={<Confirmacion />}></Route>
+          <Route path="" element={<Asistencias />}></Route>
     </Route>
     <Route path='/analista-datos' element={<AnalistaDeDatos />}>
           <Route path="verDatos" element={<VerDatos />}></Route>
           <Route path="asistencias" element={<Asistencias />}></Route>
           <Route path="datosLaborales" element={<DatosLaborales />}></Route>
-          <Route path="confirmacion" element={<Confirmacion />}></Route>
+          {/* <Route path="confirmacion" element={<Confirmacion />}></Route> */}
           <Route path="empleados" element={<Empleados />}></Route>
           <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
           <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>
           <Route path="reportes-analista" element={<ReportesAnalista />}></Route>           
-          <Route path="" element={<Confirmacion />}></Route>
+          <Route path="" element={<Asistencias />}></Route>
     </Route>
     <Route path='/supervisor' element={<Supervisor />}>
           <Route path="verDatos" element={<VerDatos />}></Route>
           <Route path="asistencias" element={<Asistencias />}></Route>
           <Route path="datosLaborales" element={<DatosLaborales />}></Route>
-          <Route path="confirmacion" element={<Confirmacion />}></Route>
+          {/* <Route path="confirmacion" element={<Confirmacion />}></Route> */}
           <Route path="fichada-manual" element={<FichadaManual />}></Route>
           <Route path="permitir-fichada" element={<PermitirFichada />}></Route>
           <Route path="reportes" element={<Reportes />}></Route>          
           <Route path="ver-nomina" element={<VerNomina />}></Route>
-          <Route path="" element={<Confirmacion />}></Route>
+          <Route path="" element={<Asistencias />}></Route>
           {/* <Route path="dashboard" element={<Dashboard />} /> */}
     </Route>
     </Routes>
