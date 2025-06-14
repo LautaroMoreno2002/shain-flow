@@ -66,6 +66,7 @@ function App() {
           <Route path="datosLaborales" element={<DatosLaborales />}></Route>
           {/* <Route path="confirmacion" element={<Confirmacion />}></Route> */}
           <Route path="empleados" element={<Empleados />}></Route>
+          <Route path="empleados/editarEmpleado" element={<EditarEmpleado />} />
           <Route path="empleados-nomina" element={<EmpleadosNomina />}></Route>
           <Route path="editarDatosLaborales" element={<EditarDatosLaborales />}></Route>
           <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>

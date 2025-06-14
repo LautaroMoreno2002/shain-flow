@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
+import { Empleado } from '../routes/Interfaces/Empleado';
+import EmpleadoItem from './EmpleadoItem';
 
 type Item = {
     id_empleado: number;
@@ -60,15 +62,17 @@ const SearchablePaginatedList: React.FC<Props> = ({ items, itemsPerPage = 5 }) =
       <ul className='empleado-items'>
         {currentItems.length > 0 ? (
           currentItems.map(item =>           
-          <div className='empleado-item' key={item.id_empleado}>
-            <span className="icono-perfil">
-              <img src="https://imgs.search.brave.com/z1pY-zOd_QZunrzoobVmAzPXl4KV3X43yVSRA6IYek4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9lcy52/aXNhZm90by5jb20v/aW1nLzR4NC1jbS1w/YXNzcG9ydC1waG90/by1leGFtcGxlLndl/YnA" alt="" width='50px'/>
-            </span>
-            <span className='empleado-nombre'>{item.nombre} {item.apellido}</span>
-            <NavLink className={"link"} to="/administrador/editarEmpleado" >Editar</NavLink>
-            <NavLink className={"link"} to="/administrador/editarDatosLaborales" >Agregar datos laborales</NavLink>
-            <NavLink className={"link"} to="/administrador/inasistencia" >Agregar inasistencia</NavLink>
-          </div>)
+          // <div className='empleado-item' key={item.id_empleado}>
+          //   <span className="icono-perfil">
+          //     <img src="https://imgs.search.brave.com/z1pY-zOd_QZunrzoobVmAzPXl4KV3X43yVSRA6IYek4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9lcy52/aXNhZm90by5jb20v/aW1nLzR4NC1jbS1w/YXNzcG9ydC1waG90/by1leGFtcGxlLndl/YnA" alt="" width='50px'/>
+          //   </span>
+          //   <span className='empleado-nombre'>{item.nombre} {item.apellido}</span>
+          //   <NavLink className={"link"} to="/administrador/editarEmpleado" >Editar</NavLink>
+          //   <NavLink className={"link"} to="/administrador/editarDatosLaborales" >Agregar datos laborales</NavLink>
+          //   <NavLink className={"link"} to="/administrador/inasistencia" >Agregar inasistencia</NavLink>
+          // </div>)
+          <EmpleadoItem key={item.id_empleado} empleado={item}></EmpleadoItem>
+          )
         ) : (
           <li>No se encontraron resultados.</li>
         )}

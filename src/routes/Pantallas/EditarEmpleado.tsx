@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../estilos/datos-personales.css'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { actualizarDatosEmpleado } from '../../services/api';
 import { useEffect } from 'react';
 import { obtenerEmpleadoPorIdentificacion } from '../../services/api';
@@ -22,9 +22,14 @@ interface PersonalDataType {
 }
 
 export const EditarEmpleado = () => {
-  const empleadoId = "1";
+  const location = useLocation()
+  const empleado = location.state;
+
+  const empleadoId = empleado.id_empleado;
+  console.log(empleadoId);
+
   // Estado para determinar si los campos son editables
-  const [isEditable, setIsEditable] = useState<boolean>(true);
+  const [isEditable, setIsEditable] = useState<boolean>();
   const navegar = useNavigate();
 
   // Estado para los datos personales, tipado con la interfaz PersonalDataType
@@ -71,7 +76,8 @@ export const EditarEmpleado = () => {
         provincia: personalData.provincia
       };
 
-      await actualizarDatosEmpleado(empleadoId, nuevosDatos);
+
+      await actualizarDatosEmpleado(JSON.stringify(empleadoId), nuevosDatos);
       console.log("Datos actualizados exitosamente.");
       setIsEditable(false);
       navegar('/administrador/empleados');
@@ -83,7 +89,7 @@ export const EditarEmpleado = () => {
   // Función para cancelar y revertir los cambios
   const handleCancel = async () => {
     setIsEditable(true);
-    const datos = await obtenerEmpleadoPorIdentificacion("12348795");
+    const datos = await obtenerEmpleadoPorIdentificacion(empleado.numero_identificacion);
     // Volver a los datos iniciales
     setPersonalData({
       nombre: datos.nombre,
@@ -103,12 +109,13 @@ export const EditarEmpleado = () => {
   };
 
   useEffect(() => {
-    const cargarDatosEmpleado = async () => {
-      try {
-        const datos = await obtenerEmpleadoPorIdentificacion("12348795");
+  if (!empleado?.numero_identificacion) return;
 
-        setPersonalData({
-          nombre: datos.nombre,
+  const cargarDatosEmpleado = async () => {
+    try {
+      const datos = await obtenerEmpleadoPorIdentificacion(empleado.numero_identificacion);
+      setPersonalData({
+        nombre: datos.nombre,
           apellido: datos.apellido,
           dni: datos.numero_identificacion,
           fechaNacimiento: datos.fecha_nacimiento,
@@ -127,7 +134,7 @@ export const EditarEmpleado = () => {
     };
 
     cargarDatosEmpleado();
-  }, []);
+  }, [empleado?.numero_identificacion]);
 
   return (
     <div className="container-personal-data">
