@@ -250,3 +250,9 @@ button {
     margin-left: auto;
   }
 }
+
+@media (max-width: 600px) {
+  .admin-container {
+    margin-bottom: 30px;
+  }
+}

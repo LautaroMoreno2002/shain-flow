@@ -1,5 +1,6 @@
 .layout {
   min-height: 100dvh;
+  margin-left: 145px;
 }
 .cont-asistencias {
   display: flex;
@@ -147,6 +148,13 @@ th, td {
     }
   }
 }
+
+@media (max-width: 800px) {
+  .layout {
+    margin-left: 30px;
+  }
+}
+
 @media screen and (max-width: 760px) {
   .cont-asistencias {
     & h2 {
