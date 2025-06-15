@@ -4,7 +4,7 @@ export const DashboardS: React.FC = () => {
   const dashboards = [
     {
       title: "Resumen mensual jornadas",
-      url: "http://localhost:3000/public/dashboard/c9cc4e0e-95ee-402f-9372-9f2760a99b60",
+      url: "https://3-137-176-177.sslip.io/public/dashboard/6d0497a8-4e46-43e2-9dbd-6cb75f8ecf79",
     },
     {
       title: "Comparativo mensual asistencias",
