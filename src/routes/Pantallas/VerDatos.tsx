@@ -24,6 +24,8 @@ export interface PersonalDataType {
   estado_civil: string;
 }
 
+let personaActualID: number = 1;
+
 export const VerDatos = () => {
   const [isEditable, setIsEditable] = useState(false);
   const [cargando, setCargando] = useState(false);
@@ -63,12 +65,13 @@ export const VerDatos = () => {
   const fetchData = async () => {
     if (!usuario || !usuario.numero_identificacion) {
       console.error("Usuario no encontrado o número de identificación no disponible.");
-      return;
+      return personaActualID;
     }
     try {
       setCargando(true);
       const data = await obtenerEmpleadoPorIdentificacion(usuario.numero_identificacion);
       setPersonalData(data);
+      personaActualID = data.id_empleado;
     } catch (error) {
       console.error("Error al obtener los datos:", error);
     } finally {
