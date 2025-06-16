@@ -70,14 +70,12 @@ useEffect(() => {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const resultado = await iniciarSesion(username, password);
-    
-    setUsuario(resultado);
 
     if (resultado.access_token) {
       // console.log("Token:", resultado.access_token);
       // console.log("Permisos:", resultado.permisos);
       // console.log("Rol:", resultado.rol);
-
+      
       // 👉 Guardar en sessionStorage
       sessionStorage.setItem("token", resultado.access_token);
       sessionStorage.setItem(
@@ -89,7 +87,8 @@ useEffect(() => {
           numero_identificacion: resultado.numero_identificacion,
         })
       );
-
+      
+      setUsuario(resultado); // Actualizar el contexto de usuario
       // Redirigir según el rol
       switch (resultado.rol) {
         case "1":

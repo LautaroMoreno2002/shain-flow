@@ -22,6 +22,7 @@ export interface PersonalDataType {
   localidad: string;
   nacionalidad: string;
   estado_civil: string;
+  imagen_perfil_url: string; // Agregado para la imagen de perfil
 }
 
 let personaActualID : PersonalDataType;
@@ -36,7 +37,7 @@ export const VerDatos = () => {
   const { usuario } = useUser();
 
   const manejarVerImagen = () => {
-    if (imagenPerfil) {
+    if (imagenPerfil || personalData.imagen_perfil_url) {
       setMostrarVistaPrevia(true);
       setMostrarMenuImagen(false);
     }
@@ -60,7 +61,7 @@ export const VerDatos = () => {
     localidad: "",
     nacionalidad: "",
     estado_civil: "",
-    // Necesito que traiga la img
+    imagen_perfil_url: ""
   });
 
   const fetchData = async () => {
@@ -141,7 +142,9 @@ export const VerDatos = () => {
       )}
 
       {/* Imagen circular */}
-      <div style={{ position: "absolute", top: "20px", right: "40px", zIndex: 1 }}>
+      <div
+        style={{ position: "absolute", top: "20px", right: "40px", zIndex: 1 }}
+      >
         <div
           className="foto-perfil"
           style={{
@@ -159,9 +162,9 @@ export const VerDatos = () => {
           }}
           onClick={() => setMostrarMenuImagen((prev) => !prev)}
         >
-          {imagenPerfil ? (
+          {imagenPerfil || personalData.imagen_perfil_url ? (
             <img
-              src={imagenPerfil}
+              src={imagenPerfil || personalData.imagen_perfil_url}
               alt="Foto de perfil"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
@@ -209,7 +212,7 @@ export const VerDatos = () => {
                 cursor: "pointer",
               }}
               onClick={manejarVerImagen}
-              disabled={!imagenPerfil}
+              disabled={!imagenPerfil && !personalData.imagen_perfil_url}
             >
               Ver imagen
             </button>
@@ -333,7 +336,7 @@ export const VerDatos = () => {
             ×
           </button>
           <img
-            src={imagenPerfil || ""}
+            src={imagenPerfil || personalData.imagen_perfil_url || ""}
             alt="Vista previa"
             style={{
               maxWidth: "90%",
