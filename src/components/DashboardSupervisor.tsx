@@ -8,7 +8,7 @@ export const DashboardS: React.FC = () => {
     },
     {
       title: "Comparativo mensual asistencias",
-      url: "http://localhost:3000/public/dashboard/312b7439-fbcf-424a-96cd-df2899a6ebe2",
+      url: "https://3-137-176-177.sslip.io/public/dashboard/7fd2a19d-0f0c-4fc7-be40-195ec14b9726",
     },
   ];
 
