@@ -15,10 +15,10 @@ const navItemsSupervisor = [
 export const Supervisor = () => {
   return (
     <>
-      <NavBar items={navItemsSupervisor} />
+      <NavBar items={navItemsSupervisor} logoSrc="/logo_producto.png" />
       <main>
         <Outlet /> {/* Aquí se renderiza la ruta hija */}
       </main>
     </>
-  )
+  );
 };

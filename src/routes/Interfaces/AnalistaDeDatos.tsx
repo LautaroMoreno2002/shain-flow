@@ -23,10 +23,10 @@ Puede hacer reportes y gráficos con la información que ve. Esto podría ser ú
 export const AnalistaDeDatos = () => {
   return (
     <>
-      <NavBar items={navItemsAnalista} />
+      <NavBar items={navItemsAnalista} logoSrc="/logo_producto.png" />
       <main>
         <Outlet /> {/* Aquí se renderiza la ruta hija */}
       </main>
     </>
-  )
+  );
 };

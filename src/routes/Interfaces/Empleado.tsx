@@ -18,7 +18,7 @@ Puede ver, editar y realizar acciones sobre sus datos personales, su informació
 export const Empleado = () => {
   return (
     <>
-      <NavBar items={navItemsEmpleado} />
+      <NavBar items={navItemsEmpleado} logoSrc="/logo_producto.png"  />
       <main>
         <Outlet /> {/* Aquí se renderiza la ruta hija */}
       </main>

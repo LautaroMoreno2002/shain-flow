@@ -23,10 +23,10 @@ Podrá enviar notificaciones a los empleados.
 export const Administrador = () => {
   return (
     <>
-      <NavBar items={navItemsAdministrador} />
+      <NavBar items={navItemsAdministrador} logoSrc="/logo_producto.png" />
       <main>
         <Outlet /> {/* Aquí se renderiza la ruta hija */}
       </main>
     </>
-  )
+  );
 };

@@ -9,11 +9,11 @@ export type NavItem = {
 };
 
 export interface NavBarProps {
-  items: NavItem[];
-  logoSrc: string; // <-- ruta al logo
+  items: NavItem[]; // <-- ruta al logo
+  logoSrc: string;
 }
 
-export const NavBar = ({ items }: NavBarProps) => {
+export const NavBar = ({ items, logoSrc }: NavBarProps) => {
   const [showLabels, setShowLabels] = useState(true);
 
   const handleToggle = () => {
@@ -43,7 +43,7 @@ export const NavBar = ({ items }: NavBarProps) => {
         </ul>
         {/* Logo al pie */}
         <div className="logo-footer">
-          <img src="./logo_producto.png" alt="shain-flow"/>
+          <img src={logoSrc} alt="shain-flow" />
         </div>
       </div>
       <div className="close" onClick={handleToggle}>
