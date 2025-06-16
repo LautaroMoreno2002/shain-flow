@@ -57,6 +57,7 @@ export const VerDatos = () => {
     localidad: "",
     nacionalidad: "",
     estado_civil: "",
+    // Necesito que traiga la img
   });
 
   const fetchData = async () => {
