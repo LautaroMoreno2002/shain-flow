@@ -16,12 +16,28 @@ export const EmpleadoItem = ({ empleado }: EmpleadoItemProps) => {
     <div className="empleado-item">
       {/* <span className="icono-perfil">👤</span> */}
       <span className="icono-perfil">
-        <img src="https://imgs.search.brave.com/z1pY-zOd_QZunrzoobVmAzPXl4KV3X43yVSRA6IYek4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9lcy52/aXNhZm90by5jb20v/aW1nLzR4NC1jbS1w/YXNzcG9ydC1waG90/by1leGFtcGxlLndl/YnA" alt="" width='50px'/>
+        {empleado.imagen_perfil_url ? (
+          <img src={empleado.imagen_perfil_url} alt="" width="50px" />
+        ) : (
+          <span className="icono-perfil">👤</span>
+        )}
       </span>
-      <span className='empleado-nombre'>{empleado.nombre} {empleado.apellido}</span>
-      <NavLink className={"link"} to="/administrador/empleados/editarEmpleado" state={empleado}>Editar</NavLink>
-      <NavLink className={"link"} to="/administrador/editarDatosLaborales" >Agregar datos laborales</NavLink>
-      <NavLink className={"link"} to="/administrador/inasistencia" >Agregar inasistencia</NavLink>
+      <span className="empleado-nombre">
+        {empleado.nombre} {empleado.apellido}
+      </span>
+      <NavLink
+        className={"link"}
+        to="/administrador/empleados/editarEmpleado"
+        state={empleado}
+      >
+        Editar
+      </NavLink>
+      <NavLink className={"link"} to="/administrador/editarDatosLaborales">
+        Agregar datos laborales
+      </NavLink>
+      <NavLink className={"link"} to="/administrador/inasistencia">
+        Agregar inasistencia
+      </NavLink>
     </div>
   );
 };

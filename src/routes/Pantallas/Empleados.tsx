@@ -13,6 +13,7 @@ export interface Empleado {
   apellido: string;
   correo: string;
   telefono: string;
+  imagen_perfil_url?: string;
 }
 
 export const Empleados = () => {
@@ -103,6 +104,7 @@ export const Empleados = () => {
           apellido: empleadoCreado.apellido,
           correo: empleadoCreado.correo_electronico ?? empleadoCreado.correo,
           telefono: empleadoCreado.telefono,
+          imagen_perfil_url: empleadoCreado.imagen_perfil_url || "",
         },
       ]);
 
