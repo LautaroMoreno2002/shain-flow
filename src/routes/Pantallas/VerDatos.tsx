@@ -61,9 +61,13 @@ export const VerDatos = () => {
   });
 
   const fetchData = async () => {
+    if (!usuario || !usuario.numero_identificacion) {
+      console.error("Usuario no encontrado o número de identificación no disponible.");
+      return;
+    }
     try {
       setCargando(true);
-      const data = await obtenerEmpleadoPorIdentificacion(usuario?.numero_identificacion || "1");
+      const data = await obtenerEmpleadoPorIdentificacion(usuario.numero_identificacion);
       setPersonalData(data);
     } catch (error) {
       console.error("Error al obtener los datos:", error);
