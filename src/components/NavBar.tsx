@@ -10,6 +10,7 @@ export type NavItem = {
 
 export interface NavBarProps {
   items: NavItem[];
+  logoSrc: string; // <-- ruta al logo
 }
 
 export const NavBar = ({ items }: NavBarProps) => {
@@ -27,19 +28,23 @@ export const NavBar = ({ items }: NavBarProps) => {
             <li key={index}>
               <NavLink
                 to={path}
-                data-label={label} 
+                data-label={label}
                 className={({ isActive }) =>
-                  `navLink ${!showLabels ? "collapsed" : ""} ${isActive ? "active" : ""
+                  `navLink ${!showLabels ? "collapsed" : ""} ${
+                    isActive ? "active" : ""
                   }`
                 }
               >
-
                 <i className={icon}></i>
                 <span className="label">{label}</span>
               </NavLink>
             </li>
           ))}
         </ul>
+        {/* Logo al pie */}
+        <div className="logo-footer">
+          <img src="./logo_producto.png" alt="shain-flow"/>
+        </div>
       </div>
       <div className="close" onClick={handleToggle}>
         {showLabels ? (

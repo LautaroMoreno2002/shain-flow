@@ -184,6 +184,9 @@ i {
     background-color: var(--c1);
     border-radius: 4px;
   }
+  .logo-footer {
+    display: none; /* Oculta el logo en pantallas pequeñas */
+  }
 }
 @media screen and (max-width: 420px) {
   .navLink {
@@ -206,4 +209,32 @@ i {
     gap: 5px; /* Añade espacio entre los ítems */
   }
   
+}
+/* 1) Hacemos que .cont-nav sea un flex column */
+/*    para poder empujar el footer abajo con margin-top:auto */
+.cont-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 2) Permitimos que la lista ocupe todo el espacio disponible */
+/*    y deje al footer pegado al final */
+.cont-nav ul {
+  flex: 1;
+}
+
+/* 3) Estilos del contenedor del logo */
+.logo-footer {
+  margin-top: auto;      /* empuja hacia abajo */
+  padding: 16px 0;       /* espacio arriba/abajo */
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+/* 4) Ajustes de la imagen */
+.logo-footer img {
+  max-width: 100%;
+  width: 120px;          /* o el ancho que prefieras */
+  height: auto;
+  display: inline-block;
 }
