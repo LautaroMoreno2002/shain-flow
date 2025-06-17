@@ -6,7 +6,9 @@ export function Reportes() {
     const [iframeLoaded, setIframeLoaded] = useState(false);
     
     // Configuración del dashboard
-    const metabaseUrl = `https://3-137-176-177.sslip.io/public/dashboard/6d7f9cc7-30db-4711-855c-46c19eccc377?id_empleado=${id_empleado}&theme=transparent&bordered=false&titled=false`;
+const metabaseUrl = `https://3-137-176-177.sslip.io/embed/dashboard/6d7f9cc7-30db-4711-855c-46c19eccc377?id_empleado=${id_empleado}#theme=transparent&hide_parameters=id_empleado`;
+
+
 
     if (!id_empleado) {
         return (
