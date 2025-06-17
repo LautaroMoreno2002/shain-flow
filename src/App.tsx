@@ -101,7 +101,7 @@ function App() {
           {/* <Route path="confirmacion" element={<Confirmacion />}></Route> */}
           <Route path="fichada-manual" element={<FichadaManual />}></Route>
           <Route path="permitir-fichada" element={<PermitirFichada />}></Route>
-          <Route path="reportes" element={<Reportes />}></Route>          
+          <Route path="/supervisor/reportes/:id_empleado?" element={<Reportes />} />      
           <Route path="ver-nomina" element={<VerNomina />}></Route>
           {/* <Route path="" element={<Confirmacion />}></Route> */}
           <Route path="dashboard" element={<DashboardS />} />

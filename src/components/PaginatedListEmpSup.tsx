@@ -67,7 +67,8 @@ const SearchablePaginatedList: React.FC<Props> = ({ items, itemsPerPage = 5 }) =
             </span>
             <span className='empleado-nombre'>{item.nombre} {item.apellido}</span>
             <NavLink className={"link"} to="/supervisor/permitir-fichada" >Fichada manual</NavLink>
-            <NavLink className={"link"} to="/supervisor/reportes" >Ver Reportes</NavLink>
+            <NavLink className={"link"} to={`/supervisor/reportes/${item.id_empleado}`} // Cambia esta línea
+            >Ver Reportes</NavLink>
             <NavLink className={"link"} to="/supervisor/ver-nomina" >Ver nomina</NavLink>
           </div>)
         ) : (
