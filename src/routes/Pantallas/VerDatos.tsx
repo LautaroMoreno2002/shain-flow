@@ -118,7 +118,7 @@ export const VerDatos = () => {
 }
     
     // Actualizar los datos personales
-    await actualizarDatosEmpleado(personalData.id, data);
+    await actualizarDatosEmpleado(JSON.stringify(usuario?.id_empleado), data);
     console.log("Datos actualizados correctamente.");
     
     await fetchData();
