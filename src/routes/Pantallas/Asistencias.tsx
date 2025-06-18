@@ -43,6 +43,9 @@ export const Asistencias = () => {
   const [asistencias, setAsistencias] = useState<RegistroAsistencia[]>([]);
   const [cargando, setCargando] = useState(false);
   const { usuario } = useUser();
+  const [asistenciasPorMes, setAsistenciasPorMes] = useState<Record<string, RegistroAsistencia[]>>({});
+const [mesSeleccionado, setMesSeleccionado] = useState<string>("");
+
 
   useEffect(() => {
   const fetchAsistencias = async () => {
@@ -50,22 +53,32 @@ export const Asistencias = () => {
       setCargando(true);
       const datosCrudos = await registroAsistenciasPorId(JSON.stringify(usuario?.id_empleado));
 
-      // Mapear los datos crudos al formato esperado
       const asistenciasAdaptadas: RegistroAsistencia[] = datosCrudos.map((registro: any[]) => {
         const [fecha, dia, horaEntrada, horaSalida, horasTrabajadas, horasExtras, estado] = registro;
-
         return {
           fecha: fecha || "---",
           dia: dia || "---",
           horaEntrada: horaEntrada || "---",
           horaSalida: horaSalida || "---",
-          horasTrabajadas: horasTrabajadas || "---",
           horasExtras: horasExtras?.toString() || "0",
           estado: estado || "Sin estado"
         };
       });
 
-      setAsistencias(asistenciasAdaptadas);
+      // Agrupar por mes
+      const agrupadas: Record<string, RegistroAsistencia[]> = {};
+      asistenciasAdaptadas.forEach((asis) => {
+        const mes = asis.fecha?.substring(0, 7); // "YYYY-MM"        
+        if (!agrupadas[mes]) agrupadas[mes] = [];
+        agrupadas[mes].push(asis);
+      });
+
+      setAsistenciasPorMes(agrupadas);
+
+      // Establecer el mes actual por defecto
+      const mesActual = new Date().toISOString().substring(0, 7);
+      setMesSeleccionado(agrupadas[mesActual] ? mesActual : Object.keys(agrupadas)[0]);
+      
     } catch (error) {
       console.error("Error al obtener las asistencias:", error);
     } finally {
@@ -103,6 +116,20 @@ export const Asistencias = () => {
         <li><strong>HT</strong> → Horas trabajadas</li>
         <li><strong>HEX</strong> → Horas Extras</li>
       </ul>
+      <div style={{ marginBottom: "1rem" }}>
+  <label htmlFor="mes">Seleccionar mes: </label>
+  <select
+    id="mes"
+    value={mesSeleccionado}
+    onChange={(e) => setMesSeleccionado(e.target.value)}
+  >
+    {Object.keys(asistenciasPorMes).map((mes) => (
+      <option key={mes} value={mes}>
+        {new Date((mes) + "-02").toLocaleDateString("es-ES", { year: "numeric", month: "long" })}
+      </option>
+    ))}
+  </select>
+</div>
 
       <div className="asistencias" style={{ position: 'relative' }}>
         {cargando && (
@@ -110,6 +137,7 @@ export const Asistencias = () => {
             <CircularProgress />
           </div>
         )}
+        
         <table style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
           <thead>
             <tr>
@@ -123,29 +151,22 @@ export const Asistencias = () => {
             </tr>
           </thead>
           <tbody>
-            {asistencias.map((asistencia, index) => {
-              const { fecha, dia, horaEntrada, horaSalida, estado, horasExtras } = asistencia;
-              const horasTrabajadas = calcularHorasTrabajadas(horaEntrada, horaSalida);
-
-              // Obtener el nombre del día
-              // const partesFecha = fecha?.split("-");
-              // const dia = partesFecha?.length === 3 ? parseInt(partesFecha[2]) : 0;
-              // const nombreDia = obtenerNombreDia(dia);
-
-              return (
-                <tr key={index}>
-                  <td>{fecha}</td>
-                  {/* <td>{nombreDia.toLocaleUpperCase()}</td> */}
-                  <td>{dia}</td>
-                  <td>{horaEntrada}</td>
-                  <td>{horaSalida}</td>
-                  <td>{horasTrabajadas}</td>
-                  <td>{horasExtras}</td>
-                  <td className={clasesEstado[estado] || ''}>{estado}</td>
-                </tr>
-              );
-            })}
-          </tbody>
+  {(asistenciasPorMes[mesSeleccionado] || []).map((asistencia, index) => {
+    const { fecha, dia, horaEntrada, horaSalida, estado, horasExtras } = asistencia;
+    const horasTrabajadas = calcularHorasTrabajadas(horaEntrada, horaSalida);
+    return (
+      <tr key={index}>
+        <td>{fecha}</td>
+        <td>{dia}</td>
+        <td>{horaEntrada}</td>
+        <td>{horaSalida}</td>
+        <td>{horasTrabajadas}</td>
+        <td>{horasExtras}</td>
+        <td className={clasesEstado[estado] || ""}>{estado}</td>
+      </tr>
+    );
+  })}
+</tbody>
         </table>
       </div>
     </div>

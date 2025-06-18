@@ -10,7 +10,7 @@ export interface PersonalDataType {
 }
 
 export const InformacionBancaria = () => {
-  const [isEditable, setIsEditable] = useState(true);
+  const [isEditable, setIsEditable] = useState(false);
   const navegar = useNavigate();
 
   const [personalData, setPersonalData] = useState<PersonalDataType>({
