@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   actualizarDatosEmpleado,
+  enviarImg,
   obtenerEmpleadoPorIdentificacion,
   type ModificarData,
 } from "../../services/api";
@@ -25,8 +26,8 @@ export interface PersonalDataType {
   imagen_perfil_url: string; // Agregado para la imagen de perfil
 }
 
-let personaActualID : PersonalDataType;
-let personaActualizada : boolean = false;
+let personaActualID: PersonalDataType;
+let personaActualizada: boolean = false;
 
 export const VerDatos = () => {
   const [isEditable, setIsEditable] = useState(false);
@@ -35,6 +36,7 @@ export const VerDatos = () => {
   const [mostrarMenuImagen, setMostrarMenuImagen] = useState(false);
   const [mostrarVistaPrevia, setMostrarVistaPrevia] = useState(false);
   const { usuario } = useUser();
+  const [imagenArchivo, setImagenArchivo] = useState<File | null>(null);
 
   const manejarVerImagen = () => {
     if (imagenPerfil || personalData.imagen_perfil_url) {
@@ -68,7 +70,7 @@ export const VerDatos = () => {
     if (!usuario || !usuario.numero_identificacion) {
       console.error("Usuario no encontrado o número de identificación no disponible.");
       console.log(personaActualID);
-      
+
       return personaActualID;
     }
     try {
@@ -96,42 +98,54 @@ export const VerDatos = () => {
   };
 
   const handleSave = async () => {
-    try {
-      setCargando(true);
-      const data: ModificarData = {
-        telefono: personalData.telefono,
-        correo_electronico: personalData.correo_electronico,
-        calle: personalData.calle,
-        numero_calle: personalData.numero_calle,
-        localidad: personalData.localidad,
-        partido: "",
-        provincia: personalData.nacionalidad,
-      };
-      await actualizarDatosEmpleado(personalData.id, data);
-      console.log("Datos actualizados correctamente.");
-      setIsEditable(false);
-    } catch (error) {
-      console.error("Error al guardar los cambios:", error);
-    } finally {
-      setCargando(false);
-    }
-  };
+  try {
+    setCargando(true);
 
+    const data: ModificarData = {
+      telefono: personalData.telefono,
+      correo_electronico: personalData.correo_electronico,
+      calle: personalData.calle,
+      numero_calle: personalData.numero_calle,
+      localidad: personalData.localidad,
+      partido: "",
+      provincia: personalData.nacionalidad,
+    };
+    
+        // Enviar imagen si fue cambiada
+       if (imagenArchivo) {
+  await enviarImg(imagenArchivo, JSON.stringify(usuario?.id_empleado));
+  console.log("Imagen enviada correctamente.");
+}
+    
+    // Actualizar los datos personales
+    await actualizarDatosEmpleado(personalData.id, data);
+    console.log("Datos actualizados correctamente.");
+    
+    await fetchData();
+    setIsEditable(false);
+  } catch (error) {
+    console.error("Error al guardar los cambios:", error);
+  } finally {
+    setCargando(false);
+  }
+};
   const handleCancel = () => {
     setIsEditable(false);
     fetchData();
   };
 
-  const handleImagenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImagenPerfil(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  
+const handleImagenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (file) {
+    setImagenArchivo(file);
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImagenPerfil(reader.result as string); // Solo para vista previa
+    };
+    reader.readAsDataURL(file);
+  }
+};
 
   return (
     <div className="container-personal-data" style={{ position: "relative" }}>
@@ -142,9 +156,7 @@ export const VerDatos = () => {
       )}
 
       {/* Imagen circular */}
-      <div
-        style={{ position: "absolute", top: "20px", right: "40px", zIndex: 1 }}
-      >
+      <div style={{ position: "absolute", top: "20px", right: "40px", zIndex: 1 }}>
         <div
           className="foto-perfil"
           style={{
@@ -153,14 +165,18 @@ export const VerDatos = () => {
             borderRadius: "50%",
             overflow: "hidden",
             border: "3px solid #ccc",
-            cursor: "pointer",
+            cursor: isEditable || imagenPerfil || personalData.imagen_perfil_url ? "pointer" : "default",
             backgroundColor: "#f0f0f0",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             boxShadow: "0 0 8px rgba(0,0,0,0.1)",
           }}
-          onClick={() => setMostrarMenuImagen((prev) => !prev)}
+          onClick={() => {
+            if (isEditable || imagenPerfil || personalData.imagen_perfil_url) {
+              setMostrarMenuImagen(prev => !prev);
+            }
+          }}
         >
           {imagenPerfil || personalData.imagen_perfil_url ? (
             <img
@@ -169,14 +185,7 @@ export const VerDatos = () => {
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           ) : (
-            <span
-              style={{
-                color: "#999",
-                textAlign: "center",
-                fontSize: "13px",
-                padding: "10px",
-              }}
-            >
+            <span style={{ color: "#999", textAlign: "center", fontSize: "13px", padding: "10px" }}>
               Agregar foto
             </span>
           )}
@@ -190,73 +199,37 @@ export const VerDatos = () => {
         </div>
 
         {mostrarMenuImagen && (
-          <div
-            style={{
-              marginTop: "5px",
-              backgroundColor: "#fff",
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-              width: "140px",
-              zIndex: 1000,
-              position: "absolute",
-              right: 0,
-            }}
-          >
-            <button
-              style={{
-                padding: "10px",
-                width: "100%",
-                border: "none",
-                background: "none",
-                cursor: "pointer",
-              }}
-              onClick={manejarVerImagen}
-              disabled={!imagenPerfil && !personalData.imagen_perfil_url}
-            >
+          <div style={{ marginTop: "5px", backgroundColor: "#fff", border: "1px solid #ccc", borderRadius: "8px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)", width: "140px", zIndex: 1000, position: "absolute", right: 0 }}>
+            <button style={{ padding: "10px", width: "100%", border: "none", background: "none", cursor: "pointer" }} onClick={manejarVerImagen} disabled={!imagenPerfil && !personalData.imagen_perfil_url}>
               Ver imagen
             </button>
-            <button
-              style={{
-                padding: "10px",
-                width: "100%",
-                border: "none",
-                background: "none",
-                cursor: "pointer",
-              }}
-              onClick={manejarCambiarImagen}
-            >
-              Cambiar imagen
-            </button>
+            {isEditable && (
+              <button style={{ padding: "10px", width: "100%", border: "none", background: "none", cursor: "pointer" }} onClick={manejarCambiarImagen}>
+                Cambiar imagen
+              </button>
+            )}
           </div>
         )}
       </div>
 
-      <div
-        className="personal-data"
-        style={{ filter: cargando ? "blur(2px)" : "none" }}
-      >
+      <div className="personal-data" style={{ filter: cargando ? "blur(2px)" : "none" }}>
         <h2 className="title">Información personal</h2>
         <div className="data-container">
           <div className="data-group">
             {[
               { label: "Nombre/s", name: "nombre" },
               { label: "Apellido/s", name: "apellido" },
-              {
-                label: personalData.tipo_identificacion,
-                name: "numero_identificacion",
-              },
+              { label: personalData.tipo_identificacion, name: "numero_identificacion" },
               { label: "Fecha de nacimiento", name: "fecha_nacimiento" },
             ].map(({ label, name }) => (
               <div className="data-item" key={name}>
                 <p className="data-item--label">{label}:</p>
                 <input
-                  className={`data-item--value ${isEditable ? "editable" : ""}`}
+                  className="data-item--value"
                   type="text"
                   name={name}
                   value={(personalData as any)[name]}
-                  onChange={handleChange}
-                  readOnly={!isEditable}
+                  readOnly
                 />
               </div>
             ))}
@@ -305,46 +278,13 @@ export const VerDatos = () => {
           )}
         </div>
       </div>
+
       {mostrarVistaPrevia && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.9)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 9999,
-          }}
-        >
-          <button
-            onClick={() => setMostrarVistaPrevia(false)}
-            style={{
-              position: "absolute",
-              top: "20px",
-              right: "30px",
-              background: "transparent",
-              color: "#fff",
-              fontSize: "30px",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
+        <div style={{ position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", backgroundColor: "rgba(0, 0, 0, 0.9)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 9999 }}>
+          <button onClick={() => setMostrarVistaPrevia(false)} style={{ position: "absolute", top: "20px", right: "30px", background: "transparent", color: "#fff", fontSize: "30px", border: "none", cursor: "pointer" }}>
             ×
           </button>
-          <img
-            src={imagenPerfil || personalData.imagen_perfil_url || ""}
-            alt="Vista previa"
-            style={{
-              maxWidth: "90%",
-              maxHeight: "90%",
-              borderRadius: "10px",
-              boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)",
-            }}
-          />
+          <img src={imagenPerfil || personalData.imagen_perfil_url || ""} alt="Vista previa" style={{ maxWidth: "90%", maxHeight: "90%", borderRadius: "10px", boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)" }} />
         </div>
       )}
     </div>

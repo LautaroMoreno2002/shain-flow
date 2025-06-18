@@ -1,4 +1,5 @@
 import axios from "axios";
+import { addISOWeekYears } from "date-fns";
 
 // const API_URL2 = "https://tpp-g2-adp-1.onrender.com/"; //conectar con la API
 const API_URL = "https://render-crud-jc22.onrender.com/";
@@ -221,3 +222,26 @@ export const crearUsuario = async (
     console.error();
   }
 }
+
+export const enviarImg = async (imagen: File, usuario_id: string) => {
+  const formData = new FormData();
+  formData.append("image", imagen);
+  formData.append("usuario_id", usuario_id);
+
+  try {
+    const response = await api.post(
+      "/cargar-image/",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error("Error al enviar la imagen:", error.response?.data || error);
+    console.log(error.response?.data);
+    throw error;
+  }
+};
