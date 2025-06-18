@@ -22,7 +22,7 @@ export const DashboardS: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: "20px", textAlign: "center", position: "relative" }}>
+    <div style={{ padding: "20px", textAlign: "center", position: "relative", marginLeft: "155px" }}>
       <h2>{dashboards[index].title}</h2>
 
       <div style={{ marginBottom: "20px" }}>

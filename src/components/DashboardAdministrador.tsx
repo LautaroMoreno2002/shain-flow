@@ -10,10 +10,11 @@ export const DashboardA: React.FC = () => {
   return (
     <div
       style={{
-        width: "100%",
+        width: "90%",
         height: "100vh",
         position: "relative",
         padding: "16px",
+        marginLeft: "155px"
       }}
     >
       {cargando && (
@@ -44,8 +45,7 @@ export const DashboardA: React.FC = () => {
         allowTransparency={true}
         title="Dashboard Administrador"
         onLoad={() => setCargando(false)}
-        style={{ position: "relative", zIndex: 0 }}
-      />
+        style={{ position: "relative", zIndex: 0 }} />
     </div>
   );
 };
