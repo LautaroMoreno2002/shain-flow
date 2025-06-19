@@ -30,6 +30,7 @@ import { AgregarSalario } from './components/AgregaSalario'
 import { AgregarDatos } from './components/AgregaDatos'
 import { ReportesAnalista } from './routes/Pantallas/Reportes-analista'
 import Inasistencia from './components/Inasistencia'
+import AsistenciaUnica from './components/AsistenciaUnica'
 import { DashboardS } from './components/DashboardSupervisor'
 import { DashboardA } from './components/DashboardAdministrador'
 import { DashboardAn } from './components/DashboardAnalistadeDatos'
@@ -77,6 +78,7 @@ function App() {
           <Route path="agregar-salario" element={<AgregarSalario />}></Route>
           <Route path="agregar-datos" element={<AgregarDatos />}></Route>
           <Route path="inasistencia" element={<Inasistencia />}></Route>
+          <Route path="asistenciaUnica" element={<AsistenciaUnica/>}></Route>
           {/* <Route path="" element={<Confirmacion />}></Route> */}
           <Route path="dashboard" element={<DashboardA />} />
           <Route path="" element={<Asistencias />}></Route>

@@ -38,6 +38,9 @@ export const EmpleadoItem = ({ empleado }: EmpleadoItemProps) => {
       <NavLink className={"link"} to="/administrador/inasistencia">
         Agregar inasistencia
       </NavLink>
+      <NavLink className={"link"} to="/administrador/asistenciaUnica"> 
+        Agregar asistencia unica
+      </NavLink>
     </div>
   );
 };

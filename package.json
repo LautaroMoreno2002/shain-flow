@@ -27,6 +27,7 @@
     "react-day-picker": "^9.7.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.57.0",
+    "react-icons": "^5.5.0",
     "react-pdf-charts": "^0.4.2",
     "react-router-dom": "^7.6.0",
     "recharts": "^2.15.3",
