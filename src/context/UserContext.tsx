@@ -17,7 +17,7 @@ export interface Usuario {
     ver_datos_empresa: boolean;
     editar_datos_empresa: boolean;
   };
-  rol: "empleado" | "administrador" | "analista-datos" | "supervisor";
+  rol: "1" | "2" | "3" | "4"; // 1: empleado, 2: administrador, 3: supervisor, 4: analista-datos
   id_empleado: number;
   numero_identificacion: string;
 }

@@ -40,7 +40,6 @@ const calcularHorasTrabajadas = (entrada: string, salida: string) => {
 
 
 export const Asistencias = () => {
-  const [asistencias, setAsistencias] = useState<RegistroAsistencia[]>([]);
   const [cargando, setCargando] = useState(false);
   const { usuario } = useUser();
   const [asistenciasPorMes, setAsistenciasPorMes] = useState<Record<string, RegistroAsistencia[]>>({});

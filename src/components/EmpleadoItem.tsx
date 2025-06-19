@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import './estilos/empleado-item.css';
 import type { Empleado } from '../routes/Pantallas/Empleados';
+import { useUser } from '../context/UserContext';
 
 // interface Empleado {
 //   id: number;
@@ -12,6 +13,8 @@ export interface EmpleadoItemProps {
 }
 
 export const EmpleadoItem = ({ empleado }: EmpleadoItemProps) => {
+  const { usuario } = useUser();
+
   return (
     <div className="empleado-item">
       {/* <span className="icono-perfil">👤</span> */}
@@ -25,23 +28,26 @@ export const EmpleadoItem = ({ empleado }: EmpleadoItemProps) => {
       <span className="empleado-nombre">
         {empleado.nombre} {empleado.apellido}
       </span>
-      <NavLink
-        className={"link"}
-        to="/administrador/empleados/editarEmpleado"
-        state={empleado}
-      >
-        Editar
-      </NavLink>
+      {usuario?.permisos.editar_datos_personales &&
+        (usuario.rol == "2") && ( // verifica si el usuario tiene permiso para editar datos personales de los empleados
+          <NavLink
+            className={"link"}
+            to="/administrador/empleados/editarEmpleado"
+            state={empleado}
+          >
+            Editar
+          </NavLink>
+        )}
       <NavLink className={"link"} to="/administrador/editarDatosLaborales">
         Agregar datos laborales
       </NavLink>
-            <NavLink className={"link"} to="/administrador/permitirFichada">
+      <NavLink className={"link"} to="/administrador/permitirFichada">
         Agregar jornada
       </NavLink>
       <NavLink className={"link"} to="/administrador/inasistencia">
         Agregar inasistencia
       </NavLink>
-      <NavLink className={"link"} to="/administrador/asistenciaUnica"> 
+      <NavLink className={"link"} to="/administrador/asistenciaUnica">
         Agregar asistencia unica
       </NavLink>
     </div>

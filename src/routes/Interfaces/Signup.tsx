@@ -4,13 +4,31 @@ import DefaultLayout from "../../components/DefaultLayout";
 import { NavLink } from "react-router-dom";
 import '../../estilos/signup.css';
 
-interface CredentialFormProps {
+export interface CredentialFormProps {
   username: string;
   setUsername: (val: string) => void;
   password: string;
   setPassword: (val: string) => void;
   confirmPassword: string;
   setConfirmPassword: (val: string) => void;
+}
+
+export interface SignupFormProps {
+  nombre: string;
+  apellido: string;
+  tipo_identificacion: string;
+  numero_identificacion: string;
+  fecha_nacimiento: string;
+  correo_electronico: string;
+  telefono: string;
+  calle: string;
+  numero_calle: string;
+  localidad: string;
+  partido: string;
+  provincia: string;
+  genero: string;
+  pais_nacimiento: string;
+  estado_civil: string;
 }
 
 export const CredentialForm = ({
