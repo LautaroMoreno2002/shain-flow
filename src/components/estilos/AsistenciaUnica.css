@@ -1,4 +1,4 @@
-@keyframes fadeInUp {
+@keyframes fadeInAsistenciaUnica {
   from {
     opacity: 0;
     transform: translateY(30px);
@@ -9,16 +9,29 @@
   }
 }
 
-/* Encapsulado con .form-inasistencia para evitar afectar globales */
-.form-inasistencia {
+.form-asistencia-unica {
+  position: relative;
+  min-height: 100vh;
+  padding: 30px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 30px;
-  min-height: calc(100vh - 80px); /* si tu navbar mide ~80px */
+  background-color: transparent;
 }
 
-.form-inasistencia .form-container {
+/* Fondo negro semitransparente detrás */
+.form-asistencia-unica::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 0;
+}
+
+.form-asistencia-unica .form-container {
   background-color: #ffffff;
   padding: 30px 40px;
   border-radius: 12px;
@@ -26,37 +39,40 @@
   width: 100%;
   max-width: 500px;
   box-sizing: border-box;
-  animation: fadeInUp 0.6s ease forwards;
+  animation: fadeInAsistenciaUnica 0.6s ease forwards;
 }
 
-.form-inasistencia .asistencia-unica__titulo {
+.form-asistencia-unica .asistencia-unica__titulo {
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 8px;
   text-align: center;
+  color: var(--c1);
 }
 
-.form-inasistencia .asistencia-unica__subtitulo {
+.form-asistencia-unica .asistencia-unica__subtitulo {
   font-size: 14px;
-  color: #666;
+  color: #444;
   margin-bottom: 20px;
   text-align: center;
 }
 
-.form-inasistencia .cont-campos > div {
+.form-asistencia-unica .cont-campos > div {
   margin-bottom: 20px;
 }
 
-.form-inasistencia label {
+.form-asistencia-unica label {
   display: block;
   margin-bottom: 6px;
   font-weight: 600;
-  color: #333;
+  color: var(--c1);
 }
 
-.form-inasistencia .data-item--value,
-.form-inasistencia input[type="time"],
-.form-inasistencia select {
+.form-asistencia-unica .data-item--value,
+.form-asistencia-unica select,
+.form-asistencia-unica input[type="text"],
+.form-asistencia-unica input[type="time"],
+.form-asistencia-unica textarea {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #ccc;
@@ -65,21 +81,22 @@
   box-sizing: border-box;
   font-family: inherit;
   background-color: #fafafa;
-  transition: border 0.2s;
+  transition: border-color 0.2s;
 }
 
-.form-inasistencia .data-item--value:focus,
-.form-inasistencia input[type="time"]:focus,
-.form-inasistencia select:focus {
-  border-color: #0d6efd;
+.form-asistencia-unica .data-item--value:focus,
+.form-asistencia-unica textarea:focus,
+.form-asistencia-unica select:focus,
+.form-asistencia-unica input[type="time"]:focus {
+  border-color: var(--c1);
   outline: none;
 }
 
-.form-inasistencia .react-datepicker-wrapper {
+.form-asistencia-unica .react-datepicker-wrapper {
   width: 100%;
 }
 
-.form-inasistencia .react-datepicker__input-container input {
+.form-asistencia-unica .react-datepicker__input-container input {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #ccc;
@@ -88,17 +105,17 @@
   background-color: #fafafa;
 }
 
-.form-inasistencia span {
+.form-asistencia-unica span {
   color: red;
   font-size: 13px;
   margin-top: 4px;
   display: block;
 }
 
-.form-inasistencia .btn-registrar {
+.form-asistencia-unica .btn-registrar {
   width: 100%;
   padding: 14px;
-  background-color: #057e19;
+  background-color: var(--c2);
   color: white;
   border: none;
   border-radius: 6px;
@@ -111,6 +128,6 @@
   align-items: center;
 }
 
-.form-inasistencia .btn-registrar:hover {
-  background-color: #15b300;
+.form-asistencia-unica .btn-registrar:hover {
+  background-color: var(--c1);
 }

@@ -32,7 +32,7 @@ const AsistenciaUnica: React.FC = () => {
   };
 
   return (
-    <div className="form-inasistencia">
+    <div className="form-asistencia-unica">
       <form onSubmit={handleSubmit(onSubmit)} className="form-container">
         <h2 className="asistencia-unica__titulo">Registrar asistencia manual</h2>
         <p className="asistencia-unica__subtitulo">

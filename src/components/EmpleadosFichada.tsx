@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import './estilos/empleado-item.css';
-import type { Empleado } from '../routes/Pantallas/FichadaManual';
+import type { Empleado } from '../routes/Pantallas/EmpleadosSup';
 
 interface EmpleadoItemProps {
   empleado: Empleado;

@@ -49,7 +49,7 @@ export const PermitirFichada = () => {
     alert('Vas a permitir que el empleado realice una fichada manual')
 
     //Vuelve a la lista de empleados
-    navegar('/supervisor/fichada-manual');
+    navegar('/administrador/empleados');
   };
 
   // Función para cancelar y revertir los cambios
@@ -69,7 +69,7 @@ export const PermitirFichada = () => {
     alert('Vas a cancelar la fichada manual')
 
     //Vuelve a la lista de empleados
-    navegar('/supervisor/fichada-manual');
+    navegar('/administrador/empleados');
   };
 
   const opcionesDia = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];

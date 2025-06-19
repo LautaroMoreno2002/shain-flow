@@ -10,12 +10,26 @@
 }
 
 .form-inasistencia {
+  position: relative;
+  min-height: 100vh;
+  padding: 30px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 30px;
-  min-height: calc(100vh - 80px);
+  background-color: transparent;
 }
+
+.form-inasistencia::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 0;
+}
+
 
 .form-inasistencia .form-container {
   background-color: #ffffff;
@@ -33,11 +47,12 @@
   font-weight: 600;
   margin-bottom: 8px;
   text-align: center;
+  color: var(--c1); /* Color institucional */
 }
 
 .form-inasistencia .inasistencia__subtitulo {
   font-size: 14px;
-  color: #666;
+  color: #444; /* Más oscuro, más serio */
   margin-bottom: 20px;
   text-align: center;
 }
@@ -50,7 +65,7 @@
   display: block;
   margin-bottom: 6px;
   font-weight: 600;
-  color: #333;
+  color: var(--c1); /* Color institucional */
 }
 
 .form-inasistencia .data-item--value,
@@ -65,13 +80,13 @@
   box-sizing: border-box;
   font-family: inherit;
   background-color: #fafafa;
-  transition: border 0.2s;
+  transition: border-color 0.2s;
 }
 
 .form-inasistencia .data-item--value:focus,
 .form-inasistencia textarea:focus,
 .form-inasistencia select:focus {
-  border-color: #0d6efd;
+  border-color: var(--c1); /* Color institucional al enfocar */
   outline: none;
 }
 
@@ -98,7 +113,7 @@
 .form-inasistencia .btn-registrar {
   width: 100%;
   padding: 14px;
-  background-color: #057e19;
+  background-color: var(--c2); /* Botón en celeste */
   color: white;
   border: none;
   border-radius: 6px;
@@ -112,5 +127,5 @@
 }
 
 .form-inasistencia .btn-registrar:hover {
-  background-color: #15b300;
+  background-color: var(--c1); /* Hover más fuerte */
 }

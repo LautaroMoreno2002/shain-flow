@@ -12,7 +12,7 @@ export interface Empleado {
   telefono: string;
 }
 
-export const FichadaManual = () => {
+export const EmpleadosSup = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
   // const [busqueda, setBusqueda] = useState<string>('');
 

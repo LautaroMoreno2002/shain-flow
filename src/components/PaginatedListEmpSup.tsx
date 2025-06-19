@@ -66,7 +66,7 @@ const SearchablePaginatedList: React.FC<Props> = ({ items, itemsPerPage = 5 }) =
               <img src="https://imgs.search.brave.com/z1pY-zOd_QZunrzoobVmAzPXl4KV3X43yVSRA6IYek4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9lcy52/aXNhZm90by5jb20v/aW1nLzR4NC1jbS1w/YXNzcG9ydC1waG90/by1leGFtcGxlLndl/YnA" alt="" width='50px'/>
             </span>
             <span className='empleado-nombre'>{item.nombre} {item.apellido}</span>
-            <NavLink className={"link"} to="/supervisor/permitir-fichada" >Fichada manual</NavLink>
+            <NavLink className={"link"} to="/supervisor/empleadosSup" ></NavLink>
             <NavLink className={"link"} to={`/supervisor/reportes/${item.id_empleado}`} // Cambia esta línea
             >Ver Reportes</NavLink>
             <NavLink className={"link"} to="/supervisor/ver-nomina" >Ver nomina</NavLink>
