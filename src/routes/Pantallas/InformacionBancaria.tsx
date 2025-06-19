@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { obtenerEmpleadoPorIdentificacion } from '../../services/api';
+import { editarInfoBancaria, getInfoBancaria, type DatosBancarios } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
-
-export interface PersonalDataType {
-  banco: string,
-  nroCuenta: string,
-  tipoCuenta: string,
-  estado: string
-}
+import { useUser } from '../../context/UserContext';
+import { CircularProgress } from '@mui/material';
 
 export const InformacionBancaria = () => {
   const [isEditable, setIsEditable] = useState(false);
   const navegar = useNavigate();
-
-  const [personalData, setPersonalData] = useState<PersonalDataType>({
-    banco: "Galicia",
-    nroCuenta: "12345678",
-    tipoCuenta: "Caja de ahorro",
-    estado: "Activo",
+  const { usuario } = useUser()
+  const [datosBancarios, setDatosBancarios] = useState<DatosBancarios>({
+    numero_cuenta: "",
+    tipo_cuenta: "",
+    nombre: ""
+    // estado: "Activo",
   });
+  const [cargando, setCargando] = useState(false);
 
   // Opciones para los combobox
   const bancos = [
@@ -98,35 +94,61 @@ export const InformacionBancaria = () => {
     "CRÉDITO REGIONAL COMPAÑÍA FINANCIERA S.A"
   ];
   const tiposCuenta = ["Caja de ahorro", "Cuenta corriente"];
-  const estados = ["Activo", "Inactivo", "Suspendido"];
+  // const estados = ["Activo", "Inactivo", "Suspendido"];
 
   const fetchData = async () => {
+    setCargando(true);
+    if (!usuario?.id_empleado) return;
     try {
-      setPersonalData(await obtenerEmpleadoPorIdentificacion("46474422"));
+      const data = await getInfoBancaria(usuario.id_empleado);
+      console.log(data);
+      
+      setDatosBancarios({
+        numero_cuenta: data.numero_cuenta,
+        tipo_cuenta: data.tipo_cuenta,
+        nombre: data.nombre
+      });
+
+      console.log(datosBancarios);
+      
+      
+      setCargando(false);
     } catch (error) {
       console.error('Error al obtener los datos:', error);
+    } finally {
+      setCargando(false);
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [usuario]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setPersonalData(prev => ({ ...prev, [name]: value }));
+    setDatosBancarios(prev => ({ ...prev, [name]: value }));
   };
+  
 
-  const handleSave = async () => {
-    // try {
-    //   await actualizarDatosEmpleado(personalData.id, personalData);
-    //   console.log('Datos actualizados correctamente.');
-    //   setIsEditable(false);
-    // } catch (error) {
-    //   console.error('Error al guardar los cambios:', error);
-    // }
-    alert('Datos guardados correctamente');
-    navegar('/empleado');
+   const handleSave = async () => {
+    if (!usuario?.id_empleado) return;
+    try {
+      setCargando(true);
+      const response = await editarInfoBancaria(usuario.id_empleado, datosBancarios);
+      if (response?.status === 200 || response?.status === 204) {
+        alert('Datos guardados correctamente');
+        setIsEditable(false);
+        navegar('/empleado');
+      } else {
+        console.error('Error al guardar:', response);
+        alert('No se pudieron guardar los datos.');
+      }
+    } catch (error) {
+      console.error('Error al guardar los datos:', error);
+      alert('Ha ocurrido un error al guardar.');
+    } finally {
+      setCargando(false);
+    }
   };
 
   const handleCancel = () => {
@@ -135,15 +157,20 @@ export const InformacionBancaria = () => {
   };
 
   return (
-    <div className="container-personal-data">
-      <div className="personal-data">
+    <div className="container-personal-data" style={{ position: 'relative' }}>
+      {cargando && (
+                <div className="overlay">
+                  <CircularProgress />
+                </div>
+              )}
+      <div className="personal-data" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
         <h2 className="title">Información bancaria</h2>
         <div className="data-container">
           <div className="data-group">
             {[
-              { label: 'Banco', name: 'banco', type: 'select', options: bancos },
-              { label: 'Número de cuenta', name: 'nroCuenta', type: 'input' },
-              { label: 'Tipo de cuenta', name: 'tipoCuenta', type: 'select', options: tiposCuenta },
+              { label: 'Banco', name: 'nombre', type: 'select', options: bancos },
+              { label: 'Número de cuenta', name: 'numero_cuenta', type: 'input' },
+              { label: 'Tipo de cuenta', name: 'tipo_cuenta', type: 'select', options: tiposCuenta },
               // { label: 'Estado', name: 'estado', type: 'select', options: estados },
             ].map(({ label, name, type, options }) => (
               <div className="data-item" key={name} style={{ marginBottom: '20px' }}>
@@ -152,7 +179,7 @@ export const InformacionBancaria = () => {
                   <select
                     className={`data-item--value ${isEditable ? 'editable' : ''}`}
                     name={name}
-                    value={(personalData as any)[name]}
+                    value={(datosBancarios as any)[name]}
                     onChange={handleChange}
                     disabled={!isEditable}
                     style={{ padding: '8px', fontSize: '1rem', borderRadius: '4px', width: '100%', boxSizing: 'border-box' }}
@@ -166,7 +193,7 @@ export const InformacionBancaria = () => {
                     className={`data-item--value ${isEditable ? 'editable' : ''}`}
                     type="text"
                     name={name}
-                    value={(personalData as any)[name]}
+                    value={(datosBancarios as any)[name]}
                     onChange={handleChange}
                     readOnly={!isEditable}
                     style={{ padding: '8px', fontSize: '1rem', borderRadius: '4px', width: '100%', boxSizing: 'border-box' }}

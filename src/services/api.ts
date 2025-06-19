@@ -1,5 +1,4 @@
 import axios from "axios";
-import { addISOWeekYears } from "date-fns";
 
 // const API_URL2 = "https://tpp-g2-adp-1.onrender.com/"; //conectar con la API
 const API_URL = "https://render-crud-jc22.onrender.com/";
@@ -33,6 +32,12 @@ export interface RegistroHorario {
   turno_asistencia: string;
   puesto_del_asistente: string;
   vector_capturado: string;
+}
+
+export interface DatosBancarios {
+  numero_cuenta: string;
+  tipo_cuenta: string;
+  nombre: string;
 }
 
 // 1. Listar empleados
@@ -245,3 +250,29 @@ export const enviarImg = async (imagen: File, usuario_id: string) => {
     throw error;
   }
 };
+
+export const getInfoBancaria = async (
+  id_empleado: number | string | undefined,
+) => {
+  try {
+    const response = await api.get(`/empleado/${id_empleado}/cuenta-bancaria`);
+    return response.data;
+  } catch (error) {
+    console.error("Ha ocurrido un error al traer la información bancaria", error);
+  }
+}
+
+export const editarInfoBancaria = async (
+  id_empleado: number | string | undefined,
+  datos: DatosBancarios
+) => {
+  try {
+    return await api.put(`/empleado/${id_empleado}/cuenta-bancaria`, {
+      numero_cuenta: datos.numero_cuenta,
+      tipo_cuenta: datos.tipo_cuenta,
+      codigo_banco: datos.nombre
+    });
+  } catch (error) {
+    console.error("Ha ocurrido un error al traer la información bancaria", error);
+  }
+}
