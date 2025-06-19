@@ -144,7 +144,7 @@ export const InformacionBancaria = () => {
               { label: 'Banco', name: 'banco', type: 'select', options: bancos },
               { label: 'Número de cuenta', name: 'nroCuenta', type: 'input' },
               { label: 'Tipo de cuenta', name: 'tipoCuenta', type: 'select', options: tiposCuenta },
-              { label: 'Estado', name: 'estado', type: 'select', options: estados },
+              // { label: 'Estado', name: 'estado', type: 'select', options: estados },
             ].map(({ label, name, type, options }) => (
               <div className="data-item" key={name} style={{ marginBottom: '20px' }}>
                 <p className="data-item--label">{label}:</p>
