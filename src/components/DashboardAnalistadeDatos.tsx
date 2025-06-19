@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import "./estilos/DashboardAnalista.css";
 export const DashboardAn: React.FC = () => {
   const dashboards = [
     {
@@ -18,14 +18,14 @@ export const DashboardAn: React.FC = () => {
 
   const handleChangeIndex = (newIndex: number) => {
     setIndex(newIndex);
-    setCargando(true); // Mostrar el loader al cambiar de dashboard
+    setCargando(true);
   };
 
   return (
-    <div style={{ padding: "20px", textAlign: "center", position: "relative", marginLeft: "155px"}}>
+    <div className="dashboard-an-container">
       <h2>{dashboards[index].title}</h2>
 
-      <div style={{ marginBottom: "20px" }}>
+      <div className="dashboard-an-buttons">
         <button
           onClick={() => handleChangeIndex(Math.max(0, index - 1))}
           disabled={index === 0}
@@ -44,22 +44,7 @@ export const DashboardAn: React.FC = () => {
       </div>
 
       {cargando && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.4)",
-            backdropFilter: "blur(4px)",
-            WebkitBackdropFilter: "blur(4px)", // Soporte Safari
-            zIndex: 1,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <div className="dashboard-an-loader">
           <CircularProgress style={{ color: "#fff" }} />
         </div>
       )}
@@ -67,13 +52,7 @@ export const DashboardAn: React.FC = () => {
       <iframe
         key={dashboards[index].url}
         src={dashboards[index].url}
-        style={{
-          width: "100%",
-          height: "80vh",
-          border: "none",
-          position: "relative",
-          zIndex: 0,
-        }}
+        className="dashboard-an-iframe"
         title="Dashboard"
         onLoad={() => setCargando(false)}
       />

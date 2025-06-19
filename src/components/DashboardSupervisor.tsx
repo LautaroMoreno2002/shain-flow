@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
+import "./estilos/DashboardSupervisor.css"; // 
 
 export const DashboardS: React.FC = () => {
   const dashboards = [
@@ -22,10 +23,10 @@ export const DashboardS: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: "20px", textAlign: "center", position: "relative", marginLeft: "155px" }}>
+    <div className="dashboard-s-container">
       <h2>{dashboards[index].title}</h2>
 
-      <div style={{ marginBottom: "20px" }}>
+      <div className="dashboard-s-buttons">
         <button
           onClick={() => handleChangeIndex(Math.max(0, index - 1))}
           disabled={index === 0}
@@ -44,22 +45,7 @@ export const DashboardS: React.FC = () => {
       </div>
 
       {cargando && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.4)",
-            backdropFilter: "blur(4px)", // Efecto de desenfoque
-            WebkitBackdropFilter: "blur(4px)", // Para compatibilidad con Safari
-            zIndex: 1,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <div className="dashboard-s-loader">
           <CircularProgress style={{ color: "#fff" }} />
         </div>
       )}
@@ -67,13 +53,7 @@ export const DashboardS: React.FC = () => {
       <iframe
         key={dashboards[index].url}
         src={dashboards[index].url}
-        style={{
-          width: "100%",
-          height: "80vh",
-          border: "none",
-          position: "relative",
-          zIndex: 0,
-        }}
+        className="dashboard-s-iframe"
         title="Dashboard"
         onLoad={() => setCargando(false)}
       />

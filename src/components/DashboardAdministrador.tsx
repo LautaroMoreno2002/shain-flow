@@ -11,6 +11,7 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
+import "./estilos/DashboardAdministrador.css";
 
 type DashboardItem = {
   title: string;
@@ -55,16 +56,7 @@ export const DashboardA: React.FC = () => {
   const dashboardsActivos = dashboards[seccionActiva];
 
   return (
-    <div
-      style={{
-        width: "90%",
-        height: "100vh",
-        padding: "16px",
-        marginLeft: "155px",
-        boxSizing: "border-box",
-        position: "relative",
-      }}
-    >
+    <div className="dashboard-container">
       <Box sx={{ display: "flex", alignItems: "center", gap: 3, mb: 2 }}>
         <FormControl size="small">
           <InputLabel>Sección</InputLabel>
@@ -108,20 +100,7 @@ export const DashboardA: React.FC = () => {
       </Tabs>
 
       {cargando && (
-        <div
-          style={{
-            position: "absolute",
-            top: 80,
-            left: 0,
-            width: "100%",
-            height: "calc(100% - 80px)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "rgba(0, 0, 0, 0.4)",
-            zIndex: 1,
-          }}
-        >
+        <div className="loading-overlay">
           <CircularProgress style={{ color: "#fff" }} />
         </div>
       )}
@@ -134,7 +113,7 @@ export const DashboardA: React.FC = () => {
         height="100%"
         allowTransparency={true}
         onLoad={() => setCargando(false)}
-        style={{ position: "relative", zIndex: 0 }}
+        className="dashboard-iframe"
       />
     </div>
   );
