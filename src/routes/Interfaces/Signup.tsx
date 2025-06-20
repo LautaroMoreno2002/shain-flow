@@ -76,10 +76,10 @@ const CredentialForm = ({
       onChange={(e) => onChange("rol", e.target.value)}
       className="input-field"
     >
-      <option value="1">Administrador</option>
-      <option value="2">Empleado</option>
-      <option value="3">Analista de datos</option>
-      <option value="4">Supervisor</option>
+      <option value="1">Empleado</option>
+      <option value="2">Administrador</option>
+      <option value="3">Supervisor</option>
+      <option value="4">Analista de datos</option>
     </select>
 
   </>
@@ -91,7 +91,7 @@ export const Signup = () => {
     username: "",
     password: "",
     confirmPassword: "",
-    rol: "1"
+    rol: ""
   });
 
   const [datos, setDatos] = useState<DatosEmpleado>({
@@ -435,7 +435,7 @@ export const Signup = () => {
                     }
                     className="input-field"
                   >
-                    <option value="">Selecciona estado civil</option>
+                    <option value="">Selecciona tu estado civil</option>
                     <option value="Soltero/a">Soltero/a</option>
                     <option value="Casado/a">Casado/a</option>
                     <option value="Divorciado/a">Divorciado/a</option>
