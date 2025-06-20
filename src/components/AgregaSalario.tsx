@@ -13,7 +13,7 @@ export function AgregarSalario() {
         categoria: "",
         valor: "600000",
         fecha_inicio: "",
-        fecha_fin: ""
+        // fecha_fin: ""
     });
 
     const manejarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
