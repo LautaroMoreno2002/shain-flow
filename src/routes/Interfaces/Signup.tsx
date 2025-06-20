@@ -5,13 +5,14 @@ import { NavLink } from "react-router-dom";
 import "../../estilos/signup.css";
 import { crearEmpleado, crearUsuario } from "../../services/api";
 
-interface Credenciales {
+export interface Credenciales {
   username: string;
   password: string;
   confirmPassword: string;
+  rol: string;
 }
 
-interface DatosEmpleado {
+export interface DatosEmpleado {
   nombre: string;
   apellido: string;
   tipo_identificacion: string;
@@ -33,16 +34,54 @@ interface CredentialFormProps extends Credenciales {
   onChange: (campo: keyof Credenciales, valor: string) => void;
 }
 
-const CredentialForm = ({ username, password, confirmPassword, onChange }: CredentialFormProps) => (
+const CredentialForm = ({
+  username,
+  password,
+  confirmPassword,
+  rol,
+  onChange,
+}: CredentialFormProps) => (
   <>
     <label htmlFor="username">Usuario:</label>
-    <input type="text" id="username" value={username} onChange={(e) => onChange("username", e.target.value)} className="input-field" />
+    <input
+      type="text"
+      id="username"
+      value={username}
+      onChange={(e) => onChange("username", e.target.value)}
+      className="input-field"
+    />
 
     <label htmlFor="password">Contraseña:</label>
-    <input type="password" id="password" value={password} onChange={(e) => onChange("password", e.target.value)} className="input-field" />
+    <input
+      type="password"
+      id="password"
+      value={password}
+      onChange={(e) => onChange("password", e.target.value)}
+      className="input-field"
+    />
 
     <label htmlFor="confirmPassword">Confirmar contraseña:</label>
-    <input type="password" id="confirmPassword" value={confirmPassword} onChange={(e) => onChange("confirmPassword", e.target.value)} className="input-field" />
+    <input
+      type="password"
+      id="confirmPassword"
+      value={confirmPassword}
+      onChange={(e) => onChange("confirmPassword", e.target.value)}
+      className="input-field"
+    />
+
+    <label htmlFor="rol">Rol:</label>
+    <select
+      id="rol"
+      value={rol}
+      onChange={(e) => onChange("rol", e.target.value)}
+      className="input-field"
+    >
+      <option value="1">Administrador</option>
+      <option value="2">Empleado</option>
+      <option value="3">Analista de datos</option>
+      <option value="4">Supervisor</option>
+    </select>
+
   </>
 );
 
@@ -52,6 +91,7 @@ export const Signup = () => {
     username: "",
     password: "",
     confirmPassword: "",
+    rol: "1"
   });
 
   const [datos, setDatos] = useState<DatosEmpleado>({
@@ -118,7 +158,7 @@ export const Signup = () => {
         // Crear usuario luego
         const usuarioCreado = await crearUsuario(
           id_empleado,
-          1, // ID de rol por defecto
+          credenciales.rol, // ID de rol por defecto
           credenciales.username,
           credenciales.password,
           "Registro manual"
