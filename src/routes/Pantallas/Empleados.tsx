@@ -111,9 +111,16 @@ export const Empleados = () => {
         estado_civil: nuevoEmpleado.estado_civil,
       });
       console.log("Empleado creado:", empleadoCreado);
+      console.log(nuevoEmpleado.rol);
+      
+      const rolEmpleado = (nuevoEmpleado.rol == 'administrador' ? 2 :
+      nuevoEmpleado.rol == 'empleado' ? 1 :
+      nuevoEmpleado.rol == 'supervisor' ? 3 :
+      nuevoEmpleado.rol == 'analista-datos' ? 4 : 2)
+
       await crearUsuario(
         empleadoCreado.id_empleado.id_empleado,
-        nuevoEmpleado.rol,
+        rolEmpleado,
         nuevoEmpleado.username,
         nuevoEmpleado.password,
         "Creación de usuario para empleado",
