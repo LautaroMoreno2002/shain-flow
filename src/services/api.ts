@@ -112,7 +112,7 @@ export const datosLabPorId = async (id_empleado: string) => {
 // 7. Crear empleado
 export const crearEmpleado = async (nuevoEmpleado: any) => {
   console.log("Enviando a backend:", nuevoEmpleado);
-  const response = await api.post("/empleados/", nuevoEmpleado);
+  const response = await api.post("/crear-empleado/", nuevoEmpleado);
   return response.data;
 };
 
@@ -207,26 +207,26 @@ export const iniciarSesion = async (username: string, password: string) => {
 
 // Crear usuario
 export const crearUsuario = async (
-  id_empleado: number,
-  id_rol: number = 1,
+  id_empleado: number | string,
+  id_rol: number | string,
   nombre_usuario: string,
   contrasena: string,
   motivo: string
 ) => {
   try {
-    const response = await api.post("/crear-usuario", {
+    const response = await api.post("/crear-usuario/", {
       id_empleado,
-      id_rol, 
+      id_rol,
       nombre_usuario,
       contrasena,
       motivo,
-    })
-    
+    });
+
     return response.data;
   } catch (e: any) {
     console.error();
   }
-}
+};
 
 export const enviarImg = async (imagen: File, usuario_id: string) => {
   const formData = new FormData();
