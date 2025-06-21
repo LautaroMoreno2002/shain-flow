@@ -1,0 +1,133 @@
+
+
+.formulario-empleado {
+  max-width: 600px;
+  margin: 1.5rem auto;
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-family: Arial, Helvetica, sans-serif, Geneva, Tahoma, sans-serif;
+}
+
+.formulario-empleado h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--c1);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.formulario-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--c1);
+}
+
+.form-group select,
+.form-group input {
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  background-color: #fafafa;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+  outline: none;
+  border-color: var(--c1);
+  box-shadow: 0 0 5px var(--c1);
+}
+
+.input-error {
+  border-color: var(--c2) !important;
+  box-shadow: 0 0 5px var(--c2);
+}
+
+.botones-formulario {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.8rem;
+}
+
+.botones-formulario button {
+  cursor: pointer;
+  padding: 0.75rem 2rem;
+  border-radius: 30px;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.botones-formulario button[type="submit"] {
+  background-color: var(--c2);
+}
+
+.botones-formulario button[type="submit"]:hover {
+  background-color: var(--c1);
+}
+
+.botones-formulario button[type="button"] {
+  background-color: var(--c2);
+  transition: background-color 0.3s ease;
+}
+
+.botones-formulario button[type="button"]:hover {
+  background-color: var(--c1); /* color más claro para hover */
+}
+
+/* === Tabla historial mejorada === */
+.tabla-historial {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  font-family: Arial, Helvetica, sans-serif, Geneva, Tahoma, sans-serif;
+}
+
+.tabla-historial thead {
+  background-color: var(--c1);
+  color: white;
+}
+
+.tabla-historial th,
+.tabla-historial td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.tabla-historial tbody tr:nth-child(even) {
+  background-color: #fef0f0; /* un rosado clarito suave */
+}
+
+.tabla-historial tbody tr.vigente {
+  background-color: #fccaca; /* rosado más fuerte para vigente */
+  font-weight: 700;
+}
+
+.mensaje-error {
+  color: var(--c2);
+  font-weight: 600;
+  margin-top: 1rem;
+  text-align: center;
+}
+

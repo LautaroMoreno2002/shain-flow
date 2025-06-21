@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../estilos/datos-personales.css'
 import { useNavigate } from 'react-router-dom';
-import { CalendarioInput } from "../../components/Calendario"
+import CalendarioInput from "../../components/Calendario"
 import HoraInput from '../../components/Hora';
 
 
@@ -146,7 +146,12 @@ export const EditarDatosLaborales = () => {
             </div>
             <div className="data-item">
               <p className="data-item--label">Fecha de alta</p>
-              <CalendarioInput />
+              <CalendarioInput
+                value={personalData.fechaAlta}
+                onChange={(fecha) =>
+                setPersonalData((prev) => ({ ...prev, fechaAlta: fecha }))
+               }
+              />
             </div>
           </div>
 
