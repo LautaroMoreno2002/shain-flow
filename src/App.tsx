@@ -14,7 +14,7 @@ import { AgregarEmpleado } from './routes/Pantallas/agregarEmpleado'
 import { EditarEmpleado } from './routes/Pantallas/EditarEmpleado'
 import { Supervisor } from './routes/Interfaces/Supervisor'
 import { AnalistaDeDatos } from './routes/Interfaces/AnalistaDeDatos'
-import { EmpleadosSup } from './routes/Pantallas/EmpleadosSup'
+//import { EmpleadosSup } from './routes/Pantallas/EmpleadosSup'
 import { PermitirFichada } from './routes/Pantallas/PermitirFichada'
 import { Reportes } from './routes/Pantallas/Reportes'
 import { CalculoNomina } from './routes/Pantallas/CalculoNomina'
@@ -35,6 +35,7 @@ import { DashboardS } from './components/DashboardSupervisor'
 import { DashboardA } from './components/DashboardAdministrador'
 import { DashboardAn } from './components/DashboardAnalistadeDatos'
 import { UserProvider } from './context/UserContext'
+import { NuevoConcepto } from './components/NuevoConcepto'
 
 // import { Dashboard } from './components/dashboard'
 
@@ -76,6 +77,7 @@ function App() {
           <Route path="calcular-nomina" element={<CalcularNomina />}></Route>
           <Route path="ver-nomina" element={<VerNomina />}></Route>
           <Route path="agregar-salario" element={<AgregarSalario />}></Route>
+          <Route path="agregar-concepto" element={<NuevoConcepto />}></Route>
           <Route path="agregar-datos" element={<AgregarDatos />}></Route>
           <Route path="permitirFichada" element={<PermitirFichada />}></Route>
           <Route path="inasistencia" element={<Inasistencia />}></Route>
@@ -102,7 +104,7 @@ function App() {
           <Route path="asistencias" element={<Asistencias />}></Route>
           <Route path="datosLaborales" element={<DatosLaborales />}></Route>
           {/* <Route path="confirmacion" element={<Confirmacion />}></Route> */}
-          <Route path="empleadosSup" element={<EmpleadosSup />}></Route>
+          <Route path="empleados" element={<Empleados />}></Route>
           <Route path="/supervisor/reportes/:id_empleado?" element={<Reportes />} />      
           <Route path="ver-nomina" element={<VerNomina />}></Route>
           {/* <Route path="" element={<Confirmacion />}></Route> */}

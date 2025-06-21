@@ -1,10 +1,12 @@
+// Versión modificada con campos: username, password y rol
 import { useState, useEffect } from "react";
-// import EmpleadoItem from "../../components/EmpleadoItem";
 import "../../estilos/empleados.css";
-import { listarEmpleados, crearEmpleado } from "../../services/api";
+import { listarEmpleados, crearEmpleado, crearUsuario } from "../../services/api";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import PaginatedList from "../../components/PaginatedListEmpleados";
+//import PaginatedList from "../../components/PaginatedListEmpleados";
+import Paginacion from "../../components/Paginacion";
+import { useUser } from '../../context/UserContext';
 
 export interface Empleado {
   id_empleado: number;
@@ -17,8 +19,9 @@ export interface Empleado {
 }
 
 export const Empleados = () => {
+  const { usuario } = useUser();
+
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
-  // const [busqueda, setBusqueda] = useState<string>("");
   const [mostrarFormulario, setMostrarFormulario] = useState<boolean>(false);
   const [cargando, setCargando] = useState(false);
   const [nuevoEmpleado, setNuevoEmpleado] = useState({
@@ -37,6 +40,9 @@ export const Empleados = () => {
     genero: "",
     pais_nacimiento: "",
     estado_civil: "",
+    username: "",
+    password: "",
+    rol: "",
   });
 
   const [errores, setErrores] = useState<{ [key: string]: boolean }>({});
@@ -58,17 +64,13 @@ export const Empleados = () => {
     cargarEmpleados();
   }, []);
 
-  // const empleadosFiltrados = empleados.filter((emp) =>
-  //   `${emp.nombre} ${emp.apellido} ${emp.numero_identificacion}`
-  //     .toLowerCase()
-  //     .includes(busqueda.toLowerCase())
-  // );
-
   const agregarDatos = () => {
-    navegar('/administrador/agregar-datos');
+    navegar("/administrador/agregar-datos");
   };
 
-  const manejarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const manejarCambio = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setNuevoEmpleado((prev) => ({ ...prev, [name]: value }));
     setErrores((prev) => ({ ...prev, [name]: false }));
@@ -87,13 +89,46 @@ export const Empleados = () => {
 
     if (!esValido) {
       setErrores(nuevosErrores);
-      setMensajeError("Por favor, completa todos los campos antes de continuar.");
+      setMensajeError(
+        "Por favor, completa todos los campos antes de continuar."
+      );
       return;
     }
 
     try {
       console.log("Enviando empleado:", nuevoEmpleado);
-      const empleadoCreado = await crearEmpleado(nuevoEmpleado);
+      const empleadoCreado = await crearEmpleado({
+        nombre: nuevoEmpleado.nombre,
+        apellido: nuevoEmpleado.apellido,
+        tipo_identificacion: nuevoEmpleado.tipo_identificacion,
+        numero_identificacion: nuevoEmpleado.numero_identificacion,
+        fecha_nacimiento: nuevoEmpleado.fecha_nacimiento,
+        correo_electronico: nuevoEmpleado.correo_electronico,
+        telefono: nuevoEmpleado.telefono,
+        calle: nuevoEmpleado.calle,
+        numero_calle: nuevoEmpleado.numero_calle,
+        localidad:  nuevoEmpleado.localidad,
+        partido: nuevoEmpleado.partido,
+        provincia: nuevoEmpleado.provincia,
+        genero: nuevoEmpleado.genero,
+        pais_nacimiento: nuevoEmpleado.pais_nacimiento,
+        estado_civil: nuevoEmpleado.estado_civil,
+      });
+      console.log("Empleado creado:", empleadoCreado);
+      console.log(nuevoEmpleado.rol);
+      
+      const rolEmpleado = (nuevoEmpleado.rol == 'administrador' ? 2 :
+      nuevoEmpleado.rol == 'empleado' ? 1 :
+      nuevoEmpleado.rol == 'supervisor' ? 3 :
+      nuevoEmpleado.rol == 'analista-datos' ? 4 : 2)
+
+      await crearUsuario(
+        empleadoCreado.id_empleado.id_empleado,
+        rolEmpleado,
+        nuevoEmpleado.username,
+        nuevoEmpleado.password,
+        "Creación de usuario para empleado",
+      );
 
       setEmpleados((prev) => [
         ...prev,
@@ -125,6 +160,9 @@ export const Empleados = () => {
         genero: "",
         pais_nacimiento: "",
         estado_civil: "",
+        username: "",
+        password: "",
+        rol: "",
       });
       setErrores({});
       setMensajeError("");
@@ -134,53 +172,32 @@ export const Empleados = () => {
     }
   };
 
-
   return (
     <div className="admin-container">
       <div className="titulo-con-botones">
-  <h2 className="admin-title">👥 Empleados:</h2>
-  <div className="botones-superiores">
-    <button onClick={() => setMostrarFormulario(true)}>
-      <span className="plus">➕</span> Agregar empleado
-    </button>
-    <button onClick={agregarDatos}>
-      <span className="plus">➕</span> Agregar datos
-    </button>
-  </div>
-</div>
-
+        <h2 className="admin-title">👥 Empleados:</h2>
+        <div className="botones-superiores">
+          {usuario?.permisos.editar_datos_personales &&
+        (usuario.rol == "2") && (
+          <button onClick={() => setMostrarFormulario(true)}>
+            <span className="plus">➕</span> Agregar empleado
+          </button>)}
+        {usuario?.permisos.editar_datos_personales &&
+        (usuario.rol == "2") && (
+          <button onClick={agregarDatos}>
+            <span className="plus">➕</span> Agregar datos
+          </button>)}
+        </div>
+      </div>
 
       {!mostrarFormulario && (
         <>
-          {/*<div className="busqueda-container" style={{ position: 'relative' }}>
-            <input
-              type="text"
-              placeholder="Buscar empleado por nombre, apellido o ID..."
-              value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
-            />
-            <span className="icono-busqueda">🔍</span>
-          </div>*/}
           {cargando && (
             <div className="overlay">
               <CircularProgress />
             </div>
           )}
-          <PaginatedList items={empleados} itemsPerPage={9} />
-          {/* <div className="lista-empleados" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
-            
-            {/*{empleadosFiltrados.map((empleado) => (
-              
-              <EmpleadoItem key={empleado.id_empleado} empleado={empleado} />
-            ))}*/}
-          {/* 
-            <button onClick={() => setMostrarFormulario(true)}>
-              <span className="plus">➕</span> Agregar empleado
-            </button>
-            <button onClick={() => agregarDatos()}>
-              <span className="plus">➕</span> Agregar datos
-            </button>
-          </div> */}
+          <Paginacion items={empleados} itemsPerPage={12} />
         </>
       )}
 
@@ -189,24 +206,68 @@ export const Empleados = () => {
           <h3>Formulario de nuevo empleado</h3>
           <form className="formulario-grid">
             {Object.entries(nuevoEmpleado).map(([campo, valor]) => {
-              const label = campo.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
-
-              const opcionesIdentificacion = ["DNI", "Pasaporte", "Libreta Cívica"];
-              const opcionesProvincia = [
-                "Buenos Aires", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes", "Entre Ríos", "Formosa",
-                "Jujuy", "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquén", "Río Negro", "Salta", "San Juan",
-                "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucumán"
-              ];
-              const opcionesPaises = [
-                "Argentina", "Uruguay", "Paraguay", "Chile", "Bolivia", "Perú", "Ecuador", "Colombia", "Venezuela",
-                "Brasil", "México", "Guatemala", "Honduras", "El Salvador", "Nicaragua", "Costa Rica", "Panamá",
-                "Cuba", "República Dominicana"
-              ];
-
-              let opciones: string[] = [];
-              if (campo === "tipo_identificacion") opciones = opcionesIdentificacion;
-              else if (campo === "provincia") opciones = opcionesProvincia;
-              else if (campo === "pais_nacimiento") opciones = opcionesPaises;
+              const label = campo
+                .replace(/_/g, " ")
+                .replace(/\b\w/g, (l) => l.toUpperCase());
+              const opciones: string[] =
+                campo === "tipo_identificacion"
+                  ? ["DNI", "Pasaporte", "Libreta Cívica"]
+                  : campo === "provincia"
+                  ? [
+                      "Buenos Aires",
+                      "Catamarca",
+                      "Chaco",
+                      "Chubut",
+                      "Córdoba",
+                      "Corrientes",
+                      "Entre Ríos",
+                      "Formosa",
+                      "Jujuy",
+                      "La Pampa",
+                      "La Rioja",
+                      "Mendoza",
+                      "Misiones",
+                      "Neuquén",
+                      "Río Negro",
+                      "Salta",
+                      "San Juan",
+                      "San Luis",
+                      "Santa Cruz",
+                      "Santa Fe",
+                      "Santiago del Estero",
+                      "Tierra del Fuego",
+                      "Tucumán",
+                    ]
+                  : campo === "pais_nacimiento"
+                  ? [
+                      "Argentina",
+                      "Uruguay",
+                      "Paraguay",
+                      "Chile",
+                      "Bolivia",
+                      "Perú",
+                      "Ecuador",
+                      "Colombia",
+                      "Venezuela",
+                      "Brasil",
+                      "México",
+                      "Guatemala",
+                      "Honduras",
+                      "El Salvador",
+                      "Nicaragua",
+                      "Costa Rica",
+                      "Panamá",
+                      "Cuba",
+                      "República Dominicana",
+                    ]
+                  : campo === "rol"
+                  ? [
+                      "administrador",
+                      "empleado",
+                      "analista de datos",
+                      "supervisor",
+                    ]
+                  : [];
 
               return (
                 <div key={campo} className="form-group">
@@ -221,14 +282,22 @@ export const Empleados = () => {
                     >
                       <option value="">Seleccione una opción</option>
                       {opciones.map((opcion) => (
-                        <option key={opcion} value={opcion}>{opcion}</option>
+                        <option key={opcion} value={opcion}>
+                          {opcion}
+                        </option>
                       ))}
                     </select>
                   ) : (
                     <input
                       id={campo}
                       name={campo}
-                      type={campo === "fecha_nacimiento" ? "date" : "text"}
+                      type={
+                        campo.includes("password")
+                          ? "password"
+                          : campo === "fecha_nacimiento"
+                          ? "date"
+                          : "text"
+                      }
                       value={valor}
                       onChange={manejarCambio}
                       className={errores[campo] ? "input-error" : ""}
@@ -241,7 +310,9 @@ export const Empleados = () => {
           {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
           <div className="botones-formulario">
             <button onClick={cargarEmpleado}>✅ Cargar empleado</button>
-            <button onClick={() => setMostrarFormulario(false)}>❌ Cancelar</button>
+            <button onClick={() => setMostrarFormulario(false)}>
+              ❌ Cancelar
+            </button>
           </div>
         </div>
       )}
