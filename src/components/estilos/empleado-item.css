@@ -57,6 +57,8 @@
 
 .nav-paginas {
   display: flex;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .btn-nros {
@@ -66,14 +68,19 @@
   font-size: 1rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .empleado-items {
     grid-template-columns: repeat(2, minmax(auto, 1fr));
+    margin: 0 auto;
+  }
+
+  .nav-paginas {
+    gap: 0.2rem;
   }
 }
 
 @media (max-width: 420px) {
   .empleado-items {
     grid-template-columns: repeat(1, minmax(auto, 1fr));
-  }
+  }  
 }
