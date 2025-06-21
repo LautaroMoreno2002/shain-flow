@@ -4,7 +4,8 @@ import "../../estilos/empleados.css";
 import { listarEmpleados, crearEmpleado, crearUsuario } from "../../services/api";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import PaginatedList from "../../components/PaginatedListEmpleados";
+//import PaginatedList from "../../components/PaginatedListEmpleados";
+import Paginacion from "../../components/Paginacion";
 
 export interface Empleado {
   id_empleado: number;
@@ -189,7 +190,7 @@ export const Empleados = () => {
               <CircularProgress />
             </div>
           )}
-          <PaginatedList items={empleados} itemsPerPage={9} />
+          <Paginacion items={empleados} itemsPerPage={9} />
         </>
       )}
 

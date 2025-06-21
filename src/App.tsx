@@ -102,7 +102,7 @@ function App() {
           <Route path="asistencias" element={<Asistencias />}></Route>
           <Route path="datosLaborales" element={<DatosLaborales />}></Route>
           {/* <Route path="confirmacion" element={<Confirmacion />}></Route> */}
-          <Route path="empleadosSup" element={<EmpleadosSup />}></Route>
+          <Route path="empleados" element={<Empleados />}></Route>
           <Route path="/supervisor/reportes/:id_empleado?" element={<Reportes />} />      
           <Route path="ver-nomina" element={<VerNomina />}></Route>
           {/* <Route path="" element={<Confirmacion />}></Route> */}
