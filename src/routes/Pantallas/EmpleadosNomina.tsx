@@ -75,6 +75,10 @@ export const EmpleadosNomina = () => {
     navegar('/administrador/agregar-salario');
   };
 
+  const agregarConcepto = () => {
+    navegar('/administrador/agregar-concepto');
+  };
+
   const manejarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setNuevoConcepto((prev) => ({ ...prev, [name]: value }));
@@ -169,7 +173,7 @@ export const EmpleadosNomina = () => {
             {/*{empleadosFiltrados.map((empleado) => (
               <EmpleadoNomina key={empleado.id_empleado} empleado={empleado} />
             ))}*/}
-            <button onClick={() => setMostrarFormulario(true)}>
+            <button onClick={() => agregarConcepto()}>
              <span className="plus">➕</span>Agregar Concepto
             </button>
             <button onClick={() => agregarSalario()}>
@@ -178,72 +182,7 @@ export const EmpleadosNomina = () => {
           </div>
             
         </>
-      )}
-
-      {mostrarFormulario && (
-        <div className="formulario-empleado">
-          <h3>Formulario de nuevo concepto</h3>
-          <form className="formulario-grid">
-            {Object.entries(nuevoConcepto).map(([campo, valor]) => {
-              const label = campo.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
-
-              // const opcionesTipoConcepto = ['Remunerativo', 'No remunerativo', 'Deducción', 'Retención', 'Percepción',
-                // 'Indemnización', 'Reintegro', 'Premio', 'Multa', 'Ajuste', 'Anticipo', 'Vacaciones'];
-              const opcionesEsPorcentaje = ["Si", "No"];
-              // const opcionesProvincia = [
-              //   "Buenos Aires", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes", "Entre Ríos", "Formosa",
-              //   "Jujuy", "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquén", "Río Negro", "Salta", "San Juan",
-              //   "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucumán"
-              // ];
-              const opcionesPaises = [
-                "Argentina", "Uruguay", "Paraguay", "Chile", "Bolivia", "Perú", "Ecuador", "Colombia", "Venezuela",
-                "Brasil", "México", "Guatemala", "Honduras", "El Salvador", "Nicaragua", "Costa Rica", "Panamá",
-                "Cuba", "República Dominicana"
-              ];
-
-              let opciones: string[] = [];
-              // if (campo === "tipo_concepto") opciones = opcionesTipoConcepto;
-              // else 
-              if (campo === "es_porcentaje") opciones = opcionesEsPorcentaje;
-              else if (campo === "pais_nacimiento") opciones = opcionesPaises;
-
-              return (
-                <div key={campo} className="form-group">
-                  <label htmlFor={campo}>{label}</label>
-                  {opciones.length > 0 ? (
-                    <select
-                      id={campo}
-                      name={campo}
-                      value={valor}
-                      onChange={manejarCambio}
-                      className={errores[campo] ? "input-error" : ""}
-                    >
-                      <option value="">Seleccione una opción</option>
-                      {opciones.map((opcion) => (
-                        <option key={opcion} value={opcion}>{opcion}</option>
-                      ))}
-                    </select>
-                  ) : (
-                    <input
-                      id={campo}
-                      name={campo}
-                      type="text" //{campo === "valor" ? "number" : campo === "codigo" ? "number" : "text"}
-                      placeholder={valor}
-                      onChange={manejarCambio}
-                      className={errores[campo] ? "input-error" : ""}
-                    />
-                  )}
-                </div>
-              );
-            })}
-          </form>
-          {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
-          <div className="botones-formulario">
-            <button onClick={cargarEmpleado}>✅ Cargar</button>
-            <button onClick={() => setMostrarFormulario(false)}>❌ Cancelar</button>
-          </div>
-        </div>
-      )}
+      )}      
     </div>
   );
 };
