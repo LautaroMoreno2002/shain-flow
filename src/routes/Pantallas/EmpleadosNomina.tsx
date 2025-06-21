@@ -150,10 +150,21 @@ export const EmpleadosNomina = () => {
 
   return (
     <div className="admin-container">
-      <h2 className="admin-title">👥 Nomina:</h2>
+      <div className="titulo-con-botones">
+        <h2 className="admin-title">👥 Nomina:</h2>
+        <div className="botones-superiores">
+          <button className="button-empleado" onClick={() => agregarConcepto()}>
+            <span className="plus">➕</span> Agregar Concepto
+          </button>
+          <button className="button-empleado" onClick={() => agregarSalario()}>
+            <span className="plus">➕</span> Agregar datos
+          </button>
+        </div>
+      </div>
 
       {!mostrarFormulario && (
         <>
+          
           {/*<div className="busqueda-container" style={{ position: 'relative' }}>
             <input
               type="text"
@@ -169,17 +180,7 @@ export const EmpleadosNomina = () => {
             </div>
           )}
           <PaginatedListNomina items={empleados} itemsPerPage={12} />
-          <div className="lista-empleados" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>            
-            {/*{empleadosFiltrados.map((empleado) => (
-              <EmpleadoNomina key={empleado.id_empleado} empleado={empleado} />
-            ))}*/}
-            <button onClick={() => agregarConcepto()}>
-             <span className="plus">➕</span>Agregar Concepto
-            </button>
-            <button onClick={() => agregarSalario()}>
-             <span className="plus">➕</span> Agregar Salario
-            </button>
-          </div>
+          
             
         </>
       )}      
