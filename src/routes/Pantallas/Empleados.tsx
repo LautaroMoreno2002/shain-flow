@@ -6,6 +6,7 @@ import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 //import PaginatedList from "../../components/PaginatedListEmpleados";
 import Paginacion from "../../components/Paginacion";
+import { useUser } from '../../context/UserContext';
 
 export interface Empleado {
   id_empleado: number;
@@ -18,6 +19,8 @@ export interface Empleado {
 }
 
 export const Empleados = () => {
+  const { usuario } = useUser();
+
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
   const [mostrarFormulario, setMostrarFormulario] = useState<boolean>(false);
   const [cargando, setCargando] = useState(false);
@@ -174,12 +177,16 @@ export const Empleados = () => {
       <div className="titulo-con-botones">
         <h2 className="admin-title">👥 Empleados:</h2>
         <div className="botones-superiores">
+          {usuario?.permisos.editar_datos_personales &&
+        (usuario.rol == "2") && (
           <button onClick={() => setMostrarFormulario(true)}>
             <span className="plus">➕</span> Agregar empleado
-          </button>
+          </button>)}
+        {usuario?.permisos.editar_datos_personales &&
+        (usuario.rol == "2") && (
           <button onClick={agregarDatos}>
             <span className="plus">➕</span> Agregar datos
-          </button>
+          </button>)}
         </div>
       </div>
 
@@ -190,7 +197,7 @@ export const Empleados = () => {
               <CircularProgress />
             </div>
           )}
-          <Paginacion items={empleados} itemsPerPage={9} />
+          <Paginacion items={empleados} itemsPerPage={12} />
         </>
       )}
 
