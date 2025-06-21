@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CalendarioInput from "./Calendario";
-import "./estilos/ForuSalario.css";
+import "./estilos/FormularioSalario.css";
 
 interface NuevoSalario {
   puesto: string;
