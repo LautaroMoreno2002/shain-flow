@@ -79,9 +79,9 @@ function App() {
               element={<EmpleadosNomina />}
             ></Route>
             <Route
-              path="editarDatosLaborales"
+              path="empleados/:id_empleado/editar-datos-laborales"
               element={<EditarDatosLaborales />}
-            ></Route>
+            />
             <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
             <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>
             <Route path="calculo-nomina" element={<CalculoNomina />}></Route>

@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./estilos/AsistenciaUnica.css";
 import { useNavigate, useParams } from "react-router-dom";
+import HoraInput from "../components/Hora";
 
 type FormData = {
   fecha: Date | null;
@@ -15,17 +16,32 @@ type FormData = {
 
 const tipos = ["Entrada", "Salida"];
 const estadosAsistencia = ["A tiempo", "Tarde", "Temprana", "Retraso minimo", "Fuera de rango"];
-const turnos = ["Mañana", "Tarde"];
+const turnos = ["Mañana", "Tarde","Noche"];
 
 const AsistenciaUnica: React.FC = () => {
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors }
+  } = useForm<FormData>();
+
   const [fechaSeleccionada, setFechaSeleccionada] = useState<Date | null>(new Date());
+  const [horaSeleccionada, setHoraSeleccionada] = useState<string>(
+    new Date().toTimeString().slice(0, 5)
+  );
+
   const navegar = useNavigate();
   const { id_empleado } = useParams<{ id_empleado: string }>();
 
   const handleFechaChange = (date: Date | null) => {
     setFechaSeleccionada(date);
     if (date) setValue("fecha", date);
+  };
+
+  const handleHoraChange = (e: { target: { value: string } }) => {
+    setHoraSeleccionada(e.target.value);
+    setValue("hora", e.target.value);
   };
 
   const onSubmit = async (data: FormData) => {
@@ -103,12 +119,12 @@ const AsistenciaUnica: React.FC = () => {
 
           <div>
             <label>Hora:</label>
-            <input
-              type="time"
-              {...register("hora", { required: "La hora es obligatoria" })}
-              className="data-item--value"
-              defaultValue={new Date().toTimeString().slice(0, 5)}
+            <HoraInput
+              name="hora"
+              value={horaSeleccionada}
+              onChange={handleHoraChange}
             />
+            <input type="hidden" {...register("hora", { required: "La hora es obligatoria" })} />
             {errors.hora && <span>{errors.hora.message}</span>}
           </div>
 

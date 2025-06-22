@@ -147,7 +147,7 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                 usuario.rol == "2" && (
                   <NavLink
                     className={"link"}
-                    to="/administrador/editarDatosLaborales"
+                    to={`/administrador/empleados/${item.id_empleado}/editar-datos-laborales`}
                   >
                     Agregar datos laborales
                   </NavLink>

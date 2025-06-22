@@ -31,7 +31,7 @@ export const EmpleadoItem = ({ empleado }: EmpleadoItemProps) => {
       {usuario?.permisos.editar_datos_personales && usuario.rol == "2" && (
         <NavLink
           className={"link"}
-          to={`/administrador/empleados/${empleado.id_empleado}/editarEmpleado`}
+          to={`/administrador/empleados/editarEmpleado`}
         >
           Editar
         </NavLink>
@@ -39,7 +39,7 @@ export const EmpleadoItem = ({ empleado }: EmpleadoItemProps) => {
 
       <NavLink
         className={"link"}
-        to={`/administrador/empleados/${empleado.id_empleado}/editarDatosLaborales`}
+        to={`/administrador/empleados/${empleado.id_empleado}/editar-datos-laborales`}
       >
         Agregar datos laborales
       </NavLink>
