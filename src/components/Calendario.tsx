@@ -8,7 +8,12 @@ interface CalendarioInputProps {
 }
 
 const CalendarioInput: React.FC<CalendarioInputProps> = ({ value, onChange }) => {
-  const fechaParseada = value ? new Date(value) : null;
+  const fechaParseada = value
+    ? (() => {
+        const [year, month, day] = value.split('-').map(Number);
+        return new Date(year, month - 1, day); // Date local sin desfase UTC
+      })()
+    : null;
 
   return (
     <div>
@@ -18,10 +23,13 @@ const CalendarioInput: React.FC<CalendarioInputProps> = ({ value, onChange }) =>
         selected={fechaParseada}
         onChange={(date: Date | null) => {
           if (date) {
-            const fechaFormateada = date.toISOString().split("T")[0]; // formato YYYY-MM-DD
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const fechaFormateada = `${year}-${month}-${day}`;
             onChange(fechaFormateada);
           } else {
-            onChange(""); // En caso de borrar la fecha
+            onChange('');
           }
         }}
         dateFormat="yyyy-MM-dd"

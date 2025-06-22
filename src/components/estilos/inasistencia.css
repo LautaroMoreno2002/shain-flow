@@ -12,7 +12,7 @@
 .form-inasistencia {
   position: relative;
   min-height: 100vh;
-  padding: 30px;
+  padding: 35px 25px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -26,46 +26,48 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.9);
   z-index: 0;
 }
 
-
 .form-inasistencia .form-container {
   background-color: #ffffff;
-  padding: 30px 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 35px 45px;
+  border-radius: 14px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.13);
   width: 100%;
-  max-width: 500px;
+  max-width: 550px;
   box-sizing: border-box;
   animation: fadeInInasistencia 0.6s ease forwards;
 }
 
 .form-inasistencia .inasistencia__titulo {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 8px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
   text-align: center;
-  color: var(--c1); /* Color institucional */
+  color: var(--c1);
+  letter-spacing: 0.02em;
 }
 
 .form-inasistencia .inasistencia__subtitulo {
-  font-size: 14px;
-  color: #444; /* Más oscuro, más serio */
-  margin-bottom: 20px;
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 25px;
   text-align: center;
+  font-weight: 500;
 }
 
 .form-inasistencia .cont-campos > div {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .form-inasistencia label {
   display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: var(--c1); /* Color institucional */
+  margin-bottom: 7px;
+  font-weight: 700;
+  color: var(--c1);
+  font-size: 15px;
 }
 
 .form-inasistencia .data-item--value,
@@ -73,21 +75,22 @@
 .form-inasistencia input[type="text"],
 .form-inasistencia textarea {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
+  padding: 12px 14px;
+  border: 1.3px solid #ccc;
+  border-radius: 7px;
+  font-size: 17px;
   box-sizing: border-box;
   font-family: inherit;
   background-color: #fafafa;
-  transition: border-color 0.2s;
+  transition: border-color 0.25s ease;
 }
 
 .form-inasistencia .data-item--value:focus,
 .form-inasistencia textarea:focus,
 .form-inasistencia select:focus {
-  border-color: var(--c1); /* Color institucional al enfocar */
+  border-color: var(--c1);
   outline: none;
+  box-shadow: 0 0 5px var(--c1);
 }
 
 .form-inasistencia .react-datepicker-wrapper {
@@ -96,36 +99,51 @@
 
 .form-inasistencia .react-datepicker__input-container input {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
+  padding: 12px 14px;
+  border: 1.3px solid #ccc;
+  border-radius: 7px;
+  font-size: 17px;
   background-color: #fafafa;
 }
 
 .form-inasistencia span {
-  color: red;
-  font-size: 13px;
-  margin-top: 4px;
+  color: #e53935;
+  font-size: 13.5px;
+  margin-top: 5px;
   display: block;
 }
 
-.form-inasistencia .btn-registrar {
-  width: 100%;
-  padding: 14px;
-  background-color: var(--c2); /* Botón en celeste */
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s;
+.botones-formulario {
   display: flex;
   justify-content: center;
-  align-items: center;
+  gap: 1rem;
+  margin-top: 1.8rem;
 }
 
-.form-inasistencia .btn-registrar:hover {
-  background-color: var(--c1); /* Hover más fuerte */
+.btn-cancelar {
+  cursor: pointer;
+  padding: 0.75rem 2rem;
+  border-radius: 30px;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.btn-registrar {
+  background-color: var(--c2);
+}
+
+.btn-registrar:hover {
+  background-color: var(--c1);
+}
+
+.btn-cancelar {
+  background-color: var(--c2);
+}
+
+.btn-cancelar:hover {
+  background-color: var(--c1);
 }

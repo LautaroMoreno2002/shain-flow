@@ -1,7 +1,7 @@
-import { NavLink } from 'react-router-dom';
-import './estilos/empleado-item.css';
-import type { Empleado } from '../routes/Pantallas/Empleados';
-import { useUser } from '../context/UserContext';
+import { NavLink } from "react-router-dom";
+import "./estilos/empleado-item.css";
+import type { Empleado } from "../routes/Pantallas/Empleados";
+import { useUser } from "../context/UserContext";
 
 // interface Empleado {
 //   id: number;
@@ -28,27 +28,41 @@ export const EmpleadoItem = ({ empleado }: EmpleadoItemProps) => {
       <span className="empleado-nombre">
         {empleado.nombre} {empleado.apellido}
       </span>
-      {usuario?.permisos.editar_datos_personales &&
-        (usuario.rol == "2") && ( // verifica si el usuario tiene permiso para editar datos personales de los empleados
-          <NavLink
-            className={"link"}
-            to="/administrador/empleados/editarEmpleado"
-            state={empleado}
-          >
-            Editar
-          </NavLink>
-        )}
-      <NavLink className={"link"} to="/administrador/editarDatosLaborales">
+      {usuario?.permisos.editar_datos_personales && usuario.rol == "2" && (
+        <NavLink
+          className={"link"}
+          to={`/administrador/empleados/${empleado.id_empleado}/editarEmpleado`}
+        >
+          Editar
+        </NavLink>
+      )}
+
+      <NavLink
+        className={"link"}
+        to={`/administrador/empleados/${empleado.id_empleado}/editarDatosLaborales`}
+      >
         Agregar datos laborales
       </NavLink>
-      <NavLink className={"link"} to="/administrador/permitirFichada">
+
+      <NavLink
+        className={"link"}
+        to={`/administrador/empleados/${empleado.id_empleado}/agregar-jornada`}
+      >
         Agregar jornada
       </NavLink>
-      <NavLink className={"link"} to="/administrador/inasistencia">
+
+      <NavLink
+        className={"link"}
+        to={`/administrador/empleados/${empleado.id_empleado}/inasistencia`}
+      >
         Agregar inasistencia
       </NavLink>
-      <NavLink className={"link"} to="/administrador/asistenciaUnica">
-        Agregar asistencia unica
+
+      <NavLink
+        className={"link"}
+        to={`/administrador/empleados/${empleado.id_empleado}/asistenciaUnica`}
+      >
+        Agregar asistencia única
       </NavLink>
     </div>
   );

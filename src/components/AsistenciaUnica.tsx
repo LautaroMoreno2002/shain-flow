@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import './estilos/AsistenciaUnica.css';
-import { FaCheck } from 'react-icons/fa';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./estilos/AsistenciaUnica.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 type FormData = {
   fecha: Date | null;
@@ -13,22 +13,60 @@ type FormData = {
   turno_asistencia: string;
 };
 
-const tipos = ['Entrada', 'Salida'];
-const estadosAsistencia = ['A tiempo', 'Tarde', 'Temprana', 'Retraso minimo', 'Fuera de rango'];
-const turnos = ['Mañana', 'Tarde'];
+const tipos = ["Entrada", "Salida"];
+const estadosAsistencia = ["A tiempo", "Tarde", "Temprana", "Retraso minimo", "Fuera de rango"];
+const turnos = ["Mañana", "Tarde"];
 
 const AsistenciaUnica: React.FC = () => {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>();
   const [fechaSeleccionada, setFechaSeleccionada] = useState<Date | null>(new Date());
-
-  const onSubmit = (data: FormData) => {
-    console.log('Datos enviados:', data);
-    alert('✅ Asistencia registrada manualmente');
-  };
+  const navegar = useNavigate();
+  const { id_empleado } = useParams<{ id_empleado: string }>();
 
   const handleFechaChange = (date: Date | null) => {
     setFechaSeleccionada(date);
-    if (date) setValue('fecha', date);
+    if (date) setValue("fecha", date);
+  };
+
+  const onSubmit = async (data: FormData) => {
+    if (!id_empleado) {
+      alert("❌ No se encontró el ID del empleado");
+      return;
+    }
+
+    const payload = {
+      id_empleado: Number(id_empleado),
+      fecha: data.fecha?.toISOString().split("T")[0],
+      tipo: data.tipo,
+      hora: data.hora,
+      estado_asistencia: data.estado_asistencia,
+      turno_asistencia: data.turno_asistencia,
+    };
+
+    try {
+      const response = await fetch("https://render-crud-jc22.onrender.com/registrar-asistenciaBiometrica", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const resData = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 409) {
+          alert(`⚠️ No se pudo registrar la asistencia: ${resData.detail}`);
+        } else {
+          alert(`❌ Error inesperado: ${resData.detail || "Intenta nuevamente."}`);
+        }
+        return;
+      }
+
+      alert("✅ Asistencia registrada correctamente.");
+      navegar("/administrador/empleados");
+    } catch (error) {
+      console.error("❌ Error de red o servidor:", error);
+      alert("❌ Ocurrió un error de red. Intenta más tarde.");
+    }
   };
 
   return (
@@ -48,13 +86,13 @@ const AsistenciaUnica: React.FC = () => {
               dateFormat="yyyy-MM-dd"
               placeholderText="Seleccionar fecha"
             />
-            <input type="hidden" {...register('fecha', { required: 'La fecha es obligatoria' })} />
+            <input type="hidden" {...register("fecha", { required: "La fecha es obligatoria" })} />
             {errors.fecha && <span>{errors.fecha.message}</span>}
           </div>
 
           <div>
             <label>Tipo:</label>
-            <select {...register('tipo', { required: 'El tipo es obligatorio' })} className="data-item--value">
+            <select {...register("tipo", { required: "El tipo es obligatorio" })} className="data-item--value">
               <option value="">Seleccionar...</option>
               {tipos.map((tipo) => (
                 <option key={tipo} value={tipo}>{tipo}</option>
@@ -67,7 +105,7 @@ const AsistenciaUnica: React.FC = () => {
             <label>Hora:</label>
             <input
               type="time"
-              {...register('hora', { required: 'La hora es obligatoria' })}
+              {...register("hora", { required: "La hora es obligatoria" })}
               className="data-item--value"
               defaultValue={new Date().toTimeString().slice(0, 5)}
             />
@@ -76,7 +114,7 @@ const AsistenciaUnica: React.FC = () => {
 
           <div>
             <label>Estado de asistencia:</label>
-            <select {...register('estado_asistencia', { required: 'El estado es obligatorio' })} className="data-item--value">
+            <select {...register("estado_asistencia", { required: "El estado es obligatorio" })} className="data-item--value">
               <option value="">Seleccionar...</option>
               {estadosAsistencia.map((estado) => (
                 <option key={estado} value={estado}>{estado}</option>
@@ -87,7 +125,7 @@ const AsistenciaUnica: React.FC = () => {
 
           <div>
             <label>Turno:</label>
-            <select {...register('turno_asistencia', { required: 'El turno es obligatorio' })} className="data-item--value">
+            <select {...register("turno_asistencia", { required: "El turno es obligatorio" })} className="data-item--value">
               <option value="">Seleccionar...</option>
               {turnos.map((turno) => (
                 <option key={turno} value={turno}>{turno}</option>
@@ -96,10 +134,18 @@ const AsistenciaUnica: React.FC = () => {
             {errors.turno_asistencia && <span>{errors.turno_asistencia.message}</span>}
           </div>
 
-          <button type="submit" className="btn-registrar">
-            <FaCheck style={{ marginRight: '8px' }} />
-            Registrar asistencia
-          </button>
+          <div className="botones-formulario">
+            <button type="submit" className="btn-registrar">
+              ✅ Permitir
+            </button>
+            <button
+              type="button"
+              className="btn-cancelar"
+              onClick={() => navegar("/administrador/empleados")}
+            >
+              ❌ Cancelar
+            </button>
+          </div>
         </div>
       </form>
     </div>

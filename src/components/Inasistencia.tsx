@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import './estilos/Inasistencia.css';
-import { FaClipboardCheck } from 'react-icons/fa';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./estilos/Inasistencia.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 type FormData = {
   fecha: Date | null;
@@ -13,45 +13,90 @@ type FormData = {
 };
 
 const tiposInasistencia = [
-  'Falta justificada',
-  'Falta no justificada',
-  'Licencia médica',
-  'Vacaciones',
-  'Suspensión',
-  'No laboral',
-  'Otra',
+  "Falta justificada",
+  "Falta no justificada",
+  "Licencia médica",
+  "Vacaciones",
+  "Suspensión",
+  "No laboral",
+  "Otra",
 ];
 
 const diasSemana = [
-  'Lunes',
-  'Martes',
-  'Miércoles',
-  'Jueves',
-  'Viernes',
-  'Sábado',
-  'Domingo',
+  "Lunes",
+  "Martes",
+  "Miércoles",
+  "Jueves",
+  "Viernes",
+  "Sábado",
+  "Domingo",
 ];
 
 const Inasistencia: React.FC = () => {
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>();
-  const [fechaSeleccionada, setFechaSeleccionada] = useState<Date | null>(new Date());
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
-    console.log('Datos enviados:', data);
-    alert('✅ Inasistencia registrada');
-  };
+  const [fechaSeleccionada, setFechaSeleccionada] = useState<Date | null>(new Date());
+  const navegar = useNavigate();
+  const { id_empleado } = useParams<{ id_empleado: string }>();
 
   const handleFechaChange = (date: Date | null) => {
     setFechaSeleccionada(date);
     if (date) {
-      setValue('fecha', date);
+      setValue("fecha", date);
     }
   };
 
   const handleDiaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const dia = e.target.value;
     if (dia) {
-      setValue('dia', dia);
+      setValue("dia", dia);
+    }
+  };
+
+  const onSubmit = async (data: FormData) => {
+    if (!id_empleado) {
+      alert("❌ No se encontró el ID del empleado");
+      return;
+    }
+
+    const payload = {
+      id_empleado: Number(id_empleado),
+      fecha: data.fecha?.toISOString().split("T")[0], // Formato YYYY-MM-DD
+      dia: data.dia,
+      tipo: data.tipo,
+      descripcion: data.descripcion,
+    };
+
+    try {
+      const response = await fetch("https://render-crud-jc22.onrender.com/registrar-incidencia", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const resData = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 409) {
+          alert(`⚠️ No se pudo registrar la inasistencia: ${resData.detail}`);
+        } else {
+          alert(`❌ Error inesperado: ${resData.detail || "Intenta nuevamente."}`);
+        }
+        return;
+      }
+
+      alert("✅ Inasistencia registrada correctamente.");
+      navegar("/administrador/empleados");
+    } catch (error) {
+      console.error("❌ Error de red o servidor:", error);
+      alert("❌ Ocurrió un error de red. Intenta más tarde.");
     }
   };
 
@@ -72,7 +117,10 @@ const Inasistencia: React.FC = () => {
               dateFormat="yyyy-MM-dd"
               placeholderText="Elige una fecha"
             />
-            <input type="hidden" {...register('fecha', { required: 'La fecha es obligatoria' })} />
+            <input
+              type="hidden"
+              {...register("fecha", { required: "La fecha es obligatoria" })}
+            />
             {errors.fecha && <span>{errors.fecha.message}</span>}
           </div>
 
@@ -86,19 +134,29 @@ const Inasistencia: React.FC = () => {
             >
               <option value="">Seleccione una opción</option>
               {diasSemana.map((opcion) => (
-                <option key={opcion} value={opcion}>{opcion}</option>
+                <option key={opcion} value={opcion}>
+                  {opcion}
+                </option>
               ))}
             </select>
-            <input type="hidden" {...register('dia', { required: 'El día es obligatorio' })} />
+            <input
+              type="hidden"
+              {...register("dia", { required: "El día es obligatorio" })}
+            />
             {errors.dia && <span>{errors.dia.message}</span>}
           </div>
 
           <div>
             <label>Tipo de inasistencia:</label>
-            <select className="data-item--value" {...register('tipo', { required: 'El tipo es obligatorio' })}>
+            <select
+              className="data-item--value"
+              {...register("tipo", { required: "El tipo es obligatorio" })}
+            >
               <option value="">Seleccionar...</option>
               {tiposInasistencia.map((tipo) => (
-                <option key={tipo} value={tipo}>{tipo}</option>
+                <option key={tipo} value={tipo}>
+                  {tipo}
+                </option>
               ))}
             </select>
             {errors.tipo && <span>{errors.tipo.message}</span>}
@@ -106,14 +164,25 @@ const Inasistencia: React.FC = () => {
 
           <div>
             <label>Descripción:</label>
-            <textarea className="data-textarea" {...register('descripcion', { required: 'La descripción es obligatoria' })} />
+            <textarea
+              className="data-textarea"
+              {...register("descripcion", { required: "La descripción es obligatoria" })}
+            />
             {errors.descripcion && <span>{errors.descripcion.message}</span>}
           </div>
 
-          <button className="btn-registrar" type="submit">
-            <FaClipboardCheck style={{ marginRight: '8px' }} />
-            Registrar inasistencia
-          </button>
+          <div className="botones-formulario">
+            <button type="submit" className="btn-registrar">
+              ✅ Permitir
+            </button>
+            <button
+              type="button"
+              className="btn-cancelar"
+              onClick={() => navegar("/administrador/empleados")}
+            >
+              ❌ Cancelar
+            </button>
+          </div>
         </div>
       </form>
     </div>
