@@ -179,12 +179,12 @@ export const Empleados = () => {
         <div className="botones-superiores">
           {usuario?.permisos.editar_datos_personales &&
         (usuario.rol == "2") && (
-          <button onClick={() => setMostrarFormulario(true)}>
+          <button className="button-empleado" onClick={() => setMostrarFormulario(true)}>
             <span className="plus">➕</span> Agregar empleado
           </button>)}
         {usuario?.permisos.editar_datos_personales &&
         (usuario.rol == "2") && (
-          <button onClick={agregarDatos}>
+          <button className="button-empleado" onClick={agregarDatos}>
             <span className="plus">➕</span> Agregar datos
           </button>)}
         </div>
@@ -309,8 +309,8 @@ export const Empleados = () => {
           </form>
           {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
           <div className="botones-formulario">
-            <button onClick={cargarEmpleado}>✅ Cargar empleado</button>
-            <button onClick={() => setMostrarFormulario(false)}>
+            <button className="button-empleado" onClick={cargarEmpleado}>✅ Cargar empleado</button>
+            <button className="button-empleado" onClick={() => setMostrarFormulario(false)}>
               ❌ Cancelar
             </button>
           </div>
