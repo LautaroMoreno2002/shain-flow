@@ -157,7 +157,7 @@ export const EmpleadosNomina = () => {
             <span className="plus">➕</span> Agregar Concepto
           </button>
           <button className="button-empleado" onClick={() => agregarSalario()}>
-            <span className="plus">➕</span> Agregar datos
+            <span className="plus">➕</span> Agregar Salario
           </button>
         </div>
       </div>
