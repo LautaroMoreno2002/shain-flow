@@ -106,44 +106,37 @@
   background-color: #fafafa;
 }
 
-.form-inasistencia span {
-  color: #e53935;
-  font-size: 13.5px;
-  margin-top: 5px;
-  display: block;
-}
-
-.botones-formulario {
+.form-inasistencia .botones-formulario {
   display: flex;
   justify-content: center;
   gap: 1rem;
   margin-top: 1.8rem;
 }
 
-.btn-cancelar {
+.form-inasistencia .botones-formulario button {
   cursor: pointer;
   padding: 0.75rem 2rem;
   border-radius: 30px;
   border: none;
   font-size: 1.1rem;
   font-weight: 600;
+  transition: background-color 0.3s ease;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   color: white;
-  transition: background-color 0.3s ease;
 }
 
-.btn-registrar {
+.form-inasistencia .botones-formulario button[type="submit"] {
   background-color: var(--c2);
 }
 
-.btn-registrar:hover {
+.form-inasistencia .botones-formulario button[type="submit"]:hover {
   background-color: var(--c1);
 }
 
-.btn-cancelar {
+.form-inasistencia .botones-formulario button[type="button"] {
   background-color: var(--c2);
 }
 
-.btn-cancelar:hover {
+.form-inasistencia .botones-formulario button[type="button"]:hover {
   background-color: var(--c1);
 }

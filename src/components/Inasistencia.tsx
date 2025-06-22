@@ -172,12 +172,12 @@ const Inasistencia: React.FC = () => {
           </div>
 
           <div className="botones-formulario">
-            <button type="submit" className="btn-registrar">
+            <button type="submit" className="btn-inasistencia-registrar">
               ✅ Permitir
             </button>
             <button
               type="button"
-              className="btn-cancelar"
+              className="btn-inasistencia-cancelar "
               onClick={() => navegar("/administrador/empleados")}
             >
               ❌ Cancelar

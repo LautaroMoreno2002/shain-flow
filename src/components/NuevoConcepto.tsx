@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import './estilos/Concepto.css'; // Importa los estilos
-//import { crearConcepto } from '../services/api';
+import React, { useEffect, useState } from "react";
+import "./estilos/Concepto.css";
 
-// Definir los tipos para los campos del formulario
 type Concepto = {
-  codigo: string;
+  codigo?: string; // Lo maneja el backend
   nombre: string;
   tipo: string;
   valor: string;
@@ -12,182 +10,394 @@ type Concepto = {
 };
 
 const tiposConcepto = [
-  'Remunerativo', 'No remunerativo', 'Deducción', 'Retención', 'Percepción', 'Indemnización', 
-  'Reintegro', 'Premio', 'Multa', 'Ajuste', 'Anticipo', 'Vacaciones'
+  "Remunerativo",
+  "No remunerativo",
+  "Deducción",
+  "Retención",
+  "Percepción",
+  "Indemnización",
+  "Reintegro",
+  "Premio",
+  "Multa",
+  "Ajuste",
+  "Anticipo",
+  "Vacaciones",
 ];
 
-const porcentajeOptions = ['si', 'no'];
-
+const porcentajeOptions = ["si", "no"];
 export const NuevoConcepto: React.FC = () => {
-  // Estado para los valores del formulario y los errores
-  const [concepto, setConcepto] = useState<Concepto>({
-    codigo: '',
-    nombre: '',
-    tipo: '',
-    valor: '',
-    porcentaje: '',
+  const [conceptos, setConceptos] = useState<Concepto[]>([]);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [nuevo, setNuevo] = useState<Concepto>({
+    nombre: "",
+    tipo: "",
+    valor: "",
+    porcentaje: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const [filtroNombre, setFiltroNombre] = useState("");
+  const [filtroTipo, setFiltroTipo] = useState("");
+
+  // Cargar conceptos del backend al montar
+  useEffect(() => {
+    cargarConceptos();
+  }, []);
+
+  const cargarConceptos = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(
+        "https://render-crud-jc22.onrender.com/api/conceptos/"
+      );
+      if (!res.ok) throw new Error("Error al cargar conceptos");
+      const data = await res.json();
+      // Ajustamos el formato recibido para el frontend
+      const lista = data.map((c: any) => ({
+        codigo: c.codigo,
+        nombre: c.descripcion,
+        tipo: c.tipo_concepto,
+        valor: c.valor_por_defecto ? String(c.valor_por_defecto) : "",
+        porcentaje: c.es_porcentaje ? "si" : "no",
+      }));
+      setConceptos(lista);
+    } catch (error) {
+      alert("No se pudieron cargar los conceptos.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const conceptosFiltrados = conceptos.filter((c) => {
+    const coincideNombre = c.nombre
+      .toLowerCase()
+      .includes(filtroNombre.toLowerCase());
+    const coincideTipo = filtroTipo === "" || c.tipo === filtroTipo;
+    return coincideNombre && coincideTipo;
   });
 
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [conceptosRegistrados, setConceptosRegistrados] = useState<Concepto[]>([]);
+  // Crear concepto nuevo en backend
+  const agregarConcepto = async () => {
+    if (!nuevo.nombre.trim() || !nuevo.valor.trim()) {
+      alert("Nombre y valor son obligatorios");
+      return;
+    }
+    try {
+      setLoading(true);
+      const res = await fetch(
+        "https://render-crud-jc22.onrender.com/api/conceptos/agregar",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            descripcion: nuevo.nombre,
+            tipo_concepto: nuevo.tipo,
+            valor_por_defecto: parseFloat(nuevo.valor),
+            es_porcentaje: nuevo.porcentaje === "si",
+          }),
+        }
+      );
 
-  // Manejar el cambio de valores en el formulario
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      if (!res.ok) {
+        const err = await res.json();
+        if (res.status === 409) {
+          alert("Ya existe un concepto con ese nombre.");
+        } else if (res.status === 400) {
+          alert("Datos inválidos: " + (err.detail || "Verifique los campos."));
+        } else {
+          alert("Error al crear concepto: " + (err.detail || res.statusText));
+        }
+        return;
+      }
+
+      await cargarConceptos();
+      setNuevo({ nombre: "", tipo: "", valor: "", porcentaje: "" });
+      alert("Concepto agregado con éxito");
+    } catch (error) {
+      alert("Error de red al crear concepto");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Guardar edición en backend
+  const guardarEdicion = async (index: number) => {
+    const conceptoEditado = conceptos[index];
+    if (!conceptoEditado.nombre.trim() || !conceptoEditado.valor.trim()) {
+      alert("Nombre y valor son obligatorios");
+      return;
+    }
+    if (!conceptoEditado.codigo) {
+      alert("Error: el concepto no tiene código");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `https://render-crud-jc22.onrender.com/api/conceptos/${conceptoEditado.codigo}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            descripcion: conceptoEditado.nombre,
+            tipo_concepto: conceptoEditado.tipo,
+            valor_por_defecto: parseFloat(conceptoEditado.valor),
+            es_porcentaje: conceptoEditado.porcentaje === "si",
+          }),
+        }
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        alert("Error al editar concepto: " + (err.detail || res.statusText));
+        return;
+      }
+      await cargarConceptos();
+      setEditIndex(null);
+      alert("Concepto actualizado");
+    } catch (error) {
+      alert("Error de red al editar concepto");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Eliminar concepto en backend
+  const eliminarConcepto = async (index: number) => {
+    const conceptoEliminar = conceptos[index];
+    if (!conceptoEliminar.codigo) {
+      alert("Error: el concepto no tiene código");
+      return;
+    }
+    if (
+      !window.confirm(
+        `¿Querés eliminar el concepto "${conceptoEliminar.nombre}"?`
+      )
+    )
+      return;
+
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `https://render-crud-jc22.onrender.com/api/conceptos/${conceptoEliminar.codigo}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        alert("Error al eliminar concepto: " + (err.detail || res.statusText));
+        return;
+      }
+      await cargarConceptos();
+      alert("Concepto eliminado");
+    } catch (error) {
+      alert("Error de red al eliminar concepto");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Manejador cambios inputs en tabla y en nuevo concepto
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    index?: number
+  ) => {
     const { name, value } = e.target;
-    setConcepto({
-      ...concepto,
-      [name]: value,
-    });
-
-    // Limpiar el error cuando el campo es modificado
-    setErrors({
-      ...errors,
-      [name]: '',
-    });
-  };
-
-  // Validar formulario
-  const validate = (): boolean => {
-    let isValid = true;
-    const newErrors: { [key: string]: string } = {};
-
-    if (!concepto.codigo) {
-      newErrors.codigo = 'El código es obligatorio.';
-      isValid = false;
-    }
-    if (!concepto.nombre) {
-      newErrors.nombre = 'El nombre es obligatorio.';
-      isValid = false;
-    }
-
-    if (!concepto.valor) {
-      newErrors.nombre = 'El valor es obligatorio.';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
-  // Manejar el envío del formulario
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validate()) {
-      //const conceptoCreado = await crearConcepto(concepto);
-    
-          //console.log(conceptoCreado);
-      setConceptosRegistrados([...conceptosRegistrados, concepto]);
-      setConcepto({ codigo: '', nombre: '', tipo: '', valor:'', porcentaje: '' });
+    if (index !== undefined) {
+      const copia = [...conceptos];
+      copia[index] = { ...copia[index], [name]: value };
+      setConceptos(copia);
+    } else {
+      setNuevo({ ...nuevo, [name]: value });
     }
   };
 
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit} className="form">
-        <h2>Registrar Concepto</h2>
-        
-        {/*<div className="input-group">
-          <label>Código:</label>
-          <input 
-            type="text" 
-            name="codigo" 
-            value={concepto.codigo}
-            placeholder='Ingrese un código' 
-            onChange={handleChange} 
-            className="input"
-            required 
-          />
-          {errors.codigo && <span className="error">{errors.codigo}</span>}
-        </div>*/}
+    <div className="formulario-concepto">
+      <h3>Gestión de Conceptos</h3>
 
-        <div className="input-group">
-          <label>Nombre:</label>
-          <input 
-            type="text" 
-            name="nombre" 
-            value={concepto.nombre}
-            placeholder='Ingrese un nombre' 
-            onChange={handleChange} 
-            className="input" 
-            required 
-          />
-          {errors.nombre && <span className="error">{errors.nombre}</span>}
-        </div>
-
-        <div className="input-group">
-          <label>Tipo de Concepto:</label>
-          <select 
-            name="tipo" 
-            value={concepto.tipo} 
-            onChange={handleChange} 
-            className="input"
-            required
-          >
-            <option value="">Seleccione una opción</option>
-            {tiposConcepto.map((tipo, index) => (
-              <option key={index} value={tipo}>{tipo}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="input-group">
-          <label>Valor:</label>
-          <input 
-            type="text" 
-            name="valor" 
-            value={concepto.valor} 
-            placeholder='Ingrese un valor'
-            onChange={handleChange} 
-            className="input" 
-            required 
-          />
-          {errors.valor && <span className="error">{errors.valor}</span>}
-        </div>
-
-        <div className="input-group">
-          <label>¿Es porcentaje?</label>
-          <select 
-            name="porcentaje" 
-            value={concepto.porcentaje} 
-            onChange={handleChange} 
-            className="input"
-            required
-          >
-            <option value="">Seleccione una opción</option>
-            {porcentajeOptions.map((option, index) => (
-              <option key={index} value={option}>{option}</option>
-            ))}
-          </select>
-        </div>
-
-        <button type="submit" className="button">Registrar</button>
-      </form>
-
-      <h3>Conceptos Registrados</h3>
-      <table className="table">
-        <thead>
-          <tr>
-            {/*<th>Código</th>*/}
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Valor</th>
-            <th>Porcentaje</th>
-          </tr>
-        </thead>
-        <tbody>
-          {conceptosRegistrados.map((item, index) => (
-            <tr key={index}>
-              {/*<td>{item.codigo}</td>*/}
-              <td>{item.nombre}</td>
-              <td>{item.tipo}</td>
-              <td>{item.valor}</td>
-              <td>{item.porcentaje}</td>
-            </tr>
+      {loading && <p>Cargando...</p>}
+      <div className="filtros-conceptos">
+        <input
+          type="text"
+          placeholder="Buscar por nombre..."
+          value={filtroNombre}
+          onChange={(e) => setFiltroNombre(e.target.value)}
+        />
+        <select
+          value={filtroTipo}
+          onChange={(e) => setFiltroTipo(e.target.value)}
+        >
+          <option value="">Todos los tipos</option>
+          {tiposConcepto.map((tipo) => (
+            <option key={tipo} value={tipo}>
+              {tipo}
+            </option>
           ))}
-        </tbody>
-      </table>
+        </select>
+      </div>
+      <div className="concepto-tabla-contenedor">
+        <table className="tabla-concepto">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Valor</th>
+              <th>%</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* Fila para nuevo concepto (arriba) */}
+            <tr>
+              <td>
+                <input
+                  name="nombre"
+                  value={nuevo.nombre}
+                  onChange={handleInputChange}
+                  placeholder="Nombre"
+                />
+              </td>
+              <td>
+                <select
+                  name="tipo"
+                  value={nuevo.tipo}
+                  onChange={handleInputChange}
+                >
+                  <option value="">--</option>
+                  {tiposConcepto.map((tipo) => (
+                    <option key={tipo} value={tipo}>
+                      {tipo}
+                    </option>
+                  ))}
+                </select>
+              </td>
+              <td>
+                <input
+                  name="valor"
+                  value={nuevo.valor}
+                  onChange={handleInputChange}
+                  placeholder="Valor"
+                />
+              </td>
+              <td>
+                <select
+                  name="porcentaje"
+                  value={nuevo.porcentaje}
+                  onChange={handleInputChange}
+                >
+                  <option value="">--</option>
+                  {porcentajeOptions.map((op) => (
+                    <option key={op} value={op}>
+                      {op}
+                    </option>
+                  ))}
+                </select>
+              </td>
+              <td>
+                <button
+                  className="agregar"
+                  onClick={agregarConcepto}
+                  disabled={loading}
+                >
+                  Agregar
+                </button>
+              </td>
+            </tr>
+
+            {/* Fila para edición o vista */}
+            {conceptosFiltrados.map((concepto, index) => (
+              <tr key={concepto.codigo || index}>
+                {editIndex === index ? (
+                  <>
+                    <td>
+                      <input
+                        name="nombre"
+                        value={concepto.nombre}
+                        onChange={(e) => handleInputChange(e, index)}
+                      />
+                    </td>
+                    <td>
+                      <select
+                        name="tipo"
+                        value={concepto.tipo}
+                        onChange={(e) => handleInputChange(e, index)}
+                      >
+                        <option value="">--</option>
+                        {tiposConcepto.map((tipo) => (
+                          <option key={tipo} value={tipo}>
+                            {tipo}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        name="valor"
+                        value={concepto.valor}
+                        onChange={(e) => handleInputChange(e, index)}
+                      />
+                    </td>
+                    <td>
+                      <select
+                        name="porcentaje"
+                        value={concepto.porcentaje}
+                        onChange={(e) => handleInputChange(e, index)}
+                      >
+                        <option value="">--</option>
+                        {porcentajeOptions.map((op) => (
+                          <option key={op} value={op}>
+                            {op}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td>
+                      <button
+                        className="guardar"
+                        onClick={() => guardarEdicion(index)}
+                      >
+                        Guardar
+                      </button>
+                      <button
+                        className="cancelar"
+                        onClick={() => setEditIndex(null)}
+                      >
+                        Cancelar
+                      </button>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td>{concepto.nombre}</td>
+                    <td>{concepto.tipo}</td>
+                    <td>{concepto.valor}</td>
+                    <td>{concepto.porcentaje}</td>
+                    <td>
+                      <button
+                        className="editar"
+                        onClick={() => setEditIndex(index)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="eliminar"
+                        onClick={() => eliminarConcepto(index)}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
-
-

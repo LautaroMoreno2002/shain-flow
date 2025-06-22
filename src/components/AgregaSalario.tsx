@@ -173,9 +173,9 @@ export function AgregarSalario() {
   const opcionesCategoria = Object.keys(categoriasMap);
 
   return (
-    <div className="formulario-empleado">
+    <div className="agregar-salario">
       <h3>Formulario de nuevo salario base</h3>
-      <form className="formulario-grid" onSubmit={cargarSalario}>
+      <form className="agregar-salario-grid" onSubmit={cargarSalario}>
         {Object.entries(nuevoSalario).map(([campo, valor]) => {
           const label = campo
             .replace(/_/g, " ")
@@ -220,7 +220,7 @@ export function AgregarSalario() {
           );
         })}
 
-        <div className="botones-formulario">
+        <div className="botones-agregar-salario">
           <button type="submit">✅ Cargar</button>
           <button type="button" onClick={volver}>
             ❌ Cancelar
@@ -229,9 +229,9 @@ export function AgregarSalario() {
       </form>
 
 {historialSalarios.length > 0 && (
-  <div className="historial-salarios">
+  <div className="historial-salarios-tabla">
     <h4>Historial de salarios anteriores</h4>
-    <table className="tabla-historial">
+    <table className="historial-salarios-tabla">
       <thead>
         <tr>
           <th>Fecha Inicio</th>

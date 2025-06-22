@@ -108,37 +108,37 @@
   background-color: #fafafa;
 }
 
-.form-asistencia-unica span {
-  color: #e53935;
-  font-size: 13px;
-  margin-top: 4px;
-  display: block;
+.form-asistencia-unica .botones-formulario {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.8rem;
 }
 
-.btn-cancelar {
+.form-asistencia-unica .botones-formulario button {
   cursor: pointer;
   padding: 0.75rem 2rem;
   border-radius: 30px;
   border: none;
   font-size: 1.1rem;
   font-weight: 600;
+  transition: background-color 0.3s ease;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   color: white;
-  transition: background-color 0.3s ease;
 }
 
-.btn-registrar {
+.form-asistencia-unica .botones-formulario button[type="submit"] {
   background-color: var(--c2);
 }
 
-.btn-registrar:hover {
+.form-asistencia-unica .botones-formulario button[type="submit"]:hover {
   background-color: var(--c1);
 }
 
-.btn-cancelar {
+.form-asistencia-unica .botones-formulario button[type="button"] {
   background-color: var(--c2);
 }
 
-.btn-cancelar:hover {
+.form-asistencia-unica .botones-formulario button[type="button"]:hover {
   background-color: var(--c1);
 }
