@@ -24,7 +24,7 @@ export const AgregaDepartamento: React.FC = () => {
       if (!res.ok) throw new Error("Error al cargar departamentos");
       const data = await res.json();
       const lista = data.map((dep: any) => ({
-        id_departamento: dep.id,
+        id_departamento: dep.id_departamento,
         nombre: dep.nombre,
         descripcion: dep.descripcion,
       }));

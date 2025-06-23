@@ -12,11 +12,11 @@ interface NuevoSalario {
 }
 
 interface Puesto {
-  id: number;
+  id_puesto: number;
   nombre: string;
 }
 interface Departamento {
-  id: number;
+  id_departamento: number;
   nombre: string;
 }
 interface Categoria {
@@ -66,10 +66,10 @@ export function AgregarSalario() {
 
   // Funciones para obtener ID desde nombre seleccionado
 const getPuestoId = (nombre: string) =>
-  puestos.find((p) => p.nombre === nombre)?.id;
+  puestos.find((p) => p.nombre === nombre)?.id_puesto;
 
 const getDepartamentoId = (nombre: string) =>
-  departamentos.find((d) => d.nombre === nombre)?.id;
+  departamentos.find((d) => d.nombre === nombre)?.id_departamento;
 
 const getCategoriaId = (nombre: string) =>
   categorias.find((c) => c.nombre_categoria === nombre)?.id_categoria;

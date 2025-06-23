@@ -94,8 +94,7 @@ export const EditarDatosLaborales = () => {
       return;
     }
 
-    // Convertir cantidadHoras "HH:mm" a entero horas (solo la parte de las horas)
-    const cantidadHorasInt = parseInt(personalData.cantidadHoras.split(":")[0]);
+const cantidadHorasInt = parseInt(personalData.cantidadHoras);
 
     const payload = {
       id_empleado: parseInt(id_empleado),
@@ -111,7 +110,7 @@ export const EditarDatosLaborales = () => {
       estado: personalData.estado,
       tipo_semana_laboral: personalData.tipoSemana,
     };
-
+console.log("Payload enviado:", payload);
     try {
       const res = await fetch(
         "https://render-crud-jc22.onrender.com/api/informacion-laboral/agregar",
@@ -264,10 +263,15 @@ export const EditarDatosLaborales = () => {
 
             <div className="data-item">
               <p className="data-item--label">Cantidad de horas:</p>
-              <HoraInput
+              <input
+                type="number"
                 name="cantidadHoras"
+                min={1}
+                max={12}
                 value={personalData.cantidadHoras}
                 onChange={handleChange}
+                className="data-item--value editable"
+                placeholder="Ej: 8"
               />
             </div>
 

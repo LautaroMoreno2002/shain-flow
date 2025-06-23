@@ -23,7 +23,7 @@ export const AgregaPuesto: React.FC = () => {
       if (!res.ok) throw new Error("Error al cargar puestos");
       const data = await res.json();
       const lista = data.map((p: any) => ({
-        id_puesto: p.id,
+        id_puesto: p.id_puesto,
         nombre: p.nombre,
       }));
       setPuestos(lista);
