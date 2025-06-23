@@ -21,7 +21,8 @@ export interface PersonalDataType {
   calle: string;
   numero_calle: string;
   localidad: string;
-  nacionalidad: string;
+  provincia: string;
+  pais_nacimiento: string;
   estado_civil: string;
   imagen_perfil_url: string; // Agregado para la imagen de perfil
 }
@@ -61,7 +62,8 @@ export const VerDatos = () => {
     calle: "",
     numero_calle: "",
     localidad: "",
-    nacionalidad: "",
+    provincia: "",
+    pais_nacimiento: "",
     estado_civil: "",
     imagen_perfil_url: ""
   });
@@ -108,7 +110,7 @@ export const VerDatos = () => {
       numero_calle: personalData.numero_calle,
       localidad: personalData.localidad,
       partido: "",
-      provincia: personalData.nacionalidad,
+      provincia: personalData.provincia,
     };
     
         // Enviar imagen si fue cambiada
@@ -155,8 +157,11 @@ const handleImagenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         </div>
       )}
 
-      {/* Imagen circular */}
-      <div style={{ position: "absolute", top: "20px", right: "40px", zIndex: 1 }}>
+      <div className="personal-data" style={{ filter: cargando ? "blur(2px)" : "none" }}>
+        <h2 className="title">Información personal</h2>
+
+        {/* Imagen circular */}
+      <div className="cont-img-perfil" style={{ position: "absolute", top: "-20px", right: "-200px", marginRight: '50px', zIndex: 1 }}>
         <div
           className="foto-perfil"
           style={{
@@ -212,8 +217,6 @@ const handleImagenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         )}
       </div>
 
-      <div className="personal-data" style={{ filter: cargando ? "blur(2px)" : "none" }}>
-        <h2 className="title">Información personal</h2>
         <div className="data-container">
           <div className="data-group">
             {[
@@ -241,7 +244,7 @@ const handleImagenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
               { label: "Teléfono", name: "telefono", type: "tel" },
               { label: "Calle", name: "calle" },
               { label: "Número", name: "numero_calle" },
-              { label: "País de nacimiento", name: "nacionalidad" },
+              { label: "País de nacimiento", name: "pais_nacimiento" },
               { label: "Provincia", name: "provincia" },
               { label: "Localidad", name: "localidad" },
               { label: "Estado", name: "estado_civil" },

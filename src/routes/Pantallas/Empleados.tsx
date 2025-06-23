@@ -177,8 +177,9 @@ export const Empleados = () => {
 
   return (
     <div className="admin-container">
+      <h2 className="admin-title">👥 Empleados:</h2>
       <div className="titulo-con-botones">
-        <h2 className="admin-title">👥 Empleados:</h2>
+        
         <div className="botones-superiores">
           {usuario?.permisos.editar_datos_personales &&
         (usuario.rol == "2") && (
