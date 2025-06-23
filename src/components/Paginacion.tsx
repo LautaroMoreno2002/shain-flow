@@ -119,10 +119,19 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                 {item.nombre} {item.apellido}
               </span>
               {usuario?.permisos.editar_datos_personales &&
+                (usuario.rol === "3" || usuario.rol === "4") && (
+                  <NavLink
+                    className="link"
+                    to={`/supervisor/asistencias/${item.id_empleado}`}
+                  >
+                    Ver asistencias
+                  </NavLink>
+                )}
+              {usuario?.permisos.editar_datos_personales &&
                 (usuario.rol == "3" || usuario.rol == "4") && (
                   <NavLink
                     className={"link"}
-                    to={`/supervisor/reportes/${item.id_empleado}`} // Cambia esta línea
+                    to={`/supervisor/reportes/${item.id_empleado}`}
                   >
                     Ver Reportes
                   </NavLink>
@@ -133,6 +142,7 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     Ver nomina
                   </NavLink>
                 )}
+
               {usuario?.permisos.editar_datos_personales &&
                 usuario.rol == "2" && ( // verifica si el usuario tiene permiso para editar datos personales de los empleados
                   <NavLink

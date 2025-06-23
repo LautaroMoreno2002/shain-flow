@@ -37,6 +37,7 @@ import { DashboardAn } from "./components/DashboardAnalistadeDatos";
 import { UserProvider } from "./context/UserContext";
 import { NuevoConcepto } from "./components/NuevoConcepto";
 import { ConfiguracionAsistencia } from "./components/ConfigurarAsistencias";
+import { AsistenciasEmpleado } from "./routes/Pantallas/EmpleadoAsistencias";
 
 // import { Dashboard } from './components/dashboard'
 
@@ -91,7 +92,10 @@ function App() {
             <Route path="agregar-salario" element={<AgregarSalario />}></Route>
             <Route path="agregar-concepto" element={<NuevoConcepto />}></Route>
             <Route path="agregar-datos" element={<AgregarDatos />}></Route>
-            <Route path="configuracion-asistencia" element={<ConfiguracionAsistencia />}></Route>
+            <Route
+              path="configuracion-asistencia"
+              element={<ConfiguracionAsistencia />}
+            ></Route>
             <Route
               path="/administrador/empleados/:id_empleado/agregar-jornada"
               element={<AgregarJornada />}
@@ -130,6 +134,10 @@ function App() {
             <Route path="datosLaborales" element={<DatosLaborales />}></Route>
             {/* <Route path="confirmacion" element={<Confirmacion />}></Route> */}
             <Route path="empleados" element={<Empleados />}></Route>
+            <Route
+              path="/supervisor/asistencias/:idEmpleado"
+              element={<AsistenciasEmpleado />}
+            />
             <Route
               path="/supervisor/reportes/:id_empleado?"
               element={<Reportes />}

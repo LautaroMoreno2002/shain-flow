@@ -11,6 +11,7 @@ export const EmpleadoFichada = ({ empleado }: EmpleadoItemProps) => {
     <div className="empleado-item">
       <span className="icono-perfil">👤</span>
       <span>{empleado.nombre}</span>
+      <NavLink to="/supervisor/asistencias" >Ver Reportes</NavLink>
       <NavLink to="/supervisor/reportes" >Ver Reportes</NavLink>
       <NavLink to="/supervisor/ver-nomina" >Ver nomina</NavLink>
     </div>
