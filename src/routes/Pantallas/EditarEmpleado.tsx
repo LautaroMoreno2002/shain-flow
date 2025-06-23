@@ -344,7 +344,7 @@ export const EditarEmpleado = () => {
             </div>
           </div>
         ) : (
-          <EditarDatosLaborales />
+          <EditarDatosLaborales idEmpleado={empleadoId} />
         )}
       </div>
     </div>

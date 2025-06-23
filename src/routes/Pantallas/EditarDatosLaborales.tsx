@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CalendarioInput from "../../components/Calendario";
 import HoraInput from "../../components/Hora";
 import "../../estilos/EditarEmpelado.css";
@@ -18,23 +18,33 @@ interface PersonalDataType {
   turno: string;
 }
 
-function useFetchOptions<T>(url: string) {
-  const [options, setOptions] = useState<T[]>([]);
-  useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setOptions(data))
-      .catch(() => setOptions([]));
-  }, [url]);
-  return options;
+interface Departamento {
+  id_departamento: number;
+  nombre: string;
 }
 
-export const EditarDatosLaborales = () => {
-  const { id_empleado } = useParams<{ id_empleado: string }>();
-  const idEmpleado = parseInt(id_empleado || "0");
-  const navegar = useNavigate();
+interface Puesto {
+  id_puesto: number;
+  nombre: string;
+}
 
+interface Categoria {
+  id_categoria: number;
+  nombre_categoria: string;
+}
+
+interface EditarDatosLaboralesProps {
+  idEmpleado: number;
+}
+
+export const EditarDatosLaborales: React.FC<EditarDatosLaboralesProps> = ({
+  idEmpleado,
+}) => {
+  const navegar = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
+  const [departamentos, setDepartamentos] = useState<Departamento[]>([]);
+  const [puestos, setPuestos] = useState<Puesto[]>([]);
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
 
   const [personalData, setPersonalData] = useState<PersonalDataType>({
     departamento: "",
@@ -50,19 +60,25 @@ export const EditarDatosLaborales = () => {
     turno: "",
   });
 
-  const departamentos = useFetchOptions<{
-    id_departamento: number;
-    nombre: string;
-  }>("https://render-crud-jc22.onrender.com/api/departamentos/");
-
-  const puestos = useFetchOptions<{ id_puesto: number; nombre: string }>(
-    "https://render-crud-jc22.onrender.com/api/puestos/"
-  );
-
-  const categorias = useFetchOptions<{
-    id_categoria: number;
-    nombre_categoria: string;
-  }>("https://render-crud-jc22.onrender.com/api/categorias/");
+  const cargarOpciones = async () => {
+    try {
+      const [depRes, pueRes, catRes] = await Promise.all([
+        fetch("https://render-crud-jc22.onrender.com/api/departamentos/"),
+        fetch("https://render-crud-jc22.onrender.com/api/puestos/"),
+        fetch("https://render-crud-jc22.onrender.com/api/categorias/"),
+      ]);
+      const [depData, pueData, catData] = await Promise.all([
+        depRes.json(),
+        pueRes.json(),
+        catRes.json(),
+      ]);
+      setDepartamentos(depData);
+      setPuestos(pueData);
+      setCategorias(catData);
+    } catch (err) {
+      console.error("Error al cargar opciones", err);
+    }
+  };
 
   const opcionesTipoContrato = [
     "Tiempo indeterminado",
@@ -87,35 +103,64 @@ export const EditarDatosLaborales = () => {
   const opcionesTurno = ["Mañana", "Tarde", "Noche"];
 
   useEffect(() => {
-    const fetchLaboral = async () => {
-      try {
-        const res = await fetch(
-          `https://render-crud-jc22.onrender.com/empleados/${idEmpleado}/informacion-laboral-completa`
-        );
-        const data = await res.json();
+  const cargarDatos = async () => {
+    try {
+      // Cargar opciones
+      const [depRes, pueRes, catRes] = await Promise.all([
+        fetch("https://render-crud-jc22.onrender.com/api/departamentos/"),
+        fetch("https://render-crud-jc22.onrender.com/api/puestos/"),
+        fetch("https://render-crud-jc22.onrender.com/api/categorias/")
+      ]);
 
-        setPersonalData({
-          departamento: data.departamento,
-          puesto: data.puesto,
-          categoria: data.categoria,
-          fechaAlta: data.fecha_ingreso,
-          horaIngreso: data.hora_inicio_turno,
-          horaSalida: data.hora_fin_turno,
-          cantidadHoras: data.cantidad_horas_trabajo.toString(),
-          tipoContrato: data.tipo_contrato,
-          estado: data.estado,
-          tipoSemana: data.tipo_semana_laboral,
-          turno: data.turno,
-        });
-      } catch (error) {
-        console.error("Error al obtener datos laborales", error);
-      }
-    };
+      const [depData, pueData, catData] = await Promise.all([
+        depRes.json(),
+        pueRes.json(),
+        catRes.json()
+      ]);
 
-    if (!isNaN(idEmpleado)) {
-      fetchLaboral();
+      setDepartamentos(depData);
+      setPuestos(pueData);
+      setCategorias(catData);
+
+      // Datos laborales del empleado (con IDs)
+      const res = await fetch(
+        `https://render-crud-jc22.onrender.com/empleados/${idEmpleado}/informacion-laboral-completa`
+      );
+      const data = await res.json();
+
+      // Mapear IDs a nombres
+      const departamentoObj = depData.find(
+        (d: Departamento) => d.id_departamento === data.id_departamento
+      );
+      const puestoObj = pueData.find(
+        (p: Puesto) => p.id_puesto === data.id_puesto
+      );
+      const categoriaObj = catData.find(
+        (c: Categoria) => c.id_categoria === data.id_categoria
+      );
+
+      setPersonalData({
+        departamento: departamentoObj ? departamentoObj.nombre : "",
+        puesto: puestoObj ? puestoObj.nombre : "",
+        categoria: categoriaObj ? categoriaObj.nombre_categoria : "",
+        fechaAlta: data.fecha_ingreso,
+        horaIngreso: data.hora_inicio_turno,
+        horaSalida: data.hora_fin_turno,
+        cantidadHoras: data.cantidad_horas_trabajo?.toString() || "",
+        tipoContrato: data.tipo_contrato,
+        estado: data.estado,
+        tipoSemana: data.tipo_semana_laboral,
+        turno: data.turno,
+      });
+    } catch (err) {
+      console.error("Error al cargar datos laborales y opciones", err);
     }
-  }, [idEmpleado]);
+  };
+
+  if (!isNaN(idEmpleado)) {
+    cargarDatos();
+  }
+}, [idEmpleado]);
 
   const handleChange = (e: { target: { name?: string; value: string } }) => {
     const { name, value } = e.target;
@@ -176,7 +221,6 @@ export const EditarDatosLaborales = () => {
 
       alert("Información laboral actualizada correctamente");
       setIsEditable(false);
-      navegar("/administrador/empleados");
     } catch (error) {
       console.error("Error al guardar cambios", error);
     }
@@ -189,60 +233,88 @@ export const EditarDatosLaborales = () => {
 
         <div className="editar-datos-laborales-data-container">
           <div className="editar-datos-laborales-group">
+            {/* Departamento */}
             <div className="editar-datos-laborales-item">
               <p className="editar-datos-laborales-label">Departamento:</p>
-              <select
-                name="departamento"
-                value={personalData.departamento}
-                onChange={handleChange}
-                disabled={!isEditable}
-                className={`editar-datos-laborales-input ${isEditable ? "editable" : ""}`}
-              >
-                <option value="">Seleccione una opción</option>
-                {departamentos.map((dep) => (
-                  <option key={dep.id_departamento} value={dep.nombre}>
-                    {dep.nombre}
-                  </option>
-                ))}
-              </select>
+              {isEditable ? (
+                <select
+                  name="departamento"
+                  value={personalData.departamento}
+                  onChange={handleChange}
+                  className="editar-datos-laborales-input editable"
+                >
+                  <option value="">Seleccione una opción</option>
+                  {departamentos.map((dep) => (
+                    <option key={dep.id_departamento} value={dep.nombre}>
+                      {dep.nombre}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  value={personalData.departamento}
+                  readOnly
+                  className="editar-datos-laborales-input"
+                />
+              )}
             </div>
 
+            {/* Puesto */}
             <div className="editar-datos-laborales-item">
               <p className="editar-datos-laborales-label">Puesto:</p>
-              <select
-                name="puesto"
-                value={personalData.puesto}
-                onChange={handleChange}
-                disabled={!isEditable}
-                className={`editar-datos-laborales-input ${isEditable ? "editable" : ""}`}
-              >
-                <option value="">Seleccione una opción</option>
-                {puestos.map((pue) => (
-                  <option key={pue.id_puesto} value={pue.nombre}>
-                    {pue.nombre}
-                  </option>
-                ))}
-              </select>
+              {isEditable ? (
+                <select
+                  name="puesto"
+                  value={personalData.puesto}
+                  onChange={handleChange}
+                  className="editar-datos-laborales-input editable"
+                >
+                  <option value="">Seleccione una opción</option>
+                  {puestos.map((pue) => (
+                    <option key={pue.id_puesto} value={pue.nombre}>
+                      {pue.nombre}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  value={personalData.puesto}
+                  readOnly
+                  className="editar-datos-laborales-input"
+                />
+              )}
             </div>
 
+            {/* Categoría */}
             <div className="editar-datos-laborales-item">
               <p className="editar-datos-laborales-label">Categoría:</p>
-              <select
-                name="categoria"
-                value={personalData.categoria}
-                onChange={handleChange}
-                disabled={!isEditable}
-                className={`editar-datos-laborales-input ${isEditable ? "editable" : ""}`}
-              >
-                <option value="">Seleccione una opción</option>
-                {categorias.map((cat) => (
-                  <option key={cat.id_categoria} value={cat.nombre_categoria}>
-                    {cat.nombre_categoria}
-                  </option>
-                ))}
-              </select>
+              {isEditable ? (
+                <select
+                  name="categoria"
+                  value={personalData.categoria}
+                  onChange={handleChange}
+                  className="editar-datos-laborales-input editable"
+                >
+                  <option value="">Seleccione una opción</option>
+                  {categorias.map((cat) => (
+                    <option key={cat.id_categoria} value={cat.nombre_categoria}>
+                      {cat.nombre_categoria}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  value={personalData.categoria}
+                  readOnly
+                  className="editar-datos-laborales-input"
+                />
+              )}
             </div>
 
+            {/* Fecha Alta */}
             <div className="editar-datos-laborales-item">
               <p className="editar-datos-laborales-label">Fecha de alta:</p>
               <CalendarioInput
@@ -250,11 +322,11 @@ export const EditarDatosLaborales = () => {
                 onChange={(fecha) =>
                   setPersonalData((prev) => ({ ...prev, fechaAlta: fecha }))
                 }
-                disabled={!isEditable}
               />
             </div>
           </div>
 
+          {/* Segundo grupo */}
           <div className="editar-datos-laborales-group">
             <div className="editar-datos-laborales-item">
               <p className="editar-datos-laborales-label">Hora de ingreso:</p>
@@ -262,7 +334,6 @@ export const EditarDatosLaborales = () => {
                 name="horaIngreso"
                 value={personalData.horaIngreso}
                 onChange={handleChange}
-                disabled={!isEditable}
               />
             </div>
 
@@ -272,7 +343,6 @@ export const EditarDatosLaborales = () => {
                 name="horaSalida"
                 value={personalData.horaSalida}
                 onChange={handleChange}
-                disabled={!isEditable}
               />
             </div>
 
@@ -285,94 +355,119 @@ export const EditarDatosLaborales = () => {
                 max={12}
                 value={personalData.cantidadHoras}
                 onChange={handleChange}
-                disabled={!isEditable}
-                className={`editar-datos-laborales-input ${isEditable ? "editable" : ""}`}
+                className="editar-datos-laborales-input editable"
+                placeholder="Ej: 8"
               />
             </div>
 
             <div className="editar-datos-laborales-item">
               <p className="editar-datos-laborales-label">Tipo de contrato:</p>
-              <select
-                name="tipoContrato"
-                value={personalData.tipoContrato}
-                onChange={handleChange}
-                disabled={!isEditable}
-                className={`editar-datos-laborales-input ${isEditable ? "editable" : ""}`}
-              >
-                <option value="">Seleccione una opción</option>
-                {opcionesTipoContrato.map((opcion) => (
-                  <option key={opcion} value={opcion}>
-                    {opcion}
-                  </option>
-                ))}
-              </select>
+              {isEditable ? (
+                <select
+                  name="tipoContrato"
+                  value={personalData.tipoContrato}
+                  onChange={handleChange}
+                  className="editar-datos-laborales-input editable"
+                >
+                  <option value="">Seleccione una opción</option>
+                  {opcionesTipoContrato.map((opcion) => (
+                    <option key={opcion} value={opcion}>
+                      {opcion}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  value={personalData.tipoContrato}
+                  readOnly
+                  className="editar-datos-laborales-input"
+                />
+              )}
             </div>
 
             <div className="editar-datos-laborales-item">
               <p className="editar-datos-laborales-label">Estado:</p>
-              <select
-                name="estado"
-                value={personalData.estado}
-                onChange={handleChange}
-                disabled={!isEditable}
-                className={`editar-datos-laborales-input ${isEditable ? "editable" : ""}`}
-              >
-                <option value="">Seleccione una opción</option>
-                {opcionesEstado.map((opcion) => (
-                  <option key={opcion} value={opcion}>
-                    {opcion}
-                  </option>
-                ))}
-              </select>
+              {isEditable ? (
+                <select
+                  name="estado"
+                  value={personalData.estado}
+                  onChange={handleChange}
+                  className="editar-datos-laborales-input editable"
+                >
+                  <option value="">Seleccione una opción</option>
+                  {opcionesEstado.map((opcion) => (
+                    <option key={opcion} value={opcion}>
+                      {opcion}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  value={personalData.estado}
+                  readOnly
+                  className="editar-datos-laborales-input"
+                />
+              )}
             </div>
 
             <div className="editar-datos-laborales-item">
               <p className="editar-datos-laborales-label">Semana laboral:</p>
-              <select
-                name="tipoSemana"
-                value={personalData.tipoSemana}
-                onChange={handleChange}
-                disabled={!isEditable}
-                className={`editar-datos-laborales-input ${isEditable ? "editable" : ""}`}
-              >
-                <option value="">Seleccione una opción</option>
-                {opcionesSemanaLaboral.map((opcion) => (
-                  <option key={opcion} value={opcion}>
-                    {opcion}
-                  </option>
-                ))}
-              </select>
+              {isEditable ? (
+                <select
+                  name="tipoSemana"
+                  value={personalData.tipoSemana}
+                  onChange={handleChange}
+                  className="editar-datos-laborales-input editable"
+                >
+                  <option value="">Seleccione una opción</option>
+                  {opcionesSemanaLaboral.map((opcion) => (
+                    <option key={opcion} value={opcion}>
+                      {opcion}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  value={personalData.tipoSemana}
+                  readOnly
+                  className="editar-datos-laborales-input"
+                />
+              )}
             </div>
 
             <div className="editar-datos-laborales-item">
               <p className="editar-datos-laborales-label">Turno:</p>
-              <select
-                name="turno"
-                value={personalData.turno}
-                onChange={handleChange}
-                disabled={!isEditable}
-                className={`editar-datos-laborales-input ${isEditable ? "editable" : ""}`}
-              >
-                <option value="">Seleccione una opción</option>
-                {opcionesTurno.map((opcion) => (
-                  <option key={opcion} value={opcion}>
-                    {opcion}
-                  </option>
-                ))}
-              </select>
+              {isEditable ? (
+                <select
+                  name="turno"
+                  value={personalData.turno}
+                  onChange={handleChange}
+                  className="editar-datos-laborales-input editable"
+                >
+                  <option value="">Seleccione una opción</option>
+                  {opcionesTurno.map((opcion) => (
+                    <option key={opcion} value={opcion}>
+                      {opcion}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  value={personalData.turno}
+                  readOnly
+                  className="editar-datos-laborales-input"
+                />
+              )}
             </div>
           </div>
         </div>
 
         <div className="editar-datos-laborales-buttons">
-          {!isEditable ? (
-            <button
-              className="editar-datos-laborales-btn guardar"
-              onClick={() => setIsEditable(true)}
-            >
-              Modificar Información
-            </button>
-          ) : (
+          {isEditable ? (
             <>
               <button
                 className="editar-datos-laborales-btn guardar"
@@ -382,11 +477,22 @@ export const EditarDatosLaborales = () => {
               </button>
               <button
                 className="editar-datos-laborales-btn cancelar"
-                onClick={() => window.location.reload()}
+                onClick={() => navegar("/administrador/empleados")}
+                type="button"
               >
                 Cancelar
               </button>
             </>
+          ) : (
+            <button
+              className="editar-datos-laborales-btn editar"
+              onClick={async () => {
+                await cargarOpciones();
+                setIsEditable(true);
+              }}
+            >
+              Modificar Información
+            </button>
           )}
         </div>
       </div>

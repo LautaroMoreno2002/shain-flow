@@ -107,6 +107,16 @@
   background-color: #c82333;
 }
 
+.editar-datos-laborales-btn.editar {
+  background-color: var(--c1);
+  color: white;
+  /* otras propiedades */
+}
+
+.editar-datos-laborales-btn.editar:hover {
+  background-color: var(--c2-editar-datos-laborales);
+}
+
 @media (max-width: 900px) {
   .editar-datos-laborales-card {
     margin-left: 2em;
