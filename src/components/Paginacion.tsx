@@ -103,23 +103,44 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
         />
         <span className="icono-busqueda">🔍</span>
       </div>
-
       <ul className="empleado-items">
         {currentItems.length > 0 ? (
           currentItems.map((item) => (
             <div className="empleado-item" key={item.id_empleado}>
-              <span className="icono-perfil">
-                {item.imagen_perfil_url ? (
-                  <img src={item.imagen_perfil_url} alt="" width="50px" />
-                ) : (
-                  <span className="icono-perfil">👤</span>
+              <div className="icono-header">
+                <span className="icono-perfil">
+                  {item.imagen_perfil_url ? (
+                    <img src={item.imagen_perfil_url} alt="" width="50px" />
+                  ) : (
+                    <span className="icono-perfil">👤</span>
+                  )}
+                </span>
+
+                {/* Mostrar íconos solo si el usuario es administrador */}
+                {usuario?.rol === "2" && (
+                  <div className="acciones-iconos">
+                    <NavLink
+                      to={`/administrador/enviar-email/${item.id_empleado}`}
+                      className="emoji-correo"
+                      title="Enviar email"
+                    >
+                      📧
+                    </NavLink>
+                    <NavLink
+                      to={`/administrador/asistencias/${item.id_empleado}`}
+                      className="emoji-calendario"
+                      title="Ver asistencias"
+                    >
+                      📅
+                    </NavLink>
+                  </div>
                 )}
-              </span>
+              </div>
               <span className="empleado-nombre">
                 {item.nombre} {item.apellido}
               </span>
               {usuario?.permisos.editar_datos_personales &&
-                (usuario.rol === "3" || usuario.rol === "4") && (
+                usuario.rol === "3" && (
                   <NavLink
                     className="link"
                     to={`/supervisor/asistencias/${item.id_empleado}`}
@@ -142,7 +163,6 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     Ver nomina
                   </NavLink>
                 )}
-
               {usuario?.permisos.editar_datos_personales &&
                 usuario.rol == "2" && ( // verifica si el usuario tiene permiso para editar datos personales de los empleados
                   <NavLink

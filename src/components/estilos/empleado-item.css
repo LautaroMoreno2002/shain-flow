@@ -67,6 +67,32 @@
   cursor: pointer;
   font-size: 1rem;
 }
+.icono-header {
+  display: flex;
+  align-items: center;
+}
+
+.acciones-iconos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 140px; /* separa del 👤 */
+}
+
+.emoji-calendario,
+.emoji-correo {
+  font-size: 1.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: #2a9df4;
+  transition: transform 0.2s ease;
+}
+
+.emoji-calendario:hover,
+.emoji-correo:hover {
+  transform: scale(1.2);
+  color: #1b6fc2;
+}
 
 @media (max-width: 800px) {
   .empleado-items {

@@ -203,7 +203,7 @@ export const EditarDatosLaborales: React.FC<EditarDatosLaboralesProps> = ({
         estado: personalData.estado,
         tipo_semana_laboral: personalData.tipoSemana,
       };
-
+console.log("Payload que se envía:", payload);
       const res = await fetch(
         "https://render-crud-jc22.onrender.com/api/informacion-laboral/modificar",
         {

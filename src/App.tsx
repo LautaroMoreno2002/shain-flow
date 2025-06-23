@@ -38,8 +38,8 @@ import { UserProvider } from "./context/UserContext";
 import { NuevoConcepto } from "./components/NuevoConcepto";
 import { ConfiguracionAsistencia } from "./components/ConfigurarAsistencias";
 import { AsistenciasEmpleado } from "./routes/Pantallas/EmpleadoAsistencias";
-import { EditarDatosLaborales } from "./routes/Pantallas/EditarDatosLaborales";
-
+import { EditarDatosLaboralesWrapper } from "./routes/Pantallas/EditarDatosLaboralesWrapper";
+import EnviarEmailEmpleado from "./components/EnviarMail";
 // import { Dashboard } from './components/dashboard'
 
 function App() {
@@ -73,9 +73,10 @@ function App() {
             <Route path="datosLaborales" element={<DatosLaborales />}></Route>
             {/* <Route path="confirmacion" element={<Confirmacion />}></Route> */}
             <Route path="empleados" element={<Empleados />}></Route>
+
             <Route
               path="empleados/:id_empleado/editar-datos-laborales"
-              element={<EditarDatosLaborales />}
+              element={<EditarDatosLaboralesWrapper />}
             />
             <Route
               path="empleados/editarEmpleado"
@@ -97,6 +98,11 @@ function App() {
             <Route path="agregar-salario" element={<AgregarSalario />}></Route>
             <Route path="agregar-concepto" element={<NuevoConcepto />}></Route>
             <Route path="agregar-datos" element={<AgregarDatos />}></Route>
+            <Route
+              path="/administrador/asistencias/:idEmpleado"
+              element={<AsistenciasEmpleado />}
+            />
+            <Route path="/administrador/enviar-email/:id_empleado" element={<EnviarEmailEmpleado />} />
             <Route
               path="configuracion-asistencia"
               element={<ConfiguracionAsistencia />}

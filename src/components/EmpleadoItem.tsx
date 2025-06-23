@@ -3,11 +3,6 @@ import "./estilos/empleado-item.css";
 import type { Empleado } from "../routes/Pantallas/Empleados";
 import { useUser } from "../context/UserContext";
 
-// interface Empleado {
-//   id: number;
-//   nombre: string;
-// }
-
 export interface EmpleadoItemProps {
   empleado: Empleado;
 }
@@ -17,7 +12,6 @@ export const EmpleadoItem = ({ empleado }: EmpleadoItemProps) => {
 
   return (
     <div className="empleado-item">
-      {/* <span className="icono-perfil">👤</span> */}
       <span className="icono-perfil">
         {empleado.imagen_perfil_url ? (
           <img src={empleado.imagen_perfil_url} alt="" width="50px" />
@@ -25,6 +19,21 @@ export const EmpleadoItem = ({ empleado }: EmpleadoItemProps) => {
           <span className="icono-perfil">👤</span>
         )}
       </span>
+      <NavLink
+        to={`/administrador/enviar-email/${empleado.id_empleado}`}
+        className="emoji-correo"
+        title="Enviar email"
+      >
+        📧
+      </NavLink>
+      <NavLink
+        to={`/administrador/asistencias/${empleado.id_empleado}`}
+        className="emoji-calendario"
+        title="Ver asistencias"
+      >
+        📅
+      </NavLink>
+
       <span className="empleado-nombre">
         {empleado.nombre} {empleado.apellido}
       </span>
