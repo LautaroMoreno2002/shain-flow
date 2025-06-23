@@ -67,6 +67,9 @@ export const Empleados = () => {
   const agregarDatos = () => {
     navegar("/administrador/agregar-datos");
   };
+   const ConfiguracionAsistencia = () => {
+    navegar("/administrador/configuracion-asistencia");
+  };
 
   const manejarCambio = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -189,7 +192,7 @@ export const Empleados = () => {
           </button>)}
                   {usuario?.permisos.editar_datos_personales &&
         (usuario.rol == "2") && (
-          <button className="button-empleado" onClick={agregarDatos}>
+          <button className="button-empleado" onClick={ConfiguracionAsistencia}>
             <span className="plus">➕</span> Configurar asistencias
           </button>)}
         </div>
