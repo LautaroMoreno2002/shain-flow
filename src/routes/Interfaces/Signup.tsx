@@ -423,6 +423,8 @@ export const Signup = () => {
                     <option value="">Selecciona un género</option>
                     <option value="Masculino">Masculino</option>
                     <option value="Femenino">Femenino</option>
+                    <option value="No binario">No binario</option>
+                    <option value="Prefiere no especificar">Prefiere no especificar</option>
                     <option value="Otro">Otro</option>
                   </select>
 

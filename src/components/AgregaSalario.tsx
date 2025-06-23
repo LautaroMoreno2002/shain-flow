@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CalendarioInput from "./Calendario";
 import "./estilos/FormularioSalario.css";
@@ -9,6 +9,19 @@ interface NuevoSalario {
   categoria: string;
   valor: string;
   fecha_inicio: string; // Formato "YYYY-MM-DD" o "" vacío
+}
+
+interface Puesto {
+  id: number;
+  nombre: string;
+}
+interface Departamento {
+  id: number;
+  nombre: string;
+}
+interface Categoria {
+  id_categoria: number;
+  nombre_categoria: string;
 }
 
 export function AgregarSalario() {
@@ -26,45 +39,42 @@ export function AgregarSalario() {
 
   const [historialSalarios, setHistorialSalarios] = useState<any[]>([]);
 
-  const puestosMap: { [key: string]: number } = {
-    "Arquitecto de Software": 2,
-    DevOps: 3,
-    "QA Analyst": 4,
-    "Scrum Master": 5,
-    "Project Manager": 6,
-    "Product Owner": 7,
-    "Analista Funcional": 8,
-    "Backend Developer": 9,
-    "Frontend Developer": 10,
-    "Fullstack Developer": 11,
-    "Data Analyst": 12,
-    "Data Engineer": 13,
-    "Data Scientist": 14,
-    "UX/UI Designer": 15,
-    CTO: 16,
-  };
+  // Estados para opciones dinámicas
+  const [puestos, setPuestos] = useState<Puesto[]>([]);
+  const [departamentos, setDepartamentos] = useState<Departamento[]>([]);
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
 
-  const categoriasMap: { [key: string]: number } = {
-    Trainee: 1,
-    Junior: 2,
-    "Semi Senior": 3,
-    Senior: 4,
-    "Tech Lead": 5,
-  };
+  useEffect(() => {
+    // Carga de puestos
+    fetch("https://render-crud-jc22.onrender.com/api/puestos/")
+      .then((res) => res.json())
+      .then(setPuestos)
+      .catch(console.error);
 
-  const departamentosMap: { [key: string]: number } = {
-    "Recursos Humanos": 1,
-    "Dirección General": 2,
-    "Finanzas y Contabilidad": 3,
-    "Marketing y Ventas": 4,
-    "Producción y Operaciones": 5,
-    "Tecnología de la Información (TI)": 6,
-    Logística: 7,
-  };
+    // Carga de departamentos
+    fetch("https://render-crud-jc22.onrender.com/api/departamentos/")
+      .then((res) => res.json())
+      .then(setDepartamentos)
+      .catch(console.error);
 
-  const manejarCambio = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+    // Carga de categorías
+    fetch("https://render-crud-jc22.onrender.com/api/categorias/")
+      .then((res) => res.json())
+      .then(setCategorias)
+      .catch(console.error);
+  }, []);
+
+  // Funciones para obtener ID desde nombre seleccionado
+const getPuestoId = (nombre: string) =>
+  puestos.find((p) => p.nombre === nombre)?.id;
+
+const getDepartamentoId = (nombre: string) =>
+  departamentos.find((d) => d.nombre === nombre)?.id;
+
+const getCategoriaId = (nombre: string) =>
+  categorias.find((c) => c.nombre_categoria === nombre)?.id_categoria;
+
+  const manejarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     const actualizado = { ...nuevoSalario, [name]: value };
     setNuevoConcepto(actualizado);
@@ -76,7 +86,6 @@ export function AgregarSalario() {
     }
   };
 
-  // manejarFecha recibe string formato "YYYY-MM-DD" o ""
   const manejarFecha = (fechaStr: string) => {
     const actualizado = { ...nuevoSalario, fecha_inicio: fechaStr };
     setNuevoConcepto(actualizado);
@@ -92,9 +101,10 @@ export function AgregarSalario() {
     departamento: string,
     categoria: string
   ) => {
-    const puesto_id = puestosMap[puesto];
-    const departamento_id = departamentosMap[departamento];
-    const categoria_id = categoriasMap[categoria];
+    const puesto_id = getPuestoId(puesto);
+    const departamento_id = getDepartamentoId(departamento);
+    const categoria_id = getCategoriaId(categoria);
+
 
     if (!puesto_id || !departamento_id || !categoria_id) return;
 
@@ -125,9 +135,9 @@ export function AgregarSalario() {
     setErrores(nuevosErrores);
     if (Object.keys(nuevosErrores).length > 0) return;
 
-    const puesto_id = puestosMap[nuevoSalario.puesto];
-    const departamento_id = departamentosMap[nuevoSalario.departamento];
-    const categoria_id = categoriasMap[nuevoSalario.categoria];
+    const puesto_id = getPuestoId(nuevoSalario.puesto);
+    const departamento_id = getDepartamentoId(nuevoSalario.departamento);
+    const categoria_id = getCategoriaId(nuevoSalario.categoria);
 
     if (!puesto_id || !departamento_id || !categoria_id) {
       alert("Por favor, seleccione valores válidos para puesto, departamento y categoría.");
@@ -168,9 +178,9 @@ export function AgregarSalario() {
     navegar("/administrador/empleados-nomina");
   };
 
-  const opcionesDepartamentos = Object.keys(departamentosMap);
-  const opcionesPuestos = Object.keys(puestosMap);
-  const opcionesCategoria = Object.keys(categoriasMap);
+  const opcionesDepartamentos = departamentos.map((d) => d.nombre);
+  const opcionesPuestos = puestos.map((p) => p.nombre);
+  const opcionesCategoria = categorias.map((c) => c.nombre_categoria);
 
   return (
     <div className="agregar-salario">
@@ -228,31 +238,31 @@ export function AgregarSalario() {
         </div>
       </form>
 
-{historialSalarios.length > 0 && (
-  <div className="historial-salarios-tabla">
-    <h4>Historial de salarios anteriores</h4>
-    <table className="historial-salarios-tabla">
-      <thead>
-        <tr>
-          <th>Fecha Inicio</th>
-          <th>Fecha Fin</th>
-          <th>Valor</th>
-        </tr>
-      </thead>
-      <tbody>
-        {historialSalarios.map((item, index) => (
-          <tr key={index} className={item.fecha_fin === null ? "vigente" : ""}>
-            <td>{item.fecha_inicio}</td>
-            <td>{item.fecha_fin || "Actual"}</td>
-            <td>${item.valor.toLocaleString()}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-)}
+      {historialSalarios.length > 0 && (
+        <div className="historial-salarios-tabla">
+          <h4>Historial de salarios anteriores</h4>
+          <table className="historial-salarios-tabla">
+            <thead>
+              <tr>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              {historialSalarios.map((item, index) => (
+                <tr key={index} className={item.fecha_fin === null ? "vigente" : ""}>
+                  <td>{item.fecha_inicio}</td>
+                  <td>{item.fecha_fin || "Actual"}</td>
+                  <td>${item.valor.toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
-{mensajeError && <p className="mensaje-error">{mensajeError}</p>}
+      {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
     </div>
   );
 }

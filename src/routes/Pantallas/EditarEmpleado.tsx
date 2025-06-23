@@ -48,14 +48,21 @@ export const EditarEmpleado = () => {
     estado: ""
   });
 
+  const opcionesEstadoCivil = [
+  "Soltero/a",
+  "Casado/a",
+  "Divorciado/a",
+  "Viudo/a",
+];
+
   // Función para manejar los cambios en los inputs
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setPersonalData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const { name, value } = e.target;
+  setPersonalData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+};
 
   // Función para guardar los cambios
   const handleSave = async () => {
@@ -266,19 +273,35 @@ export const EditarEmpleado = () => {
                 readOnly={!isEditable}
               />
             </div>
-            <div className="data-item">
+              <div className="data-item">
               <p className="data-item--label">Estado:</p>
-              <input
-                className={`data-item--value ${isEditable ? "editable" : ""}`}
-                type="text"
-                name="estado"
-                value={personalData.estado}
-                onChange={handleChange}
-                readOnly={!isEditable}
-              />
+              {isEditable ? (
+                <select
+                  className="data-item--value editable"
+                  name="estado"
+                  value={personalData.estado}
+                  onChange={handleChange}
+                >
+                  <option value="">Seleccione una opción</option>
+                  {opcionesEstadoCivil.map((estado) => (
+                    <option key={estado} value={estado}>
+                      {estado}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  className="data-item--value"
+                  type="text"
+                  name="estado"
+                  value={personalData.estado}
+                  readOnly
+                />
+              )}
             </div>
           </div>
         </div>
+
         <div className="button-container">
           {!isEditable ? (
             <button className="edit-button" onClick={() => setIsEditable(true)}>

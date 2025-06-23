@@ -258,16 +258,12 @@ export const Empleados = () => {
                       "Colombia",
                       "Venezuela",
                       "Brasil",
-                      "México",
-                      "Guatemala",
-                      "Honduras",
-                      "El Salvador",
-                      "Nicaragua",
-                      "Costa Rica",
-                      "Panamá",
-                      "Cuba",
-                      "República Dominicana",
+                      "México"
                     ]
+                  : campo==="genero"
+                  ? ["Masculino", "Femenino", "No binario", "Prefiere no especificar", "Otro"]
+                  : campo==="estado_civil"
+                  ? ["Soltero/a", "Casado/a", "Divorciado/a", "Viudo/a"]
                   : campo === "rol"
                   ? [
                       "administrador",

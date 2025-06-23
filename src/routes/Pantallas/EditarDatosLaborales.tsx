@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import '../../estilos/datos-personales.css';
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import "../../estilos/datos-personales.css";
 import CalendarioInput from "../../components/Calendario";
-import HoraInput from '../../components/Hora';
+import HoraInput from "../../components/Hora";
 
 interface PersonalDataType {
   departamento: string;
@@ -18,22 +18,43 @@ interface PersonalDataType {
   turno: string;
 }
 
+// Hook genérico para cargar opciones desde endpoint
+function useFetchOptions<T>(url: string) {
+  const [options, setOptions] = useState<T[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) throw new Error("Error al cargar datos");
+        return res.json();
+      })
+      .then((data) => setOptions(data))
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
+  }, [url]);
+
+  return { options, loading, error };
+}
+
 export const EditarDatosLaborales = () => {
   const { id_empleado } = useParams<{ id_empleado: string }>();
   const navegar = useNavigate();
 
   const [personalData, setPersonalData] = useState<PersonalDataType>({
-    departamento: "Sistemas",
-    puesto: "Desarrollador",
-    categoria: "front-end",
+    departamento: "",
+    puesto: "",
+    categoria: "",
     fechaAlta: "2002-04-01",
     horaIngreso: "08:00",
     horaSalida: "16:00",
     cantidadHoras: "08:00",
-    tipoContrato: "Permanente",
+    tipoContrato: "Tiempo indeterminado",
     estado: "Activo",
     tipoSemana: "Normal",
-    turno: "Mañana"
+    turno: "Mañana",
   });
 
   const handleChange = (e: { target: { name?: string; value: string } }) => {
@@ -48,20 +69,43 @@ export const EditarDatosLaborales = () => {
 
   const handleSave = () => {
     console.log(`Datos guardados para empleado ${id_empleado}:`, personalData);
-    navegar('/administrador/empleados');
+    navegar("/administrador/empleados");
   };
 
-  const opcionesDepartamentos = ['Recursos Humanos', 'Sistemas', 'Contabilidad'];
-  const opcionesPuetos = ['Arquitecto de Software', 'DevOps', 'QA Analyst', 'Scrum Master', 'Project Manager',
-    'Product Owner', 'Analista Funcional', 'Backend Developer', 'Frontend Developer', 'Fullstack Developer',
-    'Data Analyst', 'Data Engineer', 'Data Scientist', 'UX/UI Designer', 'CTO'];
-  const opcionesCategoria = ['Trainee', 'Junior', 'Semi Senior', 'Senior', 'Teach Lead'];
-  const opcionesTipoContrato = ['Tiempo indeterminado', 'Tiempo parcial', 'A plazo fijo', 'Por temporada',
-    'Eventual', 'Pasantia'];
-  const opcionesEstado = ['Activo', 'Suspendido', 'Desafectado', 'Licencia', 'En formación', 'Jubilado',
-    'Vacaciones'];
-  const opcionesSemanaLaboral = ['Normal', 'Extendida', 'Completa'];
-  const opcionesTurno = ['Mañana', 'Tarde', 'Noche'];
+  // Cargar datos dinámicos
+  const { options: departamentos } = useFetchOptions<{
+    id_departamento: number;
+    nombre: string;
+  }>("https://render-crud-jc22.onrender.com/api/departamentos/");
+  const { options: puestos } = useFetchOptions<{
+    id_puesto: number;
+    nombre: string;
+  }>("https://render-crud-jc22.onrender.com/api/puestos/");
+  const { options: categorias } = useFetchOptions<{
+    id_categoria: number;
+    nombre_categoria: string;
+  }>("https://render-crud-jc22.onrender.com/api/categorias/");
+
+  // Opciones estáticas (pueden quedar igual)
+  const opcionesTipoContrato = [
+    "Tiempo indeterminado",
+    "Tiempo parcial",
+    "A plazo fijo",
+    "Por temporada",
+    "Eventual",
+    "Pasantia",
+  ];
+  const opcionesEstado = [
+    "Activo",
+    "Suspendido",
+    "Desafectado",
+    "Licencia",
+    "En formación",
+    "Jubilado",
+    "Vacaciones",
+  ];
+  const opcionesSemanaLaboral = ["Normal", "Extendida", "Completa"];
+  const opcionesTurno = ["Mañana", "Tarde", "Noche"];
 
   return (
     <div className="container-personal-data">
@@ -79,8 +123,10 @@ export const EditarDatosLaborales = () => {
                 className="data-item--value editable"
               >
                 <option value="">Seleccione una opción</option>
-                {opcionesDepartamentos.map((opcion) => (
-                  <option key={opcion} value={opcion}>{opcion}</option>
+                {departamentos.map((dep) => (
+                  <option key={dep.id_departamento} value={dep.nombre}>
+                    {dep.nombre}
+                  </option>
                 ))}
               </select>
             </div>
@@ -94,8 +140,10 @@ export const EditarDatosLaborales = () => {
                 className="data-item--value editable"
               >
                 <option value="">Seleccione una opción</option>
-                {opcionesPuetos.map((opcion) => (
-                  <option key={opcion} value={opcion}>{opcion}</option>
+                {puestos.map((pue) => (
+                  <option key={pue.id_puesto} value={pue.nombre}>
+                    {pue.nombre}
+                  </option>
                 ))}
               </select>
             </div>
@@ -109,8 +157,10 @@ export const EditarDatosLaborales = () => {
                 className="data-item--value editable"
               >
                 <option value="">Seleccione una opción</option>
-                {opcionesCategoria.map((opcion) => (
-                  <option key={opcion} value={opcion}>{opcion}</option>
+                {categorias.map((cat) => (
+                  <option key={cat.id_categoria} value={cat.nombre_categoria}>
+                    {cat.nombre_categoria}
+                  </option>
                 ))}
               </select>
             </div>
@@ -164,7 +214,9 @@ export const EditarDatosLaborales = () => {
               >
                 <option value="">Seleccione una opción</option>
                 {opcionesTipoContrato.map((opcion) => (
-                  <option key={opcion} value={opcion}>{opcion}</option>
+                  <option key={opcion} value={opcion}>
+                    {opcion}
+                  </option>
                 ))}
               </select>
             </div>
@@ -179,7 +231,9 @@ export const EditarDatosLaborales = () => {
               >
                 <option value="">Seleccione una opción</option>
                 {opcionesEstado.map((opcion) => (
-                  <option key={opcion} value={opcion}>{opcion}</option>
+                  <option key={opcion} value={opcion}>
+                    {opcion}
+                  </option>
                 ))}
               </select>
             </div>
@@ -194,7 +248,9 @@ export const EditarDatosLaborales = () => {
               >
                 <option value="">Seleccione una opción</option>
                 {opcionesSemanaLaboral.map((opcion) => (
-                  <option key={opcion} value={opcion}>{opcion}</option>
+                  <option key={opcion} value={opcion}>
+                    {opcion}
+                  </option>
                 ))}
               </select>
             </div>
@@ -209,7 +265,9 @@ export const EditarDatosLaborales = () => {
               >
                 <option value="">Seleccione una opción</option>
                 {opcionesTurno.map((opcion) => (
-                  <option key={opcion} value={opcion}>{opcion}</option>
+                  <option key={opcion} value={opcion}>
+                    {opcion}
+                  </option>
                 ))}
               </select>
             </div>
@@ -219,6 +277,13 @@ export const EditarDatosLaborales = () => {
         <div className="button-container">
           <button className="save-button" onClick={handleSave}>
             Guardar
+          </button>
+          <button
+            className="cancel-button"
+            onClick={() => navegar("/administrador/empleados")}
+            type="button"
+          >
+            Cancelar
           </button>
         </div>
       </div>
