@@ -187,6 +187,11 @@ export const Empleados = () => {
           <button className="button-empleado" onClick={agregarDatos}>
             <span className="plus">➕</span> Agregar datos
           </button>)}
+                  {usuario?.permisos.editar_datos_personales &&
+        (usuario.rol == "2") && (
+          <button className="button-empleado" onClick={agregarDatos}>
+            <span className="plus">➕</span> Configurar asistencias
+          </button>)}
         </div>
       </div>
 
