@@ -2,6 +2,16 @@ import React, { useState, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import "./estilos/empleado-item.css";
 import { useUser } from "../context/UserContext";
+import {
+  FaEdit,
+  FaBriefcase,
+  FaClock,
+  FaTimesCircle,
+  FaCalendarCheck,
+  FaMoneyBillWave,
+  FaChartBar,
+  FaCalendar,
+} from 'react-icons/fa';
 
 type Item = {
   id_empleado: number;
@@ -94,12 +104,11 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
   return (
     <div>
       <div className="busqueda-container">
-        <input
+        <input className="busqueda-input"
           type="text"
           placeholder="Buscar empleado por nombre, apellido o ID..."
           value={searchTerm}
           onChange={handleSearch}
-          style={{ marginBottom: "1rem", padding: "4px" }}
         />
         <span className="icono-busqueda">🔍</span>
       </div>
@@ -107,24 +116,26 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
       <ul className="empleado-items">
         {currentItems.length > 0 ? (
           currentItems.map((item) => (
-            <div className="empleado-item" key={item.id_empleado}>
-              <span className="icono-perfil">
-                {item.imagen_perfil_url ? (
+            <div className="empleado-item" key={item.id_empleado} style={{
+              backgroundImage: `url(${item.imagen_perfil_url})`, }}>
+              <span className="icono-perfil">👤
+                {/*{item.imagen_perfil_url ? (
                   <img src={item.imagen_perfil_url} alt="" width="50px" />
                 ) : (
                   <span className="icono-perfil">👤</span>
-                )}
+                )}*/}
               </span>
               <span className="empleado-nombre">
                 {item.nombre} {item.apellido}
               </span>
+              <div className="empledo-botones">
               {usuario?.permisos.editar_datos_personales &&
                 (usuario.rol === "3" || usuario.rol === "4") && (
                   <NavLink
                     className="link"
                     to={`/supervisor/asistencias/${item.id_empleado}`}
                   >
-                    Ver asistencias
+                    <FaCalendar className="icono" title="Ver asistencias" />
                   </NavLink>
                 )}
               {usuario?.permisos.editar_datos_personales &&
@@ -133,13 +144,13 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     className={"link"}
                     to={`/supervisor/reportes/${item.id_empleado}`}
                   >
-                    Ver Reportes
+                    <FaChartBar className="icono" title="Ver reportes" />
                   </NavLink>
                 )}
               {usuario?.permisos.editar_datos_personales &&
                 (usuario.rol == "3" || usuario.rol == "4") && (
                   <NavLink className={"link"} to="/supervisor/ver-nomina">
-                    Ver nomina
+                    <FaMoneyBillWave className="icono" title="Ver nomina" />
                   </NavLink>
                 )}
 
@@ -150,7 +161,7 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     to="/administrador/empleados/editarEmpleado"
                     state={item}
                   >
-                    Editar
+                    <FaEdit className="icono" title="Editar" />
                   </NavLink>
                 )}
               {usuario?.permisos.editar_datos_personales &&
@@ -159,7 +170,7 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     className={"link"}
                     to={`/administrador/empleados/${item.id_empleado}/agregar-datos-laborales`}
                   >
-                    Agregar datos laborales
+                    <FaBriefcase className="icono" title="Agregar datos laborales" />
                   </NavLink>
                 )}
               {usuario?.permisos.editar_datos_personales &&
@@ -168,7 +179,7 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     className="link"
                     to={`/administrador/empleados/${item.id_empleado}/agregar-jornada`}
                   >
-                    Agregar jornada
+                    <FaClock className="icono" title="Agregar jornada" />
                   </NavLink>
                 )}
               {usuario?.permisos.editar_datos_personales &&
@@ -177,7 +188,7 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     className="link"
                     to={`/administrador/empleados/${item.id_empleado}/inasistencia`}
                   >
-                    Agregar inasistencia
+                    <FaTimesCircle className="icono" title="Agregar inasistencia" />
                   </NavLink>
                 )}
               {usuario?.permisos.editar_datos_personales &&
@@ -186,9 +197,10 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     className="link"
                     to={`/administrador/empleados/${item.id_empleado}/asistenciaUnica`}
                   >
-                    Agregar asistencia unica
+                    <FaCalendarCheck className="icono" title="Agregar asistencia única" />
                   </NavLink>
                 )}
+                </div>
             </div>
           ))
         ) : (
@@ -207,17 +219,12 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
 
         <span>Página</span>
 
-        <input
+        <input className="pagina-input"
           type="text"
           value={inputPage}
           onChange={handleInputChange}
           onBlur={handleInputBlur}
           onKeyDown={handleInputKeyDown}
-          style={{
-            width: "2.5em",
-            textAlign: "center",
-            padding: "2px",
-          }}
         />
 
         <span>de {totalPages}</span>

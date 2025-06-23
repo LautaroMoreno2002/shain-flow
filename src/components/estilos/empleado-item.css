@@ -23,7 +23,6 @@
 }
 
 .empleado-item {
-  background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   padding: 1rem;
@@ -33,6 +32,25 @@
   align-items: flex-start;
   gap: 0.5rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-color: #6665;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.link {
+  padding: 0.2rem;
+}
+
+.busqueda-input {
+  margin-bottom: 1rem;
+  padding: 4px;
+}
+
+.pagina-input {
+  width: 2.5em;
+  text-align: center;
+  padding: 2px;
 }
 
 .empleado-item:hover {
@@ -47,6 +65,8 @@
 
 .empleado-nombre {
   font-size: 1.2em;
+  color: #f0eaea;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .link {
