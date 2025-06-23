@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
-import '../../estilos/datosLaborales.css'
-import { datosLabPorId, nominasPorId } from '../../services/api';
-import { CircularProgress } from '@mui/material';
-import { useUser } from '../../context/UserContext';
+import { useEffect, useState } from "react";
+import "../../estilos/datosLaborales.css";
+import { datosLabPorId, nominasPorId } from "../../services/api";
+import { CircularProgress } from "@mui/material";
+import { useUser } from "../../context/UserContext";
 
 interface DatosLaborales {
   departamento: string;
@@ -42,7 +42,9 @@ export const DatosLaboralesDescrip = () => {
     const fetchDatos = async () => {
       try {
         setCargando(true);
-        const response = await datosLabPorId(JSON.stringify(usuario?.id_empleado) || "1"); // debe retornar el JSON
+        const response = await datosLabPorId(
+          JSON.stringify(usuario?.id_empleado) || "1"
+        ); // debe retornar el JSON
         setDatos(response);
       } catch (error) {
         console.error("Error al obtener los datos laborales:", error);
@@ -55,47 +57,51 @@ export const DatosLaboralesDescrip = () => {
   }, []);
 
   return (
-    <div className="cont-datos-laborales" style={{ position: 'relative' }}>
+    <div className="datos-laborales-box" style={{ position: "relative" }}>
       {cargando && (
-        <div className="overlay">
+        <div className="datos-laborales-overlay">
           <CircularProgress />
         </div>
       )}
-      <div className="datos" style={{ filter: cargando ? 'blur(2px)' : 'none' }}>
-        <h2 className="titulo">Datos laborales</h2>
-        <div className="cont-datos">
-          <div className="cont-datos__item">
-            <p className="cont-datos__item--label">Departamento:</p>
-            <p className="cont-datos__item--value">{datos?.departamento || "—"}</p>
+      <div
+        className="datos-laborales-content"
+        style={{ filter: cargando ? "blur(2px)" : "none" }}
+      >
+        <h2 className="datos-laborales-title">Datos laborales</h2>
+        <div className="datos-laborales-grid">
+          <div className="datos-laborales-item">
+            <p className="label">Departamento:</p>
+            <p className="value">{datos?.departamento || "—"}</p>
           </div>
-          <div className="cont-datos__item">
-            <p className="cont-datos__item--label">Puesto:</p>
-            <p className="cont-datos__item--value">{datos?.puesto || "—"}</p>
+          <div className="datos-laborales-item">
+            <p className="label">Puesto:</p>
+            <p className="value">{datos?.puesto || "—"}</p>
           </div>
-          <div className="cont-datos__item">
-            <p className="cont-datos__item--label">Turno:</p>
-            <p className="cont-datos__item--value">{datos?.turno || "—"}</p>
+          <div className="datos-laborales-item">
+            <p className="label">Turno:</p>
+            <p className="value">{datos?.turno || "—"}</p>
           </div>
-          <div className="cont-datos__item">
-            <p className="cont-datos__item--label">Horario de entrada:</p>
-            <p className="cont-datos__item--value">{datos?.horario_entrada?.slice(0, 5) || "—"}</p>
-            <p className="cont-datos__item--label">Horario de salida:</p>
-            <p className="cont-datos__item--value">{datos?.horario_salida?.slice(0, 5) || "—"}</p>
+          <div className="datos-laborales-item">
+            <p className="label">Horario de entrada:</p>
+            <p className="value">
+              {datos?.horario_entrada?.slice(0, 5) || "—"}
+            </p>
+            <p className="label">Horario de salida:</p>
+            <p className="value">{datos?.horario_salida?.slice(0, 5) || "—"}</p>
           </div>
-          <div className="cont-datos__item">
-            <p className="cont-datos__item--label">Fecha de ingreso:</p>
-            <p className="cont-datos__item--value">{datos?.fecha_ingreso || "—"}</p>
+          <div className="datos-laborales-item">
+            <p className="label">Fecha de ingreso:</p>
+            <p className="value">{datos?.fecha_ingreso || "—"}</p>
           </div>
-          <div className="cont-datos__item">
-            <p className="cont-datos__item--label">Tipo de contrato:</p>
-            <p className="cont-datos__item--value">{datos?.tipo_contrato || "—"}</p>
+          <div className="datos-laborales-item">
+            <p className="label">Tipo de contrato:</p>
+            <p className="value">{datos?.tipo_contrato || "—"}</p>
           </div>
         </div>
       </div>
     </div>
   );
 };
-
 
 export const UltRecibos = () => {
   // const [nominas, setNominas] = useState<any | null>(null);
@@ -106,7 +112,9 @@ export const UltRecibos = () => {
     const fetchNominas = async () => {
       try {
         setCargando(true);
-        const response = await nominasPorId(JSON.stringify(usuario?.id_empleado)); 
+        const response = await nominasPorId(
+          JSON.stringify(usuario?.id_empleado)
+        );
         console.log(response);
         console.log(response.nominas);
         // setNominas(response);
@@ -124,7 +132,7 @@ export const UltRecibos = () => {
       <div className="cont-recibos__title">
         <h2>Últimos recibos de sueldo</h2>
       </div>
-      <div className="cont-recibos__table" style={{ position: 'relative' }}>
+      <div className="cont-recibos__table" style={{ position: "relative" }}>
         {cargando && (
           <div className="overlay">
             <CircularProgress />
@@ -161,66 +169,66 @@ export const UltRecibos = () => {
     </div>
   );
 }; */}
-      <table>
-        <thead>
-          <tr>
-            <th>Periodo</th>
-            <th>Salario base</th>
-            <th>Bono presentismo</th>
-            <th>Bono antiguedad</th>
-            <th>Monto hora extra</th>
-            <th>Descuento</th>
-            <th>Sueldo bruto</th>
-            <th>Sueldo neto</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td data-label="Periodo">01/2023</td>
-            <td data-label="Salario base">$3000</td>
-            <td data-label="Bono presentismo">$1000</td>
-            <td data-label="Bono antiguedad">$500</td>
-            <td data-label="Monto hora extra">$1500</td>
-            <td data-label="Descuento">$200</td>
-            <td data-label="Sueldo bruto">$5000</td>
-            <td data-label="Sueldo neto">$4000</td>
-          </tr>
-          <tr>
-            <td data-label="Periodo">02/2023</td>
-            <td data-label="Salario base">$3000</td>
-            <td data-label="Bono presentismo">$1000</td>
-            <td data-label="Bono antiguedad">$500</td>
-            <td data-label="Monto hora extra">$1500</td>
-            <td data-label="Descuento">$200</td>
-            <td data-label="Sueldo bruto">$5000</td>
-            <td data-label="Sueldo neto">$4000</td>
-          </tr>
-          <tr>
-            <td data-label="Periodo">03/2023</td>
-            <td data-label="Salario base">$3000</td>
-            <td data-label="Bono presentismo">$1000</td>
-            <td data-label="Bono antiguedad">$500</td>
-            <td data-label="Monto hora extra">$1500</td>
-            <td data-label="Descuento">$200</td>
-            <td data-label="Sueldo bruto">$5000</td>
-            <td data-label="Sueldo neto">$4000</td>
-          </tr>
-          <tr>
-            <td data-label="Periodo">04/2023</td>
-            <td data-label="Salario base">$3000</td>
-            <td data-label="Bono presentismo">$1000</td>
-            <td data-label="Bono antiguedad">$500</td>
-            <td data-label="Monto hora extra">$1500</td>
-            <td data-label="Descuento">$200</td>
-            <td data-label="Sueldo bruto">$5000</td>
-            <td data-label="Sueldo neto">$4000</td>
-          </tr>
-        </tbody>
-      </table>
-    </div> 
+        <table>
+          <thead>
+            <tr>
+              <th>Periodo</th>
+              <th>Salario base</th>
+              <th>Bono presentismo</th>
+              <th>Bono antiguedad</th>
+              <th>Monto hora extra</th>
+              <th>Descuento</th>
+              <th>Sueldo bruto</th>
+              <th>Sueldo neto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Periodo">01/2023</td>
+              <td data-label="Salario base">$3000</td>
+              <td data-label="Bono presentismo">$1000</td>
+              <td data-label="Bono antiguedad">$500</td>
+              <td data-label="Monto hora extra">$1500</td>
+              <td data-label="Descuento">$200</td>
+              <td data-label="Sueldo bruto">$5000</td>
+              <td data-label="Sueldo neto">$4000</td>
+            </tr>
+            <tr>
+              <td data-label="Periodo">02/2023</td>
+              <td data-label="Salario base">$3000</td>
+              <td data-label="Bono presentismo">$1000</td>
+              <td data-label="Bono antiguedad">$500</td>
+              <td data-label="Monto hora extra">$1500</td>
+              <td data-label="Descuento">$200</td>
+              <td data-label="Sueldo bruto">$5000</td>
+              <td data-label="Sueldo neto">$4000</td>
+            </tr>
+            <tr>
+              <td data-label="Periodo">03/2023</td>
+              <td data-label="Salario base">$3000</td>
+              <td data-label="Bono presentismo">$1000</td>
+              <td data-label="Bono antiguedad">$500</td>
+              <td data-label="Monto hora extra">$1500</td>
+              <td data-label="Descuento">$200</td>
+              <td data-label="Sueldo bruto">$5000</td>
+              <td data-label="Sueldo neto">$4000</td>
+            </tr>
+            <tr>
+              <td data-label="Periodo">04/2023</td>
+              <td data-label="Salario base">$3000</td>
+              <td data-label="Bono presentismo">$1000</td>
+              <td data-label="Bono antiguedad">$500</td>
+              <td data-label="Monto hora extra">$1500</td>
+              <td data-label="Descuento">$200</td>
+              <td data-label="Sueldo bruto">$5000</td>
+              <td data-label="Sueldo neto">$4000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export const DatosLaborales = () => {
   return (
@@ -228,5 +236,5 @@ export const DatosLaborales = () => {
       <DatosLaboralesDescrip />
       <UltRecibos />
     </div>
-  )
-}
+  );
+};

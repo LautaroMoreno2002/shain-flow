@@ -20,7 +20,7 @@ import { Reportes } from "./routes/Pantallas/Reportes";
 import { CalculoNomina } from "./routes/Pantallas/CalculoNomina";
 import { VerNomina } from "./routes/Pantallas/VerNomina";
 import { EmpleadosNomina } from "./routes/Pantallas/EmpleadosNomina";
-import { EditarDatosLaborales } from "./routes/Pantallas/EditarDatosLaborales";
+import { EditarDatosLaborales } from "./routes/Pantallas/AgregarDatosLaborales";
 import { InformacionBancaria } from "./routes/Pantallas/InformacionBancaria";
 import { CalcularNomina } from "./routes/Pantallas/CalcularNomina";
 import { RegistroFacial } from "./routes/Interfaces/RegistroFacial";

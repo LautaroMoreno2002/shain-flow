@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "../../estilos/datos-personales.css";
+
 import CalendarioInput from "../../components/Calendario";
 import HoraInput from "../../components/Hora";
 
@@ -67,10 +67,77 @@ export const EditarDatosLaborales = () => {
     }));
   };
 
-  const handleSave = () => {
-    console.log(`Datos guardados para empleado ${id_empleado}:`, personalData);
-    navegar("/administrador/empleados");
+  // --- INICIO handleSave modificado para POST ---
+  const handleSave = async () => {
+    if (!id_empleado) {
+      alert("ID de empleado no válido");
+      return;
+    }
+
+    // Buscar los IDs a partir de los nombres seleccionados
+    const departamentoSeleccionado = departamentos.find(
+      (d) => d.nombre === personalData.departamento
+    );
+    const puestoSeleccionado = puestos.find(
+      (p) => p.nombre === personalData.puesto
+    );
+    const categoriaSeleccionada = categorias.find(
+      (c) => c.nombre_categoria === personalData.categoria
+    );
+
+    if (
+      !departamentoSeleccionado ||
+      !puestoSeleccionado ||
+      !categoriaSeleccionada
+    ) {
+      alert("Debe seleccionar departamento, puesto y categoría válidos");
+      return;
+    }
+
+    // Convertir cantidadHoras "HH:mm" a entero horas (solo la parte de las horas)
+    const cantidadHorasInt = parseInt(personalData.cantidadHoras.split(":")[0]);
+
+    const payload = {
+      id_empleado: parseInt(id_empleado),
+      id_departamento: departamentoSeleccionado.id_departamento,
+      id_puesto: puestoSeleccionado.id_puesto,
+      id_categoria: categoriaSeleccionada.id_categoria,
+      fecha_ingreso: personalData.fechaAlta,
+      turno: personalData.turno,
+      hora_inicio_turno: personalData.horaIngreso,
+      hora_fin_turno: personalData.horaSalida,
+      cantidad_horas_trabajo: cantidadHorasInt,
+      tipo_contrato: personalData.tipoContrato,
+      estado: personalData.estado,
+      tipo_semana_laboral: personalData.tipoSemana,
+    };
+
+    try {
+      const res = await fetch(
+        "https://render-crud-jc22.onrender.com/api/informacion-laboral/agregar",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json();
+        alert("Error: " + (err.detail || "No se pudo guardar la información"));
+        return;
+      }
+
+      alert("Información laboral guardada correctamente");
+      navegar("/administrador/empleados");
+    } catch (error) {
+      alert("Error de red");
+      console.error(error);
+    }
   };
+  // --- FIN handleSave modificado ---
 
   // Cargar datos dinámicos
   const { options: departamentos } = useFetchOptions<{
