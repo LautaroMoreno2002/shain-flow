@@ -5,43 +5,23 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { iniciarSesion } from "../../services/api";
 import { useUser } from "../../context/UserContext";
-
+import { CircularProgress } from "@mui/material";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // Estado para mostrar errores
+  const [cargando, setCargando] = useState(false);
   const { usuario, setUsuario } = useUser();
-  // const [errorResponse, setErrorResponse] = useState("");
-
-  // const auth = useAuth();
   const navegar = useNavigate();
-  // const users = [
-  //   {
-  //     username: 'Lautaro Moreno',
-  //     password: '1234',
-  //     rol: 'empleado'
-  //   }, {
-  //     username: 'Pablo Da Silva',
-  //     password: '1234',
-  //     rol: 'administrador'
-  //   }, {
-  //     username: 'Abel Aquino',
-  //     password: '1234',
-  //     rol: 'analista-datos'
-  //   }, {
-  //     username: 'Rodrigo Montoro',
-  //     password: '1234',
-  //     rol: 'supervisor'
-  //   }
-  // ]
-useEffect(() => {
-  if (usuario) {
-    console.log(usuario.id_empleado);
-    console.log(usuario.rol);
-    console.log(usuario.numero_identificacion);    
-  }
-}, [usuario]);
 
+  useEffect(() => {
+    if (usuario) {
+      console.log(usuario.id_empleado);
+      console.log(usuario.rol);
+      console.log(usuario.numero_identificacion);    
+    }
+  }, [usuario]);
 
   function handleChange(e: React.ChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
@@ -52,65 +32,72 @@ useEffect(() => {
       setPassword(value);
     }
   }
-  
-  /*
-  PARA CAPTURAR EL TOKEN
-  const token = sessionStorage.getItem("token");
-  const usuario = JSON.parse(sessionStorage.getItem("usuario"));
-  console.log(usuario.rol);
-  console.log(usuario.permisos.ver_datos_personales);
-  */
- 
- // console.log(username);
- // console.log(password);
- // for (let user of users) {
- //   if (username == user.username && password == user.password)
- //     navegar(`/${user.rol}`);
- // }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const resultado = await iniciarSesion(username, password);
 
-    if (resultado.access_token) {
-      // console.log("Token:", resultado.access_token);
-      // console.log("Permisos:", resultado.permisos);
-      // console.log("Rol:", resultado.rol);
-      
-      // 👉 Guardar en sessionStorage
-      sessionStorage.setItem("token", resultado.access_token);
-      sessionStorage.setItem(
-        "usuario",
-        JSON.stringify({
-          permisos: resultado.permisos,
-          rol: resultado.rol,
-          id_empleado: resultado.id_empleado,
-          numero_identificacion: resultado.numero_identificacion,
-        })
-      );
-      
-      setUsuario(resultado); // Actualizar el contexto de usuario
-      // Redirigir según el rol
-      switch (resultado.rol) {
-        case "1":
-          navegar(`/empleado`);
-          break;
-        case "2":
-          navegar(`/administrador`);
-          break;
-        case "3":
-          navegar(`/supervisor`);
-          break;
-        case "4":
-          navegar(`/analista-datos`);
-          break;
+    // Validaciones básicas
+    if (!username || !password) {
+      setError("Debes completar ambos campos.");
+      return;
+    }
+
+    try {
+      setCargando(true);
+      const resultado = await iniciarSesion(username, password);
+      setCargando(false);
+
+      if (resultado.access_token) {
+        // Guardar sesión
+        sessionStorage.setItem("token", resultado.access_token);
+        sessionStorage.setItem(
+          "usuario",
+          JSON.stringify({
+            permisos: resultado.permisos,
+            rol: resultado.rol,
+            id_empleado: resultado.id_empleado,
+            numero_identificacion: resultado.numero_identificacion,
+          })
+        );
+
+        setUsuario(resultado); // Actualizar contexto
+        setError(""); // Limpiar errores
+
+        // Redirigir por rol
+        switch (resultado.rol) {
+          case "1":
+            navegar(`/empleado`);
+            break;
+          case "2":
+            navegar(`/administrador`);
+            break;
+          case "3":
+            navegar(`/supervisor`);
+            break;
+          case "4":
+            navegar(`/analista-datos`);
+            break;
+          default:
+            setError("Rol no reconocido");
+        }
+      } else {
+        setError("Usuario o contraseña incorrectos.");
       }
-    } else {
-      console.error("Fallo en el login:", resultado);
+    } catch (err) {
+      console.error("Error al iniciar sesión:", err);
+      setError("Ocurrió un error al intentar iniciar sesión.");
     }
   }
+
   return (
     <DefaultLayout>
-      <form onSubmit={handleSubmit} className="login-form">
+      <div className="cont_login_empresa" style={{ position: "relative" }}>
+         {cargando && (
+          <div className="overlay">
+            <CircularProgress />
+          </div>
+        )}
+        <form onSubmit={handleSubmit} className="login-form">
         {/* Logo */}
         <div className="logo-container">
           <img
@@ -121,7 +108,7 @@ useEffect(() => {
         </div>
 
         {/* Mensaje de error */}
-        {/* {!!errorResponse && <div className="error-message">{errorResponse}</div>} */}
+        {error && <div className="error-message">{error}</div>}
 
         {/* Usuario */}
         <div className="cont-input">
@@ -171,6 +158,7 @@ useEffect(() => {
           <NavLink to="/signup">Regístrate</NavLink>
         </p>
       </form>
+      </div>
     </DefaultLayout>
   );
-}
+};
