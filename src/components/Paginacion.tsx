@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./estilos/empleado-item.css";
 import { useUser } from "../context/UserContext";
@@ -46,6 +46,11 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
           .includes(searchTerm.toLowerCase())
     );
   }, [items, searchTerm]);
+
+  // Sincronizar el input con la página actual cuando esta cambie
+  useEffect(() => {
+    setInputPage(String(currentPage));
+  }, [currentPage]);
 
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
@@ -104,7 +109,8 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
   return (
     <div>
       <div className="busqueda-container">
-        <input className="busqueda-input"
+        <input
+          className="busqueda-input"
           type="text"
           placeholder="Buscar empleado por nombre, apellido o ID..."
           value={searchTerm}
@@ -149,77 +155,86 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                 {item.nombre} {item.apellido}
               </span>
               <div className="empledo-botones">
-              {usuario?.permisos.editar_datos_personales &&
-                usuario.rol === "3" && (
-                  <NavLink
-                    className="link"
-                    to={`/supervisor/asistencias/${item.id_empleado}`}
-                  >
-                    <FaCalendar className="icono" title="Ver asistencias" />
-                  </NavLink>
-                )}
-              {usuario?.permisos.editar_datos_personales &&
-                (usuario.rol == "3" || usuario.rol == "4") && (
-                  <NavLink
-                    className={"link"}
-                    to={`/supervisor/reportes/${item.id_empleado}`}
-                  >
-                    <FaChartBar className="icono" title="Ver reportes" />
-                  </NavLink>
-                )}
-              {usuario?.permisos.editar_datos_personales &&
-                (usuario.rol == "3" || usuario.rol == "4") && (
-                  <NavLink className={"link"} to="/supervisor/ver-nomina">
-                    <FaMoneyBillWave className="icono" title="Ver nomina" />
-                  </NavLink>
-                )}
-              {usuario?.permisos.editar_datos_personales &&
-                usuario.rol == "2" && ( // verifica si el usuario tiene permiso para editar datos personales de los empleados
-                  <NavLink
-                    className={"link"}
-                    to="/administrador/empleados/editarEmpleado"
-                    state={item}
-                  >
-                    <FaEdit className="icono" title="Editar" />
-                  </NavLink>
-                )}
-              {usuario?.permisos.editar_datos_personales &&
-                usuario.rol == "2" && (
-                  <NavLink
-                    className={"link"}
-                    to={`/administrador/empleados/${item.id_empleado}/agregar-datos-laborales`}
-                  >
-                    <FaBriefcase className="icono" title="Agregar datos laborales" />
-                  </NavLink>
-                )}
-              {usuario?.permisos.editar_datos_personales &&
-                usuario.rol == "2" && (
-                  <NavLink
-                    className="link"
-                    to={`/administrador/empleados/${item.id_empleado}/agregar-jornada`}
-                  >
-                    <FaClock className="icono" title="Agregar jornada" />
-                  </NavLink>
-                )}
-              {usuario?.permisos.editar_datos_personales &&
-                usuario.rol == "2" && (
-                  <NavLink
-                    className="link"
-                    to={`/administrador/empleados/${item.id_empleado}/inasistencia`}
-                  >
-                    <FaTimesCircle className="icono" title="Agregar inasistencia" />
-                  </NavLink>
-                )}
-              {usuario?.permisos.editar_datos_personales &&
-                usuario.rol == "2" && (
-                  <NavLink
-                    className="link"
-                    to={`/administrador/empleados/${item.id_empleado}/asistenciaUnica`}
-                  >
-                    <FaCalendarCheck className="icono" title="Agregar asistencia única" />
-                  </NavLink>
-                )}
-                </div>
+                {usuario?.permisos.editar_datos_personales &&
+                  usuario.rol === "3" && (
+                    <NavLink
+                      className="link"
+                      to={`/supervisor/asistencias/${item.id_empleado}`}
+                    >
+                      <FaCalendar className="icono" title="Ver asistencias" />
+                    </NavLink>
+                  )}
+                {usuario?.permisos.editar_datos_personales &&
+                  (usuario.rol == "3" || usuario.rol == "4") && (
+                    <NavLink
+                      className={"link"}
+                      to={`/supervisor/reportes/${item.id_empleado}`}
+                    >
+                      <FaChartBar className="icono" title="Ver reportes" />
+                    </NavLink>
+                  )}
+                {usuario?.permisos.editar_datos_personales &&
+                  (usuario.rol == "3" || usuario.rol == "4") && (
+                    <NavLink className={"link"} to="/supervisor/ver-nomina">
+                      <FaMoneyBillWave className="icono" title="Ver nomina" />
+                    </NavLink>
+                  )}
+                {usuario?.permisos.editar_datos_personales &&
+                  usuario.rol == "2" && ( // verifica si el usuario tiene permiso para editar datos personales de los empleados
+                    <NavLink
+                      className={"link"}
+                      to="/administrador/empleados/editarEmpleado"
+                      state={item}
+                    >
+                      <FaEdit className="icono" title="Editar" />
+                    </NavLink>
+                  )}
+                {usuario?.permisos.editar_datos_personales &&
+                  usuario.rol == "2" && (
+                    <NavLink
+                      className={"link"}
+                      to={`/administrador/empleados/${item.id_empleado}/agregar-datos-laborales`}
+                    >
+                      <FaBriefcase
+                        className="icono"
+                        title="Agregar datos laborales"
+                      />
+                    </NavLink>
+                  )}
+                {usuario?.permisos.editar_datos_personales &&
+                  usuario.rol == "2" && (
+                    <NavLink
+                      className="link"
+                      to={`/administrador/empleados/${item.id_empleado}/agregar-jornada`}
+                    >
+                      <FaClock className="icono" title="Agregar jornada" />
+                    </NavLink>
+                  )}
+                {usuario?.permisos.editar_datos_personales &&
+                  usuario.rol == "2" && (
+                    <NavLink
+                      className="link"
+                      to={`/administrador/empleados/${item.id_empleado}/inasistencia`}
+                    >
+                      <FaTimesCircle
+                        className="icono"
+                        title="Agregar inasistencia"
+                      />
+                    </NavLink>
+                  )}
+                {usuario?.permisos.editar_datos_personales &&
+                  usuario.rol == "2" && (
+                    <NavLink
+                      className="link"
+                      to={`/administrador/empleados/${item.id_empleado}/asistenciaUnica`}
+                    >
+                      <FaCalendarCheck
+                        className="icono"
+                        title="Agregar asistencia única"
+                      />
+                    </NavLink>
+                  )}
+              </div>
             </div>
           ))
         ) : (
@@ -238,7 +253,8 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
 
         <span>Página</span>
 
-        <input className="pagina-input"
+        <input
+          className="pagina-input"
           type="text"
           value={inputPage}
           onChange={handleInputChange}
