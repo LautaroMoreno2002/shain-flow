@@ -2,6 +2,7 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import "../../estilos/reco-facial.css"; // Asumiendo que usas los mismos estilos base
 import { NavLink } from "react-router-dom";
 import { WS_URL } from "../../services/api";
+import { useLocation } from "react-router-dom";
 
 export const RegistroFacial = () => {
   const videoRef = useRef<HTMLVideoElement>(null); // Referencia al elemento <video>
@@ -191,6 +192,17 @@ export const RegistroFacial = () => {
     };
   }, []); // El array vacío asegura que este efecto se ejecute solo una vez al montar
 
+  // --- Manejo de la ubicación para obtener el ID del empleado ---
+  // Esto es para obtener el ID del empleado desde la ubicación, si se pasa como estado
+  const location = useLocation();
+  useEffect(() => {
+    const idRecibido = location.state?.id_empleado;
+    if (idRecibido) {
+      setEmployeeId(String(idRecibido));
+    }
+  }, [location.state]);
+
+
   // --- Funciones de Lógica de Registro ---
 
   const startRegistration = useCallback(() => {
@@ -287,7 +299,11 @@ export const RegistroFacial = () => {
       <main className="contenido">
         <section className="seccion-camara">
           <p className="estado-reconocimiento">{registrationStatus}</p>
-          <div className={`camara ${mostrarCamara ? 'camara-activa' : 'camara-inactiva'}`}>
+          <div
+            className={`camara ${
+              mostrarCamara ? "camara-activa" : "camara-inactiva"
+            }`}
+          >
             <video
               ref={videoRef}
               width="100%"
@@ -306,10 +322,17 @@ export const RegistroFacial = () => {
           </div>
         </section>
 
-        <section className={`seccion-derecha ${esMovil
-                        ? (mostrarCamara ? 'derecha-movil-abajo' : 'derecha-movil-centro')
-                        : (mostrarCamara ? 'derecha-activa' : 'derecha-inicial')
-                    }`}>
+        <section
+          className={`seccion-derecha ${
+            esMovil
+              ? mostrarCamara
+                ? "derecha-movil-abajo"
+                : "derecha-movil-centro"
+              : mostrarCamara
+              ? "derecha-activa"
+              : "derecha-inicial"
+          }`}
+        >
           <p className="mensaje-guia">
             Ingresa el ID del empleado a registrar y sigue las instrucciones
             para capturar los gestos necesarios.
@@ -327,7 +350,7 @@ export const RegistroFacial = () => {
               value={employeeId}
               onChange={(e) => setEmployeeId(e.target.value)}
               placeholder="Ej: 12345"
-              disabled={isRegistering}
+              disabled={isRegistering || location.state?.id_empleado}
               style={{
                 width: "100%",
                 padding: "8px",
