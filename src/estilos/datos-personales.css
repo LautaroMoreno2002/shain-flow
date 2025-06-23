@@ -165,6 +165,33 @@
 .data-item--value.editable {
   border-color: var(--c2); /* Celeste */
 }
+.tabs-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tab {
+  padding: 0.6rem 1.2rem;
+  border: 2px solid var(--c1);
+  background-color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  color: var(--c1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab:hover {
+  background-color: var(--c2);
+  color: white;
+}
+
+.tab.active {
+  background-color: var(--c1);
+  color: white;
+}
 
 @media (max-width: 600px) {
   .personal-data {

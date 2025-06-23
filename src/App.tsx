@@ -20,7 +20,7 @@ import { Reportes } from "./routes/Pantallas/Reportes";
 import { CalculoNomina } from "./routes/Pantallas/CalculoNomina";
 import { VerNomina } from "./routes/Pantallas/VerNomina";
 import { EmpleadosNomina } from "./routes/Pantallas/EmpleadosNomina";
-import { EditarDatosLaborales } from "./routes/Pantallas/AgregarDatosLaborales";
+import { AgregarDatosLaborales } from "./routes/Pantallas/AgregarDatosLaborales";
 import { InformacionBancaria } from "./routes/Pantallas/InformacionBancaria";
 import { CalcularNomina } from "./routes/Pantallas/CalcularNomina";
 import { RegistroFacial } from "./routes/Interfaces/RegistroFacial";
@@ -38,6 +38,7 @@ import { UserProvider } from "./context/UserContext";
 import { NuevoConcepto } from "./components/NuevoConcepto";
 import { ConfiguracionAsistencia } from "./components/ConfigurarAsistencias";
 import { AsistenciasEmpleado } from "./routes/Pantallas/EmpleadoAsistencias";
+import { EditarDatosLaborales } from "./routes/Pantallas/EditarDatosLaborales";
 
 // import { Dashboard } from './components/dashboard'
 
@@ -73,6 +74,10 @@ function App() {
             {/* <Route path="confirmacion" element={<Confirmacion />}></Route> */}
             <Route path="empleados" element={<Empleados />}></Route>
             <Route
+              path="empleados/:id_empleado/editar-datos-laborales"
+              element={<EditarDatosLaborales />}
+            />
+            <Route
               path="empleados/editarEmpleado"
               element={<EditarEmpleado />}
             />
@@ -81,8 +86,8 @@ function App() {
               element={<EmpleadosNomina />}
             ></Route>
             <Route
-              path="empleados/:id_empleado/editar-datos-laborales"
-              element={<EditarDatosLaborales />}
+              path="empleados/:id_empleado/agregar-datos-laborales"
+              element={<AgregarDatosLaborales />}
             />
             <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
             <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>

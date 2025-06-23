@@ -6,10 +6,15 @@ interface HoraInputProps {
   name?: string;
   value: string; // "HH:mm"
   onChange: (e: { target: { name?: string; value: string } }) => void;
+  disabled?: boolean; // <- añadido
 }
 
-export const HoraInput: React.FC<HoraInputProps> = ({ name, value, onChange }) => {
-  // Convierte "HH:mm" string a Date objeto con fecha hoy (solo para DatePicker)
+export const HoraInput: React.FC<HoraInputProps> = ({
+  name,
+  value,
+  onChange,
+  disabled = false, // <- valor por defecto
+}) => {
   const stringToDate = (timeStr: string): Date | null => {
     if (!timeStr) return null;
     const [hours, minutes] = timeStr.split(":").map(Number);
@@ -18,7 +23,6 @@ export const HoraInput: React.FC<HoraInputProps> = ({ name, value, onChange }) =
     return d;
   };
 
-  // Convierte Date a "HH:mm" string
   const dateToString = (date: Date | null): string => {
     if (!date) return "";
     const h = date.getHours().toString().padStart(2, "0");
@@ -40,12 +44,13 @@ export const HoraInput: React.FC<HoraInputProps> = ({ name, value, onChange }) =
       onChange={handleChange}
       showTimeSelect
       showTimeSelectOnly
-      timeIntervals={1} // permite cada minuto
+      timeIntervals={1}
       timeCaption="Hora"
       dateFormat="HH:mm"
       placeholderText="HH:mm"
       name={name}
       autoComplete="off"
+      disabled={disabled} // <- aplicado
     />
   );
 };

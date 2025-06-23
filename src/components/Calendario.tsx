@@ -5,13 +5,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 interface CalendarioInputProps {
   value: string;
   onChange: (fecha: string) => void;
+  disabled?: boolean; // <- añadido
 }
 
-const CalendarioInput: React.FC<CalendarioInputProps> = ({ value, onChange }) => {
+const CalendarioInput: React.FC<CalendarioInputProps> = ({ value, onChange, disabled = false }) => {
   const fechaParseada = value
     ? (() => {
         const [year, month, day] = value.split('-').map(Number);
-        return new Date(year, month - 1, day); // Date local sin desfase UTC
+        return new Date(year, month - 1, day);
       })()
     : null;
 
@@ -34,6 +35,7 @@ const CalendarioInput: React.FC<CalendarioInputProps> = ({ value, onChange }) =>
         }}
         dateFormat="yyyy-MM-dd"
         placeholderText="Elige una fecha"
+        disabled={disabled} // <- aplicado correctamente
       />
     </div>
   );

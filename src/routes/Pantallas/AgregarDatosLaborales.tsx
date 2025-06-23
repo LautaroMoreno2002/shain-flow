@@ -39,7 +39,7 @@ function useFetchOptions<T>(url: string) {
   return { options, loading, error };
 }
 
-export const EditarDatosLaborales = () => {
+export const AgregarDatosLaborales = () => {
   const { id_empleado } = useParams<{ id_empleado: string }>();
   const navegar = useNavigate();
 
