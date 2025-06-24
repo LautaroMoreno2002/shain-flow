@@ -22,7 +22,7 @@ import { VerNomina } from "./routes/Pantallas/VerNomina";
 import { EmpleadosNomina } from "./routes/Pantallas/EmpleadosNomina";
 import { AgregarDatosLaborales } from "./routes/Pantallas/AgregarDatosLaborales";
 import { InformacionBancaria } from "./routes/Pantallas/InformacionBancaria";
-import { CalcularNomina } from "./routes/Pantallas/CalcularNomina";
+import  CalcularNomina  from "./routes/Pantallas/CalcularNomina";
 import { RegistroFacial } from "./routes/Interfaces/RegistroFacial";
 import Verificacion from "./components/Verificacion";
 import Notificaciones from "./components/Notificaciones";

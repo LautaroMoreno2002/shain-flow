@@ -1,154 +1,226 @@
 import React, { useEffect, useState } from "react";
-import "./../../estilos/calcular-nomina.css";
+import { useParams } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
+import { useUser } from "../../context/UserContext";
+import "../../estilos/calcular-nomina.css";
 
 interface Nomina {
+  id_nomina: number;
+  nombre: string;
+  apellido: string;
+  tipo_identificacion: string;
+  numero_identificacion: string;
+  puesto: string;
+  categoria: string;
+  departamento: string;
+  tipo: string;
   periodo: string;
+  fecha_de_pago: string;
+  banco: string;
+  numero_cuenta: string;
+  salario_base: number;
+  bono_presentismo: number;
+  bono_antiguedad: number;
+  horas_extra: number;
+  descuento_jubilacion: number;
+  descuento_obra_social: number;
+  descuento_anssal: number;
+  descuento_ley_19032: number;
+  impuesto_ganancias: number;
+  descuento_sindical: number;
+  sueldo_bruto: number;
+  sueldo_neto: number;
 }
 
-export const CalcularNomina: React.FC = () => {
-  const [periodoSeleccionado, setPeriodoSeleccionado] = useState("");
-  const [nominas, setNominas] = useState<Nomina[]>([]);
 
-  // Cargar historial de nóminas al montar el componente
+const CalcularNomina: React.FC = () => {
+  const { id_empleado } = useParams<{ id_empleado: string }>();
+  const { usuario } = useUser();
+
+  // Ahora el estado es array de strings, porque el endpoint devuelve array simple
+  const [periodos, setPeriodos] = useState<string[]>([]);
+  const [tipoNomina, setTipoNomina] = useState("mensual");
+  const [periodoSeleccionado, setPeriodoSeleccionado] = useState<string>("");
+  const [loadingPeriodos, setLoadingPeriodos] = useState(false);
+
+  const [nominaCalculada, setNominaCalculada] = useState<Nomina | null>(null);
+  const [loadingCalculo, setLoadingCalculo] = useState(false);
+  const [errorCalculo, setErrorCalculo] = useState<string | null>(null);
+
+  const [nominasAnteriores, setNominasAnteriores] = useState<Nomina[]>([]);
+  const [loadingNominas, setLoadingNominas] = useState(false);
+
   useEffect(() => {
-    // TODO: Reemplaza esto con tu petición a la API para traer las nóminas
-    const obtenerNominas = async () => {
-      // Ejemplo simulado
-      const data = [
-        { periodo: "Febrero 2024" },
-        { periodo: "Diciembre 2023" },
-        { periodo: "Octubre 2023" },
-        { periodo: "Octubre 2023" },
-      ];
-      setNominas(data);
-    };
+    if (!id_empleado) return;
 
-    obtenerNominas();
-  }, []);
+    setLoadingPeriodos(true);
+    fetch(`https://render-crud-jc22.onrender.com/periodos-unicos/`)
+      .then((res) => res.json())
+      .then((data: { periodos: string[] }) => {
+        console.log("Periodos recibidos:", data.periodos);
+        setPeriodos(data.periodos);
+      })
+      .catch(() => setPeriodos([]))
+      .finally(() => setLoadingPeriodos(false));
 
-  const handleVerNomina = (periodo: string) => {
-    alert(`Ver nómina del período: ${periodo}`);
-  };
+    setLoadingNominas(true);
+    fetch(`/api/empleados/${id_empleado}/nominas`)
+      .then((res) => res.json())
+      .then((data: Nomina[]) => setNominasAnteriores(data))
+      .catch(() => setNominasAnteriores([]))
+      .finally(() => setLoadingNominas(false));
+  }, [id_empleado]);
 
   const handleCalcularNomina = () => {
-    // TODO: Aquí va la lógica para verificar y calcular la nómina del periodo seleccionado
-    alert(`Calcular nómina para: ${periodoSeleccionado}`);
+    if (!periodoSeleccionado || !id_empleado || !1) return; //!usuario?.id_usuario
+
+    setLoadingCalculo(true);
+    setErrorCalculo(null);
+    setNominaCalculada(null);
+
+    fetch(`/api/empleados/${id_empleado}/calcular-nomina`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        periodo: periodoSeleccionado,
+        tipo: tipoNomina,
+        id_usuario: 1, // usa el id_usuario real usuario.id_usuario
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Error al calcular la nómina");
+        return res.json();
+      })
+      .then((data: Nomina) => setNominaCalculada(data))
+      .catch((err) => setErrorCalculo(err.message))
+      .finally(() => setLoadingCalculo(false));
+  };
+
+  const handleVerNomina = (id_nomina: number) => {
+    window.open(`/nominas/${id_nomina}/ver`, "_blank");
   };
 
   return (
-    <section className="nominas">
-      <div className="contenedor-nomina">
-        <h2 className="titulo">CALCULAR NÓMINA</h2>
+    <div className="calcular-nomina-container">
+      <h2 className="calcular-nomina-title">Calcular nómina</h2>
 
-        <div className="campo">
-          <label htmlFor="periodo">Período</label>
+      {errorCalculo && <div className="calcular-nomina-error">{errorCalculo}</div>}
+
+      <div className="calcular-nomina-form-group">
+        <label htmlFor="periodo-select">Seleccionar período:</label>
+        {loadingPeriodos ? (
+          <CircularProgress size={24} />
+        ) : (
           <select
-            id="periodo"
+            id="periodo-select"
+            className="calcular-nomina-select"
             value={periodoSeleccionado}
             onChange={(e) => setPeriodoSeleccionado(e.target.value)}
           >
-            <option value="">Seleccione un período</option>
-            {/* Opciones de ejemplo, puedes generarlas dinámicamente */}
-            <option value="Junio 2024">Junio 2024</option>
-            <option value="Mayo 2024">Mayo 2024</option>
-            <option value="Abril 2024">Abril 2024</option>
+            <option value="">-- Elegir período --</option>
+            {periodos.map((periodo) => (
+              <option key={periodo} value={periodo}>
+                {periodo}
+              </option>
+            ))}
           </select>
-        </div>
+        )}
+      </div>
 
-        <div className="tabla">
-          <div className="fila encabezado">
-            <span>PERÍODO</span>
-            <span>NÓMINA</span>
+      <div className="calcular-nomina-form-group">
+        <label htmlFor="tipo-nomina-select">Tipo de nómina:</label>
+        <select
+          id="tipo-nomina-select"
+          className="calcular-nomina-select"
+          value={tipoNomina}
+          onChange={(e) => setTipoNomina(e.target.value)}
+        >
+          <option value="mensual">Mensual</option>
+          <option value="primera_quincena">Primera quincena</option>
+          <option value="segunda_quincena">Segunda quincena</option>
+        </select>
+      </div>
+
+      <button
+        className="calcular-nomina-btn-calcular"
+        disabled={loadingCalculo || !periodoSeleccionado}
+        onClick={handleCalcularNomina}
+      >
+        {loadingCalculo ? "Calculando..." : "Calcular"}
+      </button>
+
+      {nominaCalculada && (
+        <div className="calcular-nomina-calculada-container">
+          <h3>Nómina calculada para {nominaCalculada.periodo}</h3>
+          <p>
+            <b>Salario base:</b> ${nominaCalculada.salario_base.toFixed(2)}
+          </p>
+          <p>
+            <b>Presentismo:</b> ${nominaCalculada.bono_presentismo.toFixed(2)}
+          </p>
+          <p>
+            <b>Antigüedad:</b> ${nominaCalculada.bono_antiguedad.toFixed(2)}
+          </p>
+          <p>
+            <b>Horas extra:</b> ${nominaCalculada.horas_extra.toFixed(2)}
+          </p>
+          <p>
+            <b>Descuentos:</b>
+          </p>
+          <ul className="calcular-nomina-detalle-descuentos-list">
+            <li>Jubilación: ${nominaCalculada.descuento_jubilacion.toFixed(2)}</li>
+            <li>Obra Social: ${nominaCalculada.descuento_obra_social.toFixed(2)}</li>
+            <li>ANSSAL: ${nominaCalculada.descuento_anssal.toFixed(2)}</li>
+            <li>Ley 19032: ${nominaCalculada.descuento_ley_19032.toFixed(2)}</li>
+            <li>Impuesto Ganancias: ${nominaCalculada.impuesto_ganancias.toFixed(2)}</li>
+            <li>Sindical: ${nominaCalculada.descuento_sindical.toFixed(2)}</li>
+          </ul>
+          <p>
+            <b>Sueldo bruto:</b> ${nominaCalculada.sueldo_bruto.toFixed(2)}
+          </p>
+        </div>
+      )}
+
+      <h2 className="calcular-nomina-recibos-titulo">Recibos de sueldo anteriores</h2>
+      <div className="calcular-nomina-recibos-table-container">
+        {loadingNominas ? (
+          <CircularProgress style={{ display: "block", margin: "20px auto" }} />
+        ) : nominasAnteriores.length === 0 ? (
+          <div className="calcular-nomina-recibos-table-empty">
+            No hay recibos anteriores.
           </div>
-          {nominas.map((nomina, index) => (
-            <div className="fila" key={index}>
-              <span>{nomina.periodo}</span>
-              <button
-                className="boton-ver"
-                onClick={() => handleVerNomina(nomina.periodo)}
-              >
-                Ver
-              </button>
-            </div>
-          ))}
-        </div>
-
-        <button className="boton-calcular" onClick={handleCalcularNomina}>
-          Calcular
-        </button>
-      </div>
-    </section>
-  );
-};
-
-/*
-interface NominaData {
-  [key: string]: string | number;
-}
-
-export const CalcularNomina = () => {
-  const [periodo, setPeriodo] = useState("");
-  const [resultado, setResultado] = useState<NominaData | null>(null);
-
-  const calcularNomina = async () => {
-    try {
-      // Intentamos obtener la nómina existente con id 0
-      const nominaExistente = await obtenerNomina(1, periodo);
-
-      if (nominaExistente && nominaExistente.periodo == periodo) {
-        console.log("Nómina ya existente encontrada");
-        setResultado(nominaExistente);
-
-      } else {
-        console.log("No existe nómina, se procede a calcularla");
-        const nuevaNomina = await calcularNominaAuto(1, periodo, "27/05/2025");
-        setResultado(nuevaNomina);
-      }
-    } catch (error) {
-      console.error("Error durante el proceso de cálculo/verificación:", error);
-    }
-  };
-
-  return (
-    <>
-      <div className="calcular-container">
-        <h2 className="titulo">CALCULAR NÓMINA</h2>
-
-        <label htmlFor="periodo">Período</label>
-        <input
-          type="text"
-          id="periodo"
-          value={periodo}
-          onChange={(e) => setPeriodo(e.target.value)}
-          className="input-periodo"
-          placeholder="Ej: Mayo 2025"
-        />
-        <button onClick={calcularNomina} className="boton-calcular">
-          Calcular
-        </button>
-      </div>
-      {resultado && typeof resultado === "object" && !Array.isArray(resultado) && (
-        <div className="tabla-container-nomina">
-          <h3>Resultado de la nómina</h3>
-          <table className="tabla-nomina">
+        ) : (
+          <table className="calcular-nomina-recibos-table">
             <thead>
               <tr>
-                <th>Campo</th>
-                <th>Valor</th>
+                <th>Periodo</th>
+                <th>Tipo</th>
+                <th>Neto</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {Object.entries(resultado).map(([clave, valor]) => (
-                <tr key={clave}>
-                  <td>{clave.replace(/_/g, " ").toUpperCase()}</td>
-                  <td>{valor}</td>
+              {nominasAnteriores.map((n) => (
+                <tr key={n.id_nomina}>
+                  <td>{n.periodo}</td>
+                  <td>{n.tipo}</td>
+                  <td>${n.sueldo_neto.toFixed(2)}</td>
+                  <td>
+                    <button
+                      className="calcular-nomina-recibos-btn-ver"
+                      onClick={() => handleVerNomina(n.id_nomina)}
+                    >
+                      Ver
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
-      )}
-    </>
+        )}
+      </div>
+    </div>
   );
 };
-*/
+
+export default CalcularNomina;
