@@ -100,6 +100,7 @@
   justify-content: space-between;
   width: 100%;
 }
+
 .acciones-iconos {
   display: flex;
   align-items: center;
@@ -118,6 +119,11 @@
 
 .emoji-calendario:hover,
 .emoji-correo:hover {
+  transform: scale(1.2);
+  color: #1b6fc2;
+}
+
+.icono:hover{
   transform: scale(1.2);
   color: #1b6fc2;
 }

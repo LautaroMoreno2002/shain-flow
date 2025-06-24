@@ -1,3 +1,4 @@
+import '../../estilos/VerNomina.css'
 const recibo = {
   empresa: "Shain Flow",
   periodo: "Enero 2025",
@@ -56,6 +57,103 @@ function CabeceraRecibo() {
 
 export function VerNomina() {
   return (
+    <div>
+      <div className="ver-nomina-container">
+      <div className="ver-nomina-wrapper">
+        <section className="nomina-section">
+          <CabeceraRecibo />
+        </section>
+
+        <section className="nomina-section">
+          <h2>Datos del Empleado</h2>
+          <p>Nombre: {recibo.empleado.nombre}</p>
+          <p>Número de Empleado: {recibo.empleado.numero_empleado}</p>
+        </section>
+
+        <section className="nomina-section tabla-wrapper">
+          <table className="tabla-nomina">
+            <thead>
+              <tr>
+                <th>Concepto</th>
+                <th>Decripción</th>
+                <th>Ingreso</th>
+                <th>Descuento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>01</td>
+                <td>Salario base</td>
+                <td>600.000</td>
+                <td>62.000</td>
+              </tr>
+              <tr>
+                <td>02</td>
+                <td>Antigüedad</td>
+                <td>170.000</td>
+                <td>24.000</td>
+              </tr>
+              <tr>
+                <td>03</td>
+                <td>Presentismo</td>
+                <td>40.000</td>
+              </tr>
+              <tr>
+                <td>04</td>
+                <td>Horas extras</td>
+                <td>45.000</td>
+              </tr>
+              <tr>
+                <td>05</td>
+                <td>Descuento Obra Social</td>
+                <td></td>
+                <td>60.000</td>
+              </tr>
+              <tr>
+                <td>04</td>
+                <td>Descuento ANSSAL</td>
+                <td></td>
+                <td>20.000</td>
+              </tr>
+              <tr>
+                <td>04</td>
+                <td>Descuento Ley 19.032</td>
+                <td></td>
+                <td>5.000</td>
+              </tr>
+              <tr>
+                <td>04</td>
+                <td>Impuesto a las Ganancias</td>
+                <td></td>
+                <td>5.000</td>
+              </tr>
+              <tr>
+                <td>04</td>
+                <td>Descuento Sindical</td>
+                <td></td>
+                <td>10.000</td>
+              </tr>
+              <tr>
+                <td>04</td>
+                <td>Descuento Jubilatorio</td>
+                <td></td>
+                <td>12.000</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section className="nomina-section">
+          <h2>Totales</h2>
+          <p>Total Ingresos: {recibo.total_ingresos}</p>
+          <p>Total Deducciones: {recibo.total_deducciones}</p>
+          <p>Total Neto: {recibo.total_neto}</p>
+        </section>
+      </div>
+    </div>
+    </div>
+  );}
+  /*return (
     <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
       <div style={{ position: 'absolute', border: '1px solid black', backgroundColor: '#fff', borderRadius: '5px', boxShadow: '0 0 20px rgba(0, 0, 0, 0.1)', width: '70%' }}>
         <section style={{ border: '1px solid black', backgroundColor: '#fff', padding: '10px', borderRadius: '5px', marginTop: '20px', marginLeft: '10px', marginRight: '10px', marginBottom: '10px' }}>
@@ -137,8 +235,8 @@ export function VerNomina() {
               </tr>
             </tbody>
           </table>
-          {/*<ListaItems  />*/}
-        </section>
+          {/*<ListaItems  />*/
+        /*</section>
         <section style={{ border: '1px solid black', backgroundColor: '#fff', padding: '10px', borderRadius: '5px', marginTop: '20px', marginLeft: '10px', marginRight: '10px', marginBottom: '10px' }}>
           <h2>Totales</h2>
           <p>Total Ingresos: {recibo.total_ingresos}</p>
@@ -148,4 +246,4 @@ export function VerNomina() {
       </div>
     </div>
   )
-}
+}*/
