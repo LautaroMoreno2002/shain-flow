@@ -165,7 +165,7 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     </NavLink>
                   )}
                 {usuario?.permisos.editar_datos_personales &&
-                  (usuario.rol == "3" || usuario.rol == "4") && (
+                  (usuario.rol == "3") && (
                     <NavLink
                       className={"link"}
                       to={`/supervisor/reportes/${item.id_empleado}`}
@@ -174,8 +174,23 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     </NavLink>
                   )}
                 {usuario?.permisos.editar_datos_personales &&
-                  (usuario.rol == "3" || usuario.rol == "4") && (
+                  (usuario.rol == "3") && (
                     <NavLink className={"link"} to="/supervisor/ver-nomina">
+                      <FaMoneyBillWave className="icono" title="Ver nomina" />
+                    </NavLink>
+                  )}
+                  {usuario?.permisos.editar_datos_personales &&
+                  (usuario.rol == "4") && (
+                    <NavLink
+                      className={"link"}
+                      to={`/analista-datos/reportes/${item.id_empleado}`}
+                    >
+                      <FaChartBar className="icono" title="Ver reportes" />
+                    </NavLink>
+                  )}
+                {usuario?.permisos.editar_datos_personales &&
+                  (usuario.rol == "4") && (
+                    <NavLink className={"link"} to="/analista-datos/ver-nomina">
                       <FaMoneyBillWave className="icono" title="Ver nomina" />
                     </NavLink>
                   )}

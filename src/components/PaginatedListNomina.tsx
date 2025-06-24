@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import "./estilos/empleado-item.css"
 import "./estilos/paginated-list-empleados.css";
+import { FaCalculator, FaSyncAlt } from 'react-icons/fa';
 
 type Item = {
     id_empleado: number;
@@ -10,6 +11,7 @@ type Item = {
     apellido: string;
     correo: string;
     telefono: string;
+    imagen_perfil_url: string;
 };
 
 type Props = {
@@ -99,23 +101,26 @@ const SearchablePaginatedList: React.FC<Props> = ({ items, itemsPerPage = 5 }) =
       <ul className="empleado-items">
         {currentItems.length > 0 ? (
           currentItems.map((item) => (
-            <div className="empleado-item" key={item.id_empleado}>
-              <span className="icono-perfil">
-                <img
+            <div className="empleado-item" key={item.id_empleado} style={{
+              backgroundImage: `url(${item.imagen_perfil_url})` }}>
+              <span className="icono-perfil">👤
+                {/*<img
                   src="https://imgs.search.brave.com/z1pY-zOd_QZunrzoobVmAzPXl4KV3X43yVSRA6IYek4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9lcy52/aXNhZm90by5jb20v/aW1nLzR4NC1jbS1w/YXNzcG9ydC1waG90/by1leGFtcGxlLndl/YnA"
                   alt=""
                   width="50px"
-                />
+                />*/}
               </span>
               <span className="empleado-nombre">
                 {item.nombre} {item.apellido}
               </span>
+              <div className="empledo-botones">
               <NavLink className={"link"} to="/administrador/calculo-nomina">
-                Calculo manual
+                <FaCalculator title='Calculo manual'/>
               </NavLink>
               <NavLink className={"link"} to="/administrador/calcular-nomina">
-                Calculo automático
+                <FaSyncAlt title='Calculo automático'/>
               </NavLink>
+              </div>
             </div>
           ))
         ) : (

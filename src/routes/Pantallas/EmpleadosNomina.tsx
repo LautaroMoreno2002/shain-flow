@@ -12,6 +12,7 @@ export interface Empleado {
   apellido: string;
   correo: string;
   telefono: string;
+  imagen_perfil_url: string;
 }
 
 export const EmpleadosNomina = () => {
