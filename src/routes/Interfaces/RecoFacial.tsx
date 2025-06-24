@@ -285,14 +285,14 @@ export const ReconocimientoFacial = () => {
               </NavLink>
             </p>
           </div>
-          <div className="seccion-alternativa">
+          {/* <div className="seccion-alternativa">
             <p>¿Tus datos biométricos no están registrados?</p>
             <p>
               <NavLink to="/registro-facial">
                 <span>Registrate por acá</span>
               </NavLink>
             </p>
-          </div>
+          </div> */}
         </section>
       </main>
     </div>

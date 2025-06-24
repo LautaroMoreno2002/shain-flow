@@ -54,7 +54,13 @@ export const Empleados = () => {
       try {
         setCargando(true);
         const data = await listarEmpleados();
-        setEmpleados(data);
+
+        // Excluir un empleado específico, por ejemplo el usuario logueado actual
+        const empleadosFiltrados = data.filter(
+          (empleado: Empleado) => empleado.id_empleado !== usuario?.id_empleado
+        );
+
+        setEmpleados(empleadosFiltrados);
       } catch (error) {
         console.error("Error al cargar empleados:", error);
       } finally {

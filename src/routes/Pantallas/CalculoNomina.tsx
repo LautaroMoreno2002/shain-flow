@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import '../../estilos/datos-personales.css'
 import { useNavigate } from 'react-router-dom';
-import CalendarioInput from '../../components/Calendario';
-
-
+// import CalendarioInput from '../../components/Calendario';
 
 // Definimos el tipo de datos personales
 interface PersonalDataType {
@@ -87,7 +85,7 @@ export const CalculoNomina = () => {
           <div className="data-group">
             <div className="data-item">
               <p className="data-item--label">Fecha de pago:</p>
-              <CalendarioInput />
+              {/* <CalendarioInput /> */}
             </div>
             <div className="data-item">
               <p className="data-item--label">Salario base</p>

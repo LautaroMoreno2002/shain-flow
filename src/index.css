@@ -10,7 +10,9 @@ body {
   --c2: rgb(158, 32, 3);
   --c3: #737373;
   /* margin-left: 15%; */
-
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
 #root {

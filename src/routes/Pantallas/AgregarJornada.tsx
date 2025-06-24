@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CalendarioInput from "../../components/Calendario";
 import HoraInput from "../../components/Hora";
-import "../../estilos/agregarJornada.css";
+import "../../estilos/AgregarJornada.css";
 
 interface PersonalDataType {
   fecha: string;

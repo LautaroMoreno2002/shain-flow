@@ -50,6 +50,7 @@ label {
   border: 1px solid #ccc;
   font-size: 1rem;
   box-sizing: border-box;
+  margin: .3em 0;
 }
 
 .signup-button {
@@ -140,6 +141,9 @@ label {
   margin: 1em 0;
 }
 
+.cont-direccion {
+  margin: 1em .5em;
+}
 /* Para pantallas grandes: dividir en dos columnas */
 @media (min-width: 768px) {
   .signup-form {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./estilos/Inasistencia.css";
+import "./estilos/inasistencia.css";
 import { useNavigate, useParams } from "react-router-dom";
 
 type FormData = {

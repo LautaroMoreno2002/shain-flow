@@ -37,20 +37,21 @@ export const EmpleadosNomina = () => {
   //   estado_civil: "",
   // });
 
-  const [nuevoConcepto, setNuevoConcepto] = useState({
-    // codigo: "0",
-    nombre: "Salario base",
-    tipo_concepto: "Remunerativo",
-    valor: "600000",
-    es_porcentaje: "No"
-  })
+  // const [nuevoConcepto, setNuevoConcepto] = useState({
+  //   // codigo: "0",
+  //   nombre: "Salario base",
+  //   tipo_concepto: "Remunerativo",
+  //   valor: "600000",
+  //   es_porcentaje: "No"
+  // })
 
-  const [errores, setErrores] = useState<{ [key: string]: boolean }>({});
-  const [mensajeError, setMensajeError] = useState<string>("");
+  // const [errores, setErrores] = useState<{ [key: string]: boolean }>({});
+  // const [mensajeError, setMensajeError] = useState<string>("");
   // const [isEditable, setIsEditable] = useState<boolean>(true);
   const navegar = useNavigate();
 
   useEffect(() => {
+    setMostrarFormulario(false);
     const cargarEmpleados = async () => {
       try {
         setCargando(true);
@@ -79,31 +80,33 @@ export const EmpleadosNomina = () => {
     navegar('/administrador/agregar-concepto');
   };
 
-  const manejarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setNuevoConcepto((prev) => ({ ...prev, [name]: value }));
-    setErrores((prev) => ({ ...prev, [name]: false }));
-  };
+  // const manejarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  //   const { name, value } = e.target;
+  //   setNuevoConcepto((prev) => ({ ...prev, [name]: value }));
+  //   setErrores((prev) => ({ ...prev, [name]: false }));
+  //   console.log(errores);
+  //   console.log(mensajeError);
+  // };
 
-  const cargarEmpleado = async () => {
-    const nuevosErrores: { [key: string]: boolean } = {};
-    let esValido = true;
+  // const cargarEmpleado = async () => {
+  //   const nuevosErrores: { [key: string]: boolean } = {};
+  //   let esValido = true;
 
-    Object.entries(nuevoConcepto).forEach(([key, valor]) => {
-      if (!valor.trim()) {
-        nuevosErrores[key] = true;
-        esValido = false;
-      }
-    });
+  //   Object.entries(nuevoConcepto).forEach(([key, valor]) => {
+  //     if (!valor.trim()) {
+  //       nuevosErrores[key] = true;
+  //       esValido = false;
+  //     }
+  //   });
 
-    if (!esValido) {
-      setErrores(nuevosErrores);
-      setMensajeError("Por favor, completa todos los campos antes de continuar.");
-      return;
-    }
-    //Quitar esto cuanod se integre con back-end
-    alert("Concepto cargado correctamente");
-    setMostrarFormulario(false);
+  //   if (!esValido) {
+  //     setErrores(nuevosErrores);
+  //     setMensajeError("Por favor, completa todos los campos antes de continuar.");
+  //     return;
+  //   }
+  //   //Quitar esto cuanod se integre con back-end
+  //   alert("Concepto cargado correctamente");
+  //   setMostrarFormulario(false);
 
     {/*try {
       console.log("Enviando empleado:", nuevoConcepto);
@@ -145,7 +148,7 @@ export const EmpleadosNomina = () => {
       console.error("Error al crear empleado:", error);
       setMensajeError("Error al crear el empleado. Intenta nuevamente.");
     }*/}
-  };
+  // };
 
 
   return (

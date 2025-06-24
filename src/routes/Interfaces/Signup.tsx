@@ -4,6 +4,7 @@ import DefaultLayout from "../../components/DefaultLayout";
 import { NavLink } from "react-router-dom";
 import "../../estilos/signup.css";
 import { crearEmpleado, crearUsuario } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 export interface Credenciales {
   username: string;
@@ -76,6 +77,7 @@ const CredentialForm = ({
       onChange={(e) => onChange("rol", e.target.value)}
       className="input-field"
     >
+      <option value="">Selecciona un rol</option>
       <option value="1">Empleado</option>
       <option value="2">Administrador</option>
       <option value="3">Supervisor</option>
@@ -115,7 +117,8 @@ export const Signup = () => {
 
   const [errorResponse, setErrorResponse] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
+  const navigate = useNavigate();
+  
   const handleCredencialesChange = (campo: keyof Credenciales, valor: string) => {
     setCredenciales((prev) => ({ ...prev, [campo]: valor }));
   };
@@ -148,7 +151,6 @@ export const Signup = () => {
         
         const id_empleado = empleadoCreado?.id_empleado.id_empleado;
         console.log("ID del empleado creado:", id_empleado);
-        
 
         if (!id_empleado) {
           setErrorResponse("No se pudo obtener el ID del empleado creado.");
@@ -166,6 +168,13 @@ export const Signup = () => {
 
         if (usuarioCreado) {
           setSuccessMessage("Registro exitoso");
+          console.log("Usuario creado:", usuarioCreado);
+
+          navigate("/registro-facial", {
+            state: { id_empleado },
+          });
+
+          
           // Opcional: limpiar formulario o redirigir
         } else {
           setErrorResponse("No se pudo crear el usuario.");

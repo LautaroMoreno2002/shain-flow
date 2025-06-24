@@ -53,7 +53,7 @@ const [mesSeleccionado, setMesSeleccionado] = useState<string>("");
       const datosCrudos = await registroAsistenciasPorId(JSON.stringify(usuario?.id_empleado));
 
       const asistenciasAdaptadas: RegistroAsistencia[] = datosCrudos.map((registro: any[]) => {
-        const [fecha, dia, horaEntrada, horaSalida, horasTrabajadas, horasExtras, estado] = registro;
+        const [fecha, dia, horaEntrada, horaSalida, horasExtras, estado] = registro;
         return {
           fecha: fecha || "---",
           dia: dia || "---",
