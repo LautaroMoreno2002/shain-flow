@@ -47,7 +47,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }
     return null;
   });
-
   // Siempre que cambie `usuario`, sincronizamos el sessionStorage
   useEffect(() => {
     if (usuario) {
