@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import DefaultLayout from "../../components/DefaultLayout";
 import { NavLink } from "react-router-dom";
 import "../../estilos/signup.css";
-import { crearEmpleado, crearUsuario } from "../../services/api";
+import { crearEmpleado2, crearUsuario } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
 export interface Credenciales {
@@ -29,7 +29,6 @@ export interface DatosEmpleado {
   telefono: string;
   genero: string;
   estado_civil: string;
-  id_usuario: string;
 }
 
 interface CredentialFormProps extends Credenciales {
@@ -112,8 +111,7 @@ export const Signup = () => {
     fecha_nacimiento: "",
     telefono: "",
     genero: "",
-    estado_civil: "",
-    id_usuario: ""
+    estado_civil: ""
   });
   
 
@@ -148,7 +146,7 @@ export const Signup = () => {
 
       try {
         // Crear empleado primero
-        const empleadoCreado = await crearEmpleado(datos);
+        const empleadoCreado = await crearEmpleado2(datos);
         console.log("Empleado creado:", empleadoCreado);
 
         const codigoVerificacion = empleadoCreado.codigo;

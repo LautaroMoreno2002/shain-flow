@@ -141,8 +141,11 @@ export const RegistroFacial = () => {
   // Redirigir al componente de verificación (esperar un poco si querés que el modal se vea)
   setTimeout(() => {
     navigate("/verificacion", {
-      state: { id_empleado: employeeId, codigoVerificacion },
-    });
+  state: { 
+    id_empleado: location.state?.id_empleado, 
+    codigoVerificacion: location.state?.codigoVerificacion 
+  },
+});
   }, 2000); // ⏱ 2 segundos de espera (opcional)
 }
       // Mensajes de errores específicos durante la captura de gestos

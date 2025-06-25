@@ -125,6 +125,12 @@ export const crearEmpleado = async (nuevoEmpleado: any) => {
   return response.data;
 };
 
+export const crearEmpleado2 = async (nuevoEmpleado: any) => {
+  console.log("Enviando a backend:", nuevoEmpleado);
+  const response = await api.post("/crear-empleado2/", nuevoEmpleado);
+  return response.data;
+};
+
 export const calcularNominaAuto = async (
   id_empleado: number,
   periodo: string,
