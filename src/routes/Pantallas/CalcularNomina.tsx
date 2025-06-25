@@ -4,6 +4,8 @@ import { CircularProgress } from "@mui/material";
 import { useUser } from "../../context/UserContext";
 import "../../estilos/calcular-nomina.css";
 import CalendarioInput from "../../components/Calendario";
+import * as XLSX from "xlsx";
+import saveAs from "file-saver";
 
 interface Nomina {
   id_nomina: number;
@@ -52,7 +54,11 @@ const CalcularNomina: React.FC = () => {
 
   const [mostrarPDF, setMostrarPDF] = useState(false);
   const [pdfURL, setPdfURL] = useState<string | null>(null);
-  
+
+  const [descargasAbiertasId, setDescargasAbiertasId] = useState<number | null>(
+    null
+  );
+
   useEffect(() => {
     const fetchPeriodos = async () => {
       setLoadingPeriodos(true);
@@ -168,6 +174,121 @@ const CalcularNomina: React.FC = () => {
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("❌ Error al descargar el recibo:", error);
+    }
+  };
+
+  const descargarCSV = (n: Nomina) => {
+    const headers = [
+      "Nombre",
+      "Apellido",
+      "Tipo ID",
+      "N° ID",
+      "Puesto",
+      "Categoría",
+      "Departamento",
+      "Periodo",
+      "Tipo",
+      "Fecha de pago",
+      "Banco",
+      "N° cuenta",
+      "Salario base",
+      "Presentismo",
+      "Antigüedad",
+      "Horas extra",
+      "Jubilación",
+      "Obra Social",
+      "ANSSAL",
+      "Ley 19032",
+      "Impuesto Ganancias",
+      "Sindical",
+      "Sueldo bruto",
+      "Sueldo neto",
+    ];
+
+    const fila = [
+      n.nombre,
+      n.apellido,
+      n.tipo_identificacion,
+      n.numero_identificacion,
+      n.puesto,
+      n.categoria,
+      n.departamento,
+      n.periodo,
+      n.tipo,
+      n.fecha_de_pago,
+      n.banco,
+      n.numero_cuenta,
+      n.salario_base.toFixed(2),
+      n.bono_presentismo.toFixed(2),
+      n.bono_antiguedad.toFixed(2),
+      n.horas_extra.toFixed(2),
+      n.descuento_jubilacion.toFixed(2),
+      n.descuento_obra_social.toFixed(2),
+      n.descuento_anssal.toFixed(2),
+      n.descuento_ley_19032.toFixed(2),
+      n.impuesto_ganancias.toFixed(2),
+      n.descuento_sindical.toFixed(2),
+      n.sueldo_bruto.toFixed(2),
+      n.sueldo_neto.toFixed(2),
+    ];
+
+    let csv =
+      "data:text/csv;charset=utf-8," +
+      headers.join(",") +
+      "\r\n" +
+      fila.join(",");
+    const link = document.createElement("a");
+    link.href = encodeURI(csv);
+    link.download = `recibo_${n.id_nomina}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const descargarExcel = (n: Nomina) => {
+    const fila = {
+      Nombre: n.nombre,
+      Apellido: n.apellido,
+      "Tipo ID": n.tipo_identificacion,
+      "N° ID": n.numero_identificacion,
+      Puesto: n.puesto,
+      Categoría: n.categoria,
+      Departamento: n.departamento,
+      Periodo: n.periodo,
+      Tipo: n.tipo,
+      "Fecha de pago": n.fecha_de_pago,
+      Banco: n.banco,
+      "N° Cuenta": n.numero_cuenta,
+      "Salario base": n.salario_base,
+      Presentismo: n.bono_presentismo,
+      Antigüedad: n.bono_antiguedad,
+      "Horas extra": n.horas_extra,
+      Jubilación: n.descuento_jubilacion,
+      "Obra Social": n.descuento_obra_social,
+      ANSSAL: n.descuento_anssal,
+      "Ley 19032": n.descuento_ley_19032,
+      "Impuesto Ganancias": n.impuesto_ganancias,
+      Sindical: n.descuento_sindical,
+      "Sueldo bruto": n.sueldo_bruto,
+      "Sueldo neto": n.sueldo_neto,
+    };
+
+    const ws = XLSX.utils.json_to_sheet([fila]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Recibo");
+    const buffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([buffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    saveAs(blob, `recibo_${n.id_nomina}.xlsx`);
+  };
+
+  // Toggle para abrir/cerrar menú de descargas para un id_nomina específico
+  const toggleDescargas = (id_nomina: number) => {
+    if (descargasAbiertasId === id_nomina) {
+      setDescargasAbiertasId(null);
+    } else {
+      setDescargasAbiertasId(id_nomina);
     }
   };
 
@@ -293,30 +414,54 @@ const CalcularNomina: React.FC = () => {
             </thead>
             <tbody>
               {nominasAnteriores.map((n) => (
-                <tr key={n.id_nomina}>
-                  <td>{n.periodo}</td>
-                  <td>{n.tipo}</td>
-                  <td>${n.sueldo_neto.toFixed(2)}</td>
-                  <td>
-                    <button
-                      className="calcular-nomina-recibos-btn-ver"
-                      onClick={() => handleVerNomina(n.id_nomina)}
-                    >
-                      Ver
-                    </button>
-                    <button
-                      className="calcular-nomina-recibos-btn-descargar"
-                      onClick={() => handleDescargarNomina(n.id_nomina)}
-                    >
-                      Descargar
-                    </button>
-                  </td>
-                </tr>
+                <React.Fragment key={n.id_nomina}>
+                  <tr>
+                    <td data-label="Periodo">{n.periodo}</td>
+                    <td data-label="Tipo">{n.tipo}</td>
+                    <td data-label="Neto">${n.sueldo_neto.toFixed(2)}</td>
+                    <td data-label="Acciones">
+                      <button
+                        className="calcular-nomina-recibos-btn-ver"
+                        onClick={() => handleVerNomina(n.id_nomina)}
+                      >
+                        Ver
+                      </button>
+                      <button
+                        className="calcular-nomina-recibos-btn-descargar"
+                        onClick={() => toggleDescargas(n.id_nomina)}
+                      >
+                        {descargasAbiertasId === n.id_nomina
+                          ? "Ocultar descargas"
+                          : "Descargar"}
+                      </button>
+                    </td>
+                  </tr>
+
+                  {descargasAbiertasId === n.id_nomina && (
+                    <tr className="fila-descarga-extra">
+                      <td colSpan={4}>
+                        <div className="calcular-nomina-descargas-box">
+                          <button
+                            onClick={() => handleDescargarNomina(n.id_nomina)}
+                          >
+                            PDF
+                          </button>
+                          <button onClick={() => descargarCSV(n)}>CSV</button>
+                          <button onClick={() => descargarExcel(n)}>
+                            Excel
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
               ))}
             </tbody>
           </table>
         )}
       </div>
+
+      {/* Modal PDF */}
       {mostrarPDF && pdfURL && (
         <div className="modal-overlay" onClick={() => setMostrarPDF(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
