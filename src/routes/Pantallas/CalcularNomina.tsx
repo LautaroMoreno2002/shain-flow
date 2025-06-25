@@ -50,6 +50,9 @@ const CalcularNomina: React.FC = () => {
   const [loadingPeriodos, setLoadingPeriodos] = useState(false);
   const [loadingNominas, setLoadingNominas] = useState(false);
 
+  const [mostrarPDF, setMostrarPDF] = useState(false);
+  const [pdfURL, setPdfURL] = useState<string | null>(null);
+  
   useEffect(() => {
     const fetchPeriodos = async () => {
       setLoadingPeriodos(true);
@@ -141,10 +144,9 @@ const CalcularNomina: React.FC = () => {
   };
 
   const handleVerNomina = (id_nomina: number) => {
-    window.open(
-      `https://render-crud-jc22.onrender.com/empleados/${id_empleado}/recibos/${id_nomina}/descargar`,
-      "_blank"
-    );
+    const url = `https://render-crud-jc22.onrender.com/empleados/${id_empleado}/recibos/${id_nomina}/descargar`;
+    setPdfURL(url);
+    setMostrarPDF(true);
   };
 
   const handleDescargarNomina = async (id_nomina: number) => {
@@ -315,6 +317,25 @@ const CalcularNomina: React.FC = () => {
           </table>
         )}
       </div>
+      {mostrarPDF && pdfURL && (
+        <div className="modal-overlay" onClick={() => setMostrarPDF(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="cerrar-modal"
+              onClick={() => setMostrarPDF(false)}
+            >
+              X
+            </button>
+            <iframe
+              src={pdfURL}
+              title="Recibo PDF"
+              width="100%"
+              height="600px"
+              style={{ border: "none" }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

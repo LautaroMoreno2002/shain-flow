@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../estilos/datosLaborales.css";
 import { datosLabPorId } from "../../services/api";
-import { CircularProgress, Button } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { useUser } from "../../context/UserContext";
 import "../../estilos/recibos.css";
 import * as XLSX from "xlsx";
@@ -45,7 +45,6 @@ interface Nomina {
   sueldo_bruto: number;
   sueldo_neto: number;
 }
-
 
 export const DatosLaboralesDescrip = () => {
   const [datos, setDatos] = useState<DatosLaborales | null>(null);
@@ -122,6 +121,8 @@ export const UltRecibos = () => {
   const [nominas, setNominas] = useState<Nomina[]>([]);
   const [loading, setLoading] = useState(false);
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [mostrarPDF, setMostrarPDF] = useState(false);
+  const [pdfURL, setPdfURL] = useState<string | null>(null);
 
   const toggleExpand = (id: number) => {
     setExpandedId(expandedId === id ? null : id);
@@ -129,26 +130,64 @@ export const UltRecibos = () => {
 
   const descargarCSV = (n: Nomina) => {
     const headers = [
-      "Nombre", "Apellido", "Tipo ID", "N° ID",
-      "Puesto", "Categoría", "Departamento",
-      "Periodo", "Tipo", "Fecha de pago", "Banco", "N° cuenta",
-      "Salario base", "Presentismo", "Antigüedad", "Horas extra",
-      "Jubilación", "Obra Social", "ANSSAL", "Ley 19032",
-      "Impuesto Ganancias", "Sindical",
-      "Sueldo bruto", "Sueldo neto"
+      "Nombre",
+      "Apellido",
+      "Tipo ID",
+      "N° ID",
+      "Puesto",
+      "Categoría",
+      "Departamento",
+      "Periodo",
+      "Tipo",
+      "Fecha de pago",
+      "Banco",
+      "N° cuenta",
+      "Salario base",
+      "Presentismo",
+      "Antigüedad",
+      "Horas extra",
+      "Jubilación",
+      "Obra Social",
+      "ANSSAL",
+      "Ley 19032",
+      "Impuesto Ganancias",
+      "Sindical",
+      "Sueldo bruto",
+      "Sueldo neto",
     ];
 
     const fila = [
-      n.nombre, n.apellido, n.tipo_identificacion, n.numero_identificacion,
-      n.puesto, n.categoria, n.departamento,
-      n.periodo, n.tipo, n.fecha_de_pago, n.banco, n.numero_cuenta,
-      n.salario_base.toFixed(2), n.bono_presentismo.toFixed(2), n.bono_antiguedad.toFixed(2), n.horas_extra.toFixed(2),
-      n.descuento_jubilacion.toFixed(2), n.descuento_obra_social.toFixed(2), n.descuento_anssal.toFixed(2), n.descuento_ley_19032.toFixed(2),
-      n.impuesto_ganancias.toFixed(2), n.descuento_sindical.toFixed(2),
-      n.sueldo_bruto.toFixed(2), n.sueldo_neto.toFixed(2)
+      n.nombre,
+      n.apellido,
+      n.tipo_identificacion,
+      n.numero_identificacion,
+      n.puesto,
+      n.categoria,
+      n.departamento,
+      n.periodo,
+      n.tipo,
+      n.fecha_de_pago,
+      n.banco,
+      n.numero_cuenta,
+      n.salario_base.toFixed(2),
+      n.bono_presentismo.toFixed(2),
+      n.bono_antiguedad.toFixed(2),
+      n.horas_extra.toFixed(2),
+      n.descuento_jubilacion.toFixed(2),
+      n.descuento_obra_social.toFixed(2),
+      n.descuento_anssal.toFixed(2),
+      n.descuento_ley_19032.toFixed(2),
+      n.impuesto_ganancias.toFixed(2),
+      n.descuento_sindical.toFixed(2),
+      n.sueldo_bruto.toFixed(2),
+      n.sueldo_neto.toFixed(2),
     ];
 
-    let csv = "data:text/csv;charset=utf-8," + headers.join(",") + "\r\n" + fila.join(",");
+    let csv =
+      "data:text/csv;charset=utf-8," +
+      headers.join(",") +
+      "\r\n" +
+      fila.join(",");
     const link = document.createElement("a");
     link.href = encodeURI(csv);
     link.download = `recibo_${n.id_nomina}.csv`;
@@ -195,6 +234,12 @@ export const UltRecibos = () => {
     saveAs(blob, `recibo_${n.id_nomina}.xlsx`);
   };
 
+  const handleVerNomina = (id_nomina: number) => {
+    const url = `https://render-crud-jc22.onrender.com/empleados/${usuario?.id_empleado}/recibos/${id_nomina}/descargar`;
+    setPdfURL(url);
+    setMostrarPDF(true);
+  };
+
   const cargarNominas = async () => {
     if (!usuario?.id_empleado) return;
 
@@ -208,10 +253,23 @@ export const UltRecibos = () => {
         const parse = (p: string) => {
           const [mes, anio] = p.split(" ");
           const meses: any = {
-            ENERO: 0, FEBRERO: 1, MARZO: 2, ABRIL: 3, MAYO: 4, JUNIO: 5,
-            JULIO: 6, AGOSTO: 7, SEPTIEMBRE: 8, OCTUBRE: 9, NOVIEMBRE: 10, DICIEMBRE: 11,
+            ENERO: 0,
+            FEBRERO: 1,
+            MARZO: 2,
+            ABRIL: 3,
+            MAYO: 4,
+            JUNIO: 5,
+            JULIO: 6,
+            AGOSTO: 7,
+            SEPTIEMBRE: 8,
+            OCTUBRE: 9,
+            NOVIEMBRE: 10,
+            DICIEMBRE: 11,
           };
-          return new Date(Number(anio), meses[mes.toUpperCase()] || 0).getTime();
+          return new Date(
+            Number(anio),
+            meses[mes.toUpperCase()] || 0
+          ).getTime();
         };
         return parse(b.periodo) - parse(a.periodo);
       });
@@ -253,48 +311,46 @@ export const UltRecibos = () => {
                 <tr className="nomina-tabla-row">
                   <td className="nomina-tabla-cell">{n.periodo}</td>
                   <td className="nomina-tabla-cell">{n.tipo}</td>
-                  <td className="nomina-tabla-cell">${n.sueldo_neto.toFixed(2)}</td>
                   <td className="nomina-tabla-cell">
-                    <Button
-                      size="small"
+                    ${n.sueldo_neto.toFixed(2)}
+                  </td>
+                  <td className="nomina-tabla-cell">
+                    <button
                       onClick={() => toggleExpand(n.id_nomina)}
                       className="nomina-btn-vermas"
                     >
-                      {expandedId === n.id_nomina ? "Ocultar" : "Ver más"}
-                    </Button>
+                      {expandedId === n.id_nomina
+                        ? "Ocultar acciones"
+                        : "Acciones de descarga"}
+                    </button>
                   </td>
                 </tr>
                 <tr className="nomina-detalle-row">
                   <td className="nomina-detalle-cell" colSpan={4}>
-                    <Collapse in={expandedId === n.id_nomina} timeout="auto" unmountOnExit>
-                      <div className="nomina-detalle-contenido">
-                        <p><b>Empleado:</b> {n.nombre} {n.apellido}</p>
-                        <p><b>Identificación:</b> {n.tipo_identificacion} {n.numero_identificacion}</p>
-                        <p><b>Departamento:</b> {n.departamento} | <b>Puesto:</b> {n.puesto} | <b>Categoría:</b> {n.categoria}</p>
-                        <p><b>Fecha de pago:</b> {n.fecha_de_pago} | <b>Banco:</b> {n.banco} | <b>Cuenta:</b> {n.numero_cuenta}</p>
-                        <p><b>Salario base:</b> ${n.salario_base.toFixed(2)}</p>
-                        <p><b>Presentismo:</b> ${n.bono_presentismo.toFixed(2)}</p>
-                        <p><b>Antigüedad:</b> ${n.bono_antiguedad.toFixed(2)}</p>
-                        <p><b>Horas extra:</b> ${n.horas_extra.toFixed(2)}</p>
-                        <p><b>Descuentos:</b></p>
-                        <ul className="nomina-detalle-descuentos-list">
-                          <li>Jubilación: ${n.descuento_jubilacion.toFixed(2)}</li>
-                          <li>Obra Social: ${n.descuento_obra_social.toFixed(2)}</li>
-                          <li>ANSSAL: ${n.descuento_anssal.toFixed(2)}</li>
-                          <li>Ley 19032: ${n.descuento_ley_19032.toFixed(2)}</li>
-                          <li>Impuesto Ganancias: ${n.impuesto_ganancias.toFixed(2)}</li>
-                          <li>Sindical: ${n.descuento_sindical.toFixed(2)}</li>
-                        </ul>
-                        <p><b>Sueldo bruto:</b> ${n.sueldo_bruto.toFixed(2)}</p>
-                        <p><b>Sueldo neto:</b> ${n.sueldo_neto.toFixed(2)}</p>
-                        <div className="nomina-detalle-botones">
-                          <Button size="small" onClick={() => descargarCSV(n)} className="nomina-btn-descargar">
-                            Descargar CSV
-                          </Button>
-                          <Button size="small" onClick={() => descargarExcel(n)} className="nomina-btn-descargar">
-                            Descargar Excel
-                          </Button>
-                        </div>
+                    <Collapse
+                      in={expandedId === n.id_nomina}
+                      timeout="auto"
+                      unmountOnExit
+                    >
+                      <div className="nomina-detalle-botones">
+                        <button
+                          onClick={() => handleVerNomina(n.id_nomina)}
+                          className="nomina-btn-ver"
+                        >
+                          Ver PDF
+                        </button>
+                        <button
+                          onClick={() => descargarCSV(n)}
+                          className="nomina-btn-descargar"
+                        >
+                          Descargar CSV
+                        </button>
+                        <button
+                          onClick={() => descargarExcel(n)}
+                          className="nomina-btn-descargar"
+                        >
+                          Descargar Excel
+                        </button>
                       </div>
                     </Collapse>
                   </td>
@@ -304,6 +360,24 @@ export const UltRecibos = () => {
           )}
         </tbody>
       </table>
+
+      {mostrarPDF && pdfURL && (
+        <div className="visor-pdf-overlay">
+          <div className="visor-pdf-modal">
+            <button
+              className="visor-pdf-close-btn"
+              onClick={() => setMostrarPDF(false)}
+            >
+              ✕
+            </button>
+            <iframe
+              src={pdfURL}
+              className="visor-pdf-frame"
+              title="Recibo PDF"
+            ></iframe>
+          </div>
+        </div>
+      )}
     </>
   );
 };
