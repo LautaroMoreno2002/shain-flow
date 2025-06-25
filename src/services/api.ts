@@ -318,3 +318,22 @@ export const subirDocumentos = async ({
     throw error;
   }
 };
+
+export const enviarMail = async (
+  correo: string,
+  asunto: string,
+  mensaje: string
+) => {
+  try {
+    const response = await api.post('/api/enviar-correo-manual/', {
+    correo,
+    asunto,
+    mensaje
+  });
+    
+    return response.data;
+  } catch (error: any) {
+    console.error("Error al enviar mail:", error);
+    throw error;
+  }
+}

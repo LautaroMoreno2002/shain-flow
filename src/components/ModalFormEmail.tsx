@@ -1,6 +1,7 @@
 // components/ModalEmailForm.tsx
 import React, { useState } from "react";
 import "./estilos/modal-form-email.css"; // Asegúrate de tener un archivo CSS para estilos
+import { enviarMail } from "../services/api";
 
 interface Props {
   isOpen: boolean;
@@ -12,11 +13,13 @@ const ModalEmailForm: React.FC<Props> = ({ isOpen, onClose, destinatario }) => {
   const [asunto, setAsunto] = useState("");
   const [mensaje, setMensaje] = useState("");
 
-  const handleEnviar = () => {
+  const handleEnviar = async () => {
     // Aquí podrías usar fetch/axios para enviar el email
     console.log(
       `Enviando email a: ${destinatario}, Asunto: ${asunto}, Mensaje: ${mensaje}`
     );
+    const response = await enviarMail(destinatario, asunto, mensaje)
+    console.log(response);
     onClose(); // cerrar modal
   };
 
