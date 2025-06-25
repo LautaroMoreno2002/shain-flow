@@ -132,7 +132,7 @@ const SearchablePaginatedList: React.FC<Props> = ({
                   className="link"
                   to={`/administrador/calcular-nomina/${item.id_empleado}`}
                 >
-                  <FaCalculator className="icono" title="Cálculo automático" />
+                  <FaCalculator className="icono" /> Cálcular nómina
                 </NavLink>
               </div>
             </div>

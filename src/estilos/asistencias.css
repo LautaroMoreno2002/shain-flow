@@ -183,4 +183,7 @@ th, td {
       margin: 0;
     }
   }
+  .layout {
+    margin-left: auto;
+  }
 }
