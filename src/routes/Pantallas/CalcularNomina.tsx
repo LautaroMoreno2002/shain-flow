@@ -32,12 +32,10 @@ interface Nomina {
   sueldo_neto: number;
 }
 
-
 const CalcularNomina: React.FC = () => {
   const { id_empleado } = useParams<{ id_empleado: string }>();
   const { usuario } = useUser();
 
-  // Ahora el estado es array de strings, porque el endpoint devuelve array simple
   const [periodos, setPeriodos] = useState<string[]>([]);
   const [tipoNomina, setTipoNomina] = useState("mensual");
   const [periodoSeleccionado, setPeriodoSeleccionado] = useState<string>("");
@@ -53,47 +51,75 @@ const CalcularNomina: React.FC = () => {
   useEffect(() => {
     if (!id_empleado) return;
 
-    setLoadingPeriodos(true);
-    fetch(`https://render-crud-jc22.onrender.com/periodos-unicos/`)
-      .then((res) => res.json())
-      .then((data: { periodos: string[] }) => {
-        console.log("Periodos recibidos:", data.periodos);
-        setPeriodos(data.periodos);
-      })
-      .catch(() => setPeriodos([]))
-      .finally(() => setLoadingPeriodos(false));
+    const fetchPeriodos = async () => {
+      setLoadingPeriodos(true);
+      try {
+        const res = await fetch("https://render-crud-jc22.onrender.com/api/periodos-unicos/");
+        if (!res.ok) throw new Error("Error al obtener períodos");
+        const data: string[] = await res.json();
+        setPeriodos(data);
+      } catch (error) {
+        console.error("❌ Error al cargar periodos:", error);
+        setPeriodos([]);
+      } finally {
+        setLoadingPeriodos(false);
+      }
+    };
 
-    setLoadingNominas(true);
-    fetch(`/api/empleados/${id_empleado}/nominas`)
-      .then((res) => res.json())
-      .then((data: Nomina[]) => setNominasAnteriores(data))
-      .catch(() => setNominasAnteriores([]))
-      .finally(() => setLoadingNominas(false));
-  }, [id_empleado]);
+    const fetchNominasAnteriores = async () => {
+      setLoadingNominas(true);
+      try {
+        const res = await fetch(`https://render-crud-jc22.onrender.com/nominas/empleado/${usuario?.id_empleado}`);
+        if (!res.ok) throw new Error("Error al obtener nóminas");
+        const data: Nomina[] = await res.json();
+        setNominasAnteriores(data);
+      } catch (error) {
+        console.error("❌ Error al cargar nóminas anteriores:", error);
+        setNominasAnteriores([]);
+      } finally {
+        setLoadingNominas(false);
+      }
+    };
 
-  const handleCalcularNomina = () => {
-    if (!periodoSeleccionado || !id_empleado || !1) return; //!usuario?.id_usuario
+    fetchPeriodos();
+    fetchNominasAnteriores();
+  }, [id_empleado, usuario?.id_empleado]);
+
+  // Efecto para setear el primer periodo automáticamente si no hay ninguno seleccionado
+  useEffect(() => {
+    if (periodos.length > 0 && !periodoSeleccionado) {
+      setPeriodoSeleccionado(periodos[0]);
+    }
+  }, [periodos, periodoSeleccionado]);
+
+  const handleCalcularNomina = async () => {
+    if (!periodoSeleccionado || !id_empleado || !usuario?.id_empleado) return;
 
     setLoadingCalculo(true);
     setErrorCalculo(null);
     setNominaCalculada(null);
 
-    fetch(`/api/empleados/${id_empleado}/calcular-nomina`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        periodo: periodoSeleccionado,
-        tipo: tipoNomina,
-        id_usuario: 1, // usa el id_usuario real usuario.id_usuario
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Error al calcular la nómina");
-        return res.json();
-      })
-      .then((data: Nomina) => setNominaCalculada(data))
-      .catch((err) => setErrorCalculo(err.message))
-      .finally(() => setLoadingCalculo(false));
+    try {
+      const res = await fetch(
+        `http://localhost:8000/api/empleados/${id_empleado}/calcular-nomina`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            periodo: periodoSeleccionado,
+            tipo: tipoNomina,
+            id_usuario: usuario.id_empleado,
+          }),
+        }
+      );
+      if (!res.ok) throw new Error("Error al calcular la nómina");
+      const data: Nomina = await res.json();
+      setNominaCalculada(data);
+    } catch (error: any) {
+      setErrorCalculo(error.message || "Error inesperado");
+    } finally {
+      setLoadingCalculo(false);
+    }
   };
 
   const handleVerNomina = (id_nomina: number) => {
@@ -104,7 +130,9 @@ const CalcularNomina: React.FC = () => {
     <div className="calcular-nomina-container">
       <h2 className="calcular-nomina-title">Calcular nómina</h2>
 
-      {errorCalculo && <div className="calcular-nomina-error">{errorCalculo}</div>}
+      {errorCalculo && (
+        <div className="calcular-nomina-error">{errorCalculo}</div>
+      )}
 
       <div className="calcular-nomina-form-group">
         <label htmlFor="periodo-select">Seleccionar período:</label>
@@ -168,11 +196,19 @@ const CalcularNomina: React.FC = () => {
             <b>Descuentos:</b>
           </p>
           <ul className="calcular-nomina-detalle-descuentos-list">
-            <li>Jubilación: ${nominaCalculada.descuento_jubilacion.toFixed(2)}</li>
-            <li>Obra Social: ${nominaCalculada.descuento_obra_social.toFixed(2)}</li>
+            <li>
+              Jubilación: ${nominaCalculada.descuento_jubilacion.toFixed(2)}
+            </li>
+            <li>
+              Obra Social: ${nominaCalculada.descuento_obra_social.toFixed(2)}
+            </li>
             <li>ANSSAL: ${nominaCalculada.descuento_anssal.toFixed(2)}</li>
-            <li>Ley 19032: ${nominaCalculada.descuento_ley_19032.toFixed(2)}</li>
-            <li>Impuesto Ganancias: ${nominaCalculada.impuesto_ganancias.toFixed(2)}</li>
+            <li>
+              Ley 19032: ${nominaCalculada.descuento_ley_19032.toFixed(2)}
+            </li>
+            <li>
+              Impuesto Ganancias: ${nominaCalculada.impuesto_ganancias.toFixed(2)}
+            </li>
             <li>Sindical: ${nominaCalculada.descuento_sindical.toFixed(2)}</li>
           </ul>
           <p>
@@ -181,7 +217,9 @@ const CalcularNomina: React.FC = () => {
         </div>
       )}
 
-      <h2 className="calcular-nomina-recibos-titulo">Recibos de sueldo anteriores</h2>
+      <h2 className="calcular-nomina-recibos-titulo">
+        Recibos de sueldo anteriores
+      </h2>
       <div className="calcular-nomina-recibos-table-container">
         {loadingNominas ? (
           <CircularProgress style={{ display: "block", margin: "20px auto" }} />
