@@ -71,8 +71,6 @@ const CalcularNomina: React.FC = () => {
 
   // Cargar nóminas anteriores solo si hay usuario
   useEffect(() => {
-  if (!usuario?.id_empleado) return;
-
   const fetchNominasAnteriores = async () => {
     setLoadingNominas(true);
     try {
@@ -89,7 +87,7 @@ const CalcularNomina: React.FC = () => {
   };
 
   fetchNominasAnteriores();
-}, [usuario?.id_empleado]);
+}, [id_empleado]);
 
   // Seleccionar automáticamente el primer período
   useEffect(() => {

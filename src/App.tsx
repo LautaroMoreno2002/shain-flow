@@ -93,7 +93,7 @@ function App() {
             <Route path="agregarEmpleado" element={<AgregarEmpleado />}></Route>
             <Route path="editarEmpleado" element={<EditarEmpleado />}></Route>
             <Route path="calculo-nomina" element={<CalculoNomina />}></Route>
-            <Route path="calcular-nomina" element={<CalcularNomina />}></Route>
+            <Route path="calcular-nomina/:id_empleado" element={<CalcularNomina />} />
             <Route path="ver-nomina" element={<VerNomina />}></Route>
             <Route path="agregar-salario" element={<AgregarSalario />}></Route>
             <Route path="agregar-concepto" element={<NuevoConcepto />}></Route>

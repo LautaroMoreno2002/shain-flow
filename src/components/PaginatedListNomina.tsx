@@ -1,17 +1,17 @@
-import React, { useState, useMemo } from 'react';
-import { NavLink } from 'react-router-dom';
-import "./estilos/empleado-item.css"
+import React, { useState, useMemo } from "react";
+import { NavLink } from "react-router-dom";
+import "./estilos/empleado-item.css";
 import "./estilos/paginated-list-empleados.css";
-import { FaCalculator, FaSyncAlt } from 'react-icons/fa';
+import { FaCalculator, FaSyncAlt } from "react-icons/fa";
 
 type Item = {
-    id_empleado: number;
-    numero_identificacion: string;
-    nombre: string;
-    apellido: string;
-    correo: string;
-    telefono: string;
-    imagen_perfil_url: string;
+  id_empleado: number;
+  numero_identificacion: string;
+  nombre: string;
+  apellido: string;
+  correo: string;
+  telefono: string;
+  imagen_perfil_url: string;
 };
 
 type Props = {
@@ -19,66 +19,74 @@ type Props = {
   itemsPerPage?: number;
 };
 
-const SearchablePaginatedList: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const [inputPage, setInputPage] = useState<string>("1");
-  
+const SearchablePaginatedList: React.FC<Props> = ({
+  items,
+  itemsPerPage = 5,
+}) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [inputPage, setInputPage] = useState<string>("1");
 
   // Filtra los elementos según el término de búsqueda
   const filteredItems = useMemo(() => {
-    return items.filter(item =>
-      item.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.numero_identificacion.toLowerCase().includes(searchTerm.toLowerCase())
+    return items.filter(
+      (item) =>
+        item.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.numero_identificacion
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
     );
   }, [items, searchTerm]);
 
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = filteredItems.slice(startIndex, startIndex + itemsPerPage);
+  const currentItems = filteredItems.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
-   const goToPage = (page: number) => {
-     if (page >= 1 && page <= totalPages) {
-       setCurrentPage(page);
-     }
-   };
- 
+  const goToPage = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   //  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
   //    setSearchTerm(e.target.value);
   //    setCurrentPage(1);
   //  };
- 
-   // Actualiza el input mientras el usuario escribe
-   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-     const val = e.target.value;
-     // Permitir solo dígitos vacíos o numéricos
-     if (/^\d*$/.test(val)) {
-       setInputPage(val);
-     }
-   };
- 
-   // Cuando el usuario termina de editar (blur o Enter), validar y navegar
-   const commitInputPage = () => {
-     const pageNum = parseInt(inputPage, 10);
-     if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= totalPages) {
-       setCurrentPage(pageNum);
-     } else {
-       // Si no es válido, resetear el input a la página actual
-       setInputPage(String(currentPage));
-     }
-   };
- 
-   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-     if (e.key === "Enter") {
-       commitInputPage();
-     }
-   };
- 
-   const handleInputBlur = () => {
-     commitInputPage();
-   };
+
+  // Actualiza el input mientras el usuario escribe
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    // Permitir solo dígitos vacíos o numéricos
+    if (/^\d*$/.test(val)) {
+      setInputPage(val);
+    }
+  };
+
+  // Cuando el usuario termina de editar (blur o Enter), validar y navegar
+  const commitInputPage = () => {
+    const pageNum = parseInt(inputPage, 10);
+    if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= totalPages) {
+      setCurrentPage(pageNum);
+    } else {
+      // Si no es válido, resetear el input a la página actual
+      setInputPage(String(currentPage));
+    }
+  };
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      commitInputPage();
+    }
+  };
+
+  const handleInputBlur = () => {
+    commitInputPage();
+  };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -101,24 +109,31 @@ const SearchablePaginatedList: React.FC<Props> = ({ items, itemsPerPage = 5 }) =
       <ul className="empleado-items">
         {currentItems.length > 0 ? (
           currentItems.map((item) => (
-            <div className="empleado-item" key={item.id_empleado} >
+            <div className="empleado-item" key={item.id_empleado}>
               <span className="icono-perfil">
                 {item.imagen_perfil_url ? (
-                    <img src={item.imagen_perfil_url} alt="" width="50px" />
-                  ) : (
-                    <span className="icono-perfil">👤</span>
-                  )}
+                  <img src={item.imagen_perfil_url} alt="" width="50px" />
+                ) : (
+                  <span className="icono-perfil">👤</span>
+                )}
               </span>
               <span className="empleado-nombre">
                 {item.nombre} {item.apellido}
               </span>
               <div className="empledo-botones">
-              <NavLink className={"link"} to="/administrador/calculo-nomina">
-                <FaCalculator className="icono" title='Calculo manual'/>
-              </NavLink>
-              <NavLink className={"link"} to="/administrador/calcular-nomina">
-                <FaSyncAlt className="icono" title='Calculo automático'/>
-              </NavLink>
+                <NavLink
+                  className="link"
+                  to={`/administrador/calculo-nomina/${item.id_empleado}`}
+                >
+                  <FaCalculator className="icono" title="Cálculo manual" />
+                </NavLink>
+
+                <NavLink
+                  className="link"
+                  to={`/administrador/calcular-nomina/${item.id_empleado}`}
+                >
+                  <FaSyncAlt className="icono" title="Cálculo automático" />
+                </NavLink>
               </div>
             </div>
           ))
