@@ -3,10 +3,15 @@ import "../../estilos/reco-facial.css"; // Asumiendo que usas los mismos estilos
 import { NavLink } from "react-router-dom";
 import { WS_URL } from "../../services/api";
 import { useLocation } from "react-router-dom";
+import { ModalAlerta } from "../../components/ModalAlerta";
+import { useNavigate } from "react-router-dom";
+
 
 export const RegistroFacial = () => {
   const videoRef = useRef<HTMLVideoElement>(null); // Referencia al elemento <video>
+  const [modalMensaje, setModalMensaje] = useState<string | null>(null);
   const socketRef = useRef<WebSocket | null>(null); // Referencia a la conexión WebSocket
+  const navigate = useNavigate();
 
   // Estado para el ID del empleado que se va a registrar
   const [employeeId, setEmployeeId] = useState<string>("");
@@ -58,7 +63,7 @@ export const RegistroFacial = () => {
           setRegistrationStatus(
             "❌ Error al acceder a la cámara. Por favor, asegúrate de que esté disponible y permite el acceso."
           );
-          alert(
+          setModalMensaje(
             "❌ Error al acceder a la cámara. Por favor, asegúrate de que esté disponible."
           );
         });
@@ -80,7 +85,7 @@ export const RegistroFacial = () => {
       );
       setIsRegistering(false);
       setExpectedImageFor(null);
-      alert("❌ Error de conexión. Por favor, recarga la página.");
+      setModalMensaje("❌ Error de conexión. Por favor, recarga la página.");
     };
 
     // 3. Manejador de Mensajes del Servidor WebSocket (este es el que unifica la lógica que tenías dispersa)
@@ -92,7 +97,7 @@ export const RegistroFacial = () => {
 
       // Lógica para solicitar gestos específicos
       if (message.includes("Por favor, envía imagen del gesto: 'normal'")) {
-        alert("📸 Por favor, haz una expresión 'normal'");
+        setModalMensaje("📸 Por favor, haz una expresión 'normal'");
         setRegistrationStatus("📸 Capturando gesto 'normal'...");
         setTimeout(() => {
           sendImageForRegistration("normal");
@@ -102,7 +107,7 @@ export const RegistroFacial = () => {
       } else if (
         message.includes("Por favor, envía imagen del gesto: 'sonrisa'")
       ) {
-        alert("😊 Por favor, sonríe para la foto");
+        setModalMensaje("😊 Por favor, sonríe para la foto");
         setRegistrationStatus("📸 Capturando sonrisa...");
         setTimeout(() => {
           sendImageForRegistration("sonrisa");
@@ -113,7 +118,7 @@ export const RegistroFacial = () => {
         message.includes("Por favor, envía imagen del gesto: 'giro'")
       ) {
         setRegistrationStatus("📸 Por favor, envía imagen del gesto: 'giro'");
-        alert("↩️ Por favor, gira la cabeza");
+        setModalMensaje("↩️ Por favor, gira la cabeza");
         setRegistrationStatus("📸 Capturando giro...");
         setTimeout(() => {
           sendImageForRegistration("giro");
@@ -123,15 +128,22 @@ export const RegistroFacial = () => {
       }
       // Mensaje de éxito final de registro
       else if (
-        message.includes("✅ Persona") &&
-        message.includes("registrada")
-      ) {
-        setRegistrationStatus(message);
-        alert(message); // Alerta de éxito final
-        setEmployeeId(""); // Limpiar ID del empleado
-        nextExpectedGesture = null; // Finaliza la expectativa de imagen
-        setIsRegistering(false); // Finalizar el proceso de registro
-      }
+  message.includes("✅ Persona") &&
+  message.includes("registrada")
+) {
+  setRegistrationStatus(message);
+  setModalMensaje(message); // Mensaje de éxito
+  setEmployeeId(""); // Limpiar el input
+  nextExpectedGesture = null;
+  setIsRegistering(false);
+
+  // Redirigir al componente de verificación (esperar un poco si querés que el modal se vea)
+  setTimeout(() => {
+    navigate("/verificacion", {
+      state: { id_empleado: employeeId },
+    });
+  }, 2000); // ⏱ 2 segundos de espera (opcional)
+}
       // Mensajes de errores específicos durante la captura de gestos
       else if (
         message.includes("No se detectó rostro en la imagen de") ||
@@ -139,7 +151,7 @@ export const RegistroFacial = () => {
         message.includes("Error interno al procesar tu imagen de")
       ) {
         setRegistrationStatus(`❌ ${message}.`); // Mostrar el mensaje de error directamente
-        alert(`❌ ${message}. Por favor, vuelve a intentar.`); // Alertar al usuario
+        setModalMensaje(`❌ ${message}. Por favor, vuelve a intentar.`); // setModalMensajear al usuario
         // IMPORTANTE: Aquí NO CAMBIAMOS `nextExpectedGesture`.
         // El backend es el que debe reenviar la instrucción "Por favor, envía imagen del gesto: 'X'"
         // después de un error para que se active el botón para el reintento del mismo gesto.
@@ -149,7 +161,7 @@ export const RegistroFacial = () => {
         message.includes("El gesto") &&
         message.includes("no fue detectado correctamente")
       ) {
-        alert(`❌ ${message}. Reintentando captura...`);
+        setModalMensaje(`❌ ${message}. Reintentando captura...`);
 
         // Extraer el gesto fallido de la respuesta del servidor
         const gestoFallido = message.match(/'([^']+)'/);
@@ -170,7 +182,7 @@ export const RegistroFacial = () => {
           message.includes("🚫") ||
           message.includes("⚠️ Error")
         ) {
-          alert(message); // Alerta para errores generales no cubiertos arriba
+          setModalMensaje(message); // Alerta para errores generales no cubiertos arriba
           nextExpectedGesture = null; // En caso de un error general, resetear la expectativa
           setIsRegistering(false); // Resetear el estado de registro
         }
@@ -210,7 +222,7 @@ export const RegistroFacial = () => {
       setRegistrationStatus(
         "Por favor, ingresa un ID de empleado válido para comenzar el registro."
       );
-      alert(
+      setModalMensaje(
         "Por favor, ingresa un ID de empleado válido para comenzar el registro."
       );
       return;
@@ -224,7 +236,7 @@ export const RegistroFacial = () => {
       );
     } else {
       setRegistrationStatus("❌ No conectado al servidor WebSocket.");
-      alert(
+      setModalMensaje(
         "❌ No conectado al servidor WebSocket. Por favor, espera a que se establezca la conexión."
       );
     }
@@ -258,7 +270,7 @@ export const RegistroFacial = () => {
         setRegistrationStatus(
           "❌ No se pudo enviar la imagen. Asegúrate de que la cámara esté activa y conectado al servidor."
         );
-        alert(
+        setModalMensaje(
           "❌ No se pudo enviar la imagen. Asegúrate de que la cámara esté activa y conectado al servidor."
         );
       }
@@ -396,6 +408,10 @@ export const RegistroFacial = () => {
           </div>
         </section>
       </main>
+      {modalMensaje && (
+  <ModalAlerta mensaje={modalMensaje} onClose={() => setModalMensaje(null)} />
+)}
+
     </div>
   );
 };

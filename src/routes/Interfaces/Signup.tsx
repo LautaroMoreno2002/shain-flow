@@ -29,6 +29,7 @@ export interface DatosEmpleado {
   telefono: string;
   genero: string;
   estado_civil: string;
+  id_usuario: string;
 }
 
 interface CredentialFormProps extends Credenciales {
@@ -112,6 +113,7 @@ export const Signup = () => {
     telefono: "",
     genero: "",
     estado_civil: "",
+    id_usuario: ""
   });
   
 

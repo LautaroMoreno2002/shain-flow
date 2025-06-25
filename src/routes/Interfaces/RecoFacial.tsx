@@ -2,6 +2,7 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import "../../estilos/reco-facial.css";
 import { WS_URL } from "../../services/api";
+import { ModalAlerta } from "../../components/ModalAlerta";
 
 type Gestos = "sonrisa" | "giro" | "cejas";
 
@@ -9,6 +10,7 @@ export const ReconocimientoFacial = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null); // Referencia para el elemento de video
   const socketRef = useRef<WebSocket | null>(null); // Referencia para la conexión WebSocket
   const [mostrarCamara, setMostrarCamara] = useState(false);
+  const [modalMensaje, setModalMensaje] = useState<string | null>(null);
   // Estado para los mensajes que se muestran al usuario en la interfaz
   const [recognitionStatus, setRecognitionStatus] = useState<string>(
     "Esperando conexión con el servidor..."
@@ -60,7 +62,7 @@ export const ReconocimientoFacial = () => {
           setRecognitionStatus(
             "❌ Error al acceder a la cámara. Por favor, asegúrate de que esté disponible."
           );
-          alert(
+          setModalMensaje(
             "❌ Error al acceder a la cámara. Por favor, asegúrate de que esté disponible."
           );
         });
@@ -99,7 +101,7 @@ export const ReconocimientoFacial = () => {
 
           if (gesto) {
             if (!gesturesRequested[gesto]) {
-              alert(`🚨 ${message}`);
+              setModalMensaje(`🚨 ${message}`);
 
               // Capturar imagen después de 0.5 segundos
               setTimeout(() => {
@@ -126,7 +128,7 @@ export const ReconocimientoFacial = () => {
           setRecognitionStatus("🚫 " + message);
         } else if (message.includes("✅")) {
           setRecognitionStatus(message);
-          alert(message);
+          setModalMensaje(message);
           resetRecognitionState();
         } else if (
           message.includes("❌") ||
@@ -134,7 +136,7 @@ export const ReconocimientoFacial = () => {
           message.includes("⚠️")
         ) {
           setRecognitionStatus(`⚠️ ${message}`);
-          alert(`⚠️ ${message}`);
+          setModalMensaje(`⚠️ ${message}`);
         }
       };
     }
@@ -196,7 +198,7 @@ export const ReconocimientoFacial = () => {
       setRecognitionStatus(
         "❌ No se pudo iniciar el reconocimiento. Asegúrate de que la cámara esté activa y conectado al servidor."
       );
-      alert(
+      setModalMensaje(
         "❌ No se pudo iniciar el reconocimiento. Asegúrate de que la cámara esté activa y conectado al servidor."
       );
     }
@@ -295,6 +297,7 @@ export const ReconocimientoFacial = () => {
           </div> */}
         </section>
       </main>
+      {modalMensaje && <ModalAlerta mensaje={modalMensaje} />}
     </div>
   );
 };
