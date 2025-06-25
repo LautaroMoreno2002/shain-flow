@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import "./estilos/empleado-item.css";
 import "./estilos/paginated-list-empleados.css";
-import { FaCalculator, FaSyncAlt } from "react-icons/fa";
+import { FaCalculator } from "react-icons/fa";
 
 type Item = {
   id_empleado: number;

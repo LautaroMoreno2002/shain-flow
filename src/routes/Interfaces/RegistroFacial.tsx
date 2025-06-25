@@ -219,6 +219,7 @@ export const RegistroFacial = () => {
     }
     if (codigo) {
       setCodigoVerificacion(String(codigo));
+      console.log(codigoVerificacion);
     }
   }, [location.state]);
 
