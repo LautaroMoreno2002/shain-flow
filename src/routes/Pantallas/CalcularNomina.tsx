@@ -123,8 +123,9 @@ const CalcularNomina: React.FC = () => {
     setNominaCalculada(null);
 
     try {
-      const tipoNormalizado =
-        tipoNomina.charAt(0).toUpperCase() + tipoNomina.slice(1);
+      const tipoNormalizado = tipoNomina
+        .replace(/_/g, " ")
+        .replace(/^\w/, (c) => c.toUpperCase());
       const res = await fetch(
         "https://render-crud-jc22.onrender.com/calcular_nomina",
         {
