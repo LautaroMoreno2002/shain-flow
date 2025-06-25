@@ -40,6 +40,14 @@ export interface DatosBancarios {
   nombre: string;
 }
 
+export interface DocumentoData {
+  archivo: File;
+  tipo: string;
+  empleado_id: number;
+  descripcion?: string;
+}
+
+
 // 1. Listar empleados
 export const listarEmpleados = async () => {
   const response = await api.get("/empleados/");
@@ -277,3 +285,36 @@ export const editarInfoBancaria = async (
     console.error("Ha ocurrido un error al traer la información bancaria", error);
   }
 }
+
+export const subirDocumentos = async ({
+  archivo,
+  tipo,
+  empleado_id,
+  descripcion,
+}: DocumentoData): Promise<any> => {
+  const formData = new FormData();
+  formData.append("archivo", archivo);
+  formData.append("tipo", tipo);
+  formData.append("empleado_id", empleado_id.toString());
+
+  if (descripcion) {
+    formData.append("descripcion", descripcion);
+  }
+
+  try {
+    const response = await axios.post(
+      "/api/documentos/subir-titulo",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error: any) {
+    console.error("Error al subir el documento:", error);
+    throw error;
+  }
+};

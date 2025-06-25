@@ -3,6 +3,7 @@ import {
   actualizarDatosEmpleado,
   enviarImg,
   obtenerEmpleadoPorIdentificacion,
+  subirDocumentos,
   type ModificarData,
 } from "../../services/api";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -162,6 +163,25 @@ export const VerDatos = () => {
       if (imagenArchivo) {
         await enviarImg(imagenArchivo, JSON.stringify(usuario?.id_empleado));
         console.log("Imagen enviada correctamente.");
+      }
+
+      if (archivoTitulo) {
+        const data = await subirDocumentos({
+          archivo: archivoTitulo,
+          tipo: "Titulo",
+          empleado_id: usuario?.id_empleado || 1,
+          descripcion: "Título académico"
+        })
+        console.log("Subido con éxito:", data);
+      }
+      if (archivoCV) {
+        const data = await subirDocumentos({
+          archivo: archivoCV,
+          tipo: "CV",
+          empleado_id: usuario?.id_empleado || 1,
+          descripcion: "Currículum vitae"
+        })
+        console.log("Subido con éxito:", data);
       }
 
       // Actualizar los datos personales
