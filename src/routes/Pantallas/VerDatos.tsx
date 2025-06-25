@@ -38,6 +38,10 @@ export const VerDatos = () => {
   const [mostrarVistaPrevia, setMostrarVistaPrevia] = useState(false);
   const { usuario } = useUser();
   const [imagenArchivo, setImagenArchivo] = useState<File | null>(null);
+  const [mostrarMenuCV, setMostrarMenuCV] = useState(false);
+  const [mostrarMenuTitulo, setMostrarMenuTitulo] = useState(false);
+  const [archivoCV, setArchivoCV] = useState<File | null>(null);
+  const [archivoTitulo, setArchivoTitulo] = useState<File | null>(null);
 
   const manejarVerImagen = () => {
     if (imagenPerfil || personalData.imagen_perfil_url) {
@@ -50,6 +54,43 @@ export const VerDatos = () => {
     document.getElementById("input-foto")?.click();
     setMostrarMenuImagen(false);
   };
+
+  const toggleMenuCV = () => {
+    setMostrarMenuCV(!mostrarMenuCV);
+    setMostrarMenuTitulo(false);
+  };
+
+  const toggleMenuTitulo = () => {
+    setMostrarMenuTitulo(!mostrarMenuTitulo);
+    setMostrarMenuCV(false);
+  };
+
+  const manejarVerCV = () => {
+    window.open("/ruta/al/cv.pdf", "_blank"); // Reemplaza con ruta real
+  };
+
+  const manejarVerTitulo = () => {
+    window.open("/ruta/al/titulo.pdf", "_blank"); // Reemplaza con ruta real
+  };
+
+  const manejarCargarCV = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && file.type === "application/pdf") {
+      setArchivoCV(file);
+      console.log("Archivo CV seleccionado:", file.name);
+      // Aquí iría lógica de envío
+    }
+  };
+
+  const manejarCargarTitulo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && file.type === "application/pdf") {
+      setArchivoTitulo(file);
+      console.log("Archivo título seleccionado:", file.name);
+      // Aquí iría lógica de envío
+    }
+  };
+
   const [personalData, setPersonalData] = useState<PersonalDataType>({
     id: "",
     nombre: "",
@@ -65,19 +106,23 @@ export const VerDatos = () => {
     provincia: "",
     pais_nacimiento: "",
     estado_civil: "",
-    imagen_perfil_url: ""
+    imagen_perfil_url: "",
   });
 
   const fetchData = async () => {
     if (!usuario || !usuario.numero_identificacion) {
-      console.error("Usuario no encontrado o número de identificación no disponible.");
+      console.error(
+        "Usuario no encontrado o número de identificación no disponible."
+      );
       console.log(personaActualID);
 
       return personaActualID;
     }
     try {
       setCargando(true);
-      const data = await obtenerEmpleadoPorIdentificacion(usuario.numero_identificacion);
+      const data = await obtenerEmpleadoPorIdentificacion(
+        usuario.numero_identificacion
+      );
       setPersonalData(data);
       if (!personaActualizada) {
         personaActualID = data;
@@ -100,54 +145,53 @@ export const VerDatos = () => {
   };
 
   const handleSave = async () => {
-  try {
-    setCargando(true);
+    try {
+      setCargando(true);
 
-    const data: ModificarData = {
-      telefono: personalData.telefono,
-      correo_electronico: personalData.correo_electronico,
-      calle: personalData.calle,
-      numero_calle: personalData.numero_calle,
-      localidad: personalData.localidad,
-      partido: "",
-      provincia: personalData.provincia,
-    };
-    
-        // Enviar imagen si fue cambiada
-       if (imagenArchivo) {
-  await enviarImg(imagenArchivo, JSON.stringify(usuario?.id_empleado));
-  console.log("Imagen enviada correctamente.");
-}
-    
-    // Actualizar los datos personales
-    await actualizarDatosEmpleado(JSON.stringify(usuario?.id_empleado), data);
-    console.log("Datos actualizados correctamente.");
-    
-    await fetchData();
-  } catch (error) {
-    console.error("Error al guardar los cambios:", error);
-  } finally {
-    setCargando(false);
-    setIsEditable(false);
-  }
-};
+      const data: ModificarData = {
+        telefono: personalData.telefono,
+        correo_electronico: personalData.correo_electronico,
+        calle: personalData.calle,
+        numero_calle: personalData.numero_calle,
+        localidad: personalData.localidad,
+        partido: "",
+        provincia: personalData.provincia,
+      };
+
+      // Enviar imagen si fue cambiada
+      if (imagenArchivo) {
+        await enviarImg(imagenArchivo, JSON.stringify(usuario?.id_empleado));
+        console.log("Imagen enviada correctamente.");
+      }
+
+      // Actualizar los datos personales
+      await actualizarDatosEmpleado(JSON.stringify(usuario?.id_empleado), data);
+      console.log("Datos actualizados correctamente.");
+
+      await fetchData();
+    } catch (error) {
+      console.error("Error al guardar los cambios:", error);
+    } finally {
+      setCargando(false);
+      setIsEditable(false);
+    }
+  };
   const handleCancel = () => {
     setIsEditable(false);
     fetchData();
   };
 
-  
-const handleImagenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const file = e.target.files?.[0];
-  if (file) {
-    setImagenArchivo(file);
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImagenPerfil(reader.result as string); // Solo para vista previa
-    };
-    reader.readAsDataURL(file);
-  }
-};
+  const handleImagenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImagenArchivo(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagenPerfil(reader.result as string); // Solo para vista previa
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="container-personal-data" style={{ position: "relative" }}>
@@ -157,72 +201,132 @@ const handleImagenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         </div>
       )}
 
-      <div className="personal-data" style={{ filter: cargando ? "blur(2px)" : "none" }}>
+      <div
+        className="personal-data"
+        style={{ filter: cargando ? "blur(2px)" : "none" }}
+      >
         <h2 className="title">Información personal</h2>
 
         {/* Imagen circular */}
-      <div className="cont-img-perfil" style={{ position: "absolute", top: "-20px", right: "-200px", marginRight: '50px', zIndex: 1 }}>
         <div
-          className="foto-perfil"
+          className="cont-img-perfil"
           style={{
-            width: "250px",
-            height: "250px",
-            borderRadius: "50%",
-            overflow: "hidden",
-            border: "3px solid #ccc",
-            cursor: isEditable || imagenPerfil || personalData.imagen_perfil_url ? "pointer" : "default",
-            backgroundColor: "#f0f0f0",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 0 8px rgba(0,0,0,0.1)",
-          }}
-          onClick={() => {
-            if (isEditable || imagenPerfil || personalData.imagen_perfil_url) {
-              setMostrarMenuImagen(prev => !prev);
-            }
+            position: "absolute",
+            top: "-20px",
+            right: "-200px",
+            marginRight: "50px",
+            zIndex: 1,
           }}
         >
-          {imagenPerfil || personalData.imagen_perfil_url ? (
-            <img
-              src={imagenPerfil || personalData.imagen_perfil_url}
-              alt="Foto de perfil"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          ) : (
-            <span style={{ color: "#999", textAlign: "center", fontSize: "13px", padding: "10px" }}>
-              Agregar foto
-            </span>
-          )}
-          <input
-            type="file"
-            id="input-foto"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={handleImagenChange}
-          />
-        </div>
-
-        {mostrarMenuImagen && (
-          <div style={{ marginTop: "5px", backgroundColor: "#fff", border: "1px solid #ccc", borderRadius: "8px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)", width: "140px", zIndex: 1000, position: "absolute", right: 0 }}>
-            <button style={{ padding: "10px", width: "100%", border: "none", background: "none", cursor: "pointer" }} onClick={manejarVerImagen} disabled={!imagenPerfil && !personalData.imagen_perfil_url}>
-              Ver imagen
-            </button>
-            {isEditable && (
-              <button style={{ padding: "10px", width: "100%", border: "none", background: "none", cursor: "pointer" }} onClick={manejarCambiarImagen}>
-                Cambiar imagen
-              </button>
+          <div
+            className="foto-perfil"
+            style={{
+              width: "250px",
+              height: "250px",
+              borderRadius: "50%",
+              overflow: "hidden",
+              border: "3px solid #ccc",
+              cursor:
+                isEditable || imagenPerfil || personalData.imagen_perfil_url
+                  ? "pointer"
+                  : "default",
+              backgroundColor: "#f0f0f0",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 0 8px rgba(0,0,0,0.1)",
+            }}
+            onClick={() => {
+              if (
+                isEditable ||
+                imagenPerfil ||
+                personalData.imagen_perfil_url
+              ) {
+                setMostrarMenuImagen((prev) => !prev);
+              }
+            }}
+          >
+            {imagenPerfil || personalData.imagen_perfil_url ? (
+              <img
+                src={imagenPerfil || personalData.imagen_perfil_url}
+                alt="Foto de perfil"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            ) : (
+              <span
+                style={{
+                  color: "#999",
+                  textAlign: "center",
+                  fontSize: "13px",
+                  padding: "10px",
+                }}
+              >
+                Agregar foto
+              </span>
             )}
+            <input
+              type="file"
+              id="input-foto"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleImagenChange}
+            />
           </div>
-        )}
-      </div>
+
+          {mostrarMenuImagen && (
+            <div
+              style={{
+                marginTop: "5px",
+                backgroundColor: "#fff",
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                width: "140px",
+                zIndex: 1000,
+                position: "absolute",
+                right: 0,
+              }}
+            >
+              <button
+                style={{
+                  padding: "10px",
+                  width: "100%",
+                  border: "none",
+                  background: "none",
+                  cursor: "pointer",
+                }}
+                onClick={manejarVerImagen}
+                disabled={!imagenPerfil && !personalData.imagen_perfil_url}
+              >
+                Ver imagen
+              </button>
+              {isEditable && (
+                <button
+                  style={{
+                    padding: "10px",
+                    width: "100%",
+                    border: "none",
+                    background: "none",
+                    cursor: "pointer",
+                  }}
+                  onClick={manejarCambiarImagen}
+                >
+                  Cambiar imagen
+                </button>
+              )}
+            </div>
+          )}
+        </div>
 
         <div className="data-container">
           <div className="data-group">
             {[
               { label: "Nombre/s", name: "nombre" },
               { label: "Apellido/s", name: "apellido" },
-              { label: personalData.tipo_identificacion, name: "numero_identificacion" },
+              {
+                label: personalData.tipo_identificacion,
+                name: "numero_identificacion",
+              },
               { label: "Fecha de nacimiento", name: "fecha_nacimiento" },
             ].map(({ label, name }) => (
               <div className="data-item" key={name}>
@@ -263,8 +367,100 @@ const handleImagenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             ))}
           </div>
         </div>
+        <div
+          style={{
+            display: "flex",
+            gap: "15px",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            marginTop: "20px",
+          }}
+        >
+          <div style={{ position: "relative" }}>
+            <button className="boton-opcion" onClick={toggleMenuCV}>
+              CV ⬇
+            </button>
+            {mostrarMenuCV && (
+              <div
+                className="menu-opciones"
+                style={{ top: !isEditable ? "-50px" : "-100px", right: "0" }}
+              >
+                <button
+                  className="opcion-menu"
+                  onClick={manejarVerCV}
+                  disabled={!archivoCV}
+                  title={!archivoCV ? "No hay CV cargado" : ""}
+                >
+                  Ver CV
+                </button>
+                {isEditable && (
+                  <>
+                    <button
+                      className="opcion-menu"
+                      onClick={() =>
+                        document.getElementById("input-cv")?.click()
+                      }
+                    >
+                      Cargar CV
+                    </button>
+                    <input
+                      type="file"
+                      id="input-cv"
+                      accept="application/pdf"
+                      style={{ display: "none" }}
+                      onChange={manejarCargarCV}
+                    />
+                  </>
+                )}
+              </div>
+            )}
+          </div>
 
-        <div className="button-container">
+          <div style={{ position: "relative" }}>
+            <button className="boton-opcion" onClick={toggleMenuTitulo}>
+              Título ⬇
+            </button>
+            {mostrarMenuTitulo && (
+              <div
+                className="menu-opciones"
+                style={{ top: !isEditable ? "-50px" : "-100px", right: "0" }}
+              >
+                <button
+                  className="opcion-menu"
+                  onClick={manejarVerTitulo}
+                  disabled={!archivoTitulo}
+                  // disabled={!cv_url} DEL BACKEND
+                  title={!archivoTitulo ? "No hay título cargado" : ""}
+                >
+                  Ver Título
+                </button>
+                {isEditable && (
+                  <>
+                    <button
+                      className="opcion-menu"
+                      onClick={() =>
+                        document.getElementById("input-titulo")?.click()
+                      }
+                    >
+                      Cargar Título
+                    </button>
+                    <input
+                      type="file"
+                      id="input-titulo"
+                      accept="application/pdf"
+                      style={{ display: "none" }}
+                      onChange={manejarCargarTitulo}
+                    />
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+        <div
+          className="button-container"
+          style={{ marginTop: isEditable ? "20px" : "40px" }}
+        >
           {!isEditable ? (
             <button className="edit-button" onClick={() => setIsEditable(true)}>
               Modificar Información
@@ -283,11 +479,45 @@ const handleImagenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       </div>
 
       {mostrarVistaPrevia && (
-        <div style={{ position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", backgroundColor: "rgba(0, 0, 0, 0.9)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 9999 }}>
-          <button onClick={() => setMostrarVistaPrevia(false)} style={{ position: "absolute", top: "20px", right: "30px", background: "transparent", color: "#fff", fontSize: "30px", border: "none", cursor: "pointer" }}>
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.9)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 9999,
+          }}
+        >
+          <button
+            onClick={() => setMostrarVistaPrevia(false)}
+            style={{
+              position: "absolute",
+              top: "20px",
+              right: "30px",
+              background: "transparent",
+              color: "#fff",
+              fontSize: "30px",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
             ×
           </button>
-          <img src={imagenPerfil || personalData.imagen_perfil_url || ""} alt="Vista previa" style={{ maxWidth: "90%", maxHeight: "90%", borderRadius: "10px", boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)" }} />
+          <img
+            src={imagenPerfil || personalData.imagen_perfil_url || ""}
+            alt="Vista previa"
+            style={{
+              maxWidth: "90%",
+              maxHeight: "90%",
+              borderRadius: "10px",
+              boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)",
+            }}
+          />
         </div>
       )}
     </div>
