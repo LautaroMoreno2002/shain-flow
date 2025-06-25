@@ -113,19 +113,27 @@
   letter-spacing: 0.03em;
 }
 
-.calcular-nomina-recibos-table-container {
-  overflow-x: auto;
-  border-radius: 14px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-  background-color: #fff;
-  padding: 12px;
-}
 
 .calcular-nomina-recibos-table {
   width: 100%;
   border-collapse: collapse;
   font-family: inherit;
+  min-width: 600px; /* para forzar scroll horizontal si ventana es chica */
 }
+
+.calcular-nomina-recibos-table thead {
+  position: sticky;
+  top: 0;
+  background-color: var(--c1);
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  /* Forzar que el fondo cubra todo */
+  background-clip: padding-box;
+}
+
 
 .calcular-nomina-recibos-table th,
 .calcular-nomina-recibos-table td {
@@ -136,17 +144,22 @@
   color: #222;
 }
 
-.calcular-nomina-recibos-table thead {
-  background-color: var(--c1);
-  color: white;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
+/* Filas pares con otro fondo */
 .calcular-nomina-recibos-table tbody tr:nth-child(even) {
   background-color: #fafafa;
 }
 
+/* Columna Acciones sin posición sticky, se mueve con el scroll */
+.calcular-nomina-recibos-table th:last-child,
+.calcular-nomina-recibos-table td:last-child {
+  position: static;
+  background-color: transparent;
+  box-shadow: none;
+  border-left: none;
+  min-width: auto;
+}
+
+/* Mensaje tabla vacía */
 .calcular-nomina-recibos-table-empty {
   font-style: italic;
   color: #999;
@@ -154,22 +167,39 @@
   padding: 24px 0;
 }
 
-.calcular-nomina-recibos-btn-ver {
+/* Botones ver y descargar */
+.calcular-nomina-recibos-btn-ver,
+.calcular-nomina-recibos-btn-descargar {
   text-transform: none;
   font-weight: 600;
-  color: var(--c2);
-  border-color: var(--c2);
   background-color: transparent;
   padding: 6px 16px;
   border-radius: 8px;
   font-size: 0.95rem;
   transition: all 0.3s ease;
   cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Botón VER (color var --c2) */
+.calcular-nomina-recibos-btn-ver {
+  color: var(--c2);
   border: 2px solid var(--c2);
 }
 
 .calcular-nomina-recibos-btn-ver:hover {
   background-color: var(--c2);
+  color: #fff;
+}
+
+/* Botón DESCARGAR (color var --c3) */
+.calcular-nomina-recibos-btn-descargar {
+  color: var(--c3);
+  border: 2px solid var(--c3);
+}
+
+.calcular-nomina-recibos-btn-descargar:hover {
+  background-color: var(--c3);
   color: #fff;
 }
 
@@ -195,7 +225,7 @@
     padding: 20px;
   }
 
-  .calcular-nomina-recibos-table th, 
+  .calcular-nomina-recibos-table th,
   .calcular-nomina-recibos-table td {
     padding: 10px 12px;
     font-size: 0.9rem;

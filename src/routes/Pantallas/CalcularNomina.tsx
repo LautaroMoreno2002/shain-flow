@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { useUser } from "../../context/UserContext";
 import "../../estilos/calcular-nomina.css";
+import CalendarioInput from "../../components/Calendario";
 
 interface Nomina {
   id_nomina: number;
@@ -39,24 +40,25 @@ const CalcularNomina: React.FC = () => {
   const [periodos, setPeriodos] = useState<string[]>([]);
   const [tipoNomina, setTipoNomina] = useState("mensual");
   const [periodoSeleccionado, setPeriodoSeleccionado] = useState<string>("");
-  const [loadingPeriodos, setLoadingPeriodos] = useState(false);
+  const [fechaPago, setFechaPago] = useState<string>("");
 
   const [nominaCalculada, setNominaCalculada] = useState<Nomina | null>(null);
   const [loadingCalculo, setLoadingCalculo] = useState(false);
   const [errorCalculo, setErrorCalculo] = useState<string | null>(null);
 
   const [nominasAnteriores, setNominasAnteriores] = useState<Nomina[]>([]);
+  const [loadingPeriodos, setLoadingPeriodos] = useState(false);
   const [loadingNominas, setLoadingNominas] = useState(false);
 
-  // Cargar siempre los períodos
   useEffect(() => {
     const fetchPeriodos = async () => {
       setLoadingPeriodos(true);
       try {
-        const res = await fetch("https://render-crud-jc22.onrender.com/api/periodos-unicos/");
+        const res = await fetch(
+          "https://render-crud-jc22.onrender.com/api/periodos-unicos/"
+        );
         if (!res.ok) throw new Error("Error al obtener períodos");
         const data: string[] = await res.json();
-        console.log("✅ Periodos recibidos:", data);
         setPeriodos(data);
       } catch (error) {
         console.error("❌ Error al cargar periodos:", error);
@@ -69,27 +71,29 @@ const CalcularNomina: React.FC = () => {
     fetchPeriodos();
   }, []);
 
-  // Cargar nóminas anteriores solo si hay usuario
   useEffect(() => {
-  const fetchNominasAnteriores = async () => {
-    setLoadingNominas(true);
-    try {
-      const res = await fetch(`https://render-crud-jc22.onrender.com/nominas/empleado/${id_empleado}`);
-      if (!res.ok) throw new Error("Error al obtener nóminas");
-      const data = await res.json();
-      setNominasAnteriores(data.nominas); 
-    } catch (error) {
-      console.error("❌ Error al cargar nóminas anteriores:", error);
-      setNominasAnteriores([]);
-    } finally {
-      setLoadingNominas(false);
+    const fetchNominasAnteriores = async () => {
+      setLoadingNominas(true);
+      try {
+        const res = await fetch(
+          `https://render-crud-jc22.onrender.com/nominas/empleado/${id_empleado}`
+        );
+        if (!res.ok) throw new Error("Error al obtener nóminas");
+        const data = await res.json();
+        setNominasAnteriores(data.nominas);
+      } catch (error) {
+        console.error("❌ Error al cargar nóminas anteriores:", error);
+        setNominasAnteriores([]);
+      } finally {
+        setLoadingNominas(false);
+      }
+    };
+
+    if (id_empleado) {
+      fetchNominasAnteriores();
     }
-  };
+  }, [id_empleado]);
 
-  fetchNominasAnteriores();
-}, [id_empleado]);
-
-  // Seleccionar automáticamente el primer período
   useEffect(() => {
     if (periodos.length > 0 && !periodoSeleccionado) {
       setPeriodoSeleccionado(periodos[0]);
@@ -97,22 +101,32 @@ const CalcularNomina: React.FC = () => {
   }, [periodos, periodoSeleccionado]);
 
   const handleCalcularNomina = async () => {
-    if (!periodoSeleccionado || !id_empleado || !usuario?.id_empleado) return;
+    if (
+      !periodoSeleccionado ||
+      !fechaPago ||
+      !id_empleado ||
+      !usuario?.id_usuario
+    )
+      return;
 
     setLoadingCalculo(true);
     setErrorCalculo(null);
     setNominaCalculada(null);
 
     try {
+      const tipoNormalizado =
+        tipoNomina.charAt(0).toUpperCase() + tipoNomina.slice(1);
       const res = await fetch(
-        `http://localhost:8000/api/empleados/${id_empleado}/calcular-nomina`,
+        "https://render-crud-jc22.onrender.com/calcular_nomina",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
+            id_empleado: parseInt(id_empleado),
             periodo: periodoSeleccionado,
-            tipo: tipoNomina,
-            id_usuario: usuario.id_empleado,
+            fecha_calculo: fechaPago,
+            tipo: tipoNormalizado,
+            id_usuario: parseInt(usuario.id_usuario),
           }),
         }
       );
@@ -127,14 +141,41 @@ const CalcularNomina: React.FC = () => {
   };
 
   const handleVerNomina = (id_nomina: number) => {
-    window.open(`/nominas/${id_nomina}/ver`, "_blank");
+    window.open(
+      `https://render-crud-jc22.onrender.com/empleados/${id_empleado}/recibos/${id_nomina}/descargar`,
+      "_blank"
+    );
+  };
+
+  const handleDescargarNomina = async (id_nomina: number) => {
+    try {
+      const res = await fetch(
+        `https://render-crud-jc22.onrender.com/empleados/${id_empleado}/recibos/${id_nomina}/descargar`
+      );
+      if (!res.ok) throw new Error("No se pudo descargar el recibo");
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `recibo_${id_nomina}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("❌ Error al descargar el recibo:", error);
+    }
   };
 
   return (
     <div className="calcular-nomina-container">
       <h2 className="calcular-nomina-title">Calcular nómina</h2>
 
-      {errorCalculo && <div className="calcular-nomina-error">{errorCalculo}</div>}
+      {errorCalculo && (
+        <div className="calcular-nomina-error">{errorCalculo}</div>
+      )}
 
       <div className="calcular-nomina-form-group">
         <label htmlFor="periodo-select">Seleccionar período:</label>
@@ -171,9 +212,14 @@ const CalcularNomina: React.FC = () => {
         </select>
       </div>
 
+      <div className="calcular-nomina-form-group">
+        <label htmlFor="fecha-pago">Fecha de pago:</label>
+        <CalendarioInput value={fechaPago} onChange={setFechaPago} />
+      </div>
+
       <button
         className="calcular-nomina-btn-calcular"
-        disabled={loadingCalculo || !periodoSeleccionado}
+        disabled={loadingCalculo || !periodoSeleccionado || !fechaPago}
         onClick={handleCalcularNomina}
       >
         {loadingCalculo ? "Calculando..." : "Calcular"}
@@ -181,25 +227,51 @@ const CalcularNomina: React.FC = () => {
 
       {nominaCalculada && (
         <div className="calcular-nomina-calculada-container">
-          <h3>Nómina calculada para {nominaCalculada.periodo}</h3>
-          <p><b>Salario base:</b> ${nominaCalculada.salario_base.toFixed(2)}</p>
-          <p><b>Presentismo:</b> ${nominaCalculada.bono_presentismo.toFixed(2)}</p>
-          <p><b>Antigüedad:</b> ${nominaCalculada.bono_antiguedad.toFixed(2)}</p>
-          <p><b>Horas extra:</b> ${nominaCalculada.horas_extra.toFixed(2)}</p>
-          <p><b>Descuentos:</b></p>
+          <h3>
+            Nómina calculada para {nominaCalculada.periodo} - Pago:{" "}
+            {nominaCalculada.fecha_de_pago}
+          </h3>
+          <p>
+            <b>Salario base:</b> ${nominaCalculada.salario_base.toFixed(2)}
+          </p>
+          <p>
+            <b>Presentismo:</b> ${nominaCalculada.bono_presentismo.toFixed(2)}
+          </p>
+          <p>
+            <b>Antigüedad:</b> ${nominaCalculada.bono_antiguedad.toFixed(2)}
+          </p>
+          <p>
+            <b>Horas extra:</b> ${nominaCalculada.horas_extra.toFixed(2)}
+          </p>
+          <p>
+            <b>Descuentos:</b>
+          </p>
           <ul className="calcular-nomina-detalle-descuentos-list">
-            <li>Jubilación: ${nominaCalculada.descuento_jubilacion.toFixed(2)}</li>
-            <li>Obra Social: ${nominaCalculada.descuento_obra_social.toFixed(2)}</li>
+            <li>
+              Jubilación: ${nominaCalculada.descuento_jubilacion.toFixed(2)}
+            </li>
+            <li>
+              Obra Social: ${nominaCalculada.descuento_obra_social.toFixed(2)}
+            </li>
             <li>ANSSAL: ${nominaCalculada.descuento_anssal.toFixed(2)}</li>
-            <li>Ley 19032: ${nominaCalculada.descuento_ley_19032.toFixed(2)}</li>
-            <li>Impuesto Ganancias: ${nominaCalculada.impuesto_ganancias.toFixed(2)}</li>
+            <li>
+              Ley 19032: ${nominaCalculada.descuento_ley_19032.toFixed(2)}
+            </li>
+            <li>
+              Impuesto Ganancias: $
+              {nominaCalculada.impuesto_ganancias.toFixed(2)}
+            </li>
             <li>Sindical: ${nominaCalculada.descuento_sindical.toFixed(2)}</li>
           </ul>
-          <p><b>Sueldo bruto:</b> ${nominaCalculada.sueldo_bruto.toFixed(2)}</p>
+          <p>
+            <b>Sueldo bruto:</b> ${nominaCalculada.sueldo_bruto.toFixed(2)}
+          </p>
         </div>
       )}
 
-      <h2 className="calcular-nomina-recibos-titulo">Recibos de sueldo anteriores</h2>
+      <h2 className="calcular-nomina-recibos-titulo">
+        Recibos de sueldo anteriores
+      </h2>
       <div className="calcular-nomina-recibos-table-container">
         {loadingNominas ? (
           <CircularProgress style={{ display: "block", margin: "20px auto" }} />
@@ -229,6 +301,12 @@ const CalcularNomina: React.FC = () => {
                       onClick={() => handleVerNomina(n.id_nomina)}
                     >
                       Ver
+                    </button>
+                    <button
+                      className="calcular-nomina-recibos-btn-descargar"
+                      onClick={() => handleDescargarNomina(n.id_nomina)}
+                    >
+                      Descargar
                     </button>
                   </td>
                 </tr>
