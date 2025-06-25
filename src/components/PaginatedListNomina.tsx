@@ -114,10 +114,10 @@ const SearchablePaginatedList: React.FC<Props> = ({ items, itemsPerPage = 5 }) =
               </span>
               <div className="empledo-botones">
               <NavLink className={"link"} to="/administrador/calculo-nomina">
-                <FaCalculator title='Calculo manual'/>
+                <FaCalculator className="icono" title='Calculo manual'/>
               </NavLink>
               <NavLink className={"link"} to="/administrador/calcular-nomina">
-                <FaSyncAlt title='Calculo automático'/>
+                <FaSyncAlt className="icono" title='Calculo automático'/>
               </NavLink>
               </div>
             </div>
