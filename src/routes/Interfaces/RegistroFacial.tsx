@@ -15,6 +15,7 @@ export const RegistroFacial = () => {
 
   // Estado para el ID del empleado que se va a registrar
   const [employeeId, setEmployeeId] = useState<string>("");
+  const [codigoVerificacion, setCodigoVerificacion] = useState<string>("");
   // Estado para el mensaje de estado que se muestra al usuario en la interfaz
   const [registrationStatus, setRegistrationStatus] = useState<string>(
     "Ingresa el ID del empleado y conecta al servidor."
@@ -140,7 +141,7 @@ export const RegistroFacial = () => {
   // Redirigir al componente de verificación (esperar un poco si querés que el modal se vea)
   setTimeout(() => {
     navigate("/verificacion", {
-      state: { id_empleado: employeeId },
+      state: { id_empleado: employeeId, codigoVerificacion },
     });
   }, 2000); // ⏱ 2 segundos de espera (opcional)
 }
@@ -209,8 +210,12 @@ export const RegistroFacial = () => {
   const location = useLocation();
   useEffect(() => {
     const idRecibido = location.state?.id_empleado;
+    const codigo = location.state.codigoVerificacion;
     if (idRecibido) {
       setEmployeeId(String(idRecibido));
+    }
+    if (codigo) {
+      setCodigoVerificacion(String(codigo));
     }
   }, [location.state]);
 

@@ -297,7 +297,7 @@ export const ReconocimientoFacial = () => {
           </div> */}
         </section>
       </main>
-      {modalMensaje && <ModalAlerta mensaje={modalMensaje} />}
+      {modalMensaje && <ModalAlerta mensaje={modalMensaje} onClose={() => setModalMensaje(null)} />}
     </div>
   );
 };

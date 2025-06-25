@@ -150,7 +150,8 @@ export const Signup = () => {
         // Crear empleado primero
         const empleadoCreado = await crearEmpleado(datos);
         console.log("Empleado creado:", empleadoCreado);
-        
+
+        const codigoVerificacion = empleadoCreado.codigo;
         const id_empleado = empleadoCreado?.id_empleado.id_empleado;
         console.log("ID del empleado creado:", id_empleado);
 
@@ -173,7 +174,7 @@ export const Signup = () => {
           console.log("Usuario creado:", usuarioCreado);
 
           navigate("/registro-facial", {
-            state: { id_empleado },
+            state: { id_empleado, codigoVerificacion },
           });
 
           
