@@ -12,6 +12,7 @@ import {
   FaChartBar,
   FaCalendar,
 } from 'react-icons/fa';
+import ModalEmailForm from "./ModalFormEmail";
 
 type Item = {
   id_empleado: number;
@@ -32,6 +33,8 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [inputPage, setInputPage] = useState<string>("1");
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [emailDestino, setEmailDestino] = useState("");
 
   const { usuario } = useUser();
 
@@ -134,13 +137,23 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                 {/* Mostrar íconos solo si el usuario es administrador */}
                 {usuario?.rol === "2" && (
                   <div className="acciones-iconos">
-                    <NavLink
+                    {/* <NavLink
                       to={`/administrador/enviar-email/${item.id_empleado}`}
                       className="emoji-correo"
                       title="Enviar email"
                     >
                       📧
-                    </NavLink>
+                    </NavLink> */}
+                    <button
+                      className="emoji-correo"
+                      title="Enviar email"
+                      onClick={() => {
+                        setModalAbierto(true);
+                        setEmailDestino(item.correo);
+                      }}
+                    >
+                      📧
+                    </button>
                     <NavLink
                       to={`/administrador/asistencias/${item.id_empleado}`}
                       className="emoji-calendario"
@@ -165,7 +178,7 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     </NavLink>
                   )}
                 {usuario?.permisos.editar_datos_personales &&
-                  (usuario.rol == "3") && (
+                  usuario.rol == "3" && (
                     <NavLink
                       className={"link"}
                       to={`/supervisor/reportes/${item.id_empleado}`}
@@ -174,13 +187,13 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     </NavLink>
                   )}
                 {usuario?.permisos.editar_datos_personales &&
-                  (usuario.rol == "3") && (
+                  usuario.rol == "3" && (
                     <NavLink className={"link"} to="/supervisor/ver-nomina">
                       <FaMoneyBillWave className="icono" title="Ver nomina" />
                     </NavLink>
                   )}
-                  {usuario?.permisos.editar_datos_personales &&
-                  (usuario.rol == "4") && (
+                {usuario?.permisos.editar_datos_personales &&
+                  usuario.rol == "4" && (
                     <NavLink
                       className={"link"}
                       to={`/analista-datos/reportes/${item.id_empleado}`}
@@ -189,7 +202,7 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
                     </NavLink>
                   )}
                 {usuario?.permisos.editar_datos_personales &&
-                  (usuario.rol == "4") && (
+                  usuario.rol == "4" && (
                     <NavLink className={"link"} to="/analista-datos/ver-nomina">
                       <FaMoneyBillWave className="icono" title="Ver nomina" />
                     </NavLink>
@@ -255,6 +268,11 @@ const Paginacion: React.FC<Props> = ({ items, itemsPerPage = 5 }) => {
         ) : (
           <li>No se encontraron resultados.</li>
         )}
+        <ModalEmailForm
+          isOpen={modalAbierto}
+          onClose={() => setModalAbierto(false)}
+          destinatario={emailDestino}
+        />
       </ul>
 
       <div className="nav-paginas" style={{ marginTop: "1rem" }}>
