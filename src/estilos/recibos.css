@@ -49,7 +49,7 @@
   text-align: center;
   margin-bottom: 24px;
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: 700px;
   color: var(--c2);
   letter-spacing: 0.04em;
 }
@@ -137,7 +137,7 @@
 }
 
 /* Responsive tabla */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .nomina-tabla,
   .nomina-tabla thead,
   .nomina-tabla tbody,
@@ -184,6 +184,23 @@
     flex-direction: column;
     gap: 10px;
   }
+  .nomina-titulo-recibos {
+    font-size: 1.8rem;
+  }
+
+  .cont-datos-lab {
+    margin-left: 35px;
+  }
+}
+
+@media (max-width: 600px) {
+  .cont-datos-lab {
+    margin-left: auto;
+  }
+
+      .nomina-tabla td {
+        padding-left: 0;
+    }
 }
 
 /* Animación suave */

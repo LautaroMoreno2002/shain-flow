@@ -121,18 +121,18 @@ const SearchablePaginatedList: React.FC<Props> = ({
                 {item.nombre} {item.apellido}
               </span>
               <div className="empledo-botones">
-                <NavLink
+                {/*<NavLink
                   className="link"
-                  to={`/administrador/calculo-nomina/${item.id_empleado}`}
+                  {/*to={`/administrador/calculo-nomina/${item.id_empleado}`}
                 >
                   <FaCalculator className="icono" title="Cálculo manual" />
-                </NavLink>
+                </NavLink>*/}
 
                 <NavLink
                   className="link"
                   to={`/administrador/calcular-nomina/${item.id_empleado}`}
                 >
-                  <FaSyncAlt className="icono" title="Cálculo automático" />
+                  <FaCalculator className="icono" /> Cálcular nómina
                 </NavLink>
               </div>
             </div>
