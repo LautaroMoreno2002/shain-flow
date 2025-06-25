@@ -69,6 +69,7 @@ export const actualizarDatosEmpleado = async (
 // Actualizar empleados con Patch (reemplaza parcialmente los datos)
 export const actualizarDatosPersonalesEmpleado = async (
   empleadoId: string,
+  // usuarioId: string | number,
   nuevosDatos: ModificarData
 ) => {
   const response = await api.patch(

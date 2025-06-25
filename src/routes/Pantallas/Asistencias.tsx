@@ -50,10 +50,15 @@ const [mesSeleccionado, setMesSeleccionado] = useState<string>("");
   const fetchAsistencias = async () => {
     try {
       setCargando(true);
+    console.log(usuario);
+    console.log(`ID del empleado: ${usuario?.id_empleado}`);
+    
       const datosCrudos = await registroAsistenciasPorId(JSON.stringify(usuario?.id_empleado));
 
+      console.log("Datos crudos de asistencias:", datosCrudos);
+
       const asistenciasAdaptadas: RegistroAsistencia[] = datosCrudos.map((registro: any[]) => {
-        const [fecha, dia, horaEntrada, horaSalida, horasExtras, estado] = registro;
+        const [fecha, dia, horaEntrada, horaSalida, ,horasExtras,estado] = registro;
         return {
           fecha: fecha || "---",
           dia: dia || "---",

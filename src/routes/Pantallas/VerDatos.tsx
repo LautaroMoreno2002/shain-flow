@@ -124,11 +124,11 @@ export const VerDatos = () => {
     console.log("Datos actualizados correctamente.");
     
     await fetchData();
-    setIsEditable(false);
   } catch (error) {
     console.error("Error al guardar los cambios:", error);
   } finally {
     setCargando(false);
+    setIsEditable(false);
   }
 };
   const handleCancel = () => {

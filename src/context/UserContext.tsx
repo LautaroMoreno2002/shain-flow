@@ -20,6 +20,7 @@ export interface Usuario {
   rol: "1" | "2" | "3" | "4"; // 1: empleado, 2: administrador, 3: supervisor, 4: analista-datos
   id_empleado: number;
   numero_identificacion: string;
+  id_usuario: string; 
 }
 
 interface UserContextType {
@@ -43,15 +44,16 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         rol: parsed.rol,
         id_empleado: parsed.id_empleado,
         numero_identificacion: parsed.numero_identificacion,
+        id_usuario: sessionStorage.getItem("id_usuario") || ""
       };
     }
     return null;
   });
-
   // Siempre que cambie `usuario`, sincronizamos el sessionStorage
   useEffect(() => {
     if (usuario) {
       sessionStorage.setItem("token", usuario.access_token);
+      sessionStorage.setItem("id_usuario", usuario.id_usuario);
       sessionStorage.setItem(
         "usuario",
         JSON.stringify({

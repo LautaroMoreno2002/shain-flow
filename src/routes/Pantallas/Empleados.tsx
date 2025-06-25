@@ -122,6 +122,7 @@ export const Empleados = () => {
         genero: nuevoEmpleado.genero,
         pais_nacimiento: nuevoEmpleado.pais_nacimiento,
         estado_civil: nuevoEmpleado.estado_civil,
+        id_usuario: usuario?.id_empleado,
       });
       console.log("Empleado creado:", empleadoCreado);
       console.log(nuevoEmpleado.rol);
