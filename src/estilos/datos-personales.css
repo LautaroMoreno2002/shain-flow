@@ -1,8 +1,8 @@
 .container-personal-data {
   display: flex;
-  justify-content: center;
+  /*justify-content: center;*/
   align-items: center;
-  min-height: 100vh;
+  /*min-height: 100vh;*/
   padding: 20px;
   margin-left: 165px;
 }
@@ -76,15 +76,20 @@
 }
 @media (max-width: 900px) {
   .personal-data {
-    margin-left: 4em;
+    /*margin-left: 4em;*/
     width: 80%;
+  }
+
+  .data-item {
+    width: 45%; /* Cada ítem ocupará el 48% del ancho del contenedor */
   }
 }
 
 @media (max-width: 800px){
   .container-personal-data {    
-    margin-left: auto;
-  }  
+    margin-left: 30px;
+  }
+  
 }
 
 @media (max-width: 765px) {
