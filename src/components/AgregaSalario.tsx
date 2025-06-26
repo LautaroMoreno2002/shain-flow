@@ -184,7 +184,7 @@ const getCategoriaId = (nombre: string) =>
 
   return (
     <div className="agregar-salario">
-      <h3>Formulario de nuevo salario base</h3>
+      <h3>Gestion de salarios base</h3>
       <form className="agregar-salario-grid" onSubmit={cargarSalario}>
         {Object.entries(nuevoSalario).map(([campo, valor]) => {
           const label = campo

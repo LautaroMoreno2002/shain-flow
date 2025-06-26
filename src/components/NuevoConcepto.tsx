@@ -24,6 +24,16 @@ const tiposConcepto = [
   "Vacaciones",
 ];
 
+const codigosNoEliminables = [
+  "C001",
+  "C002",
+  "C003",
+  "C004",
+  "C005",
+  "C006",
+  "C007",
+];
+
 const porcentajeOptions = ["si", "no"];
 export const NuevoConcepto: React.FC = () => {
   const [conceptos, setConceptos] = useState<Concepto[]>([]);
@@ -384,12 +394,22 @@ export const NuevoConcepto: React.FC = () => {
                       >
                         Editar
                       </button>
-                      <button
-                        className="eliminar"
-                        onClick={() => eliminarConcepto(index)}
-                      >
-                        Eliminar
-                      </button>
+                      {codigosNoEliminables.includes(concepto.codigo || "") ? (
+                        <button
+                          className="eliminar"
+                          disabled
+                          title="Este concepto no puede eliminarse"
+                        >
+                          Eliminar
+                        </button>
+                      ) : (
+                        <button
+                          className="eliminar"
+                          onClick={() => eliminarConcepto(index)}
+                        >
+                          Eliminar
+                        </button>
+                      )}
                     </td>
                   </>
                 )}
