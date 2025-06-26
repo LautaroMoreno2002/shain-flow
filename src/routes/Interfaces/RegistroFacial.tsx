@@ -445,9 +445,9 @@ export const RegistroFacial = () => {
           </div>
         </section>
       </main>
-      {modalMensaje && (
+      {/* {modalMensaje && (
   <ModalAlerta mensaje={modalMensaje} onClose={() => setModalMensaje(null)} />
-)}
+)} */}
 
     </div>
   );
