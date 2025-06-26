@@ -167,6 +167,9 @@
   padding: 24px 0;
 }
 
+.calcular-nomina-recibos-table-container {
+  border-collapse: collapse;
+}
 /* Botones ver y descargar */
 .calcular-nomina-recibos-btn-ver,
 .calcular-nomina-recibos-btn-descargar {
@@ -272,6 +275,7 @@ modal-overlay {
 
 /* Responsive */
 
+
 @media screen and (max-width: 768px) {
   .calcular-nomina-recibos-table,
   .calcular-nomina-recibos-table thead,
@@ -282,6 +286,10 @@ modal-overlay {
     display: block;
     width: 100%;
   }
+
+  .calcular-nomina-recibos-table {
+      min-width: auto;
+    }
 
   .calcular-nomina-recibos-table thead {
     display: none;
