@@ -133,3 +133,10 @@
 .react-datepicker-popper {
   z-index: 9999 !important;
 }
+
+@media (max-width: 600px) {
+  .agregar-salario-grid {
+      display: flex;
+      flex-wrap: wrap;
+    }
+}
