@@ -118,13 +118,7 @@ export const AgregaDepartamento: React.FC = () => {
         value={filtroNombre}
         onChange={(e) => setFiltroNombre(e.target.value)}
         className="input-filtro"
-        style={{
-          marginBottom: "10px",
-          padding: "6px 10px",
-          maxWidth: "300px",
-          borderRadius: "6px",
-          border: "1px solid #ccc",
-        }}
+        
       />
 
       <div className="concepto-tabla-contenedor">
