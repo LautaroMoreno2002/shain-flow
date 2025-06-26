@@ -18,14 +18,14 @@
 
   & h3 {
     text-align: justify;
-    margin: .5em 2em;
+    /*margin: .5em 2em;*/
   }
 
   & .asistencias {
     box-shadow: 0 0 5px rgba(0, 0, 0);
     max-height: 550px;
     overflow-y: auto;
-    margin: 0 3em;
+    /*margin: 0 3em;*/
   }
 
   & table {
@@ -132,12 +132,12 @@ th, td {
     & h3 {
       font-size: 1.4em;
       margin: 0;
-      margin-left: 2em;
+      /*margin-left: 2em;*/
     }
   
     & .asistencias {
       margin: 0;
-      margin-left: 3em;
+      /*margin-left: 3em;*/
     }
     & th {
       width: 150px;
