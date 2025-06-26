@@ -3,13 +3,33 @@
   --c2-editar-datos-laborales: rgb(158, 32, 3); /* rojo oscuro personalizado */
   --c3-editar-datos-laborales: #737373;
 }
+
+.container-personal-data-edit {
+  display: flex;
+  /*justify-content: center;
+  align-items: center;*/
+  /*min-height: 100vh;*/
+  padding: 20px;
+  margin-left: 165px;
+}
+
+.personal-data-edit {
+  width: 100%;
+  max-width: 800px;  /* Controla el ancho máximo */
+  padding: 2em;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  position: relative; /* Necesario para que el botón se posicione relativo a este contenedor */
+}
+
 .editar-datos-laborales-container {
   display: flex;
-  justify-content: center;
+  /*justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100vh;*/
   padding: 20px;
-  margin-left: 5px; /* si quieres menos margen a la izquierda para ganar espacio */
+  /*margin-left: 5px;  si quieres menos margen a la izquierda para ganar espacio */
 }
 
 .editar-datos-laborales-card {
@@ -117,16 +137,20 @@
   background-color: var(--c2-editar-datos-laborales);
 }
 
-@media (max-width: 900px) {
-  .editar-datos-laborales-card {
-    margin-left: 2em;
-    width: 90%;
-  }
-}
-
 @media (max-width: 800px) {
+  .container-personal-data-edit{
+    margin-left: 25px;
+  }
+
   .editar-datos-laborales-container {
     margin-left: auto;
+    margin: auto;
+    padding: 10px;
+  }
+
+  .editar-datos-laborales-card {
+    margin-left: auto;
+    width: auto;
   }
 }
 
@@ -148,7 +172,17 @@
 }
 
 @media (max-width: 600px) {
+  .container-personal-data-edit{
+    padding: 10px;
+    margin-left: auto;
+    margin-bottom: 2.5rem;
+  }
+  .personal-data-edit{
+    padding: 10px;
+  }
+
   .editar-datos-laborales-card {
     width: 100%;
+    padding: 10px;
   }
 }

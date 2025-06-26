@@ -54,9 +54,9 @@
 
 /* Estilo del botón de edición */
 .edit-button {
-  position: absolute;
-  bottom: 20px;   /* Fija el botón en la parte inferior */
-  right: 20px;    /* Fija el botón a la derecha */
+  position: relative;
+  bottom: -5px;   /* Fija el botón en la parte inferior */
+  right: 10px;    /* Fija el botón a la derecha */
   background-color: var(--c2);  /* Color celeste */
   color: white;
   font-size: 1rem;
@@ -86,6 +86,10 @@
 }
 
 @media (max-width: 800px){
+  .personal-data {
+    width: auto;
+    padding: 2%;
+  }
   .container-personal-data {    
     margin-left: 30px;
   }
@@ -112,6 +116,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin: 10px;
 }
 
 .edit-button, .save-button, .cancel-button {
@@ -196,11 +201,6 @@
   color: white;
 }
 
-@media (max-width: 600px) {
-  .personal-data {
-    width: 100%;
-  }
-}
 .overlay {
   position: absolute;
   top: 0;
@@ -281,6 +281,17 @@
 }
 
 @media (max-width: 600px) {
+  .container-personal-data{
+    margin-left: auto;
+    padding: 5px;
+    margin-top: 5px;
+    bottom: 2rem;
+  }
+
+  .personal-data{
+    padding: 10px;
+    width: auto;
+  }
   .cont-img-perfil {
     top: 105px;
     right: 0px;
