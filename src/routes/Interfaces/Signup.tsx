@@ -132,17 +132,73 @@ export const Signup = () => {
     Object.values(credenciales).every((val) => val !== "") &&
     credenciales.password === credenciales.confirmPassword;
 
+function formatearCampo(campo: string): string {
+  const mapa: Record<string, string> = {
+    nombre: "nombre",
+    apellido: "apellido",
+    tipo_identificacion: "tipo de identificación",
+    numero_identificacion: "número de identificación",
+    correo_electronico: "correo electrónico",
+    pais_nacimiento: "país de nacimiento",
+    calle: "calle",
+    numero_calle: "número de calle",
+    localidad: "localidad",
+    partido: "partido",
+    provincia: "provincia",
+    fecha_nacimiento: "fecha de nacimiento",
+    telefono: "teléfono",
+    genero: "género",
+    estado_civil: "estado civil",
+    username: "nombre de usuario",
+    password: "contraseña",
+    confirmPassword: "confirmación de contraseña",
+    rol: "rol",
+  };
+
+  return mapa[campo] || campo;
+}
+
+
+  function validarCampos(): string | null {
+  // Validaciones de datos personales
+  for (const [key, value] of Object.entries(datos)) {
+    if (!value || value.trim() === "") {
+      return `El campo '${formatearCampo(key)}' es obligatorio.`;
+    }
+  }
+
+  if (!/\S+@\S+\.\S+/.test(datos.correo_electronico)) return "El correo electrónico no tiene un formato válido.";
+  if (datos.numero_identificacion.length < 6) return "El número de identificación debe tener al menos 6 dígitos.";
+  if (datos.telefono.length < 6) return "El teléfono debe tener al menos 6 caracteres.";
+  if (new Date(datos.fecha_nacimiento) > new Date()) return "La fecha de nacimiento no puede ser futura.";
+
+  // Validaciones de credenciales
+  for (const [key, value] of Object.entries(credenciales)) {
+    if (!value || value.trim() === "") {
+      return `El campo '${formatearCampo(key)}' es obligatorio.`;
+    }
+  }
+
+  if (credenciales.password.length < 4) return "La contraseña debe tener al menos 4 caracteres.";
+  if (credenciales.password !== credenciales.confirmPassword) return "Las contraseñas no coinciden.";
+  if (!credenciales.rol) return "Debes seleccionar un rol.";
+
+  return null;
+}
+
+
+
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       setErrorResponse("");
       setSuccessMessage("");
 
-      if (!isFormValid) {
-        setErrorResponse(
-          "Todos los campos son obligatorios y las contraseñas deben coincidir."
-        );
-        return;
-      }
+      const errorValidacion = validarCampos();
+if (errorValidacion) {
+  setErrorResponse(errorValidacion);
+  return;
+}
+
 
       try {
         // Crear empleado primero

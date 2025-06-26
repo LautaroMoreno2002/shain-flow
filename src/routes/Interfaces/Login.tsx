@@ -34,60 +34,67 @@ export const Login = () => {
   }
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  e.preventDefault();
 
-    // Validaciones básicas
-    if (!username || !password) {
-      setError("Debes completar ambos campos.");
-      return;
-    }
-
-    try {
-      setCargando(true);
-      const resultado = await iniciarSesion(username, password);
-      setCargando(false);
-
-      if (resultado.access_token) {
-        // Guardar sesión
-        sessionStorage.setItem("token", resultado.access_token);
-        sessionStorage.setItem(
-          "usuario",
-          JSON.stringify({
-            permisos: resultado.permisos,
-            rol: resultado.rol,
-            id_empleado: resultado.id_empleado,
-            numero_identificacion: resultado.numero_identificacion,
-          })
-        );
-
-        setUsuario(resultado); // Actualizar contexto
-        setError(""); // Limpiar errores
-
-        // Redirigir por rol
-        switch (resultado.rol) {
-          case "1":
-            navegar(`/empleado`);
-            break;
-          case "2":
-            navegar(`/administrador`);
-            break;
-          case "3":
-            navegar(`/supervisor`);
-            break;
-          case "4":
-            navegar(`/analista-datos`);
-            break;
-          default:
-            setError("Rol no reconocido");
-        }
-      } else {
-        setError("Usuario o contraseña incorrectos.");
-      }
-    } catch (err) {
-      console.error("Error al iniciar sesión:", err);
-      setError("Ocurrió un error al intentar iniciar sesión.");
-    }
+  if (username.length == 0 && password.length == 0) {
+    setError("El usuario y la contraseña no pueden estar vacíos.")
+    return;
+  } 
+  // Validaciones básicas
+  if (username.trim().length === 0 && password.length > 0) {
+    setError("El nombre de usuario no puede estar vacío.");
+    return;
   }
+
+  if (password.length < 4 && username.trim().length > 0) {
+    setError("La contraseña debe tener al menos 4 caracteres.");
+    return;
+  }
+
+  try {
+    setCargando(true);
+    const resultado = await iniciarSesion(username, password);
+    setCargando(false);
+
+    if (resultado.access_token) {
+      sessionStorage.setItem("token", resultado.access_token);
+      sessionStorage.setItem(
+        "usuario",
+        JSON.stringify({
+          permisos: resultado.permisos,
+          rol: resultado.rol,
+          id_empleado: resultado.id_empleado,
+          numero_identificacion: resultado.numero_identificacion,
+        })
+      );
+
+      setUsuario(resultado);
+      setError("");
+
+      switch (resultado.rol) {
+        case "1":
+          navegar(`/empleado`);
+          break;
+        case "2":
+          navegar(`/administrador`);
+          break;
+        case "3":
+          navegar(`/supervisor`);
+          break;
+        case "4":
+          navegar(`/analista-datos`);
+          break;
+        default:
+          setError("Rol no reconocido");
+      }
+    } else {
+      setError("Usuario o contraseña incorrectos.");
+    }
+  } catch (err) {
+    console.error("Error al iniciar sesión:", err);
+    setError("Ocurrió un error al intentar iniciar sesión.");
+  }
+}
 
   return (
     <DefaultLayout>
