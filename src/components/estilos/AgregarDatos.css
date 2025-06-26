@@ -167,6 +167,7 @@
 .tabs-datos {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -190,4 +191,24 @@
 .tabs-datos button:hover {
   background-color: var(--c2);
   color: white;
+}
+
+.input-filtro {
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  max-width: 300px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+@media (max-width: 600px) {
+  .formulario-concepto {
+    padding: 1rem 1.25rem;
+  }
+
+  .agregar-datos-container {
+    margin: 1rem auto;
+    padding: 1rem 1.25rem;
+  }
+
 }

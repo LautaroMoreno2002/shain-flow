@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import "../../estilos/reco-facial.css";
 import { WS_URL } from "../../services/api";
 // import { ModalAlerta } from "../../components/ModalAlerta";
+import Swal from 'sweetalert2';
+
 
 type Gestos = "sonrisa" | "giro" | "cejas";
 
@@ -91,62 +93,63 @@ export const ReconocimientoFacial = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (socketRef.current) {
-      socketRef.current.onmessage = (event: MessageEvent) => {
-        const message: string = event.data;
-        console.log("📡 Respuesta del servidor:", message);
+ useEffect(() => {
+  if (socketRef.current) {
+    socketRef.current.onmessage = async (event: MessageEvent) => {
+      const message: string = event.data;
+      console.log("📡 Respuesta del servidor:", message);
 
-        if (message.includes("Por favor, realiza el gesto:")) {
-          const gestoMatch = message.match(
-            /el gesto: '?(sonrisa|giro|cejas)'?/i);
-          const gesto = gestoMatch ? (gestoMatch[1].toLowerCase() as Gestos): null;
+      if (message.includes("Por favor, realiza el gesto:")) {
+        const gestoMatch = message.match(/el gesto: '?(sonrisa|giro|cejas)'?/i);
+        const gesto = gestoMatch ? (gestoMatch[1].toLowerCase() as Gestos) : null;
 
-          if (gesto) {
-            if (!gesturesRequested[gesto]) {
-              // setModalMensaje(`🚨 ${message}`);
-              alert(`🚨 ${message}`);
+        if (gesto && !gesturesRequested[gesto]) {
+          await Swal.fire({
+            title: '🚨 Gesto solicitado',
+            text: message,
+            icon: 'info',
+            confirmButtonText: 'Listo, capturar'
+          });
 
-              // Capturar imagen después de 0.5 segundos
-              setTimeout(() => {
-                startRecognition(); // Ejecutar captura automáticamente
-              }, 500);
+          setTimeout(() => {
+            startRecognition();
+          }, 500);
 
-              setGesturesRequested((prev) => ({ ...prev, [gesto]: true }));
-            }
-            setRecognitionStatus(`✅ ${message}`);
-            setCurrentGesturePrompt(gesto);
-          }
-        } else if (message.includes("No se detectó un rostro válido")) {
-          setRecognitionStatus("🚫 " + message);
-        } else if (message.includes("Persona no reconocida")) {
-          setRecognitionStatus("🚫 " + message);
-        } else if (
-          message.includes("No se detectó rostro en la imagen del gesto")
-        ) {
-          setRecognitionStatus("❌ " + message);
-        } else if (
-          message.includes("El gesto") &&
-          message.includes("no fue detectado")
-        ) {
-          setRecognitionStatus("🚫 " + message);
-        } else if (message.includes("✅")) {
-          setRecognitionStatus(message);
-          // setModalMensaje(message);
-          alert(message);
-          resetRecognitionState();
-        } else if (
-          message.includes("❌") ||
-          message.includes("🚫") ||
-          message.includes("⚠️")
-        ) {
-          setRecognitionStatus(`⚠️ ${message}`);
-          // setModalMensaje(`⚠️ ${message}`);
-          alert(`⚠️ ${message}`);
+          setGesturesRequested((prev) => ({ ...prev, [gesto]: true }));
         }
-      };
-    }
-  }, [gesturesRequested]);
+
+        setRecognitionStatus(`✅ ${message}`);
+        setCurrentGesturePrompt(gesto);
+      } else if (message.includes("No se detectó un rostro válido")) {
+        setRecognitionStatus("🚫 " + message);
+      } else if (message.includes("Persona no reconocida")) {
+        setRecognitionStatus("🚫 " + message);
+      } else if (message.includes("No se detectó rostro en la imagen del gesto")) {
+        setRecognitionStatus("❌ " + message);
+      } else if (message.includes("El gesto") && message.includes("no fue detectado")) {
+        setRecognitionStatus("🚫 " + message);
+      } else if (message.includes("✅")) {
+        setRecognitionStatus(message);
+        await Swal.fire({
+          title: '✅ Reconocimiento exitoso',
+          text: message,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        resetRecognitionState();
+      } else if (message.includes("❌") || message.includes("🚫") || message.includes("⚠️")) {
+        setRecognitionStatus(`⚠️ ${message}`);
+        await Swal.fire({
+          title: '⚠️ Atención',
+          text: message,
+          icon: 'warning',
+          confirmButtonText: 'Entendido'
+        });
+      }
+    };
+  }
+}, [gesturesRequested]);
+
 
   const resetRecognitionState = useCallback(() => {
     setGesturesRequested({ sonrisa: false, giro: false, cejas: false });
