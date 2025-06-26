@@ -230,32 +230,16 @@ export const VerDatos = () => {
         {/* Imagen circular */}
         <div
           className="cont-img-perfil"
-          style={{
-            position: "absolute",
-            top: "-20px",
-            right: "-200px",
-            marginRight: "50px",
-            zIndex: 1,
-          }}
+          
         >
           <div
             className="foto-perfil"
             style={{
-              width: "250px",
-              height: "250px",
-              borderRadius: "50%",
-              overflow: "hidden",
-              border: "3px solid #ccc",
               cursor:
                 isEditable || imagenPerfil || personalData.imagen_perfil_url
                   ? "pointer"
                   : "default",
-              backgroundColor: "#f0f0f0",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 0 8px rgba(0,0,0,0.1)",
-            }}
+              }}
             onClick={() => {
               if (
                 isEditable ||
