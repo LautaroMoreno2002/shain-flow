@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 import "../../estilos/signup.css";
 import { crearEmpleado2, crearUsuario } from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import Select from 'react-select';
+import { useEffect } from 'react';
 
 export interface Credenciales {
   username: string;
@@ -34,6 +36,29 @@ export interface DatosEmpleado {
 interface CredentialFormProps extends Credenciales {
   onChange: (campo: keyof Credenciales, valor: string) => void;
 }
+
+interface Partido {
+  codigo_partido: string;
+  codigo_provincia: number;
+  nombre: string;
+}
+
+interface Provincia {
+  codigo_provincia: number;
+  nombre: string;
+}
+
+interface Localidad {
+  codigo_localidad: string;
+  codigo_provincia: number;
+  nombre: string;
+}
+
+interface Pais {
+  codigo_pais: string;
+  nombre: string;
+}
+
 
 const CredentialForm = ({
   username,
@@ -113,12 +138,128 @@ export const Signup = () => {
     genero: "",
     estado_civil: ""
   });
-  
+
 
   const [errorResponse, setErrorResponse] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [partidos, setPartidos] = useState<Partido[]>([]);
+  const [partidosOptions, setPartidosOptions] = useState<{ label: string; value: string }[]>([]);
+  const [provincias, setProvincias] = useState<Provincia[]>([]);
+  const [provinciaOptions, setProvinciaOptions] = useState<{ label: string; value: string }[]>([]);
+  const [localidades, setLocalidades] = useState<Localidad[]>([]);
+  const [localidadOptions, setLocalidadOptions] = useState<{ label: string; value: string }[]>([]);
+  const [paises, setPaises] = useState<Pais[]>([]);
+  const [paisOptions, setPaisOptions] = useState<{ label: string; value: string }[]>([]);
+
+
+
+  useEffect(() => {
+    const fetchLocalidadesPorProvincia = async () => {
+      if (!datos.provincia) {
+        setLocalidadOptions([]);
+        return;
+      }
+
+      const provinciaSeleccionada = provincias.find(
+        (prov) => prov.nombre === datos.provincia
+      );
+
+      if (!provinciaSeleccionada) return;
+
+      try {
+        const response = await fetch(
+          `https://render-crud-jc22.onrender.com/api/localidades-filtrado/?codigo_provincia=${provinciaSeleccionada.codigo_provincia}`
+        );
+        const data = await response.json();
+        setLocalidades(data);
+
+        const options = data.map((loc: Localidad) => ({
+          label: loc.nombre,
+          value: loc.nombre,
+        }));
+
+        setLocalidadOptions(options);
+      } catch (error) {
+        console.error("Error al obtener localidades:", error);
+        setLocalidadOptions([]);
+      }
+    };
+
+    fetchLocalidadesPorProvincia();
+  }, [datos.provincia, provincias]);
+
+
+  useEffect(() => {
+    const fetchPartidosPorProvincia = async () => {
+      if (!datos.provincia) {
+        setPartidosOptions([]);
+        return;
+      }
+
+      const provinciaSeleccionada = provincias.find(
+        (prov) => prov.nombre === datos.provincia
+      );
+
+      if (!provinciaSeleccionada) return;
+
+      try {
+        const response = await fetch(
+          `https://render-crud-jc22.onrender.com/api/partidos-filtrado/?codigo_provincia=${provinciaSeleccionada.codigo_provincia}`
+        );
+        const data = await response.json();
+
+        const options = data.map((p: Partido) => ({
+          label: p.nombre,
+          value: p.nombre,
+        }));
+
+        setPartidosOptions(options);
+      } catch (error) {
+        console.error("Error al obtener partidos por provincia:", error);
+        setPartidosOptions([]);
+      }
+    };
+
+    const fetchProvincias = async () => {
+      try {
+        const response = await fetch('https://render-crud-jc22.onrender.com/api/provincias');
+        const data = await response.json();
+        setProvincias(data);
+
+        const options = data.map((p: Provincia) => ({
+          label: p.nombre,
+          value: p.nombre,
+        }));
+
+        setProvinciaOptions(options);
+      } catch (error) {
+        console.error("Error al obtener provincias:", error);
+      }
+    };
+
+    const fetchPaises = async () => {
+      try {
+        const response = await fetch('https://render-crud-jc22.onrender.com/api/paises');
+        const data = await response.json();
+        setPaises(data);
+
+        const options = data.map((pais: Pais) => ({
+          label: pais.nombre,
+          value: pais.nombre,
+        }));
+
+        setPaisOptions(options);
+      } catch (error) {
+        console.error("Error al obtener países:", error);
+      }
+    };
+
+    fetchPaises();
+    fetchProvincias();
+    fetchPartidosPorProvincia();
+  }, [datos.provincia, provincias]);
   const navigate = useNavigate();
-  
+
   const handleCredencialesChange = (campo: keyof Credenciales, valor: string) => {
     setCredenciales((prev) => ({ ...prev, [campo]: valor }));
   };
@@ -132,124 +273,124 @@ export const Signup = () => {
     Object.values(credenciales).every((val) => val !== "") &&
     credenciales.password === credenciales.confirmPassword;
 
-function formatearCampo(campo: string): string {
-  const mapa: Record<string, string> = {
-    nombre: "nombre",
-    apellido: "apellido",
-    tipo_identificacion: "tipo de identificación",
-    numero_identificacion: "número de identificación",
-    correo_electronico: "correo electrónico",
-    pais_nacimiento: "país de nacimiento",
-    calle: "calle",
-    numero_calle: "número de calle",
-    localidad: "localidad",
-    partido: "partido",
-    provincia: "provincia",
-    fecha_nacimiento: "fecha de nacimiento",
-    telefono: "teléfono",
-    genero: "género",
-    estado_civil: "estado civil",
-    username: "nombre de usuario",
-    password: "contraseña",
-    confirmPassword: "confirmación de contraseña",
-    rol: "rol",
-  };
+  function formatearCampo(campo: string): string {
+    const mapa: Record<string, string> = {
+      nombre: "nombre",
+      apellido: "apellido",
+      tipo_identificacion: "tipo de identificación",
+      numero_identificacion: "número de identificación",
+      correo_electronico: "correo electrónico",
+      pais_nacimiento: "país de nacimiento",
+      calle: "calle",
+      numero_calle: "número de calle",
+      localidad: "localidad",
+      partido: "partido",
+      provincia: "provincia",
+      fecha_nacimiento: "fecha de nacimiento",
+      telefono: "teléfono",
+      genero: "género",
+      estado_civil: "estado civil",
+      username: "nombre de usuario",
+      password: "contraseña",
+      confirmPassword: "confirmación de contraseña",
+      rol: "rol",
+    };
 
-  return mapa[campo] || campo;
-}
+    return mapa[campo] || campo;
+  }
 
 
   function validarCampos(): string | null {
-  // Validaciones de datos personales
-  for (const [key, value] of Object.entries(datos)) {
-    if (!value || value.trim() === "") {
-      return `El campo '${formatearCampo(key)}' es obligatorio.`;
-    }
-  }
-
-  if (!/\S+@\S+\.\S+/.test(datos.correo_electronico)) return "El correo electrónico no tiene un formato válido.";
-  if (datos.numero_identificacion.length < 6) return "El número de identificación debe tener al menos 6 dígitos.";
-  if (datos.telefono.length < 6) return "El teléfono debe tener al menos 6 caracteres.";
-  if (new Date(datos.fecha_nacimiento) > new Date()) return "La fecha de nacimiento no puede ser futura.";
-
-  // Validaciones de credenciales
-  for (const [key, value] of Object.entries(credenciales)) {
-    if (!value || value.trim() === "") {
-      return `El campo '${formatearCampo(key)}' es obligatorio.`;
-    }
-  }
-
-  if (credenciales.password.length < 4) return "La contraseña debe tener al menos 4 caracteres.";
-  if (credenciales.password !== credenciales.confirmPassword) return "Las contraseñas no coinciden.";
-  if (!credenciales.rol) return "Debes seleccionar un rol.";
-
-  return null;
-}
-
-
-
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      setErrorResponse("");
-      setSuccessMessage("");
-
-      const errorValidacion = validarCampos();
-if (errorValidacion) {
-  setErrorResponse(errorValidacion);
-  return;
-}
-
-
-      try {
-        // Crear empleado primero
-        const empleadoCreado = await crearEmpleado2(datos);
-        console.log("Empleado creado:", empleadoCreado);
-
-        const codigoVerificacion = empleadoCreado.codigo;
-        const id_empleado = empleadoCreado?.id_empleado.id_empleado;
-        console.log("ID del empleado creado:", id_empleado);
-
-        if (!id_empleado) {
-          setErrorResponse("No se pudo obtener el ID del empleado creado.");
-          return;
-        }
-
-        // Crear usuario luego
-        const usuarioCreado = await crearUsuario(
-          id_empleado,
-          credenciales.rol, // ID de rol por defecto
-          credenciales.username,
-          credenciales.password,
-          "Registro manual"
-        );
-
-        if (usuarioCreado) {
-          setSuccessMessage("Registro exitoso");
-          console.log("Usuario creado:", usuarioCreado);
-
-          navigate("/registro-facial", {
-            state: { id_empleado, codigoVerificacion },
-          });
-
-          
-          // Opcional: limpiar formulario o redirigir
-        } else {
-          setErrorResponse("No se pudo crear el usuario.");
-        }
-      } catch (err: any) {
-        console.error(err);
-        setErrorResponse(
-          "Ocurrió un error en la conexión o en el proceso de registro."
-        );
+    // Validaciones de datos personales
+    for (const [key, value] of Object.entries(datos)) {
+      if (!value || value.trim() === "") {
+        return `El campo '${formatearCampo(key)}' es obligatorio.`;
       }
-    };
-    
+    }
+
+    if (!/\S+@\S+\.\S+/.test(datos.correo_electronico)) return "El correo electrónico no tiene un formato válido.";
+    if (datos.numero_identificacion.length < 6) return "El número de identificación debe tener al menos 6 dígitos.";
+    if (datos.telefono.length < 6) return "El teléfono debe tener al menos 6 caracteres.";
+    if (new Date(datos.fecha_nacimiento) > new Date()) return "La fecha de nacimiento no puede ser futura.";
+
+    // Validaciones de credenciales
+    for (const [key, value] of Object.entries(credenciales)) {
+      if (!value || value.trim() === "") {
+        return `El campo '${formatearCampo(key)}' es obligatorio.`;
+      }
+    }
+
+    if (credenciales.password.length < 4) return "La contraseña debe tener al menos 4 caracteres.";
+    if (credenciales.password !== credenciales.confirmPassword) return "Las contraseñas no coinciden.";
+    if (!credenciales.rol) return "Debes seleccionar un rol.";
+
+    return null;
+  }
+
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorResponse("");
+    setSuccessMessage("");
+
+    const errorValidacion = validarCampos();
+    if (errorValidacion) {
+      setErrorResponse(errorValidacion);
+      return;
+    }
+
+
+    try {
+      // Crear empleado primero
+      const empleadoCreado = await crearEmpleado2(datos);
+      console.log("Empleado creado:", empleadoCreado);
+
+      const codigoVerificacion = empleadoCreado.codigo;
+      const id_empleado = empleadoCreado?.id_empleado.id_empleado;
+      console.log("ID del empleado creado:", id_empleado);
+
+      if (!id_empleado) {
+        setErrorResponse("No se pudo obtener el ID del empleado creado.");
+        return;
+      }
+
+      // Crear usuario luego
+      const usuarioCreado = await crearUsuario(
+        id_empleado,
+        credenciales.rol, // ID de rol por defecto
+        credenciales.username,
+        credenciales.password,
+        "Registro manual"
+      );
+
+      if (usuarioCreado) {
+        setSuccessMessage("Registro exitoso");
+        console.log("Usuario creado:", usuarioCreado);
+
+        navigate("/registro-facial", {
+          state: { id_empleado, codigoVerificacion },
+        });
+
+
+        // Opcional: limpiar formulario o redirigir
+      } else {
+        setErrorResponse("No se pudo crear el usuario.");
+      }
+    } catch (err: any) {
+      console.error(err);
+      setErrorResponse(
+        "Ocurrió un error en la conexión o en el proceso de registro."
+      );
+    }
+  };
+
 
   const progresoActual = Math.round(
     ((Object.values(datos).filter((v) => v !== "").length +
       Object.values(credenciales).filter((v) => v !== "").length) /
       (Object.keys(datos).length + Object.keys(credenciales).length)) *
-      100
+    100
   );
 
   return (
@@ -366,33 +507,59 @@ if (errorValidacion) {
 
                 <div className="column">
                   <label htmlFor="pais_nacimiento">País de nacimiento:</label>
-                  <select
+                  <Select
                     id="pais_nacimiento"
-                    value={datos.pais_nacimiento}
-                    onChange={(e) =>
-                      handleDatosChange("pais_nacimiento", e.target.value)
+                    options={paisOptions}
+                    value={paisOptions.find((option) => option.value === datos.pais_nacimiento)}
+                    onChange={(opcion) =>
+                      handleDatosChange("pais_nacimiento", opcion ? opcion.value : "")
                     }
-                    className="input-field"
-                  >
-                    <option value="">Selecciona una nacionalidad</option>
-                    {[
-                      "Argentina",
-                      "Brasil",
-                      "Chile",
-                      "Uruguay",
-                      "Paraguay",
-                      "Bolivia",
-                      "Perú",
-                      "Ecuador",
-                      "Colombia",
-                      "Venezuela",
-                      "México",
-                    ].map((p) => (
-                      <option key={p} value={p}>
-                        {p}
-                      </option>
-                    ))}
-                  </select>
+                    className="input-field react-select"
+                    placeholder="Selecciona un país..."
+                    isClearable
+                  />
+                  <label htmlFor="provincia">Provincia:</label>
+                  <Select
+                    id="provincia"
+                    options={provinciaOptions}
+                    value={provinciaOptions.find((option) => option.value === datos.provincia)}
+                    onChange={(opcion) => {
+                      handleDatosChange("provincia", opcion ? opcion.value : "");
+                      handleDatosChange("partido", ""); // Limpiar partido seleccionado
+                      handleDatosChange("localidad", ""); // Limpiar localidad también
+                    }}
+                    className="input-field react-select"
+                    placeholder="Selecciona una provincia..."
+                    isClearable
+                  />
+
+
+                  <label htmlFor="partido">Partido:</label>
+                  <Select
+                    id="partido"
+                    options={partidosOptions}
+                    value={partidosOptions.find((option) => option.value === datos.partido)}
+                    onChange={(opcion) =>
+                      handleDatosChange("partido", opcion ? opcion.value : "")
+                    }
+                    className="input-field react-select"
+                    placeholder="Selecciona un partido..."
+                    isClearable
+                  />
+                  <label htmlFor="localidad">Localidad:</label>
+                  <Select
+                    id="localidad"
+                    options={localidadOptions}
+                    value={localidadOptions.find((option) => option.value === datos.localidad)}
+                    onChange={(opcion) =>
+                      handleDatosChange("localidad", opcion ? opcion.value : "")
+                    }
+                    className="input-field react-select"
+                    placeholder="Selecciona una localidad..."
+                    isClearable
+                  />
+
+
 
                   <div className="cont-direccion">
                     <label htmlFor="calle">Calle:</label>
@@ -417,66 +584,6 @@ if (errorValidacion) {
                     />
                   </div>
 
-                  <label htmlFor="localidad">Localidad:</label>
-                  <input
-                    id="localidad"
-                    value={datos.localidad}
-                    onChange={(e) =>
-                      handleDatosChange("localidad", e.target.value)
-                    }
-                    className="input-field"
-                  />
-
-                  <label htmlFor="partido">Partido:</label>
-                  <input
-                    id="partido"
-                    value={datos.partido}
-                    onChange={(e) =>
-                      handleDatosChange("partido", e.target.value)
-                    }
-                    className="input-field"
-                  />
-
-                  <label htmlFor="provincia">Provincia:</label>
-                  <select
-                    id="provincia"
-                    value={datos.provincia}
-                    onChange={(e) =>
-                      handleDatosChange("provincia", e.target.value)
-                    }
-                    className="input-field"
-                  >
-                    <option value="">Selecciona una provincia</option>
-                    {[
-                      "Buenos Aires",
-                      "Catamarca",
-                      "Chaco",
-                      "Chubut",
-                      "Córdoba",
-                      "Corrientes",
-                      "Entre Ríos",
-                      "Formosa",
-                      "Jujuy",
-                      "La Pampa",
-                      "La Rioja",
-                      "Mendoza",
-                      "Misiones",
-                      "Neuquén",
-                      "Río Negro",
-                      "Salta",
-                      "San Juan",
-                      "San Luis",
-                      "Santa Cruz",
-                      "Santa Fe",
-                      "Santiago del Estero",
-                      "Tierra del Fuego",
-                      "Tucumán",
-                    ].map((p) => (
-                      <option key={p} value={p}>
-                        {p}
-                      </option>
-                    ))}
-                  </select>
                   <label htmlFor="genero">Género:</label>
                   <select
                     id="genero"

@@ -144,6 +144,19 @@ label {
 .cont-direccion {
   margin: 1em .5em;
 }
+.react-select {
+  font-size: 14px;
+  margin-top: 4px;
+}
+.react-select__control {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#partido, #provincia, #localidad, #pais_nacimiento {
+  padding: 0;
+}
+
 /* Para pantallas grandes: dividir en dos columnas */
 @media (min-width: 768px) {
   .signup-form {
