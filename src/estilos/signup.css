@@ -46,7 +46,7 @@ label {
 .input-field {
   width: 100%;
   padding: 0.6rem 1rem;
-  border-radius: 20px;
+  border-radius: 0px; /* <- campo rectangular */
   border: 1px solid #ccc;
   font-size: 1rem;
   box-sizing: border-box;
@@ -58,7 +58,7 @@ label {
   color: white;
   font-weight: bold;
   border: none;
-  border-radius: 20px;
+  border-radius: 0px; /* <- botón rectangular */
   padding: 0.75rem 2rem;
   font-size: 1rem;
   width: 100%;
@@ -117,40 +117,48 @@ label {
   flex-direction: column;
   flex: 1;
 }
+
 .button-row {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
 }
+
 .signup-button.secondary {
   background-color: #ccc;
   color: #000;
+  border-radius: 0px;
 }
 
 .cont-direccion {
   display: flex;
-  
-  & label {
-    height: 100%;
-    padding: .5em;
-  }
+}
+
+.cont-direccion label {
+  display: flex;
+  height: 100%;
+  padding: .5em;
+  justify-content: center;
 }
 
 .progress {
   height: 2em;
   margin: 1em 0;
+  width: 50%;
 }
 
 .cont-direccion {
   margin: 1em .5em;
 }
+
 .react-select {
   font-size: 14px;
   margin-top: 4px;
 }
+
 .react-select__control {
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 0px; /* <- campos react-select rectangulares */
 }
 
 #partido, #provincia, #localidad, #pais_nacimiento {
@@ -177,7 +185,4 @@ label {
     min-width: 200px;
     align-self: center;
   }
-}
-.progress {
-  width: 50%;
 }
