@@ -142,7 +142,7 @@ export const Signup = () => {
 
   const [errorResponse, setErrorResponse] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [partidos, setPartidos] = useState<Partido[]>([]);
+  // const [partidos, setPartidos] = useState<Partido[]>([]);
   const [partidosOptions, setPartidosOptions] = useState<{ label: string; value: string }[]>([]);
   const [provincias, setProvincias] = useState<Provincia[]>([]);
   const [provinciaOptions, setProvinciaOptions] = useState<{ label: string; value: string }[]>([]);
@@ -172,6 +172,7 @@ export const Signup = () => {
         );
         const data = await response.json();
         setLocalidades(data);
+        console.log(localidades);
 
         const options = data.map((loc: Localidad) => ({
           label: loc.nombre,
@@ -242,7 +243,7 @@ export const Signup = () => {
         const response = await fetch('https://render-crud-jc22.onrender.com/api/paises');
         const data = await response.json();
         setPaises(data);
-
+        console.log(paises);
         const options = data.map((pais: Pais) => ({
           label: pais.nombre,
           value: pais.nombre,
@@ -257,6 +258,7 @@ export const Signup = () => {
     fetchPaises();
     fetchProvincias();
     fetchPartidosPorProvincia();
+    
   }, [datos.provincia, provincias]);
   const navigate = useNavigate();
 

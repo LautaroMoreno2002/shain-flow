@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../../estilos/datosLaborales.css";
-import {
-  datosLabPorId,
-  enviarInfoLaboral,
-  modificarInfoLaboral,
-  type DatosLaboralesCompletos,
-} from "../../services/api";
 import { CircularProgress } from "@mui/material";
 import { useUser } from "../../context/UserContext";
 import "../../estilos/recibos.css";
@@ -139,7 +133,7 @@ interface Categoria {
 }
 
 export const DatosLaboralesDescrip = () => {
-  const [datos, setDatos] = useState<DatosLaborales | null>(null);
+  // const [datos, setDatos] = useState<DatosLaborales | null>(null);
   const [cargando, setCargando] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
   const [departamentos, setDepartamentos] = useState<Departamento[]>([]);
@@ -220,6 +214,7 @@ export const DatosLaboralesDescrip = () => {
   const cargarDatos = async () => {
     try {
       // Cargar opciones
+      setCargando(true);
       const [depRes, pueRes, catRes] = await Promise.all([
         fetch("https://render-crud-jc22.onrender.com/api/departamentos/"),
         fetch("https://render-crud-jc22.onrender.com/api/puestos/"),
@@ -266,6 +261,7 @@ export const DatosLaboralesDescrip = () => {
         tipoSemana: data.tipo_semana_laboral,
         turno: data.turno,
       });
+      setCargando(false);
     } catch (err) {
       console.error("Error al cargar datos laborales y opciones", err);
     }
