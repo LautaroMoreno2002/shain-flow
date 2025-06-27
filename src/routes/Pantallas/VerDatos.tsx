@@ -96,7 +96,7 @@ export const VerDatos = () => {
 
   const manejarVerTitulo = async () => {
     if (!usuario?.id_empleado) return;
-    const url = `https://render-crud-jc22.onrender.com/api/documentos/Titulo/${usuario.id_empleado}`;
+    const url = `https://render-crud-jc22.onrender.com/api/documentos/Título/${usuario.id_empleado}`;
     try {
       const response = await fetch(url);
       if (!response.ok) throw new Error("No se pudo obtener el Título");
@@ -222,6 +222,9 @@ export const VerDatos = () => {
         console.log("Subido título con éxito:", data);
       }
       if (archivoCV) {
+        console.log("Archivo a enviar:", archivoCV);
+        console.log("Tipo MIME:", archivoCV?.type);
+
         const data = await subirDocumentos({
           archivo: archivoCV,
           tipo: "CV",
