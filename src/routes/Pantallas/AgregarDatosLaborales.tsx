@@ -174,11 +174,11 @@ console.log("Payload enviado:", payload);
   const opcionesTurno = ["Mañana", "Tarde", "Noche"];
 
   return (
-    <div className="container-personal-data">
-      <div className="personal-data">
+    <div className="container-personal-data-edit">
+      <div className="personal-data-edit">
         <h2 className="title">Información laboral</h2>
 
-        <div className="data-container">
+        <div className="data-container-edit">
           <div className="data-group">
             <div className="data-item">
               <p className="data-item--label">Departamento:</p>
