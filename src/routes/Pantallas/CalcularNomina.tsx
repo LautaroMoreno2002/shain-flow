@@ -55,6 +55,8 @@ const CalcularNomina: React.FC = () => {
   const [mostrarPDF, setMostrarPDF] = useState(false);
   const [pdfURL, setPdfURL] = useState<string | null>(null);
 
+  const [mostrarResumen, setMostrarResumen] = useState(true);
+
   const [descargasAbiertasId, setDescargasAbiertasId] = useState<number | null>(
     null
   );
@@ -80,24 +82,23 @@ const CalcularNomina: React.FC = () => {
     fetchPeriodos();
   }, []);
 
+  const fetchNominasAnteriores = async () => {
+    setLoadingNominas(true);
+    try {
+      const res = await fetch(
+        `https://render-crud-jc22.onrender.com/nominas/empleado/${id_empleado}`
+      );
+      if (!res.ok) throw new Error("Error al obtener nóminas");
+      const data = await res.json();
+      setNominasAnteriores(data.nominas);
+    } catch (error) {
+      console.error("❌ Error al cargar nóminas anteriores:", error);
+      setNominasAnteriores([]);
+    } finally {
+      setLoadingNominas(false);
+    }
+  };
   useEffect(() => {
-    const fetchNominasAnteriores = async () => {
-      setLoadingNominas(true);
-      try {
-        const res = await fetch(
-          `https://render-crud-jc22.onrender.com/nominas/empleado/${id_empleado}`
-        );
-        if (!res.ok) throw new Error("Error al obtener nóminas");
-        const data = await res.json();
-        setNominasAnteriores(data.nominas);
-      } catch (error) {
-        console.error("❌ Error al cargar nóminas anteriores:", error);
-        setNominasAnteriores([]);
-      } finally {
-        setLoadingNominas(false);
-      }
-    };
-
     if (id_empleado) {
       fetchNominasAnteriores();
     }
@@ -126,6 +127,7 @@ const CalcularNomina: React.FC = () => {
       const tipoNormalizado = tipoNomina
         .replace(/_/g, " ")
         .replace(/^\w/, (c) => c.toUpperCase());
+
       const res = await fetch(
         "https://render-crud-jc22.onrender.com/calcular_nomina",
         {
@@ -140,9 +142,18 @@ const CalcularNomina: React.FC = () => {
           }),
         }
       );
-      if (!res.ok) throw new Error("Error al calcular la nómina");
-      const data: Nomina = await res.json();
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.detail || "Error al calcular la nómina");
+      }
+
+      // Si todo OK, seteamos la nómina calculada
       setNominaCalculada(data);
+      setMostrarResumen(true);
+      setErrorCalculo(null);
+      fetchNominasAnteriores();
     } catch (error: any) {
       setErrorCalculo(error.message || "Error inesperado");
     } finally {
@@ -154,6 +165,7 @@ const CalcularNomina: React.FC = () => {
     const url = `https://render-crud-jc22.onrender.com/empleados/${id_empleado}/recibos/${id_nomina}/descargar`;
     setPdfURL(url);
     setMostrarPDF(true);
+    setMostrarResumen(false);
   };
 
   const handleDescargarNomina = async (id_nomina: number) => {
@@ -349,7 +361,7 @@ const CalcularNomina: React.FC = () => {
         {loadingCalculo ? "Calculando..." : "Calcular"}
       </button>
 
-      {nominaCalculada && (
+      {nominaCalculada && mostrarResumen && (
         <div className="calcular-nomina-calculada-container">
           <h3>
             Nómina calculada para {nominaCalculada.periodo} - Pago:{" "}
@@ -392,7 +404,6 @@ const CalcularNomina: React.FC = () => {
           </p>
         </div>
       )}
-
       <h2 className="calcular-nomina-recibos-titulo">
         Recibos de sueldo anteriores
       </h2>
