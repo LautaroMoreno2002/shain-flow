@@ -191,7 +191,7 @@ i {
 @media screen and (max-width: 420px) {
   .navLink {
     & i {
-      font-size: 1.1em;
+      font-size: 1.2em;
     }
     .cont-nav ul {
       gap: 8px; /* Añade espacio entre los ítems */

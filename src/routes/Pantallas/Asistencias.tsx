@@ -160,17 +160,18 @@ const [mesSeleccionado, setMesSeleccionado] = useState<string>("");
     const horasTrabajadas = calcularHorasTrabajadas(horaEntrada, horaSalida);
     return (
       <tr key={index}>
-        <td>{fecha}</td>
-        <td>{dia}</td>
-        <td>{horaEntrada}</td>
-        <td>{horaSalida}</td>
-        <td>{horasTrabajadas}</td>
-        <td>{horasExtras}</td>
-        <td className={clasesEstado[estado] || ""}>{estado}</td>
+        <td data-label="Fecha">{fecha}</td>
+        <td data-label="Día">{dia}</td>
+        <td data-label="HE">{horaEntrada}</td>
+        <td data-label="HS">{horaSalida}</td>
+        <td data-label="HT">{horasTrabajadas}</td>
+        <td data-label="HEX">{horasExtras}</td>
+        <td data-label="Estado" className={clasesEstado[estado] || ""}>{estado}</td>
       </tr>
     );
   })}
 </tbody>
+
         </table>
       </div>
     </div>

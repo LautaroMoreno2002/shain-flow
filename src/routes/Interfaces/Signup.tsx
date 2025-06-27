@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DefaultLayout from "../../components/DefaultLayout";
 import { NavLink } from "react-router-dom";
@@ -238,28 +238,31 @@ export const Signup = () => {
       }
     };
 
-    const fetchPaises = async () => {
-      try {
-        const response = await fetch('https://render-crud-jc22.onrender.com/api/paises');
-        const data = await response.json();
-        setPaises(data);
-        console.log(paises);
-        const options = data.map((pais: Pais) => ({
-          label: pais.nombre,
-          value: pais.nombre,
-        }));
-
-        setPaisOptions(options);
-      } catch (error) {
-        console.error("Error al obtener países:", error);
-      }
-    };
-
-    fetchPaises();
+    
     fetchProvincias();
     fetchPartidosPorProvincia();
     
   }, [datos.provincia, provincias]);
+  
+  const fetchPaises = useCallback(async () => {
+try {
+  const response = await fetch('https://render-crud-jc22.onrender.com/api/paises');
+  const data = await response.json();
+  setPaises(data);
+  console.log("Paises recibidos:", data);
+  const options = data.map((pais: Pais) => ({
+    label: pais.nombre,
+    value: pais.nombre,
+  }));
+  setPaisOptions(options);
+} catch (error) {
+  console.error("Error al obtener países:", error);
+}
+}, []);
+  useEffect(() => {
+  fetchPaises();
+}, [fetchPaises]);
+
   const navigate = useNavigate();
 
   const handleCredencialesChange = (campo: keyof Credenciales, valor: string) => {

@@ -301,3 +301,8 @@
     margin-top: 250px
   }
 }
+@media (width <= 400px) {
+  .container-personal-data {
+    padding: 1em 0;
+  }
+}

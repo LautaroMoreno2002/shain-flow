@@ -156,6 +156,62 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   margin: 0 auto;
 }
+@media (width <= 450px) {
+  .logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 150px;
+  margin: 0 auto;
+}
+
+.logo {
+  width: 100%;
+  height: auto;
+}
+  .contenido {
+    gap: 1.2em; /* menos espacio entre elementos */
+    padding: 0 1em; /* reduce el padding horizontal si aplica */
+  }
+
+  .seccion-camara {
+    min-width: 240px;
+  }
+
+  .seccion-camara .camara {
+    max-width: 300px;
+    min-width: 200px;
+    height: 300px;
+    border: none;
+    box-shadow: 0 0 20px #a50d02;
+  }
+
+  .estado-reconocimiento {
+    font-size: 0.85em;
+    margin-bottom: 0.5em;
+  }
+
+  .mensaje-guia {
+    font-size: 0.9em;
+    margin: 0.8em auto;
+    padding: 0 0.5em;
+  }
+
+  .boton-reconocimiento {
+    padding: 8px 12px;
+    font-size: 0.95em;
+    border-radius: 10px;
+  }
+
+  .seccion-derecha {
+    gap: 0.8em;
+  }
+
+  .seccion-alternativa span {
+    font-size: 0.9em;
+  }
+}
 
 /* Versión desktop */
 @media (min-width: 850px) {

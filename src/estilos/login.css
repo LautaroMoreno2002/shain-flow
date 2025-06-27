@@ -100,6 +100,53 @@ label {
   }
 }
 
+@media (width < 400px) {
+  .login-form {
+    padding: 0.5rem;
+    gap: 0.8rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .logo-container {
+    margin-bottom: 1rem;
+  }
+
+  .logo-container .logo {
+    max-width: 120px;
+  }
+
+  .input-field {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  label {
+    font-size: 0.85rem;
+  }
+
+  .login-button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.5rem;
+    width: 60%;
+    border-radius: 15px;
+  }
+
+  .face-id-icon {
+    max-width: 80px;
+  }
+
+  .register-text {
+    font-size: 1em;
+    margin-top: 1rem;
+  }
+
+  .error-message {
+    font-size: 0.8rem;
+  }
+}
+
+
 .overlay {
   position: absolute;
   top: 0;
