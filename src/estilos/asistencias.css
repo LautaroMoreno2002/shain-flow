@@ -189,7 +189,7 @@ th, td {
     margin-left: auto;
   }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
   .cont-asistencias {
     padding: .5rem;
     gap: 0.3rem;
