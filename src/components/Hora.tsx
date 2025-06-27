@@ -1,6 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "../estilos/recibos.css"
 
 interface HoraInputProps {
   name?: string;
@@ -39,7 +40,7 @@ export const HoraInput: React.FC<HoraInputProps> = ({
 
   return (
     <DatePicker
-      className="data-item--value"
+      className="value"
       selected={stringToDate(value)}
       onChange={handleChange}
       showTimeSelect

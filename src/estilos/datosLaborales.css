@@ -313,6 +313,7 @@ select {
 }
 
 .datos-laborales-item .value {
+  width: 100%;
   padding: 12px 14px;
   font-size: 1rem;
   border: 1.5px solid #ccc;
@@ -320,6 +321,7 @@ select {
   background-color: #fafafa;
   color: #222;
   font-family: inherit;
+  text-align: center;
 }
 
 

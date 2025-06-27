@@ -11,15 +11,15 @@ interface NuevoSalario {
   fecha_inicio: string; // Formato "YYYY-MM-DD" o "" vacío
 }
 
-interface Puesto {
+export interface Puesto {
   id_puesto: number;
   nombre: string;
 }
-interface Departamento {
+export interface Departamento {
   id_departamento: number;
   nombre: string;
 }
-interface Categoria {
+export interface Categoria {
   id_categoria: number;
   nombre_categoria: string;
 }

@@ -66,12 +66,59 @@ export const VerDatos = () => {
     setMostrarMenuCV(false);
   };
 
-  const manejarVerCV = () => {
-    window.open("/ruta/al/cv.pdf", "_blank"); // Reemplaza con ruta real
-  };
+  const manejarVerCV = async () => {
+    if (!usuario?.id_empleado) return;
+    const url = `https://render-crud-jc22.onrender.com/api/documentos/CV/${usuario.id_empleado}`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("No se pudo obtener el CV");
 
-  const manejarVerTitulo = () => {
-    window.open("/ruta/al/titulo.pdf", "_blank"); // Reemplaza con ruta real
+      const data = await response.json();
+      console.log("Respuesta del backend:", data);
+
+      if (data?.url) {
+        const response = await fetch(data.url);
+        const blob = await response.blob();
+        const fileURL = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = fileURL;
+        link.download = "cv.pdf"; // o "titulo.pdf"
+        link.click();
+      } else {
+        console.warn("El campo 'url' no está presente en la respuesta");
+      }
+    } catch (err) {
+      console.error("Error al obtener el CV:", err);
+    }
+  };
+  
+
+  const manejarVerTitulo = async () => {
+    if (!usuario?.id_empleado) return;
+    const url = `https://render-crud-jc22.onrender.com/api/documentos/Titulo/${usuario.id_empleado}`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("No se pudo obtener el Título");
+
+      const data = await response.json();
+      console.log("Respuesta del backend:", data);
+
+      if (data?.url) {
+        const response = await fetch(data.url);
+        const blob = await response.blob();
+        const fileURL = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = fileURL;
+        link.download = "título.pdf";
+        link.click();
+      } else {
+        console.warn("El campo 'url' no está presente en la respuesta");
+      }
+    } catch (err) {
+      console.error("Error al obtener el título:", err);
+    }
   };
 
   const manejarCargarCV = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,11 +215,11 @@ export const VerDatos = () => {
       if (archivoTitulo) {
         const data = await subirDocumentos({
           archivo: archivoTitulo,
-          tipo: "Titulo",
+          tipo: "Título",
           empleado_id: usuario?.id_empleado || 1,
           descripcion: "Título académico"
         })
-        console.log("Subido con éxito:", data);
+        console.log("Subido título con éxito:", data);
       }
       if (archivoCV) {
         const data = await subirDocumentos({
@@ -181,7 +228,7 @@ export const VerDatos = () => {
           empleado_id: usuario?.id_empleado || 1,
           descripcion: "Currículum vitae"
         })
-        console.log("Subido con éxito:", data);
+        console.log("Subido CV con éxito:", data);
       }
 
       // Actualizar los datos personales

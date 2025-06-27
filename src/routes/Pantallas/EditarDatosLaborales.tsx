@@ -4,7 +4,7 @@ import CalendarioInput from "../../components/Calendario";
 import HoraInput from "../../components/Hora";
 import "../../estilos/EditarEmpelado.css";
 
-interface PersonalDataType {
+export interface PersonalDataType {
   departamento: string;
   puesto: string;
   categoria: string;

@@ -47,6 +47,20 @@ export interface DocumentoData {
   descripcion?: string;
 }
 
+export interface DatosLaboralesCompletos {
+  id_empleado: number;
+  id_departamento: number;
+  id_puesto: number;
+  id_categoria: number;
+  fecha_ingreso: string;
+  turno: string;
+  hora_inicio_turno: string;
+  hora_fin_turno: string;
+  cantidad_horas_trabajo: number;
+  tipo_contrato: string;
+  estado: string;
+  tipo_semana_laboral: string;
+}
 
 // 1. Listar empleados
 export const listarEmpleados = async () => {
@@ -308,7 +322,7 @@ export const subirDocumentos = async ({
   }
 
   try {
-    const response = await axios.post(
+    const response = await api.post(
       "/api/documentos/subir-titulo",
       formData,
       {
@@ -320,7 +334,7 @@ export const subirDocumentos = async ({
 
     return response.data;
   } catch (error: any) {
-    console.error("Error al subir el documento:", error);
+    console.error("Error al subir el documento: ", tipo, error);
     throw error;
   }
 };
@@ -343,3 +357,38 @@ export const enviarMail = async (
     throw error;
   }
 }
+
+export const modificarInfoLaboral = async (
+  datosLaborales: DatosLaboralesCompletos
+) => {
+  if (!datosLaborales || !datosLaborales.id_empleado) {
+    throw new Error("Los datos laborales son requeridos y deben incluir el id_empleado.");
+    return;
+  }  
+  try {
+    const response = await api.put('/api/informacion-laboral/modificar', datosLaborales);
+    return response.data;
+  } catch (error) {
+    console.error("Error al modificar la información laboral:", error);
+    throw error;
+  }
+}
+
+export const enviarInfoLaboral = async (datosLaborales: DatosLaboralesCompletos) => {
+  if (!datosLaborales || !datosLaborales.id_empleado) {
+    throw new Error(
+      "Los datos laborales son requeridos y deben incluir el id_empleado."
+    );
+    return;
+  }
+  try {
+    const response = await api.put(
+      "/api/informacion-laboral/agregar",
+      datosLaborales
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al agregar la información laboral:", error);
+    throw error;
+  }
+};
