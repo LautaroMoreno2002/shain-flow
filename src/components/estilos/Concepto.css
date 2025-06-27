@@ -6,6 +6,7 @@
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: 165px;
 }
 
 .formulario-concepto h3 {
@@ -151,4 +152,16 @@
 .tabla-concepto tbody tr.vigente {
   background-color: #fccaca; /* rosado más fuerte para fila vigente */
   font-weight: 700;
+}
+
+@media (max-width: 800px) {
+  .formulario-concepto{
+    margin-left: 25px;
+  }
+}
+
+@media (max-width: 600px) {
+  .formulario-concepto{
+    margin-left: auto;
+  }
 }
