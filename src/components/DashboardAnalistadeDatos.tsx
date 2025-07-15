@@ -5,11 +5,11 @@ export const DashboardAn: React.FC = () => {
   const dashboards = [
     {
       title: "Resumen analiticos",
-      url: "https://3-137-176-177.sslip.io/public/dashboard/bfba3005-23d3-4abd-bdb8-a8cc239a225c",
+      url: "https://3-137-215-108.sslip.io/public/dashboard/bfba3005-23d3-4abd-bdb8-a8cc239a225c",
     },
     {
       title: "Analisis de sueldos",
-      url: "https://3-137-176-177.sslip.io/public/dashboard/81b40216-45f6-4858-9e8b-c31814ff6a1c",
+      url: "https://3-137-215-108.sslip.io/public/dashboard/81b40216-45f6-4858-9e8b-c31814ff6a1c",
     },
   ];
 

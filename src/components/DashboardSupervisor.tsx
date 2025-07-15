@@ -6,11 +6,11 @@ export const DashboardS: React.FC = () => {
   const dashboards = [
     {
       title: "Resumen mensual jornadas",
-      url: "https://3-137-176-177.sslip.io/public/dashboard/6d0497a8-4e46-43e2-9dbd-6cb75f8ecf79",
+      url: "https://3-137-215-108.sslip.io/public/dashboard/6d0497a8-4e46-43e2-9dbd-6cb75f8ecf79",
     },
     {
       title: "Comparativo mensual asistencias",
-      url: "https://3-137-176-177.sslip.io/public/dashboard/7fd2a19d-0f0c-4fc7-be40-195ec14b9726",
+      url: "https://3-137-215-108.sslip.io/public/dashboard/7fd2a19d-0f0c-4fc7-be40-195ec14b9726",
     },
   ];
 

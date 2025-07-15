@@ -24,7 +24,7 @@ export const AgregaDepartamento: React.FC = () => {
       if (!res.ok) throw new Error("Error al cargar departamentos");
       const data = await res.json();
       const lista = data.map((dep: any) => ({
-        id_departamento: dep.id_departamento,
+        id_departamento: dep.id,
         nombre: dep.nombre,
         descripcion: dep.descripcion,
       }));
@@ -118,7 +118,13 @@ export const AgregaDepartamento: React.FC = () => {
         value={filtroNombre}
         onChange={(e) => setFiltroNombre(e.target.value)}
         className="input-filtro"
-        
+        style={{
+          marginBottom: "10px",
+          padding: "6px 10px",
+          maxWidth: "300px",
+          borderRadius: "6px",
+          border: "1px solid #ccc",
+        }}
       />
 
       <div className="concepto-tabla-contenedor">

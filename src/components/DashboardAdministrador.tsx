@@ -22,27 +22,27 @@ const dashboards: Record<string, DashboardItem[]> = {
   Administrador: [
     {
       title: "Resumen empresarial",
-      url: "https://3-137-176-177.sslip.io/public/dashboard/034fa285-4541-46b9-928a-2fa75d33a171",
+      url: "https://3-137-215-108.sslip.io/public/dashboard/034fa285-4541-46b9-928a-2fa75d33a171",
     },
   ],
   Supervisor: [
     {
       title: "Resumen mensual jornadas",
-      url: "https://3-137-176-177.sslip.io/public/dashboard/6d0497a8-4e46-43e2-9dbd-6cb75f8ecf79",
+      url: "https://3-137-215-108.sslip.io/public/dashboard/a8eec808-cc8e-429c-9894-4a7f4f7d0c22",
     },
     {
       title: "Comparativo mensual asistencias",
-      url: "https://3-137-176-177.sslip.io/public/dashboard/7fd2a19d-0f0c-4fc7-be40-195ec14b9726",
+      url: "https://3-137-215-108.sslip.io/public/dashboard/7fd2a19d-0f0c-4fc7-be40-195ec14b9726",
     },
   ],
   Analista: [
     {
       title: "Resumen analíticos",
-      url: "https://3-137-176-177.sslip.io/public/dashboard/bfba3005-23d3-4abd-bdb8-a8cc239a225c",
+      url: "https://3-137-215-108.sslip.io/public/dashboard/bfba3005-23d3-4abd-bdb8-a8cc239a225c",
     },
     {
       title: "Análisis de sueldos",
-      url: "https://3-137-176-177.sslip.io/public/dashboard/81b40216-45f6-4858-9e8b-c31814ff6a1c",
+      url: "https://3-137-215-108.sslip.io/public/dashboard/81b40216-45f6-4858-9e8b-c31814ff6a1c",
     },
   ],
 };

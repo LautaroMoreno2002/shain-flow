@@ -1,12 +1,13 @@
 .agregar-datos-container {
-  max-width: 650px;
-  margin: 2rem auto;
-  padding: 2rem 2.5rem;
+  max-width: 700px;
+  margin: 15px auto;
+  padding: 20px;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   animation: fadeInDatos 0.6s ease;
+  box-sizing: border-box; /* IMPORTANTE para evitar desbordes */
 }
 
 @keyframes fadeInDatos {
@@ -26,6 +27,7 @@
   color: var(--c1);
   font-weight: 700;
   font-size: 1.4rem;
+  user-select: none; /* Evita que el título se seleccione accidentalmente */
 }
 
 .form-seccion {
@@ -34,6 +36,7 @@
   border: 1px solid #eee;
   border-radius: 10px;
   background-color: #fafafa;
+  box-sizing: border-box;
 }
 
 /* Flex contenedor para formulario + lista */
@@ -42,12 +45,14 @@
   gap: 1.5rem;
   flex-wrap: wrap;
   align-items: flex-start;
+  box-sizing: border-box;
 }
 
 /* Formulario lado izquierdo o superior */
 .formulario-lado {
-  flex: 1;
+  flex: 1 1 280px; /* Más flexible en responsive */
   min-width: 280px;
+  box-sizing: border-box;
 }
 
 .formulario-lado label {
@@ -56,6 +61,7 @@
   font-weight: 600;
   color: var(--c1);
   font-size: 0.95rem;
+  user-select: none;
 }
 
 .formulario-lado input {
@@ -65,7 +71,8 @@
   border-radius: 6px;
   font-size: 1rem;
   background-color: white;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
 .formulario-lado input:focus {
@@ -84,13 +91,20 @@
   background-color: var(--c2);
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
   margin-top: 1rem;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  user-select: none;
 }
 
-.formulario-lado button:hover {
+.formulario-lado button:hover:not(:disabled) {
   background-color: var(--c1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.formulario-lado button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .formulario-lado span {
@@ -98,11 +112,12 @@
   font-size: 13px;
   margin-top: 4px;
   display: block;
+  user-select: none;
 }
 
 /* Lista lado derecho o inferior */
 .lista-lado {
-  flex: 1;
+  flex: 1 1 280px;
   min-width: 280px;
   background-color: #f9f9f9;
   border-radius: 8px;
@@ -110,11 +125,13 @@
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   max-height: 250px;
   overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .lista-lado h4 {
   margin-bottom: 1rem;
   color: var(--c1);
+  user-select: none;
 }
 
 .lista-lado ul {
@@ -132,6 +149,7 @@
   align-items: center;
   font-size: 0.95rem;
   color: #333;
+  user-select: none;
 }
 
 .lista-lado button {
@@ -142,11 +160,18 @@
   padding: 0.3rem 0.6rem;
   font-size: 0.85rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
 }
 
-.lista-lado button:hover {
+.lista-lado button:hover:not(:disabled) {
   background-color: var(--c1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.lista-lado button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 /* Scrollbar personalizado para las listas */
@@ -161,15 +186,15 @@
 
 .lista-lado::-webkit-scrollbar-track {
   background-color: #eee;
-
 }
 
+/* Tabs para seleccionar secciones */
 .tabs-datos {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1.5rem;
+  user-select: none;
 }
 
 .tabs-datos button {
@@ -180,7 +205,8 @@
   cursor: pointer;
   font-weight: 600;
   color: #444;
-  transition: 0.3s;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
 }
 
 .tabs-datos button.activo {
@@ -188,27 +214,21 @@
   color: white;
 }
 
-.tabs-datos button:hover {
+.tabs-datos button:hover:not(.activo) {
   background-color: var(--c2);
   color: white;
 }
 
-.input-filtro {
-  margin-bottom: 10px;
-  padding: 6px 10px;
-  max-width: 300px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-@media (max-width: 600px) {
-  .formulario-concepto {
-    padding: 1rem 1.25rem;
+/* Responsive para pantallas chicas */
+@media (max-width: 720px) {
+  .contenedor-seccion {
+    flex-direction: column;
   }
-
+  .formulario-lado,
+  .lista-lado {
+    min-width: 100%;
+  }
   .agregar-datos-container {
-    margin: 1rem auto;
-    padding: 1rem 1.25rem;
+    padding: 1rem 1.2rem;
   }
-
 }
